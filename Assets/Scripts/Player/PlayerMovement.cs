@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed = 10f;
     public float dashspeed = 30f;
-    public float dashlenght = 5f;
+    public float dashlenght = 20f;
 
     Vector3 movement;
     Vector3 dash;
@@ -66,35 +66,22 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isDash)
         {
-            if(dashDis < dashlenght && dashDis!=0f)
-            {
-                dash.Set(dashH, 0, dashV);
-
-                dash = dash.normalized * dashspeed * Time.deltaTime;
-                playerRigidbody.MovePosition(transform.position + dash);
-                dashDis = Vector3.Distance(transform.position, dashEnd);
-                Debug.Log(dashDis);
-                Debug.Log(transform.position);
-            }
-            else
-            {
-                dashDis = 0f;
-                isDash = false;
-                Debug.Log(isDash);
-            }
+            isDash = false;
         }
-        else 
+        else
         {
-            if (Input.GetButtonDown("Jump"))
-            {
-                dashH = h;
-                dashV = v;
-                isDash = true;
-                Debug.Log(isDash);
-                dash.Set(dashH, 0, dashV);
-                dashEnd = dash.normalized * dashlenght;
-                Debug.Log(dashEnd);
-            }
+            dashEnd = Vector3.zero;
+            isDash = false;
+        }
+        if (Input.GetButtonDown("Jump"))
+        {
+            dashH = h;
+            dashV = v;
+            isDash = true;
+            dash.Set(dashH, 0, dashV);
+            Debug.Log(transform.position);
+            dashEnd = transform.position + dash.normalized * dashlenght;
+            Debug.Log(dashEnd);
         }
     }
 }
