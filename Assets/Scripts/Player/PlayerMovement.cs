@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 10f;
-    public float dashspeed = 30f;
-    public float dashlenght = 20f;
+    public float dashSpeed = 40f;
+    public float dashLenght = 10f;
 
     Vector3 movement;
     Vector3 dash;
+    Vector3 dashStart;
     Vector3 dashEnd;
     bool isDash;
     Rigidbody playerRigidbody;
@@ -18,7 +19,12 @@ public class PlayerMovement : MonoBehaviour
     float dashH = 0f;
     float dashV = 0f;
     float dashDis = 0f;
-    
+    float dashStartTime = 0f;
+    float dashJourneyLenght = 0f;
+    float dashJourey = 0f;
+    float dashDistCovered = 0f;
+
+
 
     void Awake()
     {
@@ -66,22 +72,32 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isDash)
         {
-            isDash = false;
+            if (dashJourey < 1)
+            {
+                dashDistCovered = (Time.time - dashStartTime) * dashSpeed;
+                dashJourey = dashDistCovered / dashJourneyLenght;
+                playerRigidbody.MovePosition(Vector3.Lerp(dashStart, dashEnd, dashJourey));
+            }
+            else
+            {
+                dashEnd = Vector3.zero;
+                isDash = false;
+                dashJourey = 0f;
+            }
         }
-        else
-        {
-            dashEnd = Vector3.zero;
-            isDash = false;
-        }
+
         if (Input.GetButtonDown("Jump"))
         {
             dashH = h;
             dashV = v;
+            dashStart = transform.position;
             isDash = true;
             dash.Set(dashH, 0, dashV);
             Debug.Log(transform.position);
-            dashEnd = transform.position + dash.normalized * dashlenght;
+            dashEnd = transform.position + dash.normalized * dashLenght;
             Debug.Log(dashEnd);
+            dashStartTime = Time.time;
+            dashJourneyLenght = Vector3.Distance(transform.position, dashEnd);
         }
     }
 }
