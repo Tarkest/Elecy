@@ -15,7 +15,8 @@ public class PlayerMovement : MonoBehaviour
     bool isDash;
     Rigidbody playerRigidbody;
     int floorMask;
-    float camRayLenght = 100f;
+    int impenetrableMask;
+    float camRayLenght = 200f;
     float dashH = 0f;
     float dashV = 0f;
     float dashDis = 0f;
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+        impenetrableMask = LayerMask.GetMask("Impenetrable");
         floorMask = LayerMask.GetMask("Floor");
         playerRigidbody = GetComponent<Rigidbody>();
     }
@@ -93,11 +95,20 @@ public class PlayerMovement : MonoBehaviour
             dashStart = transform.position;
             isDash = true;
             dash.Set(dashH, 0, dashV);
-            Debug.Log(transform.position);
             dashEnd = transform.position + dash.normalized * dashLenght;
-            Debug.Log(dashEnd);
             dashStartTime = Time.time;
             dashJourneyLenght = Vector3.Distance(transform.position, dashEnd);
+            Ray dashRay = new Ray(dashStart, dash.normalized);
+            Debug.DrawRay(dashStart, dash.normalized, Color.green, 5);
+            RaycastHit impenetrableHit;
+            if (Physics.Raycast(dashRay, out impenetrableHit, dashLenght, impenetrableMask))
+            {
+                dashEnd = impenetrableHit.point;
+            }
+            else
+            {
+                dashEnd = transform.position + dash.normalized * dashLenght;
+            }
         }
     }
 }
