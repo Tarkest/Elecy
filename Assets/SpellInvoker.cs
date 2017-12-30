@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +7,18 @@ public class SpellInvoker : MonoBehaviour
 {
     private string _combination;
 
-    private SpellScript[] _playerScripts;
+    private readonly string[] _possibleCombinations = new string[] {"Q", "E" , "QQ" , "EE" , "QE" , "EQ" , "QQQ" , "EEE" , "QEQ" , "QEQE"};
+
+    private Dictionary<string, SpellScript> _playerScripts;
+
+    private TextMesh _textMesh;
 
 	// Use this for initialization
 	void Start ()
 	{
 	    _combination = "";
+
+        _textMesh = gameObject.transform.Find("TestUi").GetComponent<TextMesh>();
 
         SetSpells();
 	}
@@ -43,51 +50,45 @@ public class SpellInvoker : MonoBehaviour
     private void UpdateCombination()
     {
         _combination = "";
+        _textMesh.text = _combination;
     }
 
     private void UpdateCombination(char val)
     {
-        if (_combination.Length <= 5)
+        if (_combination.Length <= 4)
             _combination += val;
+
+        _textMesh.text = _combination;
     }
-
-
-    //TODO simplify
+    
     private void InvokeScript(int type)
     {
-        switch (_combination)
+        if (_combination.Length > 0)
         {
-            case "QQE":
+            try
+            {
                 if (type == 0)
-                    _playerScripts[0].InvokeAttack();
+                    _playerScripts[_combination].InvokeAttack();
                 else
-                    _playerScripts[0].InvokeDefense();
-                break;
-            case "QEE":
-                if (type == 0)
-                    _playerScripts[1].InvokeAttack();
-                else
-                    _playerScripts[1].InvokeDefense();
-                break;
-            default:
-                if (type == 0)
-                    _playerScripts[0].InvokeAttack();
-                else
-                    _playerScripts[0].InvokeDefense();
-                break;
-
+                    _playerScripts[_combination].InvokeDefense();
+            }
+            catch
+            {
+                Debug.Log("Combination not found");
+            }
+            
         }
-
-        _combination = "";
+        UpdateCombination();
     }
 
     private void SetSpells()
     {
-        _playerScripts = new SpellScript[]
+        _playerScripts = new Dictionary<string,SpellScript>();
+
+        for (int i = 0; i < _possibleCombinations.Length; i++)
         {
-            new SpellScript("TestSpell1"), new SpellScript("TestSpell2"), new SpellScript("TestSpell3"),
-            new SpellScript("TestSpell4"),
-        };
+            _playerScripts.Add(_possibleCombinations[i],new SpellScript("script "+i));
+        }
     }
 }
 
@@ -103,6 +104,7 @@ public class SpellScript
 
     public void InvokeAttack()
     {
+
         Debug.Log(_name + " Attack");
     }
 
@@ -111,3 +113,4 @@ public class SpellScript
         Debug.Log(_name + " Defense");
     }
 }
+
