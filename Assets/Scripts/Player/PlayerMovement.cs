@@ -99,7 +99,6 @@ public class PlayerMovement : MonoBehaviour
             dashStartTime = Time.time;
             dashJourneyLenght = Vector3.Distance(transform.position, dashEnd);
             Ray dashRay = new Ray(dashStart, dash.normalized);
-            Debug.DrawRay(dashStart, dash.normalized, Color.green, 5);
             RaycastHit impenetrableHit;
             if (Physics.Raycast(dashRay, out impenetrableHit, dashLenght, impenetrableMask))
             {

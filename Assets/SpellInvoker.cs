@@ -10,7 +10,6 @@ public class SpellInvoker : MonoBehaviour
     private readonly string[] _possibleCombinations = new string[] {"Q", "E" , "QQ" , "EE" , "QE" , "EQ" , "QQQ" , "EEE" , "QEQ" , "QEQE"};
 
     private Dictionary<string, SpellScript> _playerScripts;
-
     private TextMesh _textMesh;
 
 	// Use this for initialization

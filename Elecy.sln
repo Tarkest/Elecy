@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elecy", "Elecy.csproj", "{E10E0CAD-8D1B-E05A-B2A4-34A151A9FF46}"
 EndProject
 Global
