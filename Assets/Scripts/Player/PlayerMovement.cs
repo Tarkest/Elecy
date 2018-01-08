@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 10f;
     public float dashSpeed = 40f;
     public float dashLenght = 10f;
+    public GameObject Fireball;
 
     Vector3 movement;
     Vector3 dash;
@@ -14,23 +15,17 @@ public class PlayerMovement : MonoBehaviour
     Vector3 dashEnd;
     bool isDash;
     Rigidbody playerRigidbody;
-    int floorMask;
     int impenetrableMask;
-    float camRayLenght = 200f;
     float dashH = 0f;
     float dashV = 0f;
-    float dashDis = 0f;
     float dashStartTime = 0f;
     float dashJourneyLenght = 0f;
     float dashJourey = 0f;
     float dashDistCovered = 0f;
 
-
-
     void Awake()
     {
         impenetrableMask = LayerMask.GetMask("Impenetrable");
-        floorMask = LayerMask.GetMask("Floor");
         playerRigidbody = GetComponent<Rigidbody>();
     }
 
@@ -57,17 +52,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Turning ()
     {
-        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 playerToMouse = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;
 
-        RaycastHit floorHit;
-        if(Physics.Raycast (camRay, out floorHit, camRayLenght, floorMask))
-        {
-            Vector3 playerToMouse = floorHit.point - transform.position;
-            playerToMouse.y = 0f;
-
-            Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-            playerRigidbody.MoveRotation(newRotation);
-        }
+        Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
+        playerRigidbody.MoveRotation(newRotation);
     }
 
     void Dashing (float h, float v)
