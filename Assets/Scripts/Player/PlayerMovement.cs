@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            if(dashReady)
+            if(dashReady && (h!=0f || v!=0f))
             {
                 dashH = h;
                 dashV = v;
