@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MouseController : MonoBehaviour {
 
-    public GameObject playerObject;
     public Vector3 mousePosition;
     private int _floorMask;
     private float _camRayLenght = 200f;
@@ -21,7 +20,7 @@ public class MouseController : MonoBehaviour {
         RaycastHit floorHit;
         if (Physics.Raycast(camRay, out floorHit, _camRayLenght, _floorMask))
         {
-            mousePosition = floorHit.point - playerObject.transform.position;
+            mousePosition = floorHit.point;
             mousePosition.y = 0f;
         }
     }

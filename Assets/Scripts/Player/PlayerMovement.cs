@@ -61,7 +61,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Turning ()
     {
-        Vector3 playerToMouse = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;
+        Vector3 playerToMouse = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition - transform.position;
+        playerToMouse.y = 0f;
 
         Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
         playerRigidbody.MoveRotation(newRotation);
