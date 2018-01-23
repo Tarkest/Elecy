@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellAsset : MonoBehaviour {
+public class SpellTest : MonoBehaviour {
 
-	// Use this for initialization
+    private int _spellNumber;
+    private string _spellType;
+
 	void Start () {
 		
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
 		
 	}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpellInvoker_2 : MonoBehaviour {
 
-    public float step = 0.0005f;
+    /*public float step = 0.0005f;
 
     public float energy;
     public float energyMax = 70f;
@@ -223,5 +223,5 @@ public class SpellInvoker_2 : MonoBehaviour {
         {
             _playerSpellsFthML.Add(_possibleCombinationsFthML[i], new SpellScript("script " + i));
         }
-    }
+    }*/
 }

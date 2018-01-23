@@ -20,9 +20,11 @@ public class FireBall : MonoBehaviour {
     void Start () {
         _spellRigidbody = GetComponent<Rigidbody>();
         _casterPosition = GameObject.Find("Test player").GetComponent<Transform>().position;
+        Debug.Log(_casterPosition);
         _mousePosition = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;
         _target = (_mousePosition - _casterPosition) * _spellRange;
-        _startTime = Time.deltaTime;
+        Debug.Log(_target);
+        _startTime = Time.time;
         _spellJourneyLenght = Vector3.Distance(_casterPosition, _target);
         _spellJourney = 0f;
     }
@@ -30,13 +32,14 @@ public class FireBall : MonoBehaviour {
     void FixedUpdate () {
         if (_spellJourney<1)
         {
-            _spellDistCovered = (Time.deltaTime - _startTime) * _spellSpeed;
+            _spellDistCovered = (Time.time - _startTime) * _spellSpeed;
             _spellJourney = _spellDistCovered / _spellJourneyLenght;
+            Debug.Log(_spellJourney);
             _spellRigidbody.MovePosition(Vector3.Lerp(_casterPosition, _target, _spellJourney));
         }
         else
         {
-            Destroy(this);
+            
         }
     }
 

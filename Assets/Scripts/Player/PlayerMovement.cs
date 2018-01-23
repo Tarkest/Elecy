@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 10f;
     public float dashSpeed = 40f;
     public float dashLenght = 10f;
-    public GameObject Fireball;
+    public GameObject _Fireball;
     public float dashCooldown = 3f;
 
     Vector3 movement;
@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     float dashDistCovered = 0f;
     bool dashReady = true;
     float dashCounter = 0f;
+    
 
     void Awake()
     {

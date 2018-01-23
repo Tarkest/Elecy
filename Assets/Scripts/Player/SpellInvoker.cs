@@ -7,9 +7,17 @@ public class SpellInvoker : MonoBehaviour
 {
     private string _combination;
 
-    private readonly string[] _possibleCombinations = new string[] {"Q", "E" , "QQ" , "EE" , "QE" , "EQ" , "QQQ" , "EEE" , "QEQ" , "QEQE"};
+    private readonly string[] _possibleCombinations = new string[] {"","Q", "E" , "QQ" , "EE" , "QE" , "EQ" , "QQQ" , "EEE" , "QEQ" , "QEQE"};
 
     private Dictionary<string, SpellScript> _playerScripts;
+
+    private GameObject[] _spells;
+
+    public GameObject spell1;
+    public GameObject spell2;
+    public GameObject spell3;
+
+    public int spellType;
 
     private TextMesh _textMesh;
 
@@ -20,6 +28,8 @@ public class SpellInvoker : MonoBehaviour
         _textMesh = gameObject.transform.Find("TestUi").GetComponent<TextMesh>();
 
         SetSpells();
+
+        SpellsContainer();
 	}
 	
 	void Update () {
@@ -47,6 +57,7 @@ public class SpellInvoker : MonoBehaviour
 
     private void UpdateCombination()
     {
+        spellType = 0;
         _combination = "";
         _textMesh.text = _combination;
     }
@@ -61,21 +72,23 @@ public class SpellInvoker : MonoBehaviour
     
     private void InvokeScript(int type)
     {
-        if (_combination.Length > 0)
-        {
             try
             {
                 if (type == 0)
-                    _playerScripts[_combination].InvokeAttack();
+                {
+                    Instantiate(_spells[_playerScripts[_combination].Invoke()]);
+                    Debug.Log(_playerScripts[_combination].Invoke());
+                    spellType = 1;
+                    
+                }
                 else
-                    _playerScripts[_combination].InvokeDefense();
-            }
+                    Instantiate(_spells[_playerScripts[_combination].Invoke()]);
+                    spellType = 2;
+                }
             catch
             {
                 Debug.Log("Combination not found");
             }
-            
-        }
         UpdateCombination();
     }
 
@@ -85,29 +98,38 @@ public class SpellInvoker : MonoBehaviour
 
         for (int i = 0; i < _possibleCombinations.Length; i++)
         {
-            _playerScripts.Add(_possibleCombinations[i],new SpellScript("script "+i));
+            _playerScripts.Add(_possibleCombinations[i],new SpellScript(i));
         }
+    }
+
+    private void SpellsContainer()
+    {
+        _spells = new GameObject[6];
+
+        _spells[0] = spell1;
+        _spells[1] = spell2;
+        _spells[2] = spell3;
+        _spells[3] = spell1;
+        _spells[4] = spell2;
+        _spells[5] = spell3;
     }
 }
 
-//TEST muha2399, do not touch 
-public class SpellScript
+public class SpellScript 
 {
-    private string _name;
+    public int _name;
+    public int spellNumber;
 
-    public SpellScript(string name)
+    public SpellScript(int name)
     {
         _name = name;
     }
 
-    public void InvokeAttack()
+    public int Invoke()
     {
-        Debug.Log(_name + " Attack");
-    }
-
-    public void InvokeDefense()
-    {
-        Debug.Log(_name + " Defense");
+        spellNumber = _name;
+        Debug.Log(_name);
+        return spellNumber;
     }
 }
 
