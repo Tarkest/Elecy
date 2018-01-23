@@ -13,8 +13,8 @@ public class SpellInvoker : MonoBehaviour
 
     private TextMesh _textMesh;
 
-    void Start ()
-	{    
+	void Start ()
+	{
 	    _combination = "";
 
         _textMesh = gameObject.transform.Find("TestUi").GetComponent<TextMesh>();
@@ -102,6 +102,7 @@ public class SpellScript
 
     public void InvokeAttack()
     {
+
         Debug.Log(_name + " Attack");
     }
 
