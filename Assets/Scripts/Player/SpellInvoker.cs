@@ -1,38 +1,28 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SpellInvoker : MonoBehaviour
+public class SpellInvoker999 : MonoBehaviour
 {
-    private string _combination; 
+    private string _combination;
 
-    private readonly string[] _possibleCombinations = new string[] {"","Q", "E" , "QQ" , "EE" , "QE" , "EQ" , "QQQ" , "EEE" , "QEQ" , "QEQE"};
+    private readonly string[] _possibleCombinations = new string[] { "", "Q", "E", "QQ", "EE", "QE", "EQ", "QQQ", "EEE", "QEQ", "QEQE" };
 
-    private Dictionary<string, SpellScript> _playerScripts;
-
-    private GameObject[] _spells;
-
-    public GameObject spell1;
-    public GameObject spell2;
-    public GameObject spell3;
+    private string[] _spells;
 
     public int spellType;
 
     private TextMesh _textMesh;
 
-    void Start ()
-	{    
-	    _combination = "";
+    void Start()
+    {
+        _combination = "";
 
         _textMesh = gameObject.transform.Find("TestUi").GetComponent<TextMesh>();
 
-        SetSpells();
-
         SpellsContainer();
-	}
-	
-	void Update () {
+    }
+
+    void Update()
+    {
         if (Input.GetKeyDown("q"))
         {
             UpdateCombination('Q');
@@ -69,67 +59,50 @@ public class SpellInvoker : MonoBehaviour
 
         _textMesh.text = _combination;
     }
-    
+
     private void InvokeScript(int type)
     {
-            try
+        try
+        {
+            if (type == 0)
             {
-                if (type == 0)
-                {
-                    Instantiate(_spells[_playerScripts[_combination].Invoke()]);
-                    Debug.Log(_playerScripts[_combination].Invoke());
-                    spellType = 1;
-                    
-                }
-                else
-                    Instantiate(_spells[_playerScripts[_combination].Invoke()]);
-                    spellType = 2;
-                }
-            catch
-            {
-                Debug.Log("Combination not found");
+                Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
+                spellType = 1;
+
             }
+            else
+            {
+                Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
+                spellType = 2;
+            }
+        }
+        catch
+        {
+            Debug.Log("Combination not found");
+        }
         UpdateCombination();
     }
 
-    private void SetSpells()
+    private int Invoke(string[] combinations, string combination)
     {
-        _playerScripts = new Dictionary<string,SpellScript>();
-
-        for (int i = 0; i < _possibleCombinations.Length; i++)
-        {
-            _playerScripts.Add(_possibleCombinations[i],new SpellScript(i));
+        int _spellnumber = 99;
+        for (int i = 0; i < combinations.Length; i++) {
+            if (combinations[i] == combination)
+                _spellnumber = i;
         }
+        return _spellnumber;
     }
 
+    // Test
     private void SpellsContainer()
     {
-        _spells = new GameObject[6];
+        _spells = new string[6];
 
-        _spells[0] = spell1;
-        _spells[1] = spell2;
-        _spells[2] = spell3;
-        _spells[3] = spell1;
-        _spells[4] = spell2;
-        _spells[5] = spell3;
+        _spells[0] = "Test1";
+        _spells[1] = "Test2";
+        _spells[2] = "Test3";
+        _spells[3] = "Test1";
+        _spells[4] = "Test2";
+        _spells[5] = "Test3";
     }
 }
-
-public class SpellScript 
-{
-    public int _name;
-    public int spellNumber;
-
-    public SpellScript(int name)
-    {
-        _name = name;
-    }
-
-    public int Invoke()
-    {
-        spellNumber = _name;
-        Debug.Log(_name);
-        return spellNumber;
-    }
-}
-
