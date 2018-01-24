@@ -53,11 +53,12 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\Player\SpellInvoker.cs" />
      <Compile Include="Assets\Scripts\SpellInvoker_2.cs" />
      <Compile Include="Assets\Scripts\Spells\FireBall.cs" />
-     <Compile Include="Assets\Scripts\Spells\SpellTest.cs" />
      <Compile Include="Assets\Scripts\System\MouseController.cs" />
+     <Compile Include="Assets\Scripts\System\Spell.cs" />
      <Compile Include="Assets\Scripts\System\SpellAreaPosition.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>D:/Games/Projects/Elecy/Elecy Project/Elecy/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>

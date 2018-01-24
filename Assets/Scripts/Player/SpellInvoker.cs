@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SpellInvoker999 : MonoBehaviour
+public class SpellInvoker : MonoBehaviour
 {
     private string _combination;
 

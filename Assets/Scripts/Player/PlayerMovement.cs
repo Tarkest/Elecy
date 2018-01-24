@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 10f;
     public float dashSpeed = 40f;
     public float dashLenght = 10f;
-    public GameObject _Fireball;
     public float dashCooldown = 3f;
 
     Vector3 movement;
@@ -120,11 +118,14 @@ public class PlayerMovement : MonoBehaviour
         {
             dashCounter += Time.deltaTime;
             Image dashIcon = GameObject.Find("DashCooldownIndicator").GetComponent<Image>();
+            Text dashTimeCount = GameObject.Find("DashCooldownCounter").GetComponent<Text>();
             dashIcon.fillAmount = dashCounter / dashCooldown;
+            dashTimeCount.text = Convert.ToString(Convert.ToInt32(dashCooldown - dashCounter));
             if (dashCounter >= dashCooldown)
             {
                 dashReady = true;
                 dashCounter = 0f;
+                dashTimeCount.text = "";
             }
 
         }
