@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
 public class SpellInvoker999 : MonoBehaviour
 {
@@ -8,11 +7,7 @@ public class SpellInvoker999 : MonoBehaviour
 
     private readonly string[] _possibleCombinations = new string[] { "", "Q", "E", "QQ", "EE", "QE", "EQ", "QQQ", "EEE", "QEQ", "QEQE" };
 
-    private GameObject[] _spells;
-
-    public GameObject spell1;
-    public GameObject spell2;
-    public GameObject spell3;
+    private string[] _spells;
 
     public int spellType;
 
@@ -72,13 +67,13 @@ public class SpellInvoker999 : MonoBehaviour
         {
             if (type == 0)
             {
-                Instantiate(_spells[Array.IndexOf(_possibleCombinations, _combination)]);
+                Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
                 spellType = 1;
 
             }
             else
             {
-                Instantiate(_spells[Array.IndexOf(_possibleCombinations, _combination)]);
+                Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
                 spellType = 2;
             }
         }
@@ -89,16 +84,26 @@ public class SpellInvoker999 : MonoBehaviour
         UpdateCombination();
     }
 
+    private int Invoke(string[] combinations, string combination)
+    {
+        int _spellnumber = 99;
+        for (int i = 0; i < combinations.Length; i++) {
+            if (combinations[i] == combination)
+                _spellnumber = i;
+        }
+        return _spellnumber;
+    }
+
     // Test
     private void SpellsContainer()
     {
-        _spells = new GameObject[6];
+        _spells = new string[6];
 
-        _spells[0] = spell1;
-        _spells[1] = spell2;
-        _spells[2] = spell3;
-        _spells[3] = spell1;
-        _spells[4] = spell2;
-        _spells[5] = spell3;
+        _spells[0] = "Test1";
+        _spells[1] = "Test2";
+        _spells[2] = "Test3";
+        _spells[3] = "Test1";
+        _spells[4] = "Test2";
+        _spells[5] = "Test3";
     }
 }
