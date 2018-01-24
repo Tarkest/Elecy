@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpellInvoker : MonoBehaviour
 {
-    private string _combination;
+    private string _combination; 
 
     private readonly string[] _possibleCombinations = new string[] {"","Q", "E" , "QQ" , "EE" , "QE" , "EQ" , "QQQ" , "EEE" , "QEQ" , "QEQE"};
 
