@@ -2,6 +2,7 @@
 
 public class FireBall : MonoBehaviour {
 
+    public Spell Spell;
     [SerializeField]
     private float _spellRange = 10f;
     [SerializeField]
