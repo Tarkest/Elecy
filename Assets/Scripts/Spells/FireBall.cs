@@ -2,7 +2,6 @@
 
 public class FireBall : MonoBehaviour {
 
-    public Spell Spell;
     [SerializeField]
     private float _spellRange = 10f;
     [SerializeField]
@@ -15,6 +14,7 @@ public class FireBall : MonoBehaviour {
     private float _spellJourneyLenght;
     private float _spellDistCovered;
     private float _spellJourney = 0f;
+    public int sunergyCost;
 
     void Start () {
         _spellRigidbody = GetComponent<Rigidbody>();
@@ -26,6 +26,7 @@ public class FireBall : MonoBehaviour {
         _startTime = Time.time;
         _spellJourneyLenght = Vector3.Distance(_casterPosition, _target);
         _spellJourney = 0f;
+
     }
 	
     void FixedUpdate () {

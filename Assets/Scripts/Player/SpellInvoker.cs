@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SpellInvoker : MonoBehaviour
 {
@@ -7,16 +8,22 @@ public class SpellInvoker : MonoBehaviour
     private readonly string[] _possibleCombinations = new string[] { "", "Q", "E", "QQ", "EE", "QE", "EQ", "QQQ", "EEE", "QEQ", "QEQE" };
 
     private string[] _spells;
-
+    [System.NonSerialized]
     public int spellType;
 
     private TextMesh _textMesh;
+    private TextMesh _snTextMesh;
+
+    private GameObject _snConteiner;
+    private int _snCost = 0;
 
     void Start()
     {
         _combination = "";
 
         _textMesh = gameObject.transform.Find("TestUi").GetComponent<TextMesh>();
+
+        _snTextMesh = gameObject.transform.Find("TestUiSnCost").GetComponent<TextMesh>();
 
         SpellsContainer();
     }
@@ -50,6 +57,8 @@ public class SpellInvoker : MonoBehaviour
         spellType = 0;
         _combination = "";
         _textMesh.text = _combination;
+        _snTextMesh.text = "";
+        _snCost = 0;
     }
 
     private void UpdateCombination(char val)
@@ -58,6 +67,9 @@ public class SpellInvoker : MonoBehaviour
             _combination += val;
 
         _textMesh.text = _combination;
+        (Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)) as GameObject).GetComponent<SpellContainer>().SpellConteinerLoad();
+        _snCost = (Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)) as GameObject).GetComponent<SpellContainer>().sunergyCost;
+        _snTextMesh.text = Convert.ToString(_snCost);
     }
 
     private void InvokeScript(int type)
@@ -98,10 +110,10 @@ public class SpellInvoker : MonoBehaviour
     {
         _spells = new string[6];
 
-        _spells[0] = "Test1";
-        _spells[1] = "Test2";
-        _spells[2] = "Test3";
-        _spells[3] = "Test1";
+        _spells[0] = "FireBall";
+        _spells[1] = "FireBall 1";
+        _spells[2] = "FireBall 2";
+        _spells[3] = "FireBall 3";
         _spells[4] = "Test2";
         _spells[5] = "Test3";
     }

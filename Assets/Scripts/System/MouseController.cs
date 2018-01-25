@@ -9,17 +9,25 @@ public class MouseController : MonoBehaviour {
     void Awake()
     {
         _floorMask = LayerMask.GetMask("Floor");
+        mousePosition = MousePos(Input.mousePosition);
     }
 
 	void Update ()
     {
-        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        mousePosition = MousePos(Input.mousePosition);
+    }
+
+    Vector3 MousePos (Vector3 x)
+    {
+        Ray camRay = Camera.main.ScreenPointToRay(x);
+        Vector3 _mousePos = new Vector3();
 
         RaycastHit floorHit;
         if (Physics.Raycast(camRay, out floorHit, _camRayLenght, _floorMask))
         {
-            mousePosition = floorHit.point;
-            mousePosition.y = 0f;
+            _mousePos = floorHit.point;
+            _mousePos.y = 0f;
         }
+        return _mousePos;
     }
 }
