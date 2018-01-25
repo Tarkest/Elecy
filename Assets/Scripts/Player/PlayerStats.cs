@@ -6,7 +6,6 @@ public class PlayerStats : MonoBehaviour {
     public string fraction;
     public int playerHP;
     public int playerSN;
-    [System.NonSerialized]
     public string playerCurrentState;
     Image hpIndicator;
     Image snIndicator;
@@ -22,6 +21,6 @@ public class PlayerStats : MonoBehaviour {
 	
 	void Update () {
         hpIndicator.fillAmount = playerHP / 100;
-        snIndicator.fillAmount = playerSN / 100; 
+        snIndicator.fillAmount = playerSN / 100;   
 	}
 }

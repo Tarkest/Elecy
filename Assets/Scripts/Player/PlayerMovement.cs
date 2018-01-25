@@ -24,26 +24,32 @@ public class PlayerMovement : MonoBehaviour
     float dashDistCovered = 0f;
     bool dashReady = true;
     float dashCounter = 0f;
+    string playerState;
     
 
     void Awake()
     {
         impenetrableMask = LayerMask.GetMask("Impenetrable");
         playerRigidbody = GetComponent<Rigidbody>();
+        playerState = GetComponent<PlayerStats>().playerCurrentState;
     }
 
     void FixedUpdate()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+        if(!(playerState == "stun"))
+        {
+            Moving(h, v);
+            Turning();
+            Dashing(h, v);
+        }
 
-        Moving(h, v);
-        Turning();
-        Dashing(h, v);
     }
 
     void Update()
     {
+        playerState = GetComponent<PlayerStats>().playerCurrentState;
         DashCooldown();
     }
 
@@ -120,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
             Image dashIcon = GameObject.Find("DashCooldownIndicator").GetComponent<Image>();
             Text dashTimeCount = GameObject.Find("DashCooldownCounter").GetComponent<Text>();
             dashIcon.fillAmount = dashCounter / dashCooldown;
-            dashTimeCount.text = Convert.ToString(Convert.ToInt32(dashCooldown - dashCounter));
+            dashTimeCount.text = (dashCooldown - dashCounter).ToString("f1");
             if (dashCounter >= dashCooldown)
             {
                 dashReady = true;

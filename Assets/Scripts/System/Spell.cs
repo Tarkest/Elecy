@@ -6,4 +6,5 @@ public class Spell : ScriptableObject {
     public string spellName;
     public int spellHP;
     public int sunergyCount;
+    public Transform castPosition;
 }
