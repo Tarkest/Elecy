@@ -8,14 +8,16 @@ public class SpellInvoker : MonoBehaviour
     private readonly string[] _possibleCombinations = new string[] { "", "Q", "E", "QQ", "EE", "QE", "EQ", "QQQ", "EEE", "QEQ", "QEQE" };
 
     private string[] _spells;
+
     [System.NonSerialized]
     public int spellType;
+    private int _snCost = 0;
+    private int _currentSN;
 
     private TextMesh _textMesh;
     private TextMesh _snTextMesh;
 
     private GameObject _snConteiner;
-    private int _snCost = 0;
 
     void Start()
     {
@@ -25,11 +27,14 @@ public class SpellInvoker : MonoBehaviour
 
         _snTextMesh = gameObject.transform.Find("TestUiSnCost").GetComponent<TextMesh>();
 
+        _currentSN = GetComponent<PlayerStats>().playerCurrentSN;
+
         SpellsContainer();
     }
 
     void Update()
     {
+        _currentSN = GetComponent<PlayerStats>().playerCurrentSN;
         if (Input.GetKeyDown("q"))
         {
             UpdateCombination('Q');
@@ -74,25 +79,35 @@ public class SpellInvoker : MonoBehaviour
 
     private void InvokeScript(int type)
     {
-        try
+        if (_currentSN > _snCost)
         {
-            if (type == 0)
+            GetComponent<PlayerStats>().PlayerSynergyUpdate(-(_snCost));
+            try
             {
-                Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
-                spellType = 1;
+                if (type == 0)
+                {
+                    Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
+                    spellType = 1;
 
+                }
+                else
+                {
+                    Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
+                    spellType = 2;
+                }
             }
-            else
+            catch
             {
-                Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
-                spellType = 2;
+                Debug.Log("Combination not found");
             }
+            UpdateCombination();
         }
-        catch
+        else
         {
-            Debug.Log("Combination not found");
+            Debug.Log("Not enought synergy");
+            UpdateCombination();
         }
-        UpdateCombination();
+
     }
 
     private int Invoke(string[] combinations, string combination)

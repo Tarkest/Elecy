@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SpellAreaPosition : MonoBehaviour {
+public class SpellArea : MonoBehaviour {
 
 	void FixedUpdate () {
         Vector3 areaPos = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;

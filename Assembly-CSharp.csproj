@@ -61,7 +61,7 @@
      <Compile Include="Assets\Scripts\Spells\Test2.cs" />
      <Compile Include="Assets\Scripts\System\MouseController.cs" />
      <Compile Include="Assets\Scripts\System\Spell.cs" />
-     <Compile Include="Assets\Scripts\System\SpellAreaPosition.cs" />
+     <Compile Include="Assets\Scripts\System\SpellArea.cs" />
      <Compile Include="Assets\Scripts\System\SpellContainer.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>D:/Games/Projects/Elecy/Elecy Project/Elecy/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
