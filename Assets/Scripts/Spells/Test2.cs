@@ -8,14 +8,18 @@ public class Test2 : MonoBehaviour {
 
     private Vector3 _casterPosition;
 
-	// Use this for initialization
 	void Start () {
         _casterPosition = GameObject.Find("CastPoint").GetComponent<Transform>().position;
         transform.position = _casterPosition;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        other.gameObject.GetComponent<Background_Stats>().currentHP -= spell.damage;
+        Destroy(gameObject);
+    }
 }
