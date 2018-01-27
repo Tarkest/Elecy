@@ -20,9 +20,14 @@ public class Background_Stats : MonoBehaviour
     void Update()
     {
         _textMesh.text = currentHP + "";
-
-        if (currentHP <= 0) {
+ 
+        if (currentHP <= 0)
             Destroy(gameObject);
-        }
+        else if ((float)currentHP / _maxHp < 0.3)
+            _textMesh.color = Color.red;
+        else if ((float)currentHP / _maxHp < 0.7)
+            _textMesh.color = Color.yellow;
+        else if ((float)currentHP / _maxHp >= 0.7)
+            _textMesh.color = Color.green;
     }
 }

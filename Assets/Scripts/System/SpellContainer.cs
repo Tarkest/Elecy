@@ -29,4 +29,14 @@ public class SpellContainer : MonoBehaviour {
         castTime = spellStats.castTime;
         castArea = spellStats.castArea;
     }
+
+    public void SpellConteinerSave() {
+        spellStats.spellHP = spellHP;
+        spellStats.sunergyCost = sunergyCost;
+        spellStats.damage = damage;
+        spellStats.distance = distance;
+        spellStats.speed = speed;
+        spellStats.castTime = castTime;
+        spellStats.castArea = castArea;
+    }
 }
