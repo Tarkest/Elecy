@@ -19,7 +19,10 @@ public class Test2 : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.GetComponent<Background_Stats>().currentHP -= spell.damage;
+        if (other.tag == "background_element")
+        {
+            other.gameObject.GetComponent<Background_Stats>().currentHP -= spell.damage;
+        }
         Destroy(gameObject);
     }
 }
