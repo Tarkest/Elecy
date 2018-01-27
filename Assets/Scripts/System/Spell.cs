@@ -6,6 +6,7 @@ public class Spell : ScriptableObject
 {
     public string spellName;
     public string description;
+    public string targetType;
     public int spellHP;
     public int sunergyCost;
     public int damage;

@@ -18,6 +18,8 @@ public class SpellContainer : MonoBehaviour {
     public float castTime;
     [System.NonSerialized]
     public float castArea;
+    [System.NonSerialized]
+    public string targetType;
 
     public void SpellConteinerLoad()
     {
@@ -28,5 +30,6 @@ public class SpellContainer : MonoBehaviour {
         speed = spellStats.speed;
         castTime = spellStats.castTime;
         castArea = spellStats.castArea;
+        targetType = spellStats.targetType;
     }
 }

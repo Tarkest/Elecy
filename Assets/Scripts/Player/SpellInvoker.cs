@@ -17,7 +17,8 @@ public class SpellInvoker : MonoBehaviour
     private TextMesh _textMesh;
     private TextMesh _snTextMesh;
 
-    private GameObject _snConteiner;
+    [System.NonSerialized]
+    public GameObject spellConteiner;
 
     void Start()
     {
@@ -72,7 +73,8 @@ public class SpellInvoker : MonoBehaviour
             _combination += val;
 
         _textMesh.text = _combination;
-        (Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)) as GameObject).GetComponent<SpellContainer>().SpellConteinerLoad();
+        spellConteiner = (Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)) as GameObject);
+        spellConteiner.GetComponent<SpellContainer>().SpellConteinerLoad();
         _snCost = (Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)) as GameObject).GetComponent<SpellContainer>().sunergyCost;
         _snTextMesh.text = Convert.ToString(_snCost);
     }
