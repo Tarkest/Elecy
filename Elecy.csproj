@@ -292,7 +292,8 @@
     <Compile Include="Assets\Scripts\Spells\Test2.cs" />
     <Compile Include="Assets\Scripts\System\MouseController.cs" />
     <Compile Include="Assets\Scripts\System\Spell.cs" />
-    <Compile Include="Assets\Scripts\System\SpellAreaPosition.cs" />
+    <Compile Include="Assets\Scripts\System\SpellArea.cs" />
+    <Compile Include="Assets\Scripts\System\SpellContainer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

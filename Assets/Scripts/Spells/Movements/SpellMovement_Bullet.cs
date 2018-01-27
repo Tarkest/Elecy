@@ -21,6 +21,7 @@ public class SpellMovement_Bullet : MonoBehaviour {
     {
         _direction = ((_mousePosition - _spellPosition) / (_mousePosition - _spellPosition).magnitude);
         _target = _direction * spell.distance + _spellPosition;
+        _target = new Vector3(_target.x, _spellPosition.y, _target.z);
         path = spell.speed * (Time.time - _startTime); 
 
         transform.position = Vector3.Lerp(_spellPosition, _target, path*Time.deltaTime);
