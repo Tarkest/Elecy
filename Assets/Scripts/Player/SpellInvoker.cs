@@ -36,6 +36,7 @@ public class SpellInvoker : MonoBehaviour
     void Update()
     {
         _currentSN = GetComponent<PlayerStats>().playerCurrentSN;
+
         if (Input.GetKeyDown("q"))
         {
             UpdateCombination('Q');
@@ -90,7 +91,6 @@ public class SpellInvoker : MonoBehaviour
                 {
                     Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
                     spellType = 1;
-
                 }
                 else
                 {
@@ -127,7 +127,7 @@ public class SpellInvoker : MonoBehaviour
     {
         _spells = new string[6];
 
-        _spells[0] = "FireBall";
+        _spells[0] = "Test2";
         _spells[1] = "FireBall 1";
         _spells[2] = "FireBall 2";
         _spells[3] = "FireBall 3";

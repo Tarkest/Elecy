@@ -32,4 +32,14 @@ public class SpellContainer : MonoBehaviour {
         castArea = spellStats.castArea;
         targetType = spellStats.targetType;
     }
+
+    public void SpellConteinerSave() {
+        spellStats.spellHP = spellHP;
+        spellStats.sunergyCost = sunergyCost;
+        spellStats.damage = damage;
+        spellStats.distance = distance;
+        spellStats.speed = speed;
+        spellStats.castTime = castTime;
+        spellStats.castArea = castArea;
+    }
 }

@@ -282,6 +282,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Background_Stats.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
@@ -289,10 +290,12 @@
     <Compile Include="Assets\Scripts\SpellInvoker_2.cs" />
     <Compile Include="Assets\Scripts\Spells\FireBall.cs" />
     <Compile Include="Assets\Scripts\Spells\Movements\SpellMovement_Bullet.cs" />
+    <Compile Include="Assets\Scripts\Spells\Test1.cs" />
     <Compile Include="Assets\Scripts\Spells\Test2.cs" />
     <Compile Include="Assets\Scripts\System\MouseController.cs" />
     <Compile Include="Assets\Scripts\System\Spell.cs" />
-    <Compile Include="Assets\Scripts\System\SpellAreaPosition.cs" />
+    <Compile Include="Assets\Scripts\System\SpellArea.cs" />
+    <Compile Include="Assets\Scripts\System\SpellContainer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
