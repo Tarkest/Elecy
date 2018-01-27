@@ -20,6 +20,9 @@ public class SpellInvoker : MonoBehaviour
     [System.NonSerialized]
     public GameObject spellConteiner;
 
+    [System.NonSerialized]
+    public string spellName;
+
     void Start()
     {
         _combination = "";
@@ -31,6 +34,8 @@ public class SpellInvoker : MonoBehaviour
         _currentSN = GetComponent<PlayerStats>().playerCurrentSN;
 
         SpellsContainer();
+
+        spellName = "Spells/" + _spells[Invoke(_possibleCombinations, _combination)];
     }
 
     void Update()
@@ -74,9 +79,10 @@ public class SpellInvoker : MonoBehaviour
             _combination += val;
 
         _textMesh.text = _combination;
-        spellConteiner = (Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)) as GameObject);
+        spellName = "Spells/" + _spells[Invoke(_possibleCombinations, _combination)];
+        spellConteiner = (Resources.Load(spellName, typeof(GameObject)) as GameObject);
         spellConteiner.GetComponent<SpellContainer>().SpellConteinerLoad();
-        _snCost = (Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)) as GameObject).GetComponent<SpellContainer>().sunergyCost;
+        _snCost = (Resources.Load(spellName, typeof(GameObject)) as GameObject).GetComponent<SpellContainer>().sunergyCost;
         _snTextMesh.text = Convert.ToString(_snCost);
     }
 
@@ -89,12 +95,12 @@ public class SpellInvoker : MonoBehaviour
             {
                 if (type == 0)
                 {
-                    Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
+                    Instantiate(Resources.Load(spellName, typeof(GameObject)));
                     spellType = 1;
                 }
                 else
                 {
-                    Instantiate(Resources.Load("Spells/" + _spells[Invoke(_possibleCombinations, _combination)], typeof(GameObject)));
+                    Instantiate(Resources.Load(spellName, typeof(GameObject)));
                     spellType = 2;
                 }
             }
