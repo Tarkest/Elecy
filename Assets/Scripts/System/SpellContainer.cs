@@ -42,4 +42,5 @@ public class SpellContainer : MonoBehaviour {
         spellStats.castTime = castTime;
         spellStats.castArea = castArea;
     }
+
 }

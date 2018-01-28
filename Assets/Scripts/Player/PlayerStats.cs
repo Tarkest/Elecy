@@ -29,7 +29,19 @@ public class PlayerStats : MonoBehaviour {
 	void Update () {
         hpIndicator.fillAmount = ((float)playerCurrentHP / (float)playerMaxHP);
         snIndicator.fillAmount = ((float)playerCurrentSN / (float)playerMaxSN);
+
+        if(playerCurrentHP <= 0)
+        {
+            Death();
+        }
 	}
+
+    public void Death()
+    {
+        Debug.Log(gameObject.name + " destroyed");
+        Destroy(gameObject);
+    }
+
     public void PlayerSynergyUpdate(int x)
     {
         playerCurrentSN += x;
@@ -55,4 +67,6 @@ public class PlayerStats : MonoBehaviour {
         else if (type == "Current")
             playerCurrentHP += Convert.ToInt32(((x / 100) * playerCurrentHP));
     }
+
+
 }
