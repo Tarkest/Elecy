@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2017.3.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -288,8 +290,9 @@
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Player\SpellInvoker.cs" />
     <Compile Include="Assets\Scripts\SpellInvoker_2.cs" />
+    <Compile Include="Assets\Scripts\Spells\DamageType\AreaDamage.cs" />
     <Compile Include="Assets\Scripts\Spells\FireBall.cs" />
-    <Compile Include="Assets\Scripts\Spells\Movements\SpellMovement_Bullet.cs" />
+    <Compile Include="Assets\Scripts\Spells\Behaviour\SpellMovement_Bullet.cs" />
     <Compile Include="Assets\Scripts\Spells\Test1.cs" />
     <Compile Include="Assets\Scripts\Spells\Test2.cs" />
     <Compile Include="Assets\Scripts\System\MouseController.cs" />
@@ -297,6 +300,7 @@
     <Compile Include="Assets\Scripts\System\SpellArea.cs" />
     <Compile Include="Assets\Scripts\System\SpellContainer.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>
