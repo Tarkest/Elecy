@@ -14,6 +14,14 @@ public class Test2 : MonoBehaviour {
         transform.position = _casterPosition;
 	}
 
+    void Update()
+    {
+        if(gameObject.GetComponent<SpellMovement_Bullet>().isDying == true)
+        {
+            Death();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Death();

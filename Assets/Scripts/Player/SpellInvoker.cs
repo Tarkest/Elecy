@@ -71,6 +71,7 @@ public class SpellInvoker : MonoBehaviour
         _textMesh.text = _combination;
         _snTextMesh.text = "";
         _snCost = 0;
+        spellName = "Spells/" + _spells[Invoke(_possibleCombinations, _combination)];
     }
 
     private void UpdateCombination(char val)
@@ -79,18 +80,21 @@ public class SpellInvoker : MonoBehaviour
             _combination += val;
 
         _textMesh.text = _combination;
+
         spellName = "Spells/" + _spells[Invoke(_possibleCombinations, _combination)];
+
         spellConteiner = (Resources.Load(spellName, typeof(GameObject)) as GameObject);
         spellConteiner.GetComponent<SpellContainer>().SpellConteinerLoad();
+
         _snCost = (Resources.Load(spellName, typeof(GameObject)) as GameObject).GetComponent<SpellContainer>().sunergyCost;
+
         _snTextMesh.text = Convert.ToString(_snCost);
     }
 
     private void InvokeScript(int type)
     {
-        if (_currentSN > _snCost)
+        if (_currentSN >= _snCost)
         {
-            GetComponent<PlayerStats>().PlayerSynergyUpdate(-(_snCost));
             try
             {
                 if (type == 0)
@@ -103,6 +107,8 @@ public class SpellInvoker : MonoBehaviour
                     Instantiate(Resources.Load(spellName, typeof(GameObject)));
                     spellType = 2;
                 }
+
+                GetComponent<PlayerStats>().PlayerSynergyUpdate(-(_snCost));
             }
             catch
             {
