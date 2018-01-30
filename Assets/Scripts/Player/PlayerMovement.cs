@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
             Turning();
             Dashing(h, v);
         }
-
     }
 
     void Update()

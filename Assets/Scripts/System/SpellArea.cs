@@ -16,11 +16,13 @@ public class SpellArea : MonoBehaviour {
 
     private ParticleSystem _psTarget;
     private ParticleSystem _psCircle;
+    private ParticleSystem _psArrow;
 
     void Start()
     {
         _psTarget = GetComponent<ParticleSystem>();
-        _psCircle = gameObject.transform.Find("Circle").GetComponent<ParticleSystem>();
+        _psCircle = gameObject.transform.Find("SpellArea").GetComponent<ParticleSystem>();
+        _psArrow = gameObject.transform.Find("SpellPointer").GetComponent<ParticleSystem>();
         _spellName = GameObject.Find("Test player").GetComponent<SpellInvoker>().spellName;
         _spellContainer = (Resources.Load(_spellName, typeof (GameObject)) as GameObject).GetComponent<SpellContainer>();
         _spellContainer.SpellConteinerLoad();
@@ -49,9 +51,13 @@ public class SpellArea : MonoBehaviour {
         transform.position = _playerPosition.position;
         var main = _psTarget.main;
         var circleMain = _psCircle.main;
+        var arrowMain = _psArrow.main;
 
-        main.startSize = _spellRange;
-        _psCircle.GetComponent<Transform>().transform.position = _mousePosition;
-        circleMain.startSize = _spellArea;
+        main.startSize = _spellRange*3f;
+        _psCircle.GetComponent<Transform>().transform.position = Vector3.Lerp(_playerPosition.position, _mousePosition, _spellRange / (Vector3.Distance(_playerPosition.position, _mousePosition)));
+        circleMain.startSize = _spellArea*3f;
+        _psArrow.GetComponent<Transform>().transform.position = Vector3.Lerp(_playerPosition.position, _mousePosition, _spellRange / (Vector3.Distance(_playerPosition.position, _mousePosition)));
+        arrowMain.startRotationZ = _playerPosition.rotation.z;
+        Debug.Log(Quaternion.LookRotation((_mousePosition - transform.position)).z);
     }
 }
