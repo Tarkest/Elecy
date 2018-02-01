@@ -46,18 +46,69 @@ public class SpellArea : MonoBehaviour {
         _spellRange = _spellContainer.distance;
     }
 
-	void FixedUpdate ()
+    void FixedUpdate()
     {
         transform.position = _playerPosition.position;
         var main = _psTarget.main;
         var circleMain = _psCircle.main;
         var arrowMain = _psArrow.main;
 
-        main.startSize = _spellRange*3f;
+
+
+        main.startSize = _spellRange * 3f;
         _psCircle.GetComponent<Transform>().transform.position = Vector3.Lerp(_playerPosition.position, _mousePosition, _spellRange / (Vector3.Distance(_playerPosition.position, _mousePosition)));
-        circleMain.startSize = _spellArea*3f;
-        _psArrow.GetComponent<Transform>().transform.position = Vector3.Lerp(_playerPosition.position, _mousePosition, _spellRange / (Vector3.Distance(_playerPosition.position, _mousePosition)));
-        arrowMain.startRotationZ = _playerPosition.rotation.z;
-        Debug.Log(Quaternion.LookRotation((_mousePosition - transform.position)).z);
+        circleMain.startSize = _spellArea * 3f;
+        _psArrow.GetComponent<Transform>().transform.position = Vector3.Lerp(_playerPosition.position, Vector3.Lerp(_playerPosition.position, _mousePosition, _spellRange / (Vector3.Distance(_playerPosition.position, _mousePosition))), 0.5f);
+        arrowMain.startRotationZ = _playerPosition.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
+        _psArrow.GetComponent<Transform>().transform.rotation = _playerPosition.transform.rotation;
+        arrowMain.startSizeX = arrowMain.startSizeY = Vector3.Distance(_playerPosition.position, Vector3.Lerp(_playerPosition.position, _mousePosition, _spellRange / (Vector3.Distance(_playerPosition.position, _mousePosition)))) * 1.4f;
+
+        if (_targetType == "AreaR")
+        {
+            if(_psTarget.isStopped)
+                _psTarget.Play();
+            if (_psCircle.isStopped)
+                _psCircle.Play();
+            if (_psArrow.isPlaying)
+                _psArrow.Stop();
+        }
+        if (_targetType == "ArrowR")
+        {
+            if (_psTarget.isStopped)
+                _psTarget.Play();
+            if (_psCircle.isPlaying)
+                _psCircle.Stop();
+            if (_psArrow.isStopped)
+                _psArrow.Play();
+        }
+        if (_targetType == "ArrowNR")
+        {
+            if (_psTarget.isPlaying)
+                _psTarget.Stop();
+            if (_psCircle.isPlaying)
+                _psCircle.Stop();
+            if (_psArrow.isStopped)
+                _psArrow.Play();
+        }
+        if (_targetType == "AreaNR")
+        {
+            if (_psTarget.isPlaying)
+                _psTarget.Stop();
+            if (_psCircle.isStopped)
+                _psCircle.Play();
+            if (_psArrow.isPlaying)
+                _psArrow.Stop();
+        }
+        if (_targetType == "AreaOP")
+        {
+            _psCircle.GetComponent<Transform>().transform.position = _playerPosition.position;
+            if (_psTarget.isPlaying)
+                _psTarget.Stop();
+            if (_psCircle.isStopped)
+                _psCircle.Play();
+            if (_psArrow.isPlaying)
+                _psArrow.Stop();
+        }
+
     }
 }
