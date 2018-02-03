@@ -62,6 +62,8 @@
      <Compile Include="Assets\Scripts\Spells\FireBall.cs" />
      <Compile Include="Assets\Scripts\Spells\Test1.cs" />
      <Compile Include="Assets\Scripts\Spells\Test2.cs" />
+     <Compile Include="Assets\Scripts\System\Effect.cs" />
+     <Compile Include="Assets\Scripts\System\EffectController.cs" />
      <Compile Include="Assets\Scripts\System\MouseController.cs" />
      <Compile Include="Assets\Scripts\System\Spell.cs" />
      <Compile Include="Assets\Scripts\System\SpellArea.cs" />
