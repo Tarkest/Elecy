@@ -16,7 +16,7 @@ public class EffectController : MonoBehaviour {
 
     private float _durationCounter = 0f;
 
-	void Awake () {
+	public void EffectLoad () {
         stateType = effect.stateType;
         healthMod = effect.healthMod;
         synergyMod = effect.synergyMod;
@@ -49,5 +49,6 @@ public class EffectController : MonoBehaviour {
     void RemoveEffect()
     {
         GetComponent<PlayerMovement>().speed -= movespeedMod;
+        Destroy(this);
     }
 }
