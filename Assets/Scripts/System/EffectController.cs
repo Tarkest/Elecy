@@ -5,7 +5,9 @@ public class EffectController : MonoBehaviour {
 
     public Effect effect;
 
-    private string stateType;
+    private bool isStunned;
+    private bool isCast;
+    private bool isStucked;
     private int healthMod;
     private int synergyMod;
     private int damageMod;
@@ -17,7 +19,9 @@ public class EffectController : MonoBehaviour {
     private float _durationCounter = 0f;
 
 	public void EffectLoad () {
-        stateType = effect.stateType;
+        isStunned = effect.isStunning;
+        isCast = effect.isCasting;
+        isStucked = effect.isStucking;
         healthMod = effect.healthMod;
         synergyMod = effect.synergyMod;
         damageMod = effect.damageMod;
@@ -25,7 +29,6 @@ public class EffectController : MonoBehaviour {
         duration = effect.duration;
         buffIcon = effect.buffIcon;
         modFrequency = effect.modFrequency;
-	    StatsModify();
     }
 	
 

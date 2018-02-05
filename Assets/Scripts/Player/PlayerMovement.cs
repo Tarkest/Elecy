@@ -8,54 +8,61 @@ public class PlayerMovement : MonoBehaviour
     public float dashLenght = 10f;
     public float dashCooldown = 3f;
 
-    Vector3 movement;
-    Vector3 dash;
-    Vector3 dashStart;
-    Vector3 dashEnd;
-    bool isDash;
-    Rigidbody playerRigidbody;
-    int impenetrableMask;
-    float dashH = 0f;
-    float dashV = 0f;
-    float dashStartTime = 0f;
-    float dashJourneyLenght = 0f;
-    float dashJourey = 0f;
-    float dashDistCovered = 0f;
-    bool dashReady = true;
-    float dashCounter = 0f;
-    string playerState;
-    
+    private float dashH = 0f;
+    private float dashV = 0f;
+    private float dashStartTime = 0f;
+    private float dashJourneyLenght = 0f;
+    private float dashJourey = 0f;
+    private float dashDistCovered = 0f;
+    private float dashCounter = 0f;
+
+    private Vector3 movement;
+    private Vector3 dash;
+    private Vector3 dashStart;
+    private Vector3 dashEnd;
+
+    private Rigidbody playerRigidbody;
+
+    private int impenetrableMask;
+
+    private bool dashReady = true;
+    private bool isDash;
+    private bool isStunned = false;
+    private bool isStucked = false;
+    private bool isCasting = false;
 
     void Awake()
     {
         impenetrableMask = LayerMask.GetMask("Impenetrable");
         playerRigidbody = GetComponent<Rigidbody>();
-        playerState = GetComponent<PlayerStats>().playerCurrentState;
     }
 
     void FixedUpdate()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        if(!(playerState == "stun"))
-        {
+        
             Moving(h, v);
             Turning();
             Dashing(h, v);
-        }
     }
 
     void Update()
     {
-        playerState = GetComponent<PlayerStats>().playerCurrentState;
+        isStunned = GetComponent<PlayerStats>().isStunned;
+        isStucked = GetComponent<PlayerStats>().isStucked;
+        isCasting = GetComponent<PlayerStats>().isCasting;
         DashCooldown();
     }
 
     void Moving (float h, float v)
     {
-        if(!isDash)
+        if(!isDash && !isStunned && !isStucked)
         {
             movement.Set(h, 0, v);
+
+            if (GetComponent<PlayerStats>().isCasting && h != 0 || v != 0)
+                GetComponent<PlayerStats>().isCasting = false;
 
             movement = movement.normalized * speed * Time.deltaTime;
             playerRigidbody.MovePosition(transform.position + movement);
@@ -64,11 +71,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Turning ()
     {
-        Vector3 playerToMouse = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition - transform.position;
-        playerToMouse.y = 0f;
+        if (!isStunned && !isCasting)
+        {
+            Vector3 playerToMouse = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition - transform.position;
+            playerToMouse.y = 0f;
 
-        Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-        playerRigidbody.MoveRotation(newRotation);
+            Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
+            playerRigidbody.MoveRotation(newRotation);
+        }
+
     }
 
     void Dashing (float h, float v)
@@ -91,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            if(dashReady && (h!=0f || v!=0f))
+            if(dashReady && (h!=0f || v!=0f) && !isStunned && !isStucked)
             {
                 dashH = h;
                 dashV = v;
@@ -112,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
                     dashEnd = transform.position + dash.normalized * dashLenght;
                 }
                 dashReady = false;
+                GetComponent<PlayerStats>().isCasting = false;
             }
         }
     }

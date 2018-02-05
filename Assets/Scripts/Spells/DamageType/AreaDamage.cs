@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class AreaDamage : MonoBehaviour
 {
@@ -40,7 +39,6 @@ public class AreaDamage : MonoBehaviour
         if (other.tag == "Player")
         {
             other.gameObject.GetComponent<PlayerStats>().PlayerHealthPointUpdate(-(_spell.damage));
-            other.gameObject.AddComponent<EffectController>();
             other.gameObject.GetComponent<EffectController>().effect = Resources.Load("Effects/Slow") as Effect;
             other.gameObject.GetComponent<EffectController>().EffectLoad();
         }

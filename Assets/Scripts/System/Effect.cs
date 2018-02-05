@@ -6,7 +6,9 @@ public class Effect : ScriptableObject {
 
     public string effectName;
     public string effectDescription;
-    public string stateType;
+    public bool isStunning;
+    public bool isCasting;
+    public bool isStucking;
     public int healthMod;
     public int synergyMod;
     public int damageMod;

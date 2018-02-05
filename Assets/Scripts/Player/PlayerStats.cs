@@ -12,21 +12,26 @@ public class PlayerStats : MonoBehaviour {
     public int playerCurrentHP;
     [System.NonSerialized]
     public int playerCurrentSN;
-    [System.NonSerialized]
-    public string playerCurrentState;
+    public bool isStunned;
+    public bool isCasting;
+    public bool isStucked;
     private Image hpIndicator;
     private Image snIndicator;
 
 
-    void Start () {
+    void Start ()
+    {
         playerCurrentHP = playerMaxHP;
         playerCurrentSN = playerMaxSN;
-        playerCurrentState = "normal";
+        isStunned = false;
+        isCasting = false;
+        isStucked = false;
         hpIndicator = GameObject.Find("HPIndicator").GetComponent<Image>();
         snIndicator = GameObject.Find("SNIndicator").GetComponent<Image>();
     }
 	
-	void Update () {
+	void Update ()
+    {
         hpIndicator.fillAmount = ((float)playerCurrentHP / (float)playerMaxHP);
         snIndicator.fillAmount = ((float)playerCurrentSN / (float)playerMaxSN);
 

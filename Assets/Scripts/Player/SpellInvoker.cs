@@ -23,6 +23,9 @@ public class SpellInvoker : MonoBehaviour
     [System.NonSerialized]
     public string spellName;
 
+    private bool isStunned = false;
+    private bool isCasting = false;
+
     void Start()
     {
         _combination = "";
@@ -40,28 +43,37 @@ public class SpellInvoker : MonoBehaviour
 
     void Update()
     {
+        isStunned = GetComponent<PlayerStats>().isStunned;
+        isCasting = GetComponent<PlayerStats>().isCasting;
+
         _currentSN = GetComponent<PlayerStats>().playerCurrentSN;
 
-        if (Input.GetKeyDown("q"))
+        if(!isCasting)
         {
-            UpdateCombination('Q');
+            if (Input.GetKeyDown("q"))
+            {
+                UpdateCombination('Q');
+            }
+
+            if (Input.GetKeyDown("e"))
+            {
+                UpdateCombination('E');
+            }
+
+            if (Input.GetKeyDown("c"))
+            {
+                UpdateCombination();
+            }
         }
 
-        if (Input.GetKeyDown("e"))
+        if(!isStunned)
         {
-            UpdateCombination('E');
+            if (Input.GetMouseButtonDown(0))
+                InvokeScript(0);
+
+            if (Input.GetMouseButtonDown(1))
+                InvokeScript(1);
         }
-
-        if (Input.GetKeyDown("c"))
-        {
-            UpdateCombination();
-        }
-
-        if (Input.GetMouseButtonDown(0))
-            InvokeScript(0);
-
-        if (Input.GetMouseButtonDown(1))
-            InvokeScript(1);
     }
 
     private void UpdateCombination()
