@@ -10,7 +10,7 @@ public class SpellInvoker : MonoBehaviour
     private string[] _spells;
 
     [System.NonSerialized]
-    public int spellType;
+    public bool spellType; // True = Attack , False = Defense
     private int _snCost = 0;
     private int _currentSN;
 
@@ -78,7 +78,6 @@ public class SpellInvoker : MonoBehaviour
 
     private void UpdateCombination()
     {
-        Debug.Log(spellType);
         _combination = "";
         _textMesh.text = _combination;
         _snTextMesh.text = "";
@@ -111,14 +110,14 @@ public class SpellInvoker : MonoBehaviour
             {
                 if (type == 0)
                 {
-                    spellType = 1;
+                    spellType = true;
                     Debug.Log(spellType);
                     Instantiate(Resources.Load(spellName, typeof(GameObject)));
                     
                 }
                 else
                 {
-                    spellType = 2;
+                    spellType = false;
                     Debug.Log(spellType);
                     Instantiate(Resources.Load(spellName, typeof(GameObject)));
                     

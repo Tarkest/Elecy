@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class AreaDamage : MonoBehaviour
+public class Damage : MonoBehaviour
 {
     SpellContainer _spell;
 

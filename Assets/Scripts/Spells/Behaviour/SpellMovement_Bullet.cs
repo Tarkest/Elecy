@@ -29,7 +29,7 @@ public class SpellMovement_Bullet : MonoBehaviour {
         transform.position = Vector3.Lerp(_spellPosition, _target, path*Time.deltaTime);
 
         if (transform.position == _target)
-            gameObject.GetComponent<AreaDamage>().Death();
+            gameObject.GetComponent<Damage>().Death();
 
     }
 
