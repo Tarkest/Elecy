@@ -66,7 +66,7 @@ public class SpellInvoker : MonoBehaviour
             }
         }
 
-        if(!isStunned)
+        if(!isStunned && !isCasting)
         {
             if (Input.GetMouseButtonDown(0))
                 InvokeScript(0);

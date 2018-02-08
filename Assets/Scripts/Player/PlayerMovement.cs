@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Turning ()
     {
-        if (!isStunned && !isCasting)
+        if (!isStunned)
         {
             Vector3 playerToMouse = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition - transform.position;
             playerToMouse.y = 0f;
