@@ -12,9 +12,16 @@ public class PlayerStats : MonoBehaviour {
     public int playerCurrentHP;
     [System.NonSerialized]
     public int playerCurrentSN;
+    [System.NonSerialized]
     public bool isStunned;
+    [System.NonSerialized]
     public bool isCasting;
+    [System.NonSerialized]
     public bool isStucked;
+    [System.NonSerialized]
+    public bool castSuccses;
+    [System.NonSerialized]
+    public bool castUnsucces;
     private Image hpIndicator;
     private Image snIndicator;
 
