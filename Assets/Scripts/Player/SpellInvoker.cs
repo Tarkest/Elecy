@@ -78,7 +78,7 @@ public class SpellInvoker : MonoBehaviour
 
     private void UpdateCombination()
     {
-        spellType = 0;
+        Debug.Log(spellType);
         _combination = "";
         _textMesh.text = _combination;
         _snTextMesh.text = "";
@@ -111,13 +111,17 @@ public class SpellInvoker : MonoBehaviour
             {
                 if (type == 0)
                 {
-                    Instantiate(Resources.Load(spellName, typeof(GameObject)));
                     spellType = 1;
+                    Debug.Log(spellType);
+                    Instantiate(Resources.Load(spellName, typeof(GameObject)));
+                    
                 }
                 else
                 {
-                    Instantiate(Resources.Load(spellName, typeof(GameObject)));
                     spellType = 2;
+                    Debug.Log(spellType);
+                    Instantiate(Resources.Load(spellName, typeof(GameObject)));
+                    
                 }
 
                 GetComponent<PlayerStats>().PlayerSynergyUpdate(-(_snCost));
@@ -151,7 +155,7 @@ public class SpellInvoker : MonoBehaviour
     {
         _spells = new string[6];
 
-        _spells[0] = "Test2";
+        _spells[0] = "Ignis/Spark";
         _spells[1] = "FireBall 1";
         _spells[2] = "FireBall 2";
         _spells[3] = "FireBall 3";

@@ -10,11 +10,6 @@ public class AreaDamage : MonoBehaviour
         _spell.SpellConteinerLoad();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Death();
-    }
-
     public void Death()
     {
         RaycastHit[] elements = Physics.SphereCastAll(gameObject.transform.position, _spell.castArea, transform.forward, 0f);
