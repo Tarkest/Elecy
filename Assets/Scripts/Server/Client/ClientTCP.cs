@@ -21,10 +21,7 @@ public class ClientTCP : MonoBehaviour {
     private void ConnectCallBack(IAsyncResult ar)
     {
         clientSocket.EndConnect(ar);
-        while (true)
-        {
-            OnRecive();
-        }
+        OnRecive();
     }
 
     private void OnRecive()
