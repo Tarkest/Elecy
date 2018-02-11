@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2017.3.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -289,6 +287,10 @@
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Player\SpellInvoker.cs" />
+    <Compile Include="Assets\Scripts\Server\Client\ClientHandlerNetworkData.cs" />
+    <Compile Include="Assets\Scripts\Server\Client\ClientTCP.cs" />
+    <Compile Include="Assets\Scripts\Server\Client\NetworkPackages.cs" />
+    <Compile Include="Assets\Scripts\Server\Client\PacketBuffer.cs" />
     <Compile Include="Assets\Scripts\SpellInvoker_2.cs" />
     <Compile Include="Assets\Scripts\Spells\Behaviour\Ignis\Spark.cs" />
     <Compile Include="Assets\Scripts\Spells\Behaviour\SpellMovement_Bullet.cs" />
