@@ -111,14 +111,12 @@ public class SpellInvoker : MonoBehaviour
                 if (type == 0)
                 {
                     spellType = true;
-                    Debug.Log(spellType);
                     Instantiate(Resources.Load(spellName, typeof(GameObject)));
                     
                 }
                 else
                 {
                     spellType = false;
-                    Debug.Log(spellType);
                     Instantiate(Resources.Load(spellName, typeof(GameObject)));
                     
                 }
