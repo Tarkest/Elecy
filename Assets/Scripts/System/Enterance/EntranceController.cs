@@ -12,12 +12,12 @@ public class EntranceController : MonoBehaviour {
         Password = GameObject.Find("Password").GetComponent<InputField>().text;
     }
 
-    public static void LoginTry()
+    public void LoginTry()
     {
         ClientTCP.SendLogin();
     }
 
-    public static void RegisterTry()
+    public void RegisterTry()
     {
         ClientTCP.SendRegister();
     }
