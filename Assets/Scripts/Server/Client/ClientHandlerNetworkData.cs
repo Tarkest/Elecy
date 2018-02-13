@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class ClientHandlerNetworkData : MonoBehaviour
@@ -19,7 +18,9 @@ public class ClientHandlerNetworkData : MonoBehaviour
         Debug.Log("Initialize Network Packages");
         _Packets = new Dictionary<int, Packet_>
         {
-            {(int)ServerPackets.SConnectionOK, HandleConnectionOK }
+            {(int)ServerPackets.SConnectionOK, HandleConnectionOK },
+            {(int)ServerPackets.SRegisterOK, HandleRegisterOK },
+            {(int)ServerPackets.SLoginOK, HandleLoginOK }
         };
     }
 
@@ -46,6 +47,26 @@ public class ClientHandlerNetworkData : MonoBehaviour
 
         Debug.Log(msg);
 
-        ClientTCP.ThankYouServer();
+        ClientTCP.ConnectionComplite();
+    }
+
+    private static void HandleRegisterOK(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string msg = buffer.ReadString();
+
+        Debug.Log(msg);
+    }
+
+    private static void HandleLoginOK(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string msg = buffer.ReadString();
+
+        Debug.Log(msg);
     }
 }

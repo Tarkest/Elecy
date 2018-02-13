@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public enum ServerPackets
 {
-    SConnectionOK = 1,
+    SConnectionOK = 1,SRegisterOK = 2,SLoginOK = 3,
 }
 
 public enum ClientPackets
 {
-    CThankYou = 1,
+    CConnectcomplite = 1,CRegisterTry = 2,CLoginTry = 3,
 }

@@ -76,11 +76,31 @@ public class ClientTCP : MonoBehaviour {
         clientSocket.Send(data);
     }
 
-    public static void ThankYouServer()
+    public static void ConnectionComplite()
     {
         PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)ClientPackets.CThankYou);
-        buffer.WriteString("Thank vados for letting me connect to your 'server'.");
+        buffer.WriteInteger((int)ClientPackets.CConnectcomplite);
+        buffer.WriteString("Connection of client succesfull.");
+        SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendLogin()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)ClientPackets.CLoginTry);
+        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Name);
+        buffer.WriteString(GameObject.Find("EnternceController").GetComponent<EntranceController>().Password);
+        SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendRegister()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)ClientPackets.CRegisterTry);
+        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Name);
+        buffer.WriteString(GameObject.Find("EnternceController").GetComponent<EntranceController>().Password);
         SendData(buffer.ToArray());
         buffer.Dispose();
     }

@@ -67,12 +67,13 @@
      <Compile Include="Assets\Scripts\Spells\FireBall.cs" />
      <Compile Include="Assets\Scripts\Spells\Test1.cs" />
      <Compile Include="Assets\Scripts\Spells\Test2.cs" />
-     <Compile Include="Assets\Scripts\System\Effect.cs" />
-     <Compile Include="Assets\Scripts\System\EffectController.cs" />
-     <Compile Include="Assets\Scripts\System\MouseController.cs" />
-     <Compile Include="Assets\Scripts\System\Spell.cs" />
-     <Compile Include="Assets\Scripts\System\SpellArea.cs" />
-     <Compile Include="Assets\Scripts\System\SpellContainer.cs" />
+     <Compile Include="Assets\Scripts\System\Enterance\EntranceController.cs" />
+     <Compile Include="Assets\Scripts\System\Game Session\Effect.cs" />
+     <Compile Include="Assets\Scripts\System\Game Session\EffectController.cs" />
+     <Compile Include="Assets\Scripts\System\Game Session\MouseController.cs" />
+     <Compile Include="Assets\Scripts\System\Game Session\Spell.cs" />
+     <Compile Include="Assets\Scripts\System\Game Session\SpellArea.cs" />
+     <Compile Include="Assets\Scripts\System\Game Session\SpellContainer.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>D:/Games/Projects/Elecy/Elecy Project/Elecy/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
