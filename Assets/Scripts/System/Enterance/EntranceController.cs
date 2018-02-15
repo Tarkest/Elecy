@@ -20,6 +20,7 @@ public class EntranceController : MonoBehaviour {
     public void RegisterTry()
     {
         ClientTCP.SendRegister();
+        
     }
 
 

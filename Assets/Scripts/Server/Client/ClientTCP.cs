@@ -90,7 +90,7 @@ public class ClientTCP : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)ClientPackets.CLoginTry);
         buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Name);
-        //buffer.WriteString(GameObject.Find("EnternceController").GetComponent<EntranceController>().Password);
+        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Password);
         SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -100,7 +100,7 @@ public class ClientTCP : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)ClientPackets.CRegisterTry);
         buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Name);
-        //buffer.WriteString(GameObject.Find("EnternceController").GetComponent<EntranceController>().Password);
+        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Password);
         SendData(buffer.ToArray());
         buffer.Dispose();
     }
