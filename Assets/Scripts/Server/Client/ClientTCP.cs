@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class ClientTCP : MonoBehaviour {
 
+    public bool connectToLocal;
+
+    [System.NonSerialized]
     public string IP_ADDRESS;
-    public int PORT;
+    [System.NonSerialized]
+    public int PORT = 24985;
+
+    private int ipnum;
 
     public static Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -14,7 +20,15 @@ public class ClientTCP : MonoBehaviour {
 
     private void Start()
     {
-        Debug.Log("Connecting to server...");
+        if(connectToLocal == true)
+        {
+            IP_ADDRESS = "127.0.0.1";
+        }
+        else
+        {
+            IP_ADDRESS = "77.122.14.86";
+        }
+
         clientSocket.BeginConnect(IP_ADDRESS, PORT, new AsyncCallback(ConnectCallBack), clientSocket);
     }
 
@@ -36,7 +50,7 @@ public class ClientTCP : MonoBehaviour {
             currentRead = totalRead = clientSocket.Receive(_sizeInfo);
             if (totalRead <= 0)
             {
-                Debug.Log("You are not connected to the server!");
+                //EntranceController.TextInfo(6);
             }
             else
             {
@@ -67,7 +81,7 @@ public class ClientTCP : MonoBehaviour {
         }
         catch
         {
-            Debug.Log("You are not connected to the server!");
+            //EntranceController.TextInfo(6);
         }
     }
 
@@ -75,34 +89,4 @@ public class ClientTCP : MonoBehaviour {
     {
         clientSocket.Send(data);
     }
-
-    public static void ConnectionComplite()
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)ClientPackets.CConnectcomplite);
-        buffer.WriteString("Connection of client succesfull.");
-        SendData(buffer.ToArray());
-        buffer.Dispose();
-    }
-
-    public static void SendLogin()
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)ClientPackets.CLoginTry);
-        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Name);
-        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Password);
-        SendData(buffer.ToArray());
-        buffer.Dispose();
-    }
-
-    public static void SendRegister()
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)ClientPackets.CRegisterTry);
-        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Name);
-        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Password);
-        SendData(buffer.ToArray());
-        buffer.Dispose();
-    }
-
 }

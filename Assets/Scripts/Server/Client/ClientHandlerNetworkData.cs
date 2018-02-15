@@ -20,7 +20,8 @@ public class ClientHandlerNetworkData : MonoBehaviour
         {
             {(int)ServerPackets.SConnectionOK, HandleConnectionOK },
             {(int)ServerPackets.SRegisterOK, HandleRegisterOK },
-            {(int)ServerPackets.SLoginOK, HandleLoginOK }
+            {(int)ServerPackets.SLoginOK, HandleLoginOK },
+            {(int)ServerPackets.SAlert, HandleServerAlert }
         };
     }
 
@@ -47,7 +48,7 @@ public class ClientHandlerNetworkData : MonoBehaviour
 
         Debug.Log(msg);
 
-        ClientTCP.ConnectionComplite();
+        ClientSendData.ConnectionComplite();
     }
 
     private static void HandleRegisterOK(byte[] data)
@@ -55,12 +56,22 @@ public class ClientHandlerNetworkData : MonoBehaviour
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        string msg = buffer.ReadString();
 
-        Debug.Log(msg);
+
+        //EntranceController.TextInfo(3);
     }
 
     private static void HandleLoginOK(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string nickname = buffer.ReadString();
+
+        //EntranceController.TextInfo(5);
+    }
+
+    private static void HandleServerAlert(byte[] data)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
