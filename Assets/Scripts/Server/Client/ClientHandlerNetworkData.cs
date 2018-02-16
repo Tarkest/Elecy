@@ -45,8 +45,9 @@ public class ClientHandlerNetworkData : MonoBehaviour
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         string msg = buffer.ReadString();
+        buffer.Dispose();
 
-        Debug.Log(msg);
+        EntranceController.serverInfo = msg;
 
         ClientSendData.ConnectionComplite();
     }
@@ -56,9 +57,13 @@ public class ClientHandlerNetworkData : MonoBehaviour
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
+        string rgstOk = buffer.ReadString();
+        buffer.Dispose();
 
+        EntranceController.serverInfo = rgstOk;
+        Debug.Log("Pochemy");
 
-        //EntranceController.TextInfo(3);
+        ClientSendData.ConnectionComplite();
     }
 
     private static void HandleLoginOK(byte[] data)
@@ -68,7 +73,8 @@ public class ClientHandlerNetworkData : MonoBehaviour
         buffer.ReadInteger();
         string nickname = buffer.ReadString();
 
-        //EntranceController.TextInfo(5);
+        EntranceController.serverInfo = "You Logged On.";
+        Debug.Log("ne pashet");
     }
 
     private static void HandleServerAlert(byte[] data)
@@ -77,7 +83,8 @@ public class ClientHandlerNetworkData : MonoBehaviour
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         string msg = buffer.ReadString();
+        buffer.Dispose();
 
-        Debug.Log(msg);
+        EntranceController.serverInfo = msg;
     }
 }

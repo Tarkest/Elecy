@@ -30,6 +30,7 @@ public class ClientTCP : MonoBehaviour {
         }
 
         clientSocket.BeginConnect(IP_ADDRESS, PORT, new AsyncCallback(ConnectCallBack), clientSocket);
+        EntranceController.serverInfo = "Connecting to the server...";
     }
 
     private void ConnectCallBack(IAsyncResult ar)
@@ -50,7 +51,7 @@ public class ClientTCP : MonoBehaviour {
             currentRead = totalRead = clientSocket.Receive(_sizeInfo);
             if (totalRead <= 0)
             {
-                //EntranceController.TextInfo(6);
+                EntranceController.serverInfo = "Server unavalible.";
             }
             else
             {
@@ -81,7 +82,7 @@ public class ClientTCP : MonoBehaviour {
         }
         catch
         {
-            //EntranceController.TextInfo(6);
+            EntranceController.serverInfo = "Server unavalible.";
         }
     }
 

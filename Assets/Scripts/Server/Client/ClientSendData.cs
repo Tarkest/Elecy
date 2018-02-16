@@ -11,7 +11,7 @@ public class ClientSendData : MonoBehaviour {
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
 
-        //EntranceController.TextInfo(1);
+        EntranceController.serverInfo = "You are connected to the server.";
     }
 
     public static void SendLogin()
@@ -23,7 +23,7 @@ public class ClientSendData : MonoBehaviour {
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
 
-        //EntranceController.TextInfo(4);
+        EntranceController.serverInfo = "Loggin In...";
     }
 
     public static void SendRegister()
@@ -35,6 +35,6 @@ public class ClientSendData : MonoBehaviour {
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
 
-        //EntranceController.TextInfo(2);
+        EntranceController.serverInfo = "Creating new account...";
     }
 }

@@ -5,7 +5,8 @@ public class EntranceController : MonoBehaviour {
 
     public string Name;
     public string Password;
-    private int infoNum;
+    [System.NonSerialized]
+    public static string serverInfo;
     private static Text infoField;
 
     void Start()
@@ -17,6 +18,7 @@ public class EntranceController : MonoBehaviour {
     {
         Name = GameObject.Find("Name").GetComponent<InputField>().text;
         Password = GameObject.Find("Password").GetComponent<InputField>().text;
+        GameObject.Find("InfoField").GetComponent<Text>().text = serverInfo;
     }
 
     public void LoginTry()
@@ -28,21 +30,4 @@ public class EntranceController : MonoBehaviour {
     {
         ClientSendData.SendRegister();
     }
-
-    public static void TextInfo(int infonum)
-    {
-        string[] info = new string[7];
-
-        info[0] = "Connecting to the server...";
-        info[1] = "Connect established";
-        info[2] = "Singing up new account...";
-        info[3] = "Account registered";
-        info[4] = "Loggin in...";
-        info[5] = "Login succesfull";
-        info[6] = "Connection failed";
-
-        infoField.text = info[infonum];
-    }
-
-
 }
