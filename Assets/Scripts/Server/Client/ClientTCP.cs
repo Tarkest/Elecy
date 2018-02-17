@@ -33,11 +33,17 @@ public class ClientTCP : MonoBehaviour {
         EntranceController.serverInfo = "Connecting to the server...";
     }
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void ConnectCallBack(IAsyncResult ar)
     {
         clientSocket.EndConnect(ar);
         OnRecive();
     }
+
 
     private void OnRecive()
     {
@@ -78,11 +84,39 @@ public class ClientTCP : MonoBehaviour {
                 }
 
                 ClientHandlerNetworkData.HandleNetworkInformation(data);
+                _asyncBuffer = new byte[1024];
+                clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), null);
             }
         }
         catch
         {
             EntranceController.serverInfo = "Server unavalible.";
+        }
+    }
+
+    private void RecievedCallBack(IAsyncResult ar)
+    {
+        try
+        {
+            int received = clientSocket.EndReceive(ar);
+
+            if (received <= 0)
+            {
+                EntranceController.serverInfo = "Server unavalible.";
+            }
+            else
+            {
+                byte[] dataBuffer = new byte[received];
+                Array.Copy(_asyncBuffer, dataBuffer, received);
+                ClientHandlerNetworkData.HandleNetworkInformation(dataBuffer);
+                _asyncBuffer = new byte[1024];
+                clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), null);
+            }
+        }
+        catch
+        {
+            Console.WriteLine("catch");
+            //Connection aborted
         }
     }
 
