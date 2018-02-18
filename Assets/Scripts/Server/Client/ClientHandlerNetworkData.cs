@@ -39,26 +39,14 @@ public class ClientHandlerNetworkData : MonoBehaviour
 
     public static void HandleNetworkInformation(byte[] data)
     {
-        Debug.Log("I'm in handler");
         int packetNum;
-        string username = ""; //////
         PacketBuffer buffer = new PacketBuffer();
         Packet_ Packet;
         buffer.WriteBytes(data);
         packetNum = buffer.ReadInteger();
-        if(packetNum == 13) //////
-        {
-            username = buffer.ReadString();
-            Debug.Log(username);
-        } else
-        {
-            Debug.Log(packetNum + " isn't 13");
-        }
-        buffer = null;
-        Debug.Log("I'm in handler2 || " + packetNum + " || " + username);
+        buffer.Dispose();
         if (_Packets.TryGetValue(packetNum, out Packet))
         {
-            Debug.Log("I'm in handler3");
             Packet.Invoke(data);
         }
     }
@@ -95,13 +83,15 @@ public class ClientHandlerNetworkData : MonoBehaviour
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         string nickname = buffer.ReadString();
+        buffer.Dispose();
 
-        EntranceController.serverInfo = "You Logged On.";
-        scenechange = true;
+        EntranceController.serverInfo = "You Logged On." + nickname;
+        //scenechange = true;
     }
 
     private static void HandleServerAlert(byte[] data)
     {
+        Debug.Log("Alert");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
