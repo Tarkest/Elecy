@@ -15,6 +15,7 @@ public class ClientTCP : MonoBehaviour {
     private int ipnum;
 
     public static Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+    public Socket socket;
 
     private byte[] _asyncBuffer = new byte[1024];
 
@@ -40,68 +41,55 @@ public class ClientTCP : MonoBehaviour {
 
     private void ConnectCallBack(IAsyncResult ar)
     {
+        socket = (Socket)ar.AsyncState;
         clientSocket.EndConnect(ar);
         OnRecive();
-        clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), clientSocket);
+        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), socket);
         Debug.Log("im listen");
     }
 
 
     private void OnRecive()
     {
-        Debug.Log("TKT");
         byte[] _sizeInfo = new byte[4];
-        Debug.Log("TKT");
         byte[] _recivedBuffer = new byte[1024];
-        Debug.Log("TKT");
 
         int totalRead = 0, currentRead = 0;
-        Debug.Log("TKT");
 
         try
         {
-            Debug.Log(_sizeInfo + "TKT");
-            currentRead = totalRead = clientSocket.Receive(_sizeInfo);
-            Debug.Log("1");
+            currentRead = totalRead = socket.Receive(_sizeInfo);
             if (totalRead <= 0)
             {
+                Debug.Log("Xyi");
                 EntranceController.serverInfo = "Server unavalible.";
             }
             else
             {
                 while(totalRead < _sizeInfo.Length && currentRead > 0)
                 {
-                    Debug.Log(totalRead + "||" + _sizeInfo.Length + "||" + currentRead);
-                    currentRead = clientSocket.Receive(_sizeInfo, totalRead, _sizeInfo.Length - totalRead, SocketFlags.None);
+                    currentRead = socket.Receive(_sizeInfo, totalRead, _sizeInfo.Length - totalRead, SocketFlags.None);
                     totalRead += currentRead;
                 }
-                Debug.Log("2");
                 int messageSize = 0;
                 messageSize |= _sizeInfo[0];
                 messageSize |= (_sizeInfo[1] << 8);
                 messageSize |= (_sizeInfo[2] << 16);
                 messageSize |= (_sizeInfo[3] << 24);
-                Debug.Log("3");
                 byte[] data = new byte[messageSize];
-                Debug.Log("4");
                 totalRead = 0;
-                currentRead = totalRead = clientSocket.Receive(data, totalRead, data.Length - totalRead, SocketFlags.None);
-                Debug.Log("5");
+                currentRead = totalRead = socket.Receive(data, totalRead, data.Length - totalRead, SocketFlags.None);
                 while (totalRead < messageSize && currentRead > 0)
                 {
-                    Debug.Log(totalRead + "||" + messageSize + "||" + currentRead);
-                    currentRead = clientSocket.Receive(data, totalRead, data.Length - totalRead, SocketFlags.None);
+                    currentRead = socket.Receive(data, totalRead, data.Length - totalRead, SocketFlags.None);
                     totalRead += currentRead;
                 }
-                Debug.Log("6");
                 ClientHandlerNetworkData.HandleNetworkInformation(data);
-                Debug.Log("7");
-                //clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), null);
-                //Debug.Log("im listen");
             }
         }
         catch
         {
+            Debug.Log("Pizda");
             EntranceController.serverInfo = "Server unavalible.";
         }
     }
@@ -109,12 +97,14 @@ public class ClientTCP : MonoBehaviour {
     private void RecievedCallBack(IAsyncResult ar)
     {
         Debug.Log("im recieve");
-        clientSocket.EndReceive(ar);
+        socket = (Socket)ar.AsyncState;
+        socket.EndReceive(ar);
         Debug.Log("im stop recieve");
         OnRecive();
         Debug.Log("Im decoding");
-        clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), clientSocket);
+        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), socket);
         Debug.Log("im listen");
+        socket = null;
         //try
         //{
         //    Debug.Log("I'm recieving");
@@ -147,5 +137,11 @@ public class ClientTCP : MonoBehaviour {
     public static void SendData(byte[] data)
     {
         clientSocket.Send(data);
+    }
+
+    void OnApplicationQuit()
+    {
+        clientSocket.Close();
+        //DisconectFromServer
     }
 }

@@ -78,7 +78,6 @@ public class ClientHandlerNetworkData : MonoBehaviour
 
     private static void HandleLoginOK(byte[] data)
     {
-        Debug.Log("I'm in logOk");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
