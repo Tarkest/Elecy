@@ -41,24 +41,23 @@ public class ClientTCP : MonoBehaviour {
 
     private void ConnectCallBack(IAsyncResult ar)
     {
-        socket = (Socket)ar.AsyncState;
         clientSocket.EndConnect(ar);
         OnRecive();
-        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), socket);
-        Debug.Log("im listen");
     }
 
 
     private void OnRecive()
     {
         byte[] _sizeInfo = new byte[4];
-        byte[] _recivedBuffer = new byte[1024];
+        byte[] receivedBuffer;
 
         int totalRead = 0, currentRead = 0;
 
         try
         {
-            currentRead = totalRead = socket.Receive(_sizeInfo);
+            Debug.Log("1");
+            currentRead = totalRead = clientSocket.Receive(_sizeInfo);
+            Debug.Log(currentRead + " || " + totalRead + " || " + "2");
             if (totalRead <= 0)
             {
                 Debug.Log("Xyi");
@@ -68,7 +67,7 @@ public class ClientTCP : MonoBehaviour {
             {
                 while(totalRead < _sizeInfo.Length && currentRead > 0)
                 {
-                    currentRead = socket.Receive(_sizeInfo, totalRead, _sizeInfo.Length - totalRead, SocketFlags.None);
+                    currentRead = clientSocket.Receive(_sizeInfo, totalRead, _sizeInfo.Length - totalRead, SocketFlags.None);
                     totalRead += currentRead;
                 }
                 int messageSize = 0;
@@ -76,15 +75,18 @@ public class ClientTCP : MonoBehaviour {
                 messageSize |= (_sizeInfo[1] << 8);
                 messageSize |= (_sizeInfo[2] << 16);
                 messageSize |= (_sizeInfo[3] << 24);
-                byte[] data = new byte[messageSize];
+                receivedBuffer = new byte[messageSize];
                 totalRead = 0;
-                currentRead = totalRead = socket.Receive(data, totalRead, data.Length - totalRead, SocketFlags.None);
+                currentRead = totalRead = clientSocket.Receive(receivedBuffer, totalRead, receivedBuffer.Length - totalRead, SocketFlags.None);
                 while (totalRead < messageSize && currentRead > 0)
                 {
-                    currentRead = socket.Receive(data, totalRead, data.Length - totalRead, SocketFlags.None);
+                    currentRead = clientSocket.Receive(receivedBuffer, totalRead, receivedBuffer.Length - totalRead, SocketFlags.None);
                     totalRead += currentRead;
                 }
-                ClientHandlerNetworkData.HandleNetworkInformation(data);
+                ClientHandlerNetworkData.HandleNetworkInformation(receivedBuffer);
+                //OnRecive();
+                clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), clientSocket);
+                Debug.Log("end connect");
             }
         }
         catch
@@ -94,45 +96,39 @@ public class ClientTCP : MonoBehaviour {
         }
     }
 
-    private void RecievedCallBack(IAsyncResult ar)
+    private void ReceiveCallback(IAsyncResult ar)
     {
-        Debug.Log("im recieve");
-        socket = (Socket)ar.AsyncState;
-        socket.EndReceive(ar);
-        Debug.Log("im stop recieve");
-        OnRecive();
-        Debug.Log("Im decoding");
-        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), socket);
-        Debug.Log("im listen");
-        socket = null;
-        //try
-        //{
-        //    Debug.Log("I'm recieving");
-        //    int received = clientSocket.EndReceive(ar);
+        Debug.Log("1");
+        Socket socket;
+        try
+        {
+            socket = (Socket)ar.AsyncState;
+            if(socket.Connected)
+            {
+                int received = socket.EndReceive(ar);
+                if(received > 0)
+                {
+                    byte[] data = new byte[received];
+                    Array.Copy(_asyncBuffer, data, received);
+                    ClientHandlerNetworkData.HandleNetworkInformation(data);
+                    socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
+                    Debug.Log("2");
+                }
+                else
+                {
+                    Debug.Log("ReceiveCallback fails!");
+                    clientSocket.Close();
+                }
+            }
 
-        //    if (received <= 0)
-        //    {
-        //        EntranceController.serverInfo = "Server unavalible.";
-        //    }
-        //    else
-        //    {
-        //        byte[] dataBuffer = new byte[received];
-        //        Debug.Log(received);
-        //        Array.Copy(_asyncBuffer, dataBuffer, received);
-        //        // Debug
-        //        PacketBuffer buffer = new PacketBuffer();
-        //        buffer.WriteBytes(_asyncBuffer);
-        //        Debug.Log("Recieved int: " + buffer.ReadInteger() + " | username: " + buffer.ReadString());
-        //        ClientHandlerNetworkData.HandleNetworkInformation(dataBuffer);
-        //        clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(RecievedCallBack), null);
-        //    }
-        //}
-        //catch
-        //{
-        //    Console.WriteLine("catch");
-        //    //Connection aborted
-        //}
+        }
+        catch(Exception ex)
+        {
+            Debug.Log(ex);
+        }
     }
+
+
 
     public static void SendData(byte[] data)
     {

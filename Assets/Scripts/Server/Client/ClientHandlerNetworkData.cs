@@ -39,11 +39,13 @@ public class ClientHandlerNetworkData : MonoBehaviour
 
     public static void HandleNetworkInformation(byte[] data)
     {
+        Debug.Log("I'm in handle");
         int packetNum;
         PacketBuffer buffer = new PacketBuffer();
         Packet_ Packet;
         buffer.WriteBytes(data);
         packetNum = buffer.ReadInteger();
+        Debug.Log(packetNum);
         buffer.Dispose();
         if (_Packets.TryGetValue(packetNum, out Packet))
         {
@@ -66,6 +68,7 @@ public class ClientHandlerNetworkData : MonoBehaviour
 
     private static void HandleRegisterOK(byte[] data)
     {
+        Debug.Log("In register handler");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
@@ -78,12 +81,12 @@ public class ClientHandlerNetworkData : MonoBehaviour
 
     private static void HandleLoginOK(byte[] data)
     {
+        Debug.Log("In login handler");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         string nickname = buffer.ReadString();
         buffer.Dispose();
-
         EntranceController.serverInfo = "You Logged On." + nickname;
         //scenechange = true;
     }
