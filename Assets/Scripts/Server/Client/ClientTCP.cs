@@ -60,7 +60,6 @@ public class ClientTCP : MonoBehaviour {
             Debug.Log(currentRead + " || " + totalRead + " || " + "2");
             if (totalRead <= 0)
             {
-                Debug.Log("Xyi");
                 EntranceController.serverInfo = "Server unavalible.";
             }
             else
@@ -91,14 +90,12 @@ public class ClientTCP : MonoBehaviour {
         }
         catch
         {
-            Debug.Log("Pizda");
             EntranceController.serverInfo = "Server unavalible.";
         }
     }
 
     private void ReceiveCallback(IAsyncResult ar)
     {
-        Debug.Log("1");
         Socket socket;
         try
         {
@@ -112,7 +109,6 @@ public class ClientTCP : MonoBehaviour {
                     Array.Copy(_asyncBuffer, data, received);
                     ClientHandlerNetworkData.HandleNetworkInformation(data);
                     socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
-                    Debug.Log("2");
                 }
                 else
                 {

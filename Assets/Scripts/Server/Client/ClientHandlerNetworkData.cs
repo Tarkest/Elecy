@@ -86,8 +86,25 @@ public class ClientHandlerNetworkData : MonoBehaviour
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         string nickname = buffer.ReadString();
+        int[][] accountdata = new int[2][];
+        int[] levels = new int[5];
+        int[] ranks = new int[5];
+        for (int leveli = 0; leveli < 5; leveli++)
+            levels[leveli] = buffer.ReadInteger();
+        for (int ranki = 0; ranki < 5; ranki++)
+            ranks[ranki] = buffer.ReadInteger();
+        accountdata[0] = levels;
+        accountdata[1] = ranks;
         buffer.Dispose();
-        EntranceController.serverInfo = "You Logged On." + nickname;
+        string msg = "You Logged On." + nickname;
+        for(int i1 = 0; i1 < 2; i1++)
+        {
+            for(int i2 = 0; i2 < 5; i2++)
+            {
+                msg += accountdata[i1][i2].ToString();
+            }
+        }
+        EntranceController.serverInfo = msg;
         //scenechange = true;
     }
 

@@ -32,6 +32,7 @@ public class ClientSendData : MonoBehaviour {
         buffer.WriteInteger((int)ClientPackets.CRegisterTry);
         buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Name);
         buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Password);
+        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Nickname);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
 
