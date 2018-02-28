@@ -55,9 +55,7 @@ public class ClientTCP : MonoBehaviour {
 
         try
         {
-            Debug.Log("1");
             currentRead = totalRead = clientSocket.Receive(_sizeInfo);
-            Debug.Log(currentRead + " || " + totalRead + " || " + "2");
             if (totalRead <= 0)
             {
                 EntranceController.serverInfo = "Server unavalible.";
@@ -84,7 +82,6 @@ public class ClientTCP : MonoBehaviour {
                 }
                 ClientHandlerNetworkData.HandleNetworkInformation(receivedBuffer);
                 clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), clientSocket);
-                Debug.Log("end connect");
             }
         }
         catch
