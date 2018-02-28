@@ -83,7 +83,6 @@ public class ClientTCP : MonoBehaviour {
                     totalRead += currentRead;
                 }
                 ClientHandlerNetworkData.HandleNetworkInformation(receivedBuffer);
-                //OnRecive();
                 clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), clientSocket);
                 Debug.Log("end connect");
             }
@@ -108,7 +107,13 @@ public class ClientTCP : MonoBehaviour {
                     byte[] data = new byte[received];
                     Array.Copy(_asyncBuffer, data, received);
                     ClientHandlerNetworkData.HandleNetworkInformation(data);
-                    socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
+                    PacketBuffer packet = new PacketBuffer();
+                    packet.WriteBytes(data);
+                    int packetNum = packet.ReadInteger();
+                    if (packetNum != 3)
+                        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
+                    else
+                        return;
                 }
                 else
                 {
@@ -124,15 +129,21 @@ public class ClientTCP : MonoBehaviour {
         }
     }
 
-
-
     public static void SendData(byte[] data)
     {
         clientSocket.Send(data);
     }
 
+    public static void ClientClose()
+    {
+        ClientSendData.SendClose();
+        clientSocket.Close();
+    }
+
     void OnApplicationQuit()
     {
+        if(clientSocket.Connected)
+            ClientSendData.SendClose();
         clientSocket.Close();
         //DisconectFromServer
     }

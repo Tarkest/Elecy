@@ -105,6 +105,7 @@ public class ClientHandlerNetworkData : MonoBehaviour
             }
         }
         EntranceController.serverInfo = msg;
+        ClientTCP.ClientClose();
         //scenechange = true;
     }
 

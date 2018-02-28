@@ -38,4 +38,13 @@ public class ClientSendData : MonoBehaviour {
 
         EntranceController.serverInfo = "Creating new account...";
     }
+
+    public static void SendClose()
+    {
+        Debug.Log("Send closing");
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)ClientPackets.CClose);
+        ClientTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
 }
