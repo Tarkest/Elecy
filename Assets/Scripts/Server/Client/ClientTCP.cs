@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClientTCP : MonoBehaviour {
 
@@ -12,16 +13,21 @@ public class ClientTCP : MonoBehaviour {
     [System.NonSerialized]
     public int PORT = 24985;
 
-    private int ipnum;
-
     public static Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     public Socket socket;
+    public static PlayerTCP player;
 
     private byte[] _asyncBuffer = new byte[1024];
+    private static bool scenechange = false;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(transform.gameObject);
+    }
 
     private void Start()
     {
-        if(connectToLocal == true)
+        if (connectToLocal == true)
         {
             IP_ADDRESS = "127.0.0.1";
         }
@@ -34,10 +40,22 @@ public class ClientTCP : MonoBehaviour {
         EntranceController.serverInfo = "Connecting to the server...";
     }
 
-    /*private void Awake()
+    private void OnLevelWasLoaded(int level)
     {
-        DontDestroyOnLoad(gameObject);
-    }*/
+        if (level == 2)
+        {
+            Debug.Log("In if");
+            player.StartPlayer();
+        }
+    }
+
+    private void Update()
+    {
+        if (scenechange)
+        {
+            LoadScene();
+        }
+    }
 
     private void ConnectCallBack(IAsyncResult ar)
     {
@@ -45,6 +63,41 @@ public class ClientTCP : MonoBehaviour {
         OnRecive();
     }
 
+    private void ReceiveCallback(IAsyncResult ar)
+    {
+        Socket socket;
+        try
+        {
+            socket = (Socket)ar.AsyncState;
+            if (socket.Connected)
+            {
+                int received = socket.EndReceive(ar);
+                if (received > 0)
+                {
+                    byte[] data = new byte[received];
+                    Array.Copy(_asyncBuffer, data, received);
+                    ClientHandlerNetworkData.HandleNetworkInformation(data);
+                    PacketBuffer packet = new PacketBuffer();
+                    packet.WriteBytes(data);
+                    int packetNum = packet.ReadInteger();
+                    if (packetNum != 3)
+                        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
+                    else
+                        return;
+                }
+                else
+                {
+                    Debug.Log("ReceiveCallback fails!");
+                    clientSocket.Close();
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+        }
+    }
 
     private void OnRecive()
     {
@@ -62,7 +115,7 @@ public class ClientTCP : MonoBehaviour {
             }
             else
             {
-                while(totalRead < _sizeInfo.Length && currentRead > 0)
+                while (totalRead < _sizeInfo.Length && currentRead > 0)
                 {
                     currentRead = clientSocket.Receive(_sizeInfo, totalRead, _sizeInfo.Length - totalRead, SocketFlags.None);
                     totalRead += currentRead;
@@ -90,45 +143,24 @@ public class ClientTCP : MonoBehaviour {
         }
     }
 
-    private void ReceiveCallback(IAsyncResult ar)
+    private void LoadScene()
     {
-        Socket socket;
-        try
-        {
-            socket = (Socket)ar.AsyncState;
-            if(socket.Connected)
-            {
-                int received = socket.EndReceive(ar);
-                if(received > 0)
-                {
-                    byte[] data = new byte[received];
-                    Array.Copy(_asyncBuffer, data, received);
-                    ClientHandlerNetworkData.HandleNetworkInformation(data);
-                    PacketBuffer packet = new PacketBuffer();
-                    packet.WriteBytes(data);
-                    int packetNum = packet.ReadInteger();
-                    if (packetNum != 3)
-                        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
-                    else
-                        return;
-                }
-                else
-                {
-                    Debug.Log("ReceiveCallback fails!");
-                    clientSocket.Close();
-                }
-            }
-
-        }
-        catch(Exception ex)
-        {
-            Debug.Log(ex);
-        }
+        scenechange = false;
+        SceneManager.LoadScene(2);
     }
-
+  
     public static void SendData(byte[] data)
     {
         clientSocket.Send(data);
+    }
+
+    public static void ClientLogin()
+    {
+        ClientSendData.SendClose();
+        player = new PlayerTCP();
+        PlayerTCP.playerSocket = clientSocket;
+        //clientSocket.Close();
+        scenechange = true;
     }
 
     public static void ClientClose()
@@ -144,4 +176,6 @@ public class ClientTCP : MonoBehaviour {
         clientSocket.Close();
         //DisconectFromServer
     }
+
+    
 }

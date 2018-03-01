@@ -9,20 +9,9 @@ public class ClientHandlerNetworkData : MonoBehaviour
 
     private static Dictionary<int, Packet_> _Packets;
 
-    [System.NonSerialized]
-    public static bool scenechange = false;
-
     private void Awake()
     {
         InitializeNetworkPackages();
-    }
-
-    private void Update()
-    {
-        if(scenechange)
-        {
-            LoadScene();
-        }
     }
 
     public void InitializeNetworkPackages()
@@ -100,8 +89,7 @@ public class ClientHandlerNetworkData : MonoBehaviour
             }
         }
         EntranceController.serverInfo = msg;
-        ClientTCP.ClientClose();
-        //scenechange = true;
+        ClientTCP.ClientLogin();
     }
 
     private static void HandleServerAlert(byte[] data)
@@ -116,8 +104,4 @@ public class ClientHandlerNetworkData : MonoBehaviour
         EntranceController.serverInfo = msg;
     }
 
-    private void LoadScene()
-    {
-        SceneManager.LoadScene(1);
-    }
 }
