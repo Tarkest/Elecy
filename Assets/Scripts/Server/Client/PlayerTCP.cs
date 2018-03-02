@@ -36,28 +36,70 @@ public class PlayerTCP
     //Check/rewrite (copy-paste from server)
     public void PlayerReceiveCallback(IAsyncResult ar)
     {
-        playerSocket = (Socket)ar.AsyncState;
-        Debug.Log("In player receive");
+        //playerSocket = (Socket)ar.AsyncState;
+        //Debug.Log("In player receive");
+        //int received = 0;
 
+        //try
+        //{
+        //    try
+        //    {
+        //        received = playerSocket.EndReceive(ar);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.Log(ex);
+        //    }
+
+        //    if (received <= 0)
+        //    {
+        //        ClosePlayer();
+        //    }
+        //    else
+        //    {
+        //        byte[] dataBuffer = new byte[received];
+        //        Array.Copy(_buffer, dataBuffer, received);
+        //        //ServerHandleNetworkData.HandleNetworkInformation(index, dataBuffer);
+        //        playerSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(PlayerReceiveCallback), playerSocket);
+        //    }
+        //}
+        //catch
+        //{
+        //    ClosePlayer();
+        //}
+        Socket socket;
         try
         {
-            int received = playerSocket.EndReceive(ar);
+            socket = (Socket)ar.AsyncState;
+            if (socket.Connected)
+            {
+                int received = socket.EndReceive(ar);
+                Debug.Log(received + "received");
+                if (received > 0)
+                {
+                    Debug.Log("Server soset hui");
+                    byte[] data = new byte[received];
+                    Array.Copy(_buffer, data, received);
+                    ClientHandlerNetworkData.HandleNetworkInformation(data);
+                    PacketBuffer packet = new PacketBuffer();
+                    packet.WriteBytes(data);
+                    int packetNum = packet.ReadInteger();
+                    if (packetNum != 3)
+                        socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(PlayerReceiveCallback), socket);
+                    else
+                        return;
+                }
+                else
+                {
+                    Debug.Log("ReceiveCallback in Player fails!");
+                    playerSocket.Close();
+                }
+            }
 
-            if (received <= 0)
-            {
-                ClosePlayer();
-            }
-            else
-            {
-                byte[] dataBuffer = new byte[received];
-                Array.Copy(_buffer, dataBuffer, received);
-                //ServerHandleNetworkData.HandleNetworkInformation(index, dataBuffer);
-                playerSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(PlayerReceiveCallback), playerSocket);
-            }
         }
-        catch
+        catch (Exception ex)
         {
-            ClosePlayer();
+            Debug.Log(ex);
         }
     }
 

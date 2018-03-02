@@ -7,30 +7,38 @@ public class MainLobbyController : MonoBehaviour {
     public static List<ChatMessage> glChatMessages = new List<ChatMessage>();
     private string _glCurrentMessage;
     private int newmessage = 1;
+    private static float _fieldSize;
 
-    private Text _messageHolder;
+    private static RectTransform fieldSize;
+    private static InputField _messageHolder;
     private Text _content;
     void Start()
     {
-        _messageHolder = GameObject.Find("MessageInput").GetComponentInChildren<Text>();
+        fieldSize = GameObject.Find("Content").GetComponent<RectTransform>();
+        _fieldSize = 300;
+        _messageHolder = GameObject.Find("MessageInput").GetComponent<InputField>();
         _content = GameObject.Find("Content").GetComponent<Text>();
     }
 
     void Update()
     {
-        _glCurrentMessage = _messageHolder.text;
+        fieldSize.sizeDelta = new Vector2(0, _fieldSize);
+        //_glCurrentMessage = _messageHolder.text;
         if (glChatMessages.Count == newmessage)
         {
+            _content.text = "";
             foreach(ChatMessage message in glChatMessages)
             {
-                _content.text += message.ToString() + "/n";
+                _content.text += "\n" + message.ToString();
             }
             newmessage++;
+            _fieldSize += 20f;
         }
     }
 
     public void SendChatMessage()
     {
+        _glCurrentMessage = _messageHolder.text;
         ClientSendData.SendGlChatMsg(_glCurrentMessage);
         _glCurrentMessage = null;
     }
