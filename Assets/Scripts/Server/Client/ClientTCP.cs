@@ -166,7 +166,6 @@ public class ClientTCP : MonoBehaviour {
     public static void ClientClose()
     {
         ClientSendData.SendClose();
-        clientSocket.Close();
     }
 
     void OnApplicationQuit()
