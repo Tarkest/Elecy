@@ -7,10 +7,8 @@ public class ClientSendData : MonoBehaviour {
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)ClientPackets.CConnectcomplite);
-        buffer.WriteString("Connection of client succesfull.");
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
-
         EntranceController.serverInfo = "You are connected to the server.";
     }
 
