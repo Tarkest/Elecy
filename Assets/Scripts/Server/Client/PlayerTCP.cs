@@ -69,4 +69,9 @@ public class PlayerTCP
         //PlayerLeft();
         playerSocket.Close();
     }
+
+    public static void SendData(byte[] data)
+    {
+        playerSocket.Send(data);
+    }
 }

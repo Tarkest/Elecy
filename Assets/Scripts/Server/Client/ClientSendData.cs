@@ -50,7 +50,7 @@ public class ClientSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)ClientPackets.CGlChatMsg);
         buffer.WriteString(message);
-        ClientTCP.SendData(buffer.ToArray());
+        PlayerTCP.SendData(buffer.ToArray());
         buffer.Dispose();
 
     }
