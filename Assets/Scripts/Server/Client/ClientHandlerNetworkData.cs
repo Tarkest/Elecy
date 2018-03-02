@@ -22,7 +22,8 @@ public class ClientHandlerNetworkData : MonoBehaviour
             {(int)ServerPackets.SConnectionOK, HandleConnectionOK },
             {(int)ServerPackets.SRegisterOK, HandleRegisterOK },
             {(int)ServerPackets.SLoginOK, HandleLoginOK },
-            {(int)ServerPackets.SAlert, HandleServerAlert }
+            {(int)ServerPackets.SAlert, HandleServerAlert },
+            {(int)ServerPackets.SGlChatMsg, HandleGlobalChatMessage }
         };
     }
 
@@ -104,4 +105,14 @@ public class ClientHandlerNetworkData : MonoBehaviour
         EntranceController.serverInfo = msg;
     }
 
+    public static void HandleGlobalChatMessage(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string Nickname = buffer.ReadString();
+        string Message = buffer.ReadString();
+        buffer.Dispose();
+        MainLobbyController.glChatMessages.Add(new ChatMessage(Nickname, Message));
+    }
 }

@@ -39,10 +39,19 @@ public class ClientSendData : MonoBehaviour {
 
     public static void SendClose()
     {
-        Debug.Log("Send closing");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)ClientPackets.CClose);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
+    }
+
+    public static void SendGlChatMsg(string message)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)ClientPackets.CGlChatMsg);
+        buffer.WriteString(message);
+        ClientTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+
     }
 }
