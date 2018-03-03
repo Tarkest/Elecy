@@ -24,15 +24,15 @@ public class ChatMessageController : MonoBehaviour {
 
     public void CreateMessage()
     {
-        _nicknameTransform.sizeDelta = new Vector2(16, (float)((_nicknameTextBuffer.Length + 2) * _nicknameText.fontSize));
-        _messageTransform.sizeDelta = new Vector2(16, (580f - (float)_nicknameTextBuffer.Length * _nicknameText.fontSize));
+        _nicknameTransform.sizeDelta = new Vector2(((float)(_nicknameTextBuffer.Length + 2) * _nicknameText.fontSize/2f), 16);
+        _messageTransform.sizeDelta = new Vector2((580f - (float)_nicknameTextBuffer.Length * _nicknameText.fontSize), 16);
         _nicknameText.text = _nicknameTextBuffer + ": ";
         _messageText.text = _messageTextBuffer;  
     }
 
     public void AddMessage(string nickname, string message)
     {
-        _messageTextBuffer = nickname;
+        _nicknameTextBuffer = nickname;
         _messageTextBuffer = message;
         AwakeMessage();
     }
