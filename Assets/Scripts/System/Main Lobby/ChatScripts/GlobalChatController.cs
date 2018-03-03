@@ -9,6 +9,10 @@ public class GlobalChatController : MonoBehaviour {
     private InputField _messageInput;
     private static int _messageCount;
 
+    private static bool msgRecieve = false;
+    private static string _currentMsg;
+    private static string _currentNick;
+
     void Awake()
     {
         _content = gameObject.transform.Find("Viewport").Find("Content").GetComponent<RectTransform>();
@@ -19,9 +23,17 @@ public class GlobalChatController : MonoBehaviour {
     void Update()
     {
         _content.sizeDelta = new Vector2(0, (float)16 * _messageCount);
+        if(msgRecieve)
+        {
+            msgRecieve = false;
+            GameObject NewMessage = Instantiate(Resources.Load("MainLobby/GlobalChat/ChatMessageParent"), _content) as GameObject;
+            NewMessage.GetComponent<ChatMessageController>().AddMessage(_currentNick, _currentMsg);
+            _currentMsg = null;
+            _currentNick = null;
+        }
     }
     
-    void SendMessage()
+    public void SendChatMessage()
     {
         ClientSendData.SendGlChatMsg(_messageInput.text);
         _messageInput.text = "";
@@ -30,7 +42,8 @@ public class GlobalChatController : MonoBehaviour {
     public static void RecieveMessage(string nickname, string message)
     {
         _messageCount++;
-        GameObject NewMessage = Instantiate(Resources.Load("MainLobby/GlobalChat/ChatMessageParent"), _content) as GameObject;
-        NewMessage.GetComponent<ChatMessageController>().AddMessage(nickname, message);
+        _currentMsg = message;
+        _currentNick = nickname;
+        msgRecieve = true;
     } 
 }
