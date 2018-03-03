@@ -15,7 +15,7 @@ public class ClientTCP : MonoBehaviour {
 
     public static Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     public Socket socket;
-    public static PlayerTCP player;
+    public static NetPlayerTCP player;
 
     private byte[] _asyncBuffer = new byte[1024];
     private static bool scenechange = false;
@@ -157,8 +157,8 @@ public class ClientTCP : MonoBehaviour {
     public static void ClientLogin()
     {
         ClientSendData.SendClose();
-        player = new PlayerTCP();
-        PlayerTCP.playerSocket = clientSocket;
+        player = new NetPlayerTCP();
+        NetPlayerTCP.playerSocket = clientSocket;
         //clientSocket.Close();
         scenechange = true;
     }

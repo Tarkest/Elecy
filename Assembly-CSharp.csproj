@@ -60,9 +60,9 @@
      <Compile Include="Assets\Scripts\Server\Client\ClientHandlerNetworkData.cs" />
      <Compile Include="Assets\Scripts\Server\Client\ClientSendData.cs" />
      <Compile Include="Assets\Scripts\Server\Client\ClientTCP.cs" />
+     <Compile Include="Assets\Scripts\Server\Client\NetPlayerTCP.cs" />
      <Compile Include="Assets\Scripts\Server\Client\NetworkPackages.cs" />
      <Compile Include="Assets\Scripts\Server\Client\PacketBuffer.cs" />
-     <Compile Include="Assets\Scripts\Server\Client\PlayerTCP.cs" />
      <Compile Include="Assets\Scripts\SpellInvoker_2.cs" />
      <Compile Include="Assets\Scripts\Spells\Behaviour\Ignis\Spark.cs" />
      <Compile Include="Assets\Scripts\Spells\Behaviour\SpellMovement_Bullet.cs" />
@@ -77,6 +77,8 @@
      <Compile Include="Assets\Scripts\System\Game Session\Spell.cs" />
      <Compile Include="Assets\Scripts\System\Game Session\SpellArea.cs" />
      <Compile Include="Assets\Scripts\System\Game Session\SpellContainer.cs" />
+     <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\ChatMessageController.cs" />
+     <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\GlobalChatController.cs" />
      <Compile Include="Assets\Scripts\System\Main Lobby\MainLobbyController.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>D:/Games/Projects/Elecy/Elecy Project/Elecy/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>

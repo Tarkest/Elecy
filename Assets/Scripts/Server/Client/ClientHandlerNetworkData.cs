@@ -113,6 +113,6 @@ public class ClientHandlerNetworkData : MonoBehaviour
         string Nickname = buffer.ReadString();
         string Message = buffer.ReadString();
         buffer.Dispose();
-        MainLobbyController.glChatMessages.Add(new ChatMessage(Nickname, Message));
+        GlobalChatController.RecieveMessage(Nickname, Message);
     }
 }

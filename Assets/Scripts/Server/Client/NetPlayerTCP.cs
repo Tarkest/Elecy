@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
 
-public class PlayerTCP
+public class NetPlayerTCP
 {
     public int index;
     public string ip;
