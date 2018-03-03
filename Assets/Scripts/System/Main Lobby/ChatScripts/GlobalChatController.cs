@@ -35,8 +35,11 @@ public class GlobalChatController : MonoBehaviour {
     
     public void SendChatMessage()
     {
+        if(_messageInput.text != "")
+        {
         ClientSendData.SendGlChatMsg(_messageInput.text);
         _messageInput.text = "";
+        }
     } 
     
     public static void RecieveMessage(string nickname, string message)
