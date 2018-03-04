@@ -7,3 +7,4 @@ public enum ClientPackets
 {
     CConnectcomplite = 1, CRegisterTry = 2, CLoginTry = 3, CAlert = 4, CClose = 5, CGlChatMsg = 6
 }
+

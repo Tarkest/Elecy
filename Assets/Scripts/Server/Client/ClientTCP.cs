@@ -1,105 +1,58 @@
 ﻿using System;
-using System.Net;
 using System.Net.Sockets;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class ClientTCP : MonoBehaviour {
+public static class ClientTCP
+{
+    private static Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+    private static byte[] _asyncBuffer = new byte[1024];
+    private static bool receiving = false;
 
-    public bool connectToLocal;
-
-    [System.NonSerialized]
-    public string IP_ADDRESS;
-    [System.NonSerialized]
-    public int PORT = 24985;
-
-    public static Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-    public Socket socket;
-    public static NetPlayerTCP player;
-
-    private byte[] _asyncBuffer = new byte[1024];
-    private static bool scenechange = false;
-
-    private void Awake()
+    public static void Connect(string IP_ADDRESS, int PORT)
     {
-        DontDestroyOnLoad(transform.gameObject);
-    }
-
-    private void Start()
-    {
-        if (connectToLocal == true)
-        {
-            IP_ADDRESS = "127.0.0.1";
-        }
-        else
-        {
-            IP_ADDRESS = "77.122.14.86";
-        }
-
         clientSocket.BeginConnect(IP_ADDRESS, PORT, new AsyncCallback(ConnectCallBack), clientSocket);
-        EntranceController.serverInfo = "Connecting to the server...";
     }
 
-    private void OnLevelWasLoaded(int level)
+    public static void Close()
     {
-        if (level == 2)
-        {
-            Debug.Log("In if");
-            player.StartPlayer();
-        }
+        Stop();
+        clientSocket.Close();
     }
 
-    private void Update()
+    public static void Stop()
     {
-        if (scenechange)
-        {
-            LoadScene();
-        }
+        receiving = false;
+        ClientSendData.SendClose();
     }
 
-    private void ConnectCallBack(IAsyncResult ar)
+    public static bool isConnected()
+    {
+        return clientSocket.Connected;
+    }
+
+    public static void BeginReceive()
+    {
+        receiving = true;
+        clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), clientSocket);
+    }
+
+    public static void SendData(byte[] data)
+    {
+        clientSocket.Send(data);
+    }
+
+    public static Socket GetSocket()
+    {
+        return clientSocket;
+    }
+
+    private static void ConnectCallBack(IAsyncResult ar)
     {
         clientSocket.EndConnect(ar);
-        OnRecive();
+        receiving = true;
+        ConnectReceive();
     }
 
-    private void ReceiveCallback(IAsyncResult ar)
-    {
-        Socket socket;
-        try
-        {
-            socket = (Socket)ar.AsyncState;
-            if (socket.Connected)
-            {
-                int received = socket.EndReceive(ar);
-                if (received > 0)
-                {
-                    byte[] data = new byte[received];
-                    Array.Copy(_asyncBuffer, data, received);
-                    ClientHandlerNetworkData.HandleNetworkInformation(data);
-                    PacketBuffer packet = new PacketBuffer();
-                    packet.WriteBytes(data);
-                    int packetNum = packet.ReadInteger();
-                    if (packetNum != 3)
-                        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
-                    else
-                        return;
-                }
-                else
-                {
-                    Debug.Log("ReceiveCallback fails!");
-                    clientSocket.Close();
-                }
-            }
-
-        }
-        catch (Exception ex)
-        {
-            Debug.Log(ex);
-        }
-    }
-
-    private void OnRecive()
+    private static void ConnectReceive()
     {
         byte[] _sizeInfo = new byte[4];
         byte[] receivedBuffer;
@@ -134,7 +87,7 @@ public class ClientTCP : MonoBehaviour {
                     totalRead += currentRead;
                 }
                 ClientHandlerNetworkData.HandleNetworkInformation(receivedBuffer);
-                clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), clientSocket);
+                BeginReceive();
             }
         }
         catch
@@ -143,38 +96,38 @@ public class ClientTCP : MonoBehaviour {
         }
     }
 
-    private void LoadScene()
+    private static void ReceiveCallback(IAsyncResult ar)
     {
-        scenechange = false;
-        SceneManager.LoadScene(2);
-    }
-  
-    public static void SendData(byte[] data)
-    {
-        clientSocket.Send(data);
+        Socket socket;
+        try
+        {
+            socket = (Socket)ar.AsyncState;
+            if (socket.Connected)
+            {
+                int received = socket.EndReceive(ar);
+                if (received > 0)
+                {
+                    byte[] data = new byte[received];
+                    Array.Copy(_asyncBuffer, data, received);
+                    ClientHandlerNetworkData.HandleNetworkInformation(data);
+                    if (receiving)
+                        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
+                    else
+                        return;
+                }
+                else
+                {
+                    EntranceController.serverInfo = "Client received nothing. Connection aborded...";
+                    clientSocket.Close();
+                }
+            }
+
+        }
+        catch
+        {
+            EntranceController.serverInfo = "Client receive exception";
+            clientSocket.Close();
+        }
     }
 
-    public static void ClientLogin()
-    {
-        ClientSendData.SendClose();
-        player = new NetPlayerTCP();
-        NetPlayerTCP.playerSocket = clientSocket;
-        //clientSocket.Close();
-        scenechange = true;
-    }
-
-    public static void ClientClose()
-    {
-        ClientSendData.SendClose();
-    }
-
-    void OnApplicationQuit()
-    {
-        if(clientSocket.Connected)
-            ClientSendData.SendClose();
-        clientSocket.Close();
-        //DisconectFromServer
-    }
-
-    
 }

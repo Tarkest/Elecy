@@ -1,29 +1,18 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+﻿using System.Collections.Generic;
 
-public class ClientHandlerNetworkData : MonoBehaviour
+public class ClientHandlerNetworkData
 {
-
     private delegate void Packet_(byte[] data);
-
     private static Dictionary<int, Packet_> _Packets;
 
-    private void Awake()
+    public static void InitializeNetworkPackages()
     {
-        InitializeNetworkPackages();
-    }
-
-    public void InitializeNetworkPackages()
-    {
-        Debug.Log("Initialize Network Packages");
         _Packets = new Dictionary<int, Packet_>
         {
             {(int)ServerPackets.SConnectionOK, HandleConnectionOK },
             {(int)ServerPackets.SRegisterOK, HandleRegisterOK },
             {(int)ServerPackets.SLoginOK, HandleLoginOK },
             {(int)ServerPackets.SAlert, HandleServerAlert },
-            {(int)ServerPackets.SGlChatMsg, HandleGlobalChatMessage }
         };
     }
 
@@ -48,10 +37,8 @@ public class ClientHandlerNetworkData : MonoBehaviour
         buffer.ReadInteger();
         string msg = buffer.ReadString();
         buffer.Dispose();
-
         EntranceController.serverInfo = msg;
-
-        ClientSendData.ConnectionComplite();
+        ClientSendData.SendConnectionComplite();
     }
 
     private static void HandleRegisterOK(byte[] data)
@@ -59,10 +46,9 @@ public class ClientHandlerNetworkData : MonoBehaviour
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        string rgstOk = buffer.ReadString();
+        string msg = buffer.ReadString();
         buffer.Dispose();
-        EntranceController.serverInfo = rgstOk;
-
+        EntranceController.serverInfo = msg;
     }
 
     private static void HandleLoginOK(byte[] data)
@@ -70,42 +56,34 @@ public class ClientHandlerNetworkData : MonoBehaviour
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
+        int playerIndex = buffer.ReadInteger();
         string nickname = buffer.ReadString();
-        int[][] accountdata = new int[2][];
+        int[][] accountData = new int[2][];
         int[] levels = new int[5];
         int[] ranks = new int[5];
         for (int leveli = 0; leveli < 5; leveli++)
             levels[leveli] = buffer.ReadInteger();
         for (int ranki = 0; ranki < 5; ranki++)
             ranks[ranki] = buffer.ReadInteger();
-        accountdata[0] = levels;
-        accountdata[1] = ranks;
+        accountData[0] = levels;
+        accountData[1] = ranks;
         buffer.Dispose();
-        string msg = "You Logged On." + nickname;
-        for(int i1 = 0; i1 < 2; i1++)
-        {
-            for(int i2 = 0; i2 < 5; i2++)
-            {
-                msg += accountdata[i1][i2].ToString();
-            }
-        }
-        EntranceController.serverInfo = msg;
-        ClientTCP.ClientLogin();
+        EntranceController.serverInfo = "You Logged On.";
+        ClientTCP.Stop();
+        Network.Login(playerIndex, nickname, accountData);
     }
 
     private static void HandleServerAlert(byte[] data)
     {
-        Debug.Log("Alert");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         string msg = buffer.ReadString();
         buffer.Dispose();
-
-        EntranceController.serverInfo = msg;
+        EntranceController.serverInfo = "Alert: " + msg;
     }
 
-    public static void HandleGlobalChatMessage(byte[] data)
+    public static void HandleGlobalChatMessage(byte[] data) // In Player!
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);

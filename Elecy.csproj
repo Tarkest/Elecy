@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2017.3.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -282,7 +284,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\C3.cs" />
     <Compile Include="Assets\Scripts\Background_Stats.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
@@ -291,9 +292,12 @@
     <Compile Include="Assets\Scripts\Server\Client\ClientHandlerNetworkData.cs" />
     <Compile Include="Assets\Scripts\Server\Client\ClientSendData.cs" />
     <Compile Include="Assets\Scripts\Server\Client\ClientTCP.cs" />
-    <Compile Include="Assets\Scripts\Server\Client\NetPlayerTCP.cs" />
-    <Compile Include="Assets\Scripts\Server\Client\NetworkPackages.cs" />
-    <Compile Include="Assets\Scripts\Server\Client\PacketBuffer.cs" />
+    <Compile Include="Assets\Scripts\Server\Network.cs" />
+    <Compile Include="Assets\Scripts\Server\NetworkPackages.cs" />
+    <Compile Include="Assets\Scripts\Server\PacketBuffer.cs" />
+    <Compile Include="Assets\Scripts\Server\Player\NetPlayerHandleNetworkData.cs" />
+    <Compile Include="Assets\Scripts\Server\Player\NetPlayerSendData.cs" />
+    <Compile Include="Assets\Scripts\Server\Player\NetPlayerTCP.cs" />
     <Compile Include="Assets\Scripts\SpellInvoker_2.cs" />
     <Compile Include="Assets\Scripts\Spells\Behaviour\Ignis\Spark.cs" />
     <Compile Include="Assets\Scripts\Spells\Behaviour\SpellMovement_Bullet.cs" />

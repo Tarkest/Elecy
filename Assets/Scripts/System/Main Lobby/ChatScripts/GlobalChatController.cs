@@ -37,7 +37,7 @@ public class GlobalChatController : MonoBehaviour {
     {
         if(_messageInput.text != "")
         {
-        ClientSendData.SendGlChatMsg(_messageInput.text);
+        NetPlayerSendData.SendGlChatMsg(_messageInput.text);
         _messageInput.text = "";
         }
     } 
