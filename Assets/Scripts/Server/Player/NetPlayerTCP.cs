@@ -78,13 +78,19 @@ public static class NetPlayerTCP
     public static void Stop()
     {
         receiving = false;
+        // Send to server close
+    }
+
+    public static bool isConnected()
+    {
+        return receiving;
     }
  
-    private static void Close()
+    public static void Close()
     {
-        Stop();
+        if(receiving)
+            Stop();
         playerSocket = null;
-        //Send close player to server
     }
 
     public static void SendData(byte[] data)

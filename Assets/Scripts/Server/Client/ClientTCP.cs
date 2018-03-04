@@ -14,7 +14,8 @@ public static class ClientTCP
 
     public static void Close()
     {
-        Stop();
+        if(receiving)
+            Stop();
         clientSocket.Close();
     }
 
@@ -26,7 +27,7 @@ public static class ClientTCP
 
     public static bool isConnected()
     {
-        return clientSocket.Connected;
+        return receiving;
     }
 
     public static void BeginReceive()
@@ -129,5 +130,6 @@ public static class ClientTCP
             clientSocket.Close();
         }
     }
+
 
 }

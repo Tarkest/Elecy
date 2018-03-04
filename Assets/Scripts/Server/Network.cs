@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -61,9 +58,8 @@ public class Network : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (ClientTCP.isConnected())
-            ClientSendData.SendClose();
         ClientTCP.Close();
+        NetPlayerTCP.Close();
     }
 
     public static void Login(int playerIndex, string nickname, int[][] accountData)
