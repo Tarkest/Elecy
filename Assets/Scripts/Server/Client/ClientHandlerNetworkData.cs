@@ -35,9 +35,8 @@ public class ClientHandlerNetworkData
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        string msg = buffer.ReadString();
         buffer.Dispose();
-        EntranceController.serverInfo = msg;
+        EntranceController.serverInfo = "You are connected.";
         ClientSendData.SendConnectionComplite();
     }
 
@@ -83,14 +82,4 @@ public class ClientHandlerNetworkData
         EntranceController.serverInfo = "Alert: " + msg;
     }
 
-    public static void HandleGlobalChatMessage(byte[] data) // In Player!
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteBytes(data);
-        buffer.ReadInteger();
-        string Nickname = buffer.ReadString();
-        string Message = buffer.ReadString();
-        buffer.Dispose();
-        GlobalChatController.RecieveMessage(Nickname, Message);
-    }
 }

@@ -6,10 +6,9 @@ public class ClientSendData
     public static void SendConnectionComplite()
     {
         PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)ClientPackets.CConnectcomplite);
+        buffer.WriteInteger((int)ClientPackets.CConnectComplite);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
-        EntranceController.serverInfo = "You are connected to the server.";
     }
 
     public static void SendLogin()

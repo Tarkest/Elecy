@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 public class NetPlayerHandleNetworkData
 {
@@ -34,7 +31,12 @@ public class NetPlayerHandleNetworkData
 
     public static void HandleConnectionOK(byte[] data)
     {
-
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string msg = buffer.ReadString();
+        buffer.Dispose();
+        GlobalChatController.RecieveMessage("Server", msg);
     }
 
     public static void HandleServerAlert(byte[] data)
@@ -47,9 +49,9 @@ public class NetPlayerHandleNetworkData
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        string Nickname = buffer.ReadString();
-        string Message = buffer.ReadString();
+        string nickname = buffer.ReadString();
+        string msg = buffer.ReadString();
         buffer.Dispose();
-        GlobalChatController.RecieveMessage(Nickname, Message);
+        GlobalChatController.RecieveMessage(nickname, msg);
     }
 }

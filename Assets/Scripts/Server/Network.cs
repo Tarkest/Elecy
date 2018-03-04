@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Network : MonoBehaviour
@@ -7,7 +6,7 @@ public class Network : MonoBehaviour
     [System.NonSerialized]
     public string IP_ADDRESS;
     [System.NonSerialized]
-    public int PORT = 24985;
+    public int PORT = NetworkConstants.PORT;
 
     public bool connectToLocal;
 
@@ -23,11 +22,11 @@ public class Network : MonoBehaviour
     {
         if (connectToLocal == true)
         {
-            IP_ADDRESS = "127.0.0.1";
+            IP_ADDRESS = NetworkConstants.LOCAL_IP_ADDRESS;
         }
         else
         {
-            IP_ADDRESS = "77.122.14.86";
+            IP_ADDRESS = NetworkConstants.IP_ADDRESS;
         }
 
         ClientTCP.Connect(IP_ADDRESS, PORT);
@@ -45,12 +44,12 @@ public class Network : MonoBehaviour
     private void LoadScene()
     {
         scenechange = false;
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(NetworkConstants.MAIN_LOBBY_NUMBER);
     }
 
     private void OnLevelWasLoaded(int level)
     {
-        if (level == 2)
+        if (level == NetworkConstants.MAIN_LOBBY_NUMBER)
         {
             NetPlayerTCP.BeginReceive();
         }

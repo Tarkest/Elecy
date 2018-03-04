@@ -3,16 +3,16 @@ using System.Net.Sockets;
 
 public static class NetPlayerTCP
 {
-    public static int[] level = new int[5];
-    public static int[] rank = new int[5];
+    public static int[] level = new int[NetworkConstants.RACES_NUMBER];
+    public static int[] rank = new int[NetworkConstants.RACES_NUMBER];
 
-    private static byte[] _buffer = new byte[1024];
+    private static byte[] _buffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static int index;
     private static string ip;
     private static string nickname;
     private static playerState state;
     private static bool receiving = false;
-    private static Socket playerSocket;
+    private static Socket socket;
 
     public enum playerState
     {
@@ -25,7 +25,7 @@ public static class NetPlayerTCP
     public static void InitPlayer(int playerIndex, string nick, int[][] data)
     {
         state = playerState.InMainLobby;
-        playerSocket = ClientTCP.GetSocket();
+        socket = ClientTCP.GetSocket();
         nickname = nick;
         index = playerIndex;
         level = data[0];
@@ -35,12 +35,12 @@ public static class NetPlayerTCP
     public static void BeginReceive()
     {
         receiving = true;
-        playerSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(PlayerReceiveCallback), playerSocket);
+        socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(PlayerReceiveCallback), socket);
+        NetPlayerSendData.SendConnectionComplpite();
     }
 
     public static void PlayerReceiveCallback(IAsyncResult ar)
     {
-        Socket socket;
         try
         {
             socket = (Socket)ar.AsyncState;
@@ -62,16 +62,16 @@ public static class NetPlayerTCP
                 }
                 else
                 {
-                    playerSocket.Close();
-                    throw new Exception("Player received nothing. Connection aborded...");
+                    socket.Close();
+                    EntranceController.serverInfo = "Player received nothing. Connection aborded...";
                 }
             }
 
         }
         catch
         {
-            playerSocket.Close();
-            throw new Exception("Player receive exception");
+            socket.Close();
+            EntranceController.serverInfo = "Player receive exception";
         }
     }
 
@@ -90,12 +90,12 @@ public static class NetPlayerTCP
     {
         if(receiving)
             Stop();
-        playerSocket = null;
+        socket = null;
     }
 
     public static void SendData(byte[] data)
     {
-        playerSocket.Send(data);
+        socket.Send(data);
     }
 
     #region Gets and Sets

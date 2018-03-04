@@ -3,26 +3,27 @@ using System.Net.Sockets;
 
 public static class ClientTCP
 {
-    private static Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-    private static byte[] _asyncBuffer = new byte[1024];
+    private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+    private static byte[] _asyncBuffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static bool receiving = false;
 
     public static void Connect(string IP_ADDRESS, int PORT)
     {
-        clientSocket.BeginConnect(IP_ADDRESS, PORT, new AsyncCallback(ConnectCallBack), clientSocket);
+        socket.BeginConnect(IP_ADDRESS, PORT, new AsyncCallback(ConnectCallBack), socket);
     }
 
     public static void Close()
     {
         if(receiving)
             Stop();
-        clientSocket.Close();
+        socket.Close();
     }
 
     public static void Stop()
     {
         receiving = false;
-        ClientSendData.SendClose();
+        if(socket.Connected)
+            ClientSendData.SendClose();
     }
 
     public static bool isConnected()
@@ -33,22 +34,23 @@ public static class ClientTCP
     public static void BeginReceive()
     {
         receiving = true;
-        clientSocket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), clientSocket);
+        socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
+        //Send to server inf
     }
 
     public static void SendData(byte[] data)
     {
-        clientSocket.Send(data);
+        socket.Send(data);
     }
 
     public static Socket GetSocket()
     {
-        return clientSocket;
+        return socket;
     }
 
     private static void ConnectCallBack(IAsyncResult ar)
     {
-        clientSocket.EndConnect(ar);
+        socket.EndConnect(ar);
         receiving = true;
         ConnectReceive();
     }
@@ -62,7 +64,7 @@ public static class ClientTCP
 
         try
         {
-            currentRead = totalRead = clientSocket.Receive(_sizeInfo);
+            currentRead = totalRead = socket.Receive(_sizeInfo);
             if (totalRead <= 0)
             {
                 EntranceController.serverInfo = "Server unavalible.";
@@ -71,7 +73,7 @@ public static class ClientTCP
             {
                 while (totalRead < _sizeInfo.Length && currentRead > 0)
                 {
-                    currentRead = clientSocket.Receive(_sizeInfo, totalRead, _sizeInfo.Length - totalRead, SocketFlags.None);
+                    currentRead = socket.Receive(_sizeInfo, totalRead, _sizeInfo.Length - totalRead, SocketFlags.None);
                     totalRead += currentRead;
                 }
                 int messageSize = 0;
@@ -81,10 +83,10 @@ public static class ClientTCP
                 messageSize |= (_sizeInfo[3] << 24);
                 receivedBuffer = new byte[messageSize];
                 totalRead = 0;
-                currentRead = totalRead = clientSocket.Receive(receivedBuffer, totalRead, receivedBuffer.Length - totalRead, SocketFlags.None);
+                currentRead = totalRead = socket.Receive(receivedBuffer, totalRead, receivedBuffer.Length - totalRead, SocketFlags.None);
                 while (totalRead < messageSize && currentRead > 0)
                 {
-                    currentRead = clientSocket.Receive(receivedBuffer, totalRead, receivedBuffer.Length - totalRead, SocketFlags.None);
+                    currentRead = socket.Receive(receivedBuffer, totalRead, receivedBuffer.Length - totalRead, SocketFlags.None);
                     totalRead += currentRead;
                 }
                 ClientHandlerNetworkData.HandleNetworkInformation(receivedBuffer);
@@ -99,10 +101,8 @@ public static class ClientTCP
 
     private static void ReceiveCallback(IAsyncResult ar)
     {
-        Socket socket;
         try
         {
-            socket = (Socket)ar.AsyncState;
             if (socket.Connected)
             {
                 int received = socket.EndReceive(ar);
@@ -119,7 +119,7 @@ public static class ClientTCP
                 else
                 {
                     EntranceController.serverInfo = "Client received nothing. Connection aborded...";
-                    clientSocket.Close();
+                    socket.Close();
                 }
             }
 
@@ -127,7 +127,7 @@ public static class ClientTCP
         catch
         {
             EntranceController.serverInfo = "Client receive exception";
-            clientSocket.Close();
+            socket.Close();
         }
     }
 

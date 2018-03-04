@@ -292,6 +292,7 @@
     <Compile Include="Assets\Scripts\Server\Client\ClientHandlerNetworkData.cs" />
     <Compile Include="Assets\Scripts\Server\Client\ClientSendData.cs" />
     <Compile Include="Assets\Scripts\Server\Client\ClientTCP.cs" />
+    <Compile Include="Assets\Scripts\Server\NetworkConstants.cs" />
     <Compile Include="Assets\Scripts\Server\Network.cs" />
     <Compile Include="Assets\Scripts\Server\NetworkPackages.cs" />
     <Compile Include="Assets\Scripts\Server\PacketBuffer.cs" />

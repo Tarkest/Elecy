@@ -5,6 +5,11 @@
 
 public enum ClientPackets
 {
-    CConnectcomplite = 1, CRegisterTry = 2, CLoginTry = 3, CAlert = 4, CClose = 5, CGlChatMsg = 6
+    CConnectComplite = 1, CRegisterTry = 2, CLoginTry = 3, CAlert = 4, CClose = 5, CReconnectComplite = 6
+}
+
+public enum PlayerPackets
+{
+    PConnectionComplite = 7, PGlChatMsg = 8
 }
 
