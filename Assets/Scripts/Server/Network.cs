@@ -47,14 +47,6 @@ public class Network : MonoBehaviour
         SceneManager.LoadScene(NetworkConstants.MAIN_LOBBY_NUMBER);
     }
 
-    private void OnLevelWasLoaded(int level)
-    {
-        if (level == NetworkConstants.MAIN_LOBBY_NUMBER)
-        {
-            NetPlayerTCP.BeginReceive();
-        }
-    }
-
     private void OnApplicationQuit()
     {
         ClientTCP.Close();
