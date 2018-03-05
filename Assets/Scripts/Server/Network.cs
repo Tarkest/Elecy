@@ -12,6 +12,8 @@ public class Network : MonoBehaviour
 
     private static bool scenechange = false;
 
+    private static int scenenum;
+
     private void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
@@ -51,6 +53,7 @@ public class Network : MonoBehaviour
     {
         ClientTCP.Close();
         NetPlayerTCP.Close();
+        RoomTCP.Close();
     }
 
     public static void Login(int playerIndex, string nickname, int[][] accountData)
@@ -60,5 +63,11 @@ public class Network : MonoBehaviour
         scenechange = true;
     }
 
+    public static void InBattle(int roomindex)
+    {
+        RoomTCP.InitRoom(roomindex);
+        RoomHandleNetworkInformation.InitializeNetworkPackages();
+        scenechange = true;
+    }
 }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class NetPlayerHandleNetworkData
 {
@@ -11,9 +12,12 @@ public class NetPlayerHandleNetworkData
         {
             {(int)ServerPackets.SConnectionOK, HandleConnectionOK },
             {(int)ServerPackets.SAlert, HandleServerAlert },
-            {(int)ServerPackets.SGlChatMsg, HandleGlobalChatMessage }
+            {(int)ServerPackets.SGlChatMsg, HandleGlobalChatMessage },
+            {(int)ServerPackets.SQueueStarted, HandleQueueStarted },
+            {(int)ServerPackets.SMatchFound, HandleMatchFound }
         };
     }
+
 
     public static void HandleNetworkInformation(byte[] data)
     {
@@ -53,5 +57,26 @@ public class NetPlayerHandleNetworkData
         string msg = buffer.ReadString();
         buffer.Dispose();
         GlobalChatController.RecieveMessage(nickname, msg);
+    }
+
+    public static void HandleQueueStarted(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        buffer.Dispose();
+        MainLobbyController.isSearching = true;
+    }
+
+    public static void HandleMatchFound(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        int roomindex = buffer.ReadInteger();
+        buffer.Dispose();
+        NetPlayerSendData.SendBeginMatchLoad(roomindex);
+        NetPlayerTCP.Stop();
+        Network.InBattle(roomindex);
     }
 }

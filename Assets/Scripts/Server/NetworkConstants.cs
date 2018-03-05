@@ -13,6 +13,7 @@ public class NetworkConstants
 
     #region Scene Numbers
     public static int MAIN_LOBBY_NUMBER = 2;
+    public static int ROOM_ARENA_NUMBER = 3;
 
     #endregion
 

@@ -51,7 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\C3.cs" />
      <Compile Include="Assets\Scripts\Background_Stats.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
@@ -60,9 +59,13 @@
      <Compile Include="Assets\Scripts\Server\Client\ClientHandlerNetworkData.cs" />
      <Compile Include="Assets\Scripts\Server\Client\ClientSendData.cs" />
      <Compile Include="Assets\Scripts\Server\Client\ClientTCP.cs" />
-     <Compile Include="Assets\Scripts\Server\Client\NetPlayerTCP.cs" />
-     <Compile Include="Assets\Scripts\Server\Client\NetworkPackages.cs" />
-     <Compile Include="Assets\Scripts\Server\Client\PacketBuffer.cs" />
+     <Compile Include="Assets\Scripts\Server\Network.cs" />
+     <Compile Include="Assets\Scripts\Server\NetworkConstants.cs" />
+     <Compile Include="Assets\Scripts\Server\NetworkPackages.cs" />
+     <Compile Include="Assets\Scripts\Server\PacketBuffer.cs" />
+     <Compile Include="Assets\Scripts\Server\Player\NetPlayerHandleNetworkData.cs" />
+     <Compile Include="Assets\Scripts\Server\Player\NetPlayerSendData.cs" />
+     <Compile Include="Assets\Scripts\Server\Player\NetPlayerTCP.cs" />
      <Compile Include="Assets\Scripts\SpellInvoker_2.cs" />
      <Compile Include="Assets\Scripts\Spells\Behaviour\Ignis\Spark.cs" />
      <Compile Include="Assets\Scripts\Spells\Behaviour\SpellMovement_Bullet.cs" />
@@ -80,6 +83,7 @@
      <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\ChatMessageController.cs" />
      <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\GlobalChatController.cs" />
      <Compile Include="Assets\Scripts\System\Main Lobby\MainLobbyController.cs" />
+     <Compile Include="Assets\Scripts\System\SceneManage.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>D:/Games/Projects/Elecy/Elecy Project/Elecy/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>

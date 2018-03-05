@@ -107,5 +107,12 @@ public static class NetPlayerTCP
     {
         return nickname;
     }
+
+    public static Socket GetSocket()
+    {
+        return socket;
+    }
     #endregion
+
+
 }
