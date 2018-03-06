@@ -14,6 +14,7 @@ public class NetPlayerHandleNetworkData
             {(int)ServerPackets.SAlert, HandleServerAlert },
             {(int)ServerPackets.SGlChatMsg, HandleGlobalChatMessage },
             {(int)ServerPackets.SQueueStarted, HandleQueueStarted },
+            {(int)ServerPackets.SQueueContinue, HandleQueueContinue },
             {(int)ServerPackets.SMatchFound, HandleMatchFound }
         };
     }
@@ -45,7 +46,11 @@ public class NetPlayerHandleNetworkData
 
     public static void HandleServerAlert(byte[] data)
     {
-
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string alert = buffer.ReadString();
+        GlobalChatController.RecieveMessage("Server", alert);
     }
 
     public static void HandleGlobalChatMessage(byte[] data)
@@ -66,6 +71,12 @@ public class NetPlayerHandleNetworkData
         buffer.ReadInteger();
         buffer.Dispose();
         MainLobbyController.isSearching = true;
+        NetPlayerSendData.SendSearching(MainLobbyController.GetCounter());
+    }
+
+    public static void HandleQueueContinue(byte[] data)
+    {
+        NetPlayerSendData.SendSearching(MainLobbyController.GetCounter());
     }
 
     public static void HandleMatchFound(byte[] data)

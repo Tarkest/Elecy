@@ -54,5 +54,10 @@ public class NetPlayerSendData
         NetPlayerTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
+
+    public static void SendAlert(string alert)
+    {
+
+    }
 }
 

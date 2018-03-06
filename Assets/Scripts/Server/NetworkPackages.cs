@@ -1,6 +1,6 @@
 ﻿public enum ServerPackets
 {
-    SConnectionOK = 1, SRegisterOK = 2, SLoginOK = 3, SAlert = 4, SGlChatMsg = 5, SQueueStarted = 6, SMatchFound = 7
+    SConnectionOK = 1, SRegisterOK = 2, SLoginOK = 3, SAlert = 4, SGlChatMsg = 5, SQueueStarted = 6, SQueueContinue = 7, SMatchFound = 8, SRoomStarted = 9,
 }
 
 public enum ClientPackets
@@ -10,7 +10,7 @@ public enum ClientPackets
 
 public enum NetPlayerPackets
 {
-    PConnectionComplite = 7, PGlChatMsg = 8, PQueueStart = 9, PSearch = 10, PBeginMatchLoad = 11, PQueueStop = 12
+    PConnectionComplite = 7, PGlChatMsg = 8, PQueueStart = 9, PSearch = 10, PBeginMatchLoad = 11, PQueueStop = 12, PAlert = 14,
 }
 
 public enum RoomPackets

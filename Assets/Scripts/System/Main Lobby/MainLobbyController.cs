@@ -13,7 +13,7 @@ public class MainLobbyController : MonoBehaviour {
 
     private int matchType = 0;
     public static bool isSearching = false;
-    private float _searchTimeCounter = 0f;
+    private static float _searchTimeCounter = 0f;
 
     void Awake()
     {
@@ -24,12 +24,17 @@ public class MainLobbyController : MonoBehaviour {
         _timeCounter = GameObject.Find("TimeCounter");
     }
 
+    public static float GetCounter()
+    {
+        return _searchTimeCounter;
+    }
+
     void Update()
     {
         if(isSearching)
         {
             _searchTimeCounter += Time.deltaTime;
-            NetPlayerSendData.SendSearching(_searchTimeCounter);
+            //NetPlayerSendData.SendSearching(_searchTimeCounter);
             //_timeCounter.GetComponent<Text>().text = TimeInText(_searchTimeCounter);
             _machTypeDropdown.GetComponent<Dropdown>().interactable = false;
             _findGameButton.transform.Find("Text").GetComponent<Text>().text = "Searching...";
