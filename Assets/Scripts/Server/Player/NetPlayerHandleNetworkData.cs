@@ -66,10 +66,6 @@ public class NetPlayerHandleNetworkData
 
     public static void HandleQueueStarted(byte[] data)
     {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteBytes(data);
-        buffer.ReadInteger();
-        buffer.Dispose();
         MainLobbyController.isSearching = true;
         NetPlayerSendData.SendSearching(MainLobbyController.GetCounter());
     }
@@ -86,8 +82,8 @@ public class NetPlayerHandleNetworkData
         buffer.ReadInteger();
         int roomindex = buffer.ReadInteger();
         buffer.Dispose();
-        NetPlayerSendData.SendBeginMatchLoad(roomindex);
         NetPlayerTCP.Stop();
         Network.InBattle(roomindex);
+        RoomSendData.SendConnectionOk(roomindex);
     }
 }

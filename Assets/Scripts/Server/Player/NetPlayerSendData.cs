@@ -46,15 +46,6 @@ public class NetPlayerSendData
         buffer.Dispose();
     }
 
-    public static void SendBeginMatchLoad(int roomindex)
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)NetPlayerPackets.PBeginMatchLoad);
-        buffer.WriteInteger(roomindex);
-        NetPlayerTCP.SendData(buffer.ToArray());
-        buffer.Dispose();
-    }
-
     public static void SendAlert(string alert)
     {
 

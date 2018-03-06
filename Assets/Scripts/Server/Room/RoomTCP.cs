@@ -22,7 +22,6 @@ public class RoomTCP : MonoBehaviour {
     {
         receiving = true;
         socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(RoomReceiveCallback), socket);
-        RoomSendData.SendConnectionOk();
     }
 
     public static void RoomReceiveCallback(IAsyncResult ar)
@@ -82,5 +81,10 @@ public class RoomTCP : MonoBehaviour {
     public static void SendData(byte[] data)
     {
         socket.Send(data);
+    }
+
+    public static int Getindex()
+    {
+        return index;
     }
 }

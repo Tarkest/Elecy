@@ -39,14 +39,24 @@ public class Network : MonoBehaviour
     {
         if (scenechange)
         {
-            LoadScene();
+            LoadScene(scenenum);
         }
     }
 
-    private void LoadScene()
+    private void LoadScene(int scenenum)
     {
         scenechange = false;
-        SceneManager.LoadScene(NetworkConstants.MAIN_LOBBY_NUMBER);
+        switch(scenenum)
+        {
+            case 1:
+                SceneManager.LoadScene(NetworkConstants.MAIN_LOBBY_NUMBER);
+            break;
+
+            case 2:
+                SceneManager.LoadScene(NetworkConstants.ROOM_ARENA_NUMBER);
+            break;
+        }
+
     }
 
     private void OnApplicationQuit()
@@ -61,6 +71,7 @@ public class Network : MonoBehaviour
         NetPlayerTCP.InitPlayer(playerIndex, nickname, accountData);
         NetPlayerHandleNetworkData.InitializeNetworkPackages();
         scenechange = true;
+        scenenum = 1;
     }
 
     public static void InBattle(int roomindex)
@@ -68,6 +79,7 @@ public class Network : MonoBehaviour
         RoomTCP.InitRoom(roomindex);
         RoomHandleNetworkInformation.InitializeNetworkPackages();
         scenechange = true;
+        scenenum = 2;
     }
 }
 

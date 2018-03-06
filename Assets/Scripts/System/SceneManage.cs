@@ -16,7 +16,6 @@ public class SceneManage : MonoBehaviour {
             NetPlayerTCP.BeginReceive();
         if (scene.buildIndex == NetworkConstants.ROOM_ARENA_NUMBER)
             RoomTCP.BeginReceive();
-
     }
 
     private void OnDisable()

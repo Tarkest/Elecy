@@ -34,7 +34,6 @@ public class MainLobbyController : MonoBehaviour {
         if(isSearching)
         {
             _searchTimeCounter += Time.deltaTime;
-            //NetPlayerSendData.SendSearching(_searchTimeCounter);
             //_timeCounter.GetComponent<Text>().text = TimeInText(_searchTimeCounter);
             _machTypeDropdown.GetComponent<Dropdown>().interactable = false;
             _findGameButton.transform.Find("Text").GetComponent<Text>().text = "Searching...";
@@ -70,7 +69,6 @@ public class MainLobbyController : MonoBehaviour {
         if(!isSearching)
         { 
             _searchTimeCounter = 0;
-            Debug.Log(matchType);
             NetPlayerSendData.SendQueueStart(matchType);
         }
         else if(isSearching)
