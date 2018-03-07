@@ -13,7 +13,18 @@ public class GlobalObjects : MonoBehaviour {
     public static Transform enemyTransform;
     public static EnemyMovement enemyMovement;
 
-    void Awake()
+     void Awake()
+    { 
+        player = GameObject.Find("Test player");
+        playerTransform = player.GetComponent<Transform>();
+        playerPos = playerTransform.position;
+        playerRot = playerTransform.rotation;
+        enemy = GameObject.Find("dummy");
+        enemyTransform = enemy.GetComponent<Transform>();
+        enemyMovement = enemy.GetComponent<EnemyMovement>();
+    }
+
+    void Update()
     {
         player = GameObject.Find("Test player");
         playerTransform = player.GetComponent<Transform>();
