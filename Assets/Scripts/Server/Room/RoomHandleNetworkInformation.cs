@@ -56,7 +56,7 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         Quaternion enemyRotation = new Quaternion(buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat());
         buffer.Dispose();
 
-        GameObject.Find("dummy").GetComponent<EnemyMovement>().SetTransform(enemyTransform, enemyRotation);
-        RoomSendData.SendTransform(GameObject.Find("TestPlayer").GetComponent<Transform>().position, GameObject.Find("TestPlayer").GetComponent<Transform>().rotation);
+        GlobalObjects.enemyMovement.SetTransform(enemyTransform, enemyRotation);
+        RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
     }
 }

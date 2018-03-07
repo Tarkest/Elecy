@@ -12,7 +12,9 @@ public class SpawnPoint : MonoBehaviour {
         _spawnPos = gameObject.transform.position;
         _spawnRot = gameObject.transform.rotation;
 
-        Instantiate(Resources.Load("/Players/TestPlayer"), _spawnPos, _spawnRot);
+        //Instantiate(Resources.Load("/Players/TestPlayer"), _spawnPos, _spawnRot);
+        GameObject.Find("Test player").GetComponent<Transform>().position = _spawnPos;
+        GameObject.Find("Test player").GetComponent<Transform>().rotation = _spawnRot;
         Destroy(gameObject);
     }
 
@@ -21,7 +23,9 @@ public class SpawnPoint : MonoBehaviour {
         _spawnPos = gameObject.transform.position;
         _spawnRot = gameObject.transform.rotation;
 
-        Instantiate(Resources.Load("/Players/dummy"), _spawnPos, _spawnRot);
+        //Instantiate(Resources.Load("/Players/dummy"), _spawnPos, _spawnRot);
+        GameObject.Find("dummy").GetComponent<Transform>().position = _spawnPos;
+        GameObject.Find("dummy").GetComponent<Transform>().rotation = _spawnRot;
         Destroy(gameObject);
 
     }

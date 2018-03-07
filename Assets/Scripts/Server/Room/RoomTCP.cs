@@ -20,6 +20,7 @@ public class RoomTCP : MonoBehaviour {
 
     public static void BeginReceive()
     {
+        //RoomSendData.SendConnectionOk(index);
         receiving = true;
         socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(RoomReceiveCallback), socket);
     }
@@ -36,7 +37,7 @@ public class RoomTCP : MonoBehaviour {
                 {
                     byte[] data = new byte[received];
                     Array.Copy(_buffer, data, received);
-                    NetPlayerHandleNetworkData.HandleNetworkInformation(data);
+                    RoomHandleNetworkInformation.HandleNetworkInformation(data);
                     PacketBuffer packet = new PacketBuffer();
                     packet.WriteBytes(data);
                     int packetNum = packet.ReadInteger();

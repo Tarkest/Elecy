@@ -76,10 +76,10 @@ public class Network : MonoBehaviour
 
     public static void InBattle(int roomindex)
     {
-        RoomTCP.InitRoom(roomindex);
         RoomHandleNetworkInformation.InitializeNetworkPackages();
-        scenechange = true;
+        RoomTCP.InitRoom(roomindex);
         scenenum = 2;
+        scenechange = true;
     }
 }
 

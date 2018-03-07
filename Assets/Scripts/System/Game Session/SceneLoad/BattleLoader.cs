@@ -8,6 +8,9 @@ public class BattleLoader : MonoBehaviour {
     private static SpawnPoint _firstSpawnPoint;
     private static SpawnPoint _secondSpawnPoint;
     private static GameObject _loadScreen;
+    private static string nickname;
+    private static bool spawn = false;
+
 
     private void Awake()
     {
@@ -16,25 +19,48 @@ public class BattleLoader : MonoBehaviour {
         _loadScreen = GameObject.Find("LoadScreen");
     }
 
+    private void Update()
+    {
+        if(spawn)
+        {
+            if (nickname == NetPlayerTCP.GetNickname())
+            {
+                spawn = false;
+                RoomSendData.SendLoadComplite(_firstSpawnPoint.transform.position, _firstSpawnPoint.transform.rotation);
+                _firstSpawnPoint.SpawnPlayer();
+                _secondSpawnPoint.SpawnDummy();
+            }
+            else
+            {
+                spawn = false;
+                RoomSendData.SendLoadComplite(_secondSpawnPoint.transform.position, _secondSpawnPoint.transform.rotation);
+                _firstSpawnPoint.SpawnDummy();
+                _secondSpawnPoint.SpawnPlayer();
+            }
+        }
+    }
     public static void SpanwPlayers(string nickname1, string nickname2)
     {
-        if(nickname1 == NetPlayerTCP.GetNickname())
-        {
-            RoomSendData.SendLoadComplite(_firstSpawnPoint.transform.position, _firstSpawnPoint.transform.rotation);
-            _firstSpawnPoint.SpawnPlayer();
-            _secondSpawnPoint.SpawnDummy();
-        }
-        else
-        {
-            RoomSendData.SendLoadComplite(_secondSpawnPoint.transform.position, _secondSpawnPoint.transform.rotation);
-            _firstSpawnPoint.SpawnDummy();
-            _secondSpawnPoint.SpawnPlayer();
-        }
+        //if(nickname1 == NetPlayerTCP.GetNickname())
+        //{
+        //    RoomSendData.SendLoadComplite(_firstSpawnPoint.transform.position, _firstSpawnPoint.transform.rotation);
+        //    _firstSpawnPoint.SpawnPlayer();
+        //    _secondSpawnPoint.SpawnDummy();
+        //}
+        //else
+        //{
+        //    RoomSendData.SendLoadComplite(_secondSpawnPoint.transform.position, _secondSpawnPoint.transform.rotation);
+        //    _firstSpawnPoint.SpawnDummy();
+        //    _secondSpawnPoint.SpawnPlayer();
+        //}
+        nickname = nickname1;
+        spawn = true;
+
     }
 
     public static void StartBattle()
     {
         _loadScreen.SetActive(false);
-        RoomSendData.SendTransform(GameObject.Find("TestPlayer").GetComponent<Transform>().position, GameObject.Find("TestPlayer").GetComponent<Transform>().rotation);
+        RoomSendData.SendTransform(GlobalObjects.playerTransform.position, GlobalObjects.playerTransform.rotation);
     }
 }
