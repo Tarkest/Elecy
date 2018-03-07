@@ -10,6 +10,7 @@ public class BattleLoader : MonoBehaviour {
     private static GameObject _loadScreen;
     private static string nickname;
     private static bool spawn = false;
+    private static bool loaded = false;
 
 
     private void Awake()
@@ -37,7 +38,17 @@ public class BattleLoader : MonoBehaviour {
                 _firstSpawnPoint.SpawnDummy();
                 _secondSpawnPoint.SpawnPlayer();
             }
+
+
         }
+
+        if(loaded)
+        {
+            loaded = false;
+            _loadScreen.SetActive(false);
+            RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
+        }
+
     }
     public static void SpanwPlayers(string nickname1, string nickname2)
     {
@@ -60,7 +71,7 @@ public class BattleLoader : MonoBehaviour {
 
     public static void StartBattle()
     {
-        _loadScreen.SetActive(false);
-        RoomSendData.SendTransform(GlobalObjects.playerTransform.position, GlobalObjects.playerTransform.rotation);
+        loaded = true;
+        //RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
     }
 }

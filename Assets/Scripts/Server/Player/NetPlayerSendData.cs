@@ -29,11 +29,11 @@ public class NetPlayerSendData
         buffer.Dispose();
     }
 
-    public static void SendSearching(float searchTimeCounter)
+    public static void SendSearching()
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)NetPlayerPackets.PSearch);
-        buffer.WriteFloat(searchTimeCounter);
+        buffer.WriteFloat(0.5f);
         NetPlayerTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

@@ -39,13 +39,13 @@ public class Network : MonoBehaviour
     {
         if (scenechange)
         {
+            scenechange = false;
             LoadScene(scenenum);
         }
     }
 
     private void LoadScene(int scenenum)
     {
-        scenechange = false;
         switch(scenenum)
         {
             case 1:

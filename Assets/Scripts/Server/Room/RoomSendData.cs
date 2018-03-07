@@ -6,6 +6,7 @@ public class RoomSendData : MonoBehaviour {
 
     public static void SendConnectionOk(int roomindex)
     {
+        Debug.Log("Send connect complite");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RConnectionComplite);
         buffer.WriteInteger(roomindex);
@@ -15,6 +16,7 @@ public class RoomSendData : MonoBehaviour {
 
     public static void SendLoadComplite(Vector3 playertransform, Quaternion playerrotation)
     {
+        Debug.Log("Send load complite");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RLoadComplite);
         buffer.WriteInteger(RoomTCP.Getindex());

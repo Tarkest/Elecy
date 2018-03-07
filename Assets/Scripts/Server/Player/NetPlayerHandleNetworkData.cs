@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class NetPlayerHandleNetworkData
 {
@@ -67,16 +68,18 @@ public class NetPlayerHandleNetworkData
     public static void HandleQueueStarted(byte[] data)
     {
         MainLobbyController.isSearching = true;
-        NetPlayerSendData.SendSearching(MainLobbyController.GetCounter());
+        NetPlayerSendData.SendSearching();
     }
 
     public static void HandleQueueContinue(byte[] data)
     {
-        NetPlayerSendData.SendSearching(MainLobbyController.GetCounter());
+        Debug.Log("Handle queue continue");
+        NetPlayerSendData.SendSearching();
     }
 
     public static void HandleMatchFound(byte[] data)
     {
+        Debug.Log("Handle match found");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
