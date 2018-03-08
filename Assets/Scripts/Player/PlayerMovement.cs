@@ -53,6 +53,9 @@ public class PlayerMovement : MonoBehaviour
         isStucked = GetComponent<PlayerStats>().isStucked;
         isCasting = GetComponent<PlayerStats>().isCasting;
         DashCooldown();
+        RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
+        Debug.Log(GlobalObjects.playerPos);
+        Debug.Log(GlobalObjects.playerRot);
     }
 
     void Moving (float h, float v)

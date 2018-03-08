@@ -61,6 +61,5 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         buffer.Dispose();
 
         GlobalObjects.enemyMovement.SetTransform(enemyTransform, enemyRotation);
-        RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
     }
 }
