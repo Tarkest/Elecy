@@ -42,9 +42,12 @@ public class PlayerMovement : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         
-            Moving(h, v);
-            Turning();
-            Dashing(h, v);
+        Moving(h, v);
+        Turning();
+        Dashing(h, v);
+        RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
+        Debug.Log(GlobalObjects.playerPos);
+        Debug.Log(GlobalObjects.playerRot);
     }
 
     void Update()
@@ -53,9 +56,6 @@ public class PlayerMovement : MonoBehaviour
         isStucked = GetComponent<PlayerStats>().isStucked;
         isCasting = GetComponent<PlayerStats>().isCasting;
         DashCooldown();
-        RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
-        Debug.Log(GlobalObjects.playerPos);
-        Debug.Log(GlobalObjects.playerRot);
     }
 
     void Moving (float h, float v)

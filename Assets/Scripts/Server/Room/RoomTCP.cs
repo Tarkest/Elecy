@@ -38,11 +38,11 @@ public class RoomTCP : MonoBehaviour {
                 {
                     byte[] data = new byte[received];
                     Array.Copy(_buffer, data, received);
-                    RoomHandleNetworkInformation.HandleNetworkInformation(data);
                     if (receiving)
                         socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(RoomReceiveCallback), socket);
                     else
                         return;
+                    RoomHandleNetworkInformation.HandleNetworkInformation(data);
                 }
                 else
                 {
