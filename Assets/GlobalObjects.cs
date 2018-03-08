@@ -24,11 +24,13 @@ public class GlobalObjects : MonoBehaviour {
         enemyMovement = enemy.GetComponent<EnemyMovement>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         playerTransform = player.GetComponent<Transform>();
+        player = GameObject.Find("Test player");
         playerPos = playerTransform.position;
         playerRot = playerTransform.rotation;
+        enemy = GameObject.Find("dummy");
         enemyTransform = enemy.GetComponent<Transform>();
         enemyMovement = enemy.GetComponent<EnemyMovement>();
     }

@@ -8,26 +8,27 @@ public class EnemyMovement : MonoBehaviour {
     
     Vector3 pos;
     Quaternion rot;
-    Vector3 startpos;
-    Quaternion startrot;
+    Vector3 startpos = new Vector3();
+    Quaternion startrot = new Quaternion();
     float startTime;
-    float distance;
-    float angle;
+    float distance = 1f;
+    float angle = 1f;
+    float fracJourney;
 
     void FixedUpdate()
     {
         //change = false;
-       float fracJourney = (Time.time - startTime);
-       gameObject.transform.position = Vector3.Lerp(startpos, pos, fracJourney / distance);
-       gameObject.transform.rotation = Quaternion.Lerp(startrot, rot, fracJourney / angle);
+       fracJourney = (Time.time - startTime);
+       gameObject.transform.position = pos;
+       //gameObject.transform.rotation = Quaternion.Lerp(startrot, rot, fracJourney / angle);
     }
 
     public void SetTransform(Vector3 position, Quaternion rotation)
     {
-        pos = position;
-        rot = rotation;
         startpos = gameObject.transform.position;
         startrot = gameObject.transform.rotation;
+        pos = Vector3.Lerp(startpos, position, fracJourney / distance);
+        rot = rotation;
         startTime = Time.time;
         distance = Vector3.Distance(startpos, pos);
         angle = Quaternion.Angle(startrot, rot);
