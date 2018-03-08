@@ -17,7 +17,11 @@ public class EnemyMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        //change = false;
+       if(change)
+        {
+            change = false;
+            startTime = Time.time;
+        }
        fracJourney = (Time.time - startTime);
        gameObject.transform.position = Vector3.Lerp(startpos, pos, fracJourney / distance);
        //gameObject.transform.position = pos;
@@ -30,9 +34,8 @@ public class EnemyMovement : MonoBehaviour {
         startrot = GlobalObjects.enemyRot;
         pos = position;
         rot = rotation;
-        startTime = Time.time;
         distance = Vector3.Distance(startpos, pos);
         angle = Quaternion.Angle(startrot, rot);
-        //change = true;
+        change = true;
     }
 }
