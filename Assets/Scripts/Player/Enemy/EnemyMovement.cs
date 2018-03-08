@@ -19,15 +19,16 @@ public class EnemyMovement : MonoBehaviour {
     {
         //change = false;
        fracJourney = (Time.time - startTime);
-       gameObject.transform.position = pos;
-       //gameObject.transform.rotation = Quaternion.Lerp(startrot, rot, fracJourney / angle);
+       gameObject.transform.position = Vector3.Lerp(startpos, pos, fracJourney / distance);
+       //gameObject.transform.position = pos;
+       gameObject.transform.rotation = Quaternion.Lerp(startrot, rot, fracJourney / angle);
     }
 
     public void SetTransform(Vector3 position, Quaternion rotation)
     {
-        startpos = gameObject.transform.position;
-        startrot = gameObject.transform.rotation;
-        pos = Vector3.Lerp(startpos, position, fracJourney / distance);
+        startpos = GlobalObjects.enemyPos;
+        startrot = GlobalObjects.enemyRot;
+        pos = position;
         rot = rotation;
         startTime = Time.time;
         distance = Vector3.Distance(startpos, pos);

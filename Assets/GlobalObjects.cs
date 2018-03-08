@@ -12,6 +12,8 @@ public class GlobalObjects : MonoBehaviour {
     public static GameObject enemy;
     public static Transform enemyTransform;
     public static EnemyMovement enemyMovement;
+    public static Vector3 enemyPos;
+    public static Quaternion enemyRot;
 
      void Awake()
     { 
@@ -24,14 +26,11 @@ public class GlobalObjects : MonoBehaviour {
         enemyMovement = enemy.GetComponent<EnemyMovement>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        playerTransform = player.GetComponent<Transform>();
-        player = GameObject.Find("Test player");
         playerPos = playerTransform.position;
         playerRot = playerTransform.rotation;
-        enemy = GameObject.Find("dummy");
-        enemyTransform = enemy.GetComponent<Transform>();
-        enemyMovement = enemy.GetComponent<EnemyMovement>();
+        enemyPos = enemyTransform.position;
+        enemyRot = enemyTransform.rotation;
     }
 }
