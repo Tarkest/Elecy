@@ -40,6 +40,7 @@ public class SpawnPoint : MonoBehaviour {
 
     public void SpawnDummy()
     {
+        EnemyMovement.SetStartPos(_spawnPos, _spawnRot);
         spawnEnemy = true;
     }
 

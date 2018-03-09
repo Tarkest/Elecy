@@ -62,11 +62,9 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         Vector3 enemyTransform = new Vector3(buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat());
-        Debug.Log(enemyTransform);
         Quaternion enemyRotation = new Quaternion(buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat());
-        Debug.Log(enemyRotation);
         buffer.Dispose();
 
-        GlobalObjects.enemyMovement.SetTransform(enemyTransform, enemyRotation);
+        //GlobalObjects.enemyMovement.SetTransform(enemyTransform, enemyRotation);
     }
 }

@@ -22,7 +22,7 @@ public class BattleLoader : MonoBehaviour
         {
             loaded = false;
             _loadScreen.SetActive(false);
-            RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
+            //RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
         }
 
     }
