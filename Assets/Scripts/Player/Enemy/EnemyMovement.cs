@@ -25,7 +25,6 @@ public class EnemyMovement : MonoBehaviour {
         }
        fracJourney = (Time.time - startTime) * speed;
        gameObject.transform.position = Vector3.Lerp(startpos, pos, fracJourney / distance);
-       //gameObject.transform.position = pos;
        gameObject.transform.rotation = Quaternion.Lerp(startrot, rot, fracJourney / angle);
     }
 

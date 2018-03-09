@@ -12,6 +12,7 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         _Packets = new Dictionary<int, Packet_>
         {
             {(int)ServerPackets.SLoadStarted, HandleLoadStarted },
+            {(int)ServerPackets.SPlayerSpawned, HandleSpawn },
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
             {(int)ServerPackets.STransform, HandleEnemyTransform }
         };
@@ -41,6 +42,12 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         string Nickname2 = buffer.ReadString();
         buffer.Dispose();
         BattleLoader.SpanwPlayers(Nickname1, Nickname2);
+    }
+
+    public static void HandleSpawn(byte[] data)
+    {
+        Debug.Log("Handle spawn");
+        RoomSendData.SendLoadComplite();
     }
 
     public static void HandleRoomStart(byte[] data)
