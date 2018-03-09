@@ -11,6 +11,8 @@ public class NetworkConstants
 
     public static string IP_ADDRESS = "77.122.14.86";
 
+    public static int UPDATE_RATE = 30;
+
     #region Scene Numbers
     public static int MAIN_LOBBY_NUMBER = 2;
     public static int ROOM_ARENA_NUMBER = 1;

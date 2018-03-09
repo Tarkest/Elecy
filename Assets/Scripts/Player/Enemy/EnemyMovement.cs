@@ -39,7 +39,6 @@ public class EnemyMovement : MonoBehaviour {
     {
         startpos = position;
         startrot = rotation;
-        start = true;
     }
 
     public void SetTransform(Vector3 position, Quaternion rotation)
@@ -51,5 +50,6 @@ public class EnemyMovement : MonoBehaviour {
         distance = Vector3.Distance(startpos, pos);
         //angle = Quaternion.Angle(startrot, rot);
         change = true;
+        start = true;
     }
 }

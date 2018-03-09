@@ -34,7 +34,6 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
 
     public static void HandleLoadStarted(byte[] data)
     {
-        Debug.Log("Handle load started");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
@@ -46,13 +45,11 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
 
     public static void HandleSpawn(byte[] data)
     {
-        Debug.Log("Handle spawn");
         RoomSendData.SendLoadComplite();
     }
 
     public static void HandleRoomStart(byte[] data)
     {
-        Debug.Log("Handle room start");
         BattleLoader.StartBattle();
     }
 
@@ -65,6 +62,6 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         Quaternion enemyRotation = new Quaternion(buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat());
         buffer.Dispose();
 
-        //GlobalObjects.enemyMovement.SetTransform(enemyTransform, enemyRotation);
+        GlobalObjects.enemyMovement.SetTransform(enemyTransform, enemyRotation);
     }
 }

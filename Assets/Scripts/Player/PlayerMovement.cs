@@ -45,9 +45,6 @@ public class PlayerMovement : MonoBehaviour
         Moving(h, v);
         Turning();
         Dashing(h, v);
-        RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
-        //Debug.Log(GlobalObjects.playerPos);
-        //Debug.Log(GlobalObjects.playerRot);
     }
 
     void Update()

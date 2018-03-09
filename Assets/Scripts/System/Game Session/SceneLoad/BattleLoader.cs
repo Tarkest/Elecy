@@ -45,6 +45,6 @@ public class BattleLoader : MonoBehaviour
     public static void StartBattle()
     {
         loaded = true;
-        //RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
+        BattleLogic.BeginBattle();
     }
 }
