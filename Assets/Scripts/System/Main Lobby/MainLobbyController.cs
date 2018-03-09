@@ -34,21 +34,32 @@ public class MainLobbyController : MonoBehaviour {
         if(isSearching)
         {
             _searchTimeCounter += Time.deltaTime;
-            //_timeCounter.GetComponent<Text>().text = TimeInText(_searchTimeCounter);
-            _machTypeDropdown.GetComponent<Dropdown>().interactable = false;
+            _timeCounter.GetComponent<Text>().text = TimeInText(_searchTimeCounter);
+            _machTypeDropdown.SetActive(false);
             _findGameButton.transform.Find("Text").GetComponent<Text>().text = "Searching...";
         }
         else
         {
-            _machTypeDropdown.GetComponent<Dropdown>().interactable = true;
+            _machTypeDropdown.SetActive(true);
             _findGameButton.transform.Find("Text").GetComponent<Text>().text = "Find Game";
         }
     }
 
-    //private string TimeInText(float Time)
-    //{
-        
-    //}
+    private string TimeInText(float Time)
+    {
+        int currentTime = (int)Time;
+        int minutes = currentTime / 60;
+        int seconds = currentTime - minutes * 60;
+        string secString;
+        if (seconds < 10)
+            secString = "0" + seconds.ToString();
+        else
+            secString = seconds.ToString();
+        if (minutes == 0)
+            return secString;
+        else
+            return minutes.ToString() + ":" + secString;
+    }
 
     public void ChangeMatchType()
     {
@@ -69,6 +80,7 @@ public class MainLobbyController : MonoBehaviour {
         if(!isSearching)
         { 
             _searchTimeCounter = 0;
+            isSearching = true;
             NetPlayerSendData.SendQueueStart(matchType);
         }
         else if(isSearching)
