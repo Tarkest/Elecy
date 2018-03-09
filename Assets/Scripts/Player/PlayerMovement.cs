@@ -30,9 +30,9 @@ public class PlayerMovement : MonoBehaviour
     private bool isStunned = false;
     private bool isStucked = false;
     private bool isCasting = false;
-    private bool battleIsStarted = false;
+    private static bool battleIsStarted = false;
 
-    public void StartBattle()
+    public static void StartBattle()
     {
         battleIsStarted = true;
     }
