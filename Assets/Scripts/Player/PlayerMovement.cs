@@ -30,6 +30,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isStunned = false;
     private bool isStucked = false;
     private bool isCasting = false;
+    private bool battleIsStarted = false;
+
+    public void StartBattle()
+    {
+        battleIsStarted = true;
+    }
 
     void Awake()
     {
@@ -39,20 +45,28 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        if(battleIsStarted)
+        {
+            float h = Input.GetAxisRaw("Horizontal");
+            float v = Input.GetAxisRaw("Vertical");
         
-        Moving(h, v);
-        Turning();
-        Dashing(h, v);
+            Moving(h, v);
+            Turning();
+            Dashing(h, v);
+        }
+
     }
 
     void Update()
     {
-        isStunned = GetComponent<PlayerStats>().isStunned;
-        isStucked = GetComponent<PlayerStats>().isStucked;
-        isCasting = GetComponent<PlayerStats>().isCasting;
-        DashCooldown();
+        if(battleIsStarted)
+        {
+            isStunned = GetComponent<PlayerStats>().isStunned;
+            isStucked = GetComponent<PlayerStats>().isStucked;
+            isCasting = GetComponent<PlayerStats>().isCasting;
+            DashCooldown();
+        }
+
     }
 
     void Moving (float h, float v)
