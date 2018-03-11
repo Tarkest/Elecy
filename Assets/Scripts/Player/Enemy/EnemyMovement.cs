@@ -18,12 +18,6 @@ public class EnemyMovement : MonoBehaviour {
 
     void Update()
     {
-
-    }
-
-    void FixedUpdate()
-    {
-
         if (prevPos == Vector3.zero)
         {
             prevPos = servPos;
@@ -50,6 +44,12 @@ public class EnemyMovement : MonoBehaviour {
             gameObject.transform.position = transPos;
             gameObject.transform.rotation = rot;
         }
+    }
+
+    void FixedUpdate()
+    {
+
+
     }
 
     public static void SetStartPos(Vector3 position, Quaternion rotation)
