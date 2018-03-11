@@ -18,7 +18,13 @@ public class EnemyMovement : MonoBehaviour {
 
     void Update()
     {
-        if(prevPos == Vector3.zero)
+
+    }
+
+    void FixedUpdate()
+    {
+
+        if (prevPos == Vector3.zero)
         {
             prevPos = servPos;
         }
@@ -31,10 +37,8 @@ public class EnemyMovement : MonoBehaviour {
         prevPos = servPos;
 
         transPos = Vector3.Lerp(transPos, servPos, progress);
-    }
 
-    void FixedUpdate()
-    {
+
         if (change)
         {
             change = false;
