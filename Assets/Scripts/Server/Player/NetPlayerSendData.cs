@@ -46,6 +46,14 @@ public class NetPlayerSendData
         buffer.Dispose();
     }
 
+    public static void SendStopPlayer()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)NetPlayerPackets.PStopPlayer);
+        NetPlayerTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
     public static void SendAlert(string alert)
     {
 

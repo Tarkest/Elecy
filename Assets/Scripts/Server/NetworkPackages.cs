@@ -10,7 +10,7 @@ public enum ClientPackets
 
 public enum NetPlayerPackets
 {
-    PConnectionComplite = 7, PGlChatMsg = 8, PQueueStart = 9, PSearch = 10, PQueueStop = 11, PAlert = 12
+    PConnectionComplite = 7, PGlChatMsg = 8, PQueueStart = 9, PSearch = 10, PQueueStop = 11, PAlert = 12, PStopPlayer = 17
 }
 
 public enum RoomPackets
