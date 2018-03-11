@@ -33,7 +33,7 @@ public class NetPlayerSendData
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)NetPlayerPackets.PSearch);
-        buffer.WriteFloat(0.5f);
+        buffer.WriteFloat(0.5f); // WriteFloat
         NetPlayerTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
