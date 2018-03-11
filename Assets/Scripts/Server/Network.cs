@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Threading;
 using UnityEngine.SceneManagement;
 
 public class Network : MonoBehaviour
@@ -64,6 +65,7 @@ public class Network : MonoBehaviour
         ClientTCP.Close();
         NetPlayerTCP.Close();
         RoomTCP.Close();
+        BattleLogic.Timer.Dispose();
     }
 
     public static void Login(int playerIndex, string nickname, int[][] accountData)

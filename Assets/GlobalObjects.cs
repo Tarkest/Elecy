@@ -28,6 +28,7 @@ public class GlobalObjects : MonoBehaviour {
         player = GameObject.Find("Test player");
         playerTransform = player.GetComponent<Transform>();
         playerPos = playerTransform.position;
+        Debug.Log(playerPos);
         playerRot = playerTransform.rotation;
         enemy = GameObject.Find("dummy");
         enemyTransform = enemy.GetComponent<Transform>();

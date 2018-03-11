@@ -5,7 +5,7 @@ using System.Threading;
 
 public class BattleLogic : MonoBehaviour {
 
-    private static Timer Timer;
+    public static Timer Timer;
 
     public static void BeginBattle()
     {
