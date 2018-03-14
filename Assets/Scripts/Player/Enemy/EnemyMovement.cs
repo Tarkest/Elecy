@@ -18,32 +18,8 @@ public class EnemyMovement : MonoBehaviour {
 
     void Update()
     {
-        if (prevPos == Vector3.zero)
-        {
-            prevPos = servPos;
-        }
-        realDistance = Vector3.Distance(prevPos, servPos);
-        currentDistance = Vector3.Distance(transPos, servPos);
-        if(realDistance != 0)
-        {
-            progress = currentDistance / realDistance;
-        }
-        prevPos = servPos;
-
-        transPos = Vector3.Lerp(transPos, servPos, progress);
-
-
-        if (change)
-        {
-            change = false;
-        }
-
-        if (start)
-        {
-
-            gameObject.transform.position = transPos;
-            gameObject.transform.rotation = rot;
-        }
+        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, servPos, 0.1f);
+        gameObject.transform.rotation = rot;
     }
 
     void FixedUpdate()

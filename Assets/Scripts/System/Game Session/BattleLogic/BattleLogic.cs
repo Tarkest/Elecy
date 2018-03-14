@@ -9,8 +9,8 @@ public class BattleLogic : MonoBehaviour {
 
     public static void BeginBattle()
     {
-        Timer = new Timer(SendInfo, null, 0, 1000 / NetworkConstants.UPDATE_RATE);
         PlayerMovement.StartBattle();
+        Timer = new Timer(SendInfo, null, 0, 1000 / NetworkConstants.UPDATE_RATE);
     }
 
     private static void SendInfo(object o)
