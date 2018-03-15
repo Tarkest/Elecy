@@ -11,7 +11,7 @@ public class EnemyMovement : MonoBehaviour {
     Vector3 prevPos;
     float currentDistance;
     float posDistance;
-    public float maxLerpDist = 10f;
+    public float maxLerpDist = 10.5f;
     public float minLerpDist = 0.1f;
 
     void Update()
