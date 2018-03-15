@@ -6,6 +6,7 @@ public static class ClientTCP
     private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     private static byte[] _asyncBuffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static bool receiving = false;
+    private static bool connected = false;
 
     public static void Connect(string IP_ADDRESS, int PORT)
     {
@@ -19,6 +20,11 @@ public static class ClientTCP
         socket.Close();
     }
 
+    public static void Disconnect()
+    {
+        socket.Disconnect(true);
+    }
+
     public static void Stop()
     {
         receiving = false;
@@ -26,7 +32,7 @@ public static class ClientTCP
             ClientSendData.SendClose();
     }
 
-    public static bool isConnected()
+    public static bool IsConnected()
     {
         return receiving;
     }
@@ -50,6 +56,7 @@ public static class ClientTCP
 
     private static void ConnectCallBack(IAsyncResult ar)
     {
+        Network.ChangeConnectionStatus(true);
         socket.EndConnect(ar);
         receiving = true;
         ConnectReceive();
@@ -67,6 +74,7 @@ public static class ClientTCP
             currentRead = totalRead = socket.Receive(_sizeInfo);
             if (totalRead <= 0)
             {
+                Network.ChangeConnectionStatus(false);
                 EntranceController.serverInfo = "Server unavalible.";
             }
             else
@@ -95,6 +103,7 @@ public static class ClientTCP
         }
         catch
         {
+            Network.ChangeConnectionStatus(false);
             EntranceController.serverInfo = "Server unavalible.";
         }
     }
@@ -118,6 +127,7 @@ public static class ClientTCP
                 }
                 else
                 {
+                    Network.ChangeConnectionStatus(false);
                     EntranceController.serverInfo = "Client received nothing. Connection aborded...";
                     socket.Close();
                 }
@@ -126,6 +136,7 @@ public static class ClientTCP
         }
         catch
         {
+            Network.ChangeConnectionStatus(false);
             EntranceController.serverInfo = "Client receive exception";
             socket.Close();
         }

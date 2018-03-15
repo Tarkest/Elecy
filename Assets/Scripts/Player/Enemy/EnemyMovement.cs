@@ -1,47 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Threading;
+﻿using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
 
     bool change = false;
     static bool start = false;
     Vector3 servPos;
-    Quaternion rot;
+    Quaternion servRot;
     static Vector3 transPos = new Vector3();
-    static Quaternion startrot = new Quaternion();
+    static Quaternion transrot = new Quaternion();
     Vector3 prevPos;
     float currentDistance;
-    float realDistance;
-    float progress;
+    float posDistance;
 
     void Update()
     {
-        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, servPos, 0.1f);
-        gameObject.transform.rotation = rot;
-    }
-
-    void FixedUpdate()
-    {
-
-
+        posDistance = Vector3.Distance(gameObject.transform.position, servPos);
+        if (posDistance > 0.1f && posDistance < 10f)
+            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, servPos, 0.1f);
+        else
+            gameObject.transform.position = servPos;
+        gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, servRot, 0.1f);
     }
 
     public static void SetStartPos(Vector3 position, Quaternion rotation)
     {
         transPos = position;
-        startrot = rotation;
+        transrot = rotation;
     }
 
     public void SetTransform(Vector3 position, Quaternion rotation)
     {
         transPos = GlobalObjects.enemyPos;
-        startrot = GlobalObjects.enemyRot;
+        transrot = GlobalObjects.enemyRot;
         servPos = position;
-        rot = rotation;
+        servRot = rotation;
 
-        //angle = Quaternion.Angle(startrot, rot);
         change = true;
         start = true;
     }

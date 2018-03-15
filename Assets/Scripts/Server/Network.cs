@@ -15,6 +15,8 @@ public class Network : MonoBehaviour
 
     private static int scenenum;
 
+    private static bool isConnected = false;
+
     private void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
@@ -32,7 +34,7 @@ public class Network : MonoBehaviour
             IP_ADDRESS = NetworkConstants.IP_ADDRESS;
         }
 
-        ClientTCP.Connect(IP_ADDRESS, PORT);
+
         EntranceController.serverInfo = "Connecting to the server...";
     }
 
@@ -43,6 +45,12 @@ public class Network : MonoBehaviour
             scenechange = false;
             LoadScene(scenenum);
         }
+        while(!isConnected)
+        {
+            ClientTCP.Disconnect();
+            ClientTCP.Connect(IP_ADDRESS, PORT);
+        }
+
     }
 
     private void LoadScene(int scenenum)
@@ -58,6 +66,11 @@ public class Network : MonoBehaviour
             break;
         }
 
+    }
+
+    public static void ChangeConnectionStatus(bool connected)
+    {
+        isConnected = connected;
     }
 
     private void OnApplicationQuit()
