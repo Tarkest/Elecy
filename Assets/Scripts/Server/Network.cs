@@ -47,7 +47,6 @@ public class Network : MonoBehaviour
         }
         while(!isConnected)
         {
-            ClientTCP.Disconnect();
             ClientTCP.Connect(IP_ADDRESS, PORT);
         }
 

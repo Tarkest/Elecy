@@ -20,11 +20,6 @@ public static class ClientTCP
         socket.Close();
     }
 
-    public static void Disconnect()
-    {
-        socket.Disconnect(true);
-    }
-
     public static void Stop()
     {
         receiving = false;

@@ -11,11 +11,13 @@ public class EnemyMovement : MonoBehaviour {
     Vector3 prevPos;
     float currentDistance;
     float posDistance;
+    public float maxLerpDist = 10f;
+    public float minLerpDist = 0.1f;
 
     void Update()
     {
         posDistance = Vector3.Distance(gameObject.transform.position, servPos);
-        if (posDistance > 0.1f && posDistance < 10f)
+        if (posDistance > minLerpDist && posDistance < maxLerpDist)
             gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, servPos, 0.1f);
         else
             gameObject.transform.position = servPos;
