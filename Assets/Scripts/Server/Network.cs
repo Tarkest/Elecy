@@ -45,7 +45,7 @@ public class Network : MonoBehaviour
             scenechange = false;
             LoadScene(scenenum);
         }
-        while(!isConnected)
+        if(!isConnected)
         {
             ClientTCP.Connect(IP_ADDRESS, PORT);
         }

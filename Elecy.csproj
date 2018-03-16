@@ -360,6 +360,8 @@
     <Compile Include="Assets\Scripts\System\Game Session\SpellContainer.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\ChatMessageController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\GlobalChatController.cs" />
+    <Compile Include="Assets\Scripts\System\Main Lobby\FriendlistScripts\FriendFieldController.cs" />
+    <Compile Include="Assets\Scripts\System\Main Lobby\FriendlistScripts\FriendListController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\MainLobbyController.cs" />
     <Compile Include="Assets\Scripts\System\SceneManage.cs" />
   </ItemGroup>

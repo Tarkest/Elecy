@@ -6,7 +6,6 @@ public static class ClientTCP
     private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     private static byte[] _asyncBuffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static bool receiving = false;
-    private static bool connected = false;
 
     public static void Connect(string IP_ADDRESS, int PORT)
     {
@@ -51,7 +50,7 @@ public static class ClientTCP
 
     private static void ConnectCallBack(IAsyncResult ar)
     {
-        Network.ChangeConnectionStatus(true);
+
         socket.EndConnect(ar);
         receiving = true;
         ConnectReceive();
@@ -74,6 +73,7 @@ public static class ClientTCP
             }
             else
             {
+                Network.ChangeConnectionStatus(true);
                 while (totalRead < _sizeInfo.Length && currentRead > 0)
                 {
                     currentRead = socket.Receive(_sizeInfo, totalRead, _sizeInfo.Length - totalRead, SocketFlags.None);
@@ -124,7 +124,7 @@ public static class ClientTCP
                 {
                     Network.ChangeConnectionStatus(false);
                     EntranceController.serverInfo = "Client received nothing. Connection aborded...";
-                    socket.Close();
+                    //socket.Close();
                 }
             }
 
@@ -133,7 +133,7 @@ public static class ClientTCP
         {
             Network.ChangeConnectionStatus(false);
             EntranceController.serverInfo = "Client receive exception";
-            socket.Close();
+            //socket.;
         }
     }
 

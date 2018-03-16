@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GlobalChatController : MonoBehaviour {
@@ -30,6 +28,10 @@ public class GlobalChatController : MonoBehaviour {
             NewMessage.GetComponent<ChatMessageController>().AddMessage(_currentNick, _currentMsg);
             _currentMsg = null;
             _currentNick = null;
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SendChatMessage();
         }
     }
     
