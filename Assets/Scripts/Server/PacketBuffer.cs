@@ -70,8 +70,8 @@ public class PacketBuffer : IDisposable {
 
     public void WriteString(string input)
     {
-        _bufferList.AddRange(BitConverter.GetBytes(input.Length));
-        _bufferList.AddRange(Encoding.ASCII.GetBytes(input));
+        _bufferList.AddRange(BitConverter.GetBytes(Encoding.UTF8.GetByteCount(input)));
+        _bufferList.AddRange(Encoding.UTF8.GetBytes(input));
         _buffUpdate = true;
     }
     #endregion
@@ -171,7 +171,7 @@ public class PacketBuffer : IDisposable {
             _buffUpdate = false;
         }
 
-        string value = Encoding.ASCII.GetString(_readBuffer, _readPos, length);
+        string value = Encoding.UTF8.GetString(_readBuffer, _readPos, length);
         if (peek & _bufferList.Count > _readPos)
         {
             _readPos += length;
