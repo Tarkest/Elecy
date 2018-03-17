@@ -11,11 +11,13 @@ public class RoomTCP : MonoBehaviour {
     private static bool receiving = false;
     private static byte[] _buffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static Socket socket;
+    private static List<NetworkGameObject> GameObjects; 
 
     public static void InitRoom(int roomindex)
     {
         socket = NetPlayerTCP.GetSocket();
         index = roomindex;
+        GameObjects = new List<NetworkGameObject>();
     }
 
     public static void BeginReceive()
@@ -83,5 +85,14 @@ public class RoomTCP : MonoBehaviour {
     public static int Getindex()
     {
         return index;
+    }
+
+    public static float[] GetBattlegroundScale()
+    {
+        float[] scale = new float[2];
+        scale[0] = GameObject.Find("Terrain").GetComponent<Transform>().lossyScale.x;
+        scale[1] = GameObject.Find("Terrain").GetComponent<Transform>().lossyScale.z;
+
+        return scale;
     }
 }

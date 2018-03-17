@@ -12,7 +12,8 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         _Packets = new Dictionary<int, Packet_>
         {
             {(int)ServerPackets.SLoadStarted, HandleLoadStarted },
-            {(int)ServerPackets.SPlayerSpawned, HandleSpawn },
+            {(int)ServerPackets.SRockSpawn, HandleRockSpawn },
+            {(int)ServerPackets.STreeSpawn, HandleTreeSpawn },
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
             {(int)ServerPackets.STransform, HandleEnemyTransform }
         };
@@ -43,9 +44,16 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         BattleLoader.SpanwPlayers(Nickname1, Nickname2);
     }
 
-    public static void HandleSpawn(byte[] data)
+    public static void HandleRockSpawn(byte[] data)
     {
-        RoomSendData.SendLoadComplite();
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+    }
+
+    public static void HandleTreeSpawn(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
     }
 
     public static void HandleRoomStart(byte[] data)
@@ -58,8 +66,8 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        Vector3 enemyTransform = new Vector3(buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat());
-        Quaternion enemyRotation = new Quaternion(buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat());
+        Vector3 enemyTransform = buffer.ReadVector3();
+        Quaternion enemyRotation = buffer.ReadQuternion();
         buffer.Dispose();
 
         GlobalObjects.enemyMovement.SetTransform(enemyTransform, enemyRotation);

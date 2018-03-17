@@ -338,6 +338,7 @@
     <Compile Include="Assets\Scripts\Server\Player\NetPlayerHandleNetworkData.cs" />
     <Compile Include="Assets\Scripts\Server\Player\NetPlayerSendData.cs" />
     <Compile Include="Assets\Scripts\Server\Player\NetPlayerTCP.cs" />
+    <Compile Include="Assets\Scripts\Server\Room\NetworkGameObject.cs" />
     <Compile Include="Assets\Scripts\Server\Room\RoomHandleNetworkInformation.cs" />
     <Compile Include="Assets\Scripts\Server\Room\RoomSendData.cs" />
     <Compile Include="Assets\Scripts\Server\Room\RoomTCP.cs" />

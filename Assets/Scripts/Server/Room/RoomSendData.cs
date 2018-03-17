@@ -9,6 +9,9 @@ public class RoomSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RConnectionComplite);
         buffer.WriteInteger(roomindex);
+        float[] scale = RoomTCP.GetBattlegroundScale();
+        buffer.WriteFloat(scale[0]);
+        buffer.WriteFloat(scale[1]);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -18,13 +21,26 @@ public class RoomSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RPlayerSpawned);
         buffer.WriteInteger(RoomTCP.Getindex());
-        buffer.WriteFloat(playerTransform.x);
-        buffer.WriteFloat(playerTransform.y);
-        buffer.WriteFloat(playerTransform.z);
-        buffer.WriteFloat(playerRotation.x);
-        buffer.WriteFloat(playerRotation.y);
-        buffer.WriteFloat(playerRotation.z);
-        buffer.WriteFloat(playerRotation.w);
+        buffer.WriteVector3(playerTransform);
+        buffer.WriteQuaternion(playerRotation);
+        RoomTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendRocksSpawned()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RRockSpawned);
+        buffer.WriteInteger(RoomTCP.Getindex());
+        RoomTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendTreesSpawned()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RTreesSpawned);
+        buffer.WriteInteger(RoomTCP.Getindex());
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -43,13 +59,8 @@ public class RoomSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RTransform);
         buffer.WriteInteger(RoomTCP.Getindex());
-        buffer.WriteFloat(playertransform.x);
-        buffer.WriteFloat(playertransform.y);
-        buffer.WriteFloat(playertransform.z);
-        buffer.WriteFloat(playerrotation.x);
-        buffer.WriteFloat(playerrotation.y);
-        buffer.WriteFloat(playerrotation.z);
-        buffer.WriteFloat(playerrotation.w);
+        buffer.WriteVector3(playertransform);
+        buffer.WriteQuaternion(playerrotation);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

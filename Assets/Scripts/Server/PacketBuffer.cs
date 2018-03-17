@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
-public class PacketBuffer : IDisposable {
+public class PacketBuffer : MonoBehaviour, IDisposable {
 
     List<byte> _bufferList;
     byte[] _readBuffer;
@@ -72,6 +73,23 @@ public class PacketBuffer : IDisposable {
     {
         _bufferList.AddRange(BitConverter.GetBytes(Encoding.UTF8.GetByteCount(input)));
         _bufferList.AddRange(Encoding.UTF8.GetBytes(input));
+        _buffUpdate = true;
+    }
+
+    public void WriteVector3(Vector3 input)
+    {
+        _bufferList.AddRange(BitConverter.GetBytes(input.x));
+        _bufferList.AddRange(BitConverter.GetBytes(input.y));
+        _bufferList.AddRange(BitConverter.GetBytes(input.z));
+        _buffUpdate = true;
+    }
+
+    public void WriteQuaternion(Quaternion input)
+    {
+        _bufferList.AddRange(BitConverter.GetBytes(input.x));
+        _bufferList.AddRange(BitConverter.GetBytes(input.y));
+        _bufferList.AddRange(BitConverter.GetBytes(input.z));
+        _bufferList.AddRange(BitConverter.GetBytes(input.w));
         _buffUpdate = true;
     }
     #endregion
@@ -177,6 +195,16 @@ public class PacketBuffer : IDisposable {
             _readPos += length;
         }
         return value;
+    }
+
+    public Vector3 ReadVector3()
+    {
+        return new Vector3(ReadFloat(), ReadFloat(), ReadFloat());
+    }
+
+    public Quaternion ReadQuternion()
+    {
+        return new Quaternion(ReadFloat(), ReadFloat(), ReadFloat(), ReadFloat());
     }
     #endregion
 
