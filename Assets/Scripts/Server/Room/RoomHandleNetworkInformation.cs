@@ -14,6 +14,7 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
             {(int)ServerPackets.SLoadStarted, HandleLoadStarted },
             {(int)ServerPackets.SRockSpawn, HandleRockSpawn },
             {(int)ServerPackets.STreeSpawn, HandleTreeSpawn },
+           // {(int)ServerPackets.SEnemyLoadProgress, HandleEnemyLoadProgress },
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
             {(int)ServerPackets.STransform, HandleEnemyTransform }
         };
@@ -48,12 +49,48 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        int numberofrocks = buffer.ReadInteger();
+        int[] rocksindexes = new int[numberofrocks];
+        Vector3[] rockspos = new Vector3[numberofrocks];
+        Quaternion[] rocksrot = new Quaternion[numberofrocks];
+        for(int i = 0; i == numberofrocks; i++)
+        {
+            rocksindexes[i] = buffer.ReadInteger();
+            rockspos[i] = buffer.ReadVector3();
+            rocksrot[i] = buffer.ReadQuternion();
+        }
+        buffer.Dispose();
+        RoomTCP.LoadRocks(numberofrocks, rocksindexes, rockspos, rocksrot);
     }
 
     public static void HandleTreeSpawn(byte[] data)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        int numberoftrees = buffer.ReadInteger();
+        int[] treesindexes = new int[numberoftrees];
+        Vector3[] treespos = new Vector3[numberoftrees];
+        Quaternion[] treesrot = new Quaternion[numberoftrees];
+        for (int i = 0; i == numberoftrees; i++)
+        {
+            treesindexes[i] = buffer.ReadInteger();
+            treespos[i] = buffer.ReadVector3();
+            treesrot[i] = buffer.ReadQuternion();
+        }
+        buffer.Dispose();
+        RoomTCP.LoadTrees(numberoftrees, treesindexes, treespos, treesrot);
+    }
+
+    public static void HandleEnemyLoadProgress(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        float progress = buffer.ReadFloat();
+        buffer.Dispose();
+        BattleLoader.EnemyProgressChange(progress);
     }
 
     public static void HandleRoomStart(byte[] data)

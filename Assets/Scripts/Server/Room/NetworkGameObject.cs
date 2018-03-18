@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NetworkGameObject : MonoBehaviour {
 
+    public int thisIndex;
     public int serverHp;
     public Vector3 serverPos;
     public Quaternion serverRot;
@@ -19,6 +20,11 @@ public class NetworkGameObject : MonoBehaviour {
         serverHp = hp;
     }
 
+    public void SetIndex(int index)
+    {
+        thisIndex = index;
+    }
+
     public Vector3 GetPosition()
     {
         return serverPos;
@@ -32,5 +38,10 @@ public class NetworkGameObject : MonoBehaviour {
     public int GetHp()
     {
         return serverHp;
+    }
+
+    public int GetIndex()
+    {
+        return thisIndex;
     }
 }

@@ -11,7 +11,7 @@ public class RoomTCP : MonoBehaviour {
     private static bool receiving = false;
     private static byte[] _buffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static Socket socket;
-    private static List<NetworkGameObject> GameObjects; 
+    private static List<NetworkGameObject> GameObjects;
 
     public static void InitRoom(int roomindex)
     {
@@ -57,6 +57,36 @@ public class RoomTCP : MonoBehaviour {
             socket.Close();
             EntranceController.serverInfo = "Room receive exception";
         }
+    }
+
+    public static void LoadRocks(int rocksCount, int[] indexes, Vector3[] rocksPosition, Quaternion[] rocksRotation)
+    {
+        for(int i = 0; i == rocksCount; i++)
+        {
+            GameObject NewRock = Resources.Load("/BattleArena/Rock") as GameObject;
+            NetworkGameObject NewRockNet = NewRock.AddComponent<NetworkGameObject>();
+            NewRockNet.SetIndex(indexes[i]);
+            NewRockNet.SetTransform(rocksPosition[i], rocksRotation[i]);
+            GameObjects.Add(NewRockNet);
+            Instantiate(NewRock, rocksPosition[i], rocksRotation[i]);
+        }
+        RoomSendData.SendRocksSpawned();
+        BattleLoader.ThisPlayerProgressChange(0.66f);
+    }
+
+    public static void LoadTrees(int treesCount, int[] indexes, Vector3[] treesPosition, Quaternion[] treesRotation)
+    {
+        for(int i = 0; i == treesCount; i++)
+        {
+            GameObject NewTree = Resources.Load("/BattleArena/Tree") as GameObject;
+            NetworkGameObject NewTreeNet = NewTree.AddComponent<NetworkGameObject>();
+            NewTreeNet.SetIndex(indexes[i]);
+            NewTreeNet.SetTransform(treesPosition[i], treesRotation[i]);
+            GameObjects.Add(NewTreeNet);
+            Instantiate(NewTree, treesPosition[i], treesRotation[i]);
+        }
+        RoomSendData.SendTreesSpawned();
+        BattleLoader.ThisPlayerProgressChange(1f);
     }
 
     public static void Stop()

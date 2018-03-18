@@ -15,5 +15,5 @@ public enum NetPlayerPackets
 
 public enum RoomPackets
 {
-    RConnectionComplite = 13, RPlayerSpawned = 14, RLoadComplite = 15, RTransform = 16, RRockSpawned = 18, RTreesSpawned = 19
+    RConnectionComplite = 13, RPlayerSpawned = 14, RLoadComplite = 15, RTransform = 16, RRockSpawned = 18, RTreesSpawned = 19,
 }
