@@ -30,12 +30,12 @@ public class EnemyMovement : MonoBehaviour {
         transrot = rotation;
     }
 
-    public void SetTransform(Vector3 position, Quaternion rotation)
+    public void SetTransform(float[] position, float[] rotation)
     {
         transPos = GlobalObjects.enemyPos;
         transrot = GlobalObjects.enemyRot;
-        servPos = position;
-        servRot = rotation;
+        servPos = new Vector3(position[0], position[1],position[2]);
+        servRot = new Quaternion(rotation[0], rotation[1],rotation[2],rotation[3]);
 
         change = true;
         start = true;

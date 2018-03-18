@@ -78,7 +78,7 @@ public static class NetPlayerTCP
     public static void Stop()
     {
         receiving = false;
-        // Send to server close
+        NetPlayerSendData.SendStopPlayer();
     }
 
     public static bool isConnected()

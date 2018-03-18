@@ -23,7 +23,7 @@ public class SpellArea : MonoBehaviour {
         _psTarget = GetComponent<ParticleSystem>();
         _psCircle = gameObject.transform.Find("SpellArea").GetComponent<ParticleSystem>();
         _psArrow = gameObject.transform.Find("SpellPointer").GetComponent<ParticleSystem>();
-        _spellName = GameObject.Find("Test player").GetComponent<SpellInvoker>().spellName;
+        //_spellName = GameObject.Find("Test player").GetComponent<SpellInvoker>().spellName;
         //_spellContainer = (Resources.Load(_spellName, typeof (GameObject)) as GameObject).GetComponent<SpellContainer>();
         //_spellContainer.SpellConteinerLoad();
         _mousePosition = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;

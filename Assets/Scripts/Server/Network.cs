@@ -90,7 +90,6 @@ public class Network : MonoBehaviour
 
     public static void InBattle(int roomindex)
     {
-        NetPlayerSendData.SendStopPlayer();
         RoomHandleNetworkInformation.InitializeNetworkPackages();
         RoomTCP.InitRoom(roomindex);
         scenenum = 2;

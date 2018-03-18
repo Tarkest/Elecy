@@ -59,31 +59,35 @@ public class RoomTCP : MonoBehaviour {
         }
     }
 
-    public static void LoadRocks(int rocksCount, int[] indexes, Vector3[] rocksPosition, Quaternion[] rocksRotation)
+    public static void LoadRocks(int rocksCount, int[] indexes, float[][] rocksPosition, float[][] rocksRotation)
     {
         for(int i = 0; i < rocksCount; i++)
         {
             GameObject NewRock = Resources.Load("/BattleArena/Rock") as GameObject;
             NetworkGameObject NewRockNet = NewRock.AddComponent<NetworkGameObject>();
             NewRockNet.SetIndex(indexes[i]);
-            NewRockNet.SetTransform(rocksPosition[i], rocksRotation[i]);
+            Vector3 pos = new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]);
+            Quaternion rot = new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]);
+            NewRockNet.SetTransform(pos, rot);
             GameObjects.Add(NewRockNet);
-            Instantiate(NewRock, rocksPosition[i], rocksRotation[i]);
+            Instantiate(NewRock, pos, rot);
         }
         RoomSendData.SendRocksSpawned();
         BattleLoader.ThisPlayerProgressChange(0.66f);
     }
 
-    public static void LoadTrees(int treesCount, int[] indexes, Vector3[] treesPosition, Quaternion[] treesRotation)
+    public static void LoadTrees(int treesCount, int[] indexes, float[][] treesPosition, float[][] treesRotation)
     {
         for(int i = 0; i == treesCount; i++)
         {
             GameObject NewTree = Resources.Load("/BattleArena/Tree") as GameObject;
             NetworkGameObject NewTreeNet = NewTree.AddComponent<NetworkGameObject>();
             NewTreeNet.SetIndex(indexes[i]);
-            NewTreeNet.SetTransform(treesPosition[i], treesRotation[i]);
+            Vector3 pos = new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]);
+            Quaternion rot = new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]);
+            NewTreeNet.SetTransform(pos, rot);
             GameObjects.Add(NewTreeNet);
-            Instantiate(NewTree, treesPosition[i], treesRotation[i]);
+            Instantiate(NewTree, pos, rot);
         }
         RoomSendData.SendTreesSpawned();
         BattleLoader.ThisPlayerProgressChange(1f);

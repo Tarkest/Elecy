@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class PacketBuffer : MonoBehaviour, IDisposable {
+public class PacketBuffer : IDisposable {
 
     List<byte> _bufferList;
     byte[] _readBuffer;
@@ -76,20 +76,20 @@ public class PacketBuffer : MonoBehaviour, IDisposable {
         _buffUpdate = true;
     }
 
-    public void WriteVector3(Vector3 input)
+    public void WriteVector3(float[] pos)
     {
-        _bufferList.AddRange(BitConverter.GetBytes(input.x));
-        _bufferList.AddRange(BitConverter.GetBytes(input.y));
-        _bufferList.AddRange(BitConverter.GetBytes(input.z));
+        _bufferList.AddRange(BitConverter.GetBytes(pos[0]));
+        _bufferList.AddRange(BitConverter.GetBytes(pos[1]));
+        _bufferList.AddRange(BitConverter.GetBytes(pos[2]));
         _buffUpdate = true;
     }
 
-    public void WriteQuaternion(Quaternion input)
+    public void WriteQuaternion(float[] rot)
     {
-        _bufferList.AddRange(BitConverter.GetBytes(input.x));
-        _bufferList.AddRange(BitConverter.GetBytes(input.y));
-        _bufferList.AddRange(BitConverter.GetBytes(input.z));
-        _bufferList.AddRange(BitConverter.GetBytes(input.w));
+        _bufferList.AddRange(BitConverter.GetBytes(rot[0]));
+        _bufferList.AddRange(BitConverter.GetBytes(rot[1]));
+        _bufferList.AddRange(BitConverter.GetBytes(rot[2]));
+        _bufferList.AddRange(BitConverter.GetBytes(rot[3]));
         _buffUpdate = true;
     }
     #endregion
@@ -197,14 +197,14 @@ public class PacketBuffer : MonoBehaviour, IDisposable {
         return value;
     }
 
-    public Vector3 ReadVector3()
+    public float[] ReadVector3()
     {
-        return new Vector3(ReadFloat(), ReadFloat(), ReadFloat());
+        return new float[] { ReadFloat(), ReadFloat(), ReadFloat() };
     }
 
-    public Quaternion ReadQuternion()
+    public float[] ReadQuternion()
     {
-        return new Quaternion(ReadFloat(), ReadFloat(), ReadFloat(), ReadFloat());
+        return new float[] { ReadFloat(), ReadFloat(), ReadFloat(), ReadFloat() };
     }
     #endregion
 

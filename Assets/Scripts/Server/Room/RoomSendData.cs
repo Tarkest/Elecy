@@ -18,11 +18,13 @@ public class RoomSendData : MonoBehaviour {
 
     public static void SendPlayerSpawned(Vector3 playerTransform, Quaternion playerRotation)
     {
+        float[] playerPos = new float[] { playerTransform.x, playerTransform.y, playerTransform.z };
+        float[] playerRot = new float[] { playerRotation.x, playerRotation.y, playerRotation.z, playerRotation.w };
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RPlayerSpawned);
         buffer.WriteInteger(RoomTCP.Getindex());
-        buffer.WriteVector3(playerTransform);
-        buffer.WriteQuaternion(playerRotation);
+        buffer.WriteVector3(playerPos);
+        buffer.WriteQuaternion(playerRot);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -54,13 +56,15 @@ public class RoomSendData : MonoBehaviour {
         buffer.Dispose();
     }
 
-    public static void SendTransform(Vector3 playertransform, Quaternion playerrotation)
+    public static void SendTransform(Vector3 playerTransform, Quaternion playerRotation)
     {
+        float[] playerPos = new float[] { playerTransform.x, playerTransform.y, playerTransform.z };
+        float[] playerRot = new float[] { playerRotation.x, playerRotation.y, playerRotation.z, playerRotation.w };
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RTransform);
         buffer.WriteInteger(RoomTCP.Getindex());
-        buffer.WriteVector3(playertransform);
-        buffer.WriteQuaternion(playerrotation);
+        buffer.WriteVector3(playerPos);
+        buffer.WriteQuaternion(playerRot);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

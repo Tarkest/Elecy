@@ -52,8 +52,8 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         buffer.ReadInteger();
         int numberOfRocks = buffer.ReadInteger();
         int[] rocksIndexes = new int[numberOfRocks];
-        Vector3[] rocksPos = new Vector3[numberOfRocks];
-        Quaternion[] rocksRot = new Quaternion[numberOfRocks];
+        float[][] rocksPos = new float[numberOfRocks][];
+        float[][] rocksRot = new float[numberOfRocks][];
         for(int i = 0; i < numberOfRocks; i++)
         {
             rocksIndexes[i] = buffer.ReadInteger();
@@ -71,8 +71,8 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         buffer.ReadInteger();
         int numberoftrees = buffer.ReadInteger();
         int[] treesindexes = new int[numberoftrees];
-        Vector3[] treespos = new Vector3[numberoftrees];
-        Quaternion[] treesrot = new Quaternion[numberoftrees];
+        float[][] treespos = new float[numberoftrees][];
+        float[][] treesrot = new float[numberoftrees][];
         for (int i = 0; i < numberoftrees; i++)
         {
             treesindexes[i] = buffer.ReadInteger();
@@ -103,8 +103,8 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        Vector3 enemyTransform = buffer.ReadVector3();
-        Quaternion enemyRotation = buffer.ReadQuternion();
+        float[] enemyTransform = buffer.ReadVector3();
+        float[] enemyRotation = buffer.ReadQuternion();
         buffer.Dispose();
 
         GlobalObjects.enemyMovement.SetTransform(enemyTransform, enemyRotation);
