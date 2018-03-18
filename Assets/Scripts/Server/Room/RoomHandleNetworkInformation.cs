@@ -61,7 +61,7 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
             rocksRot[i] = buffer.ReadQuternion();
         }
         buffer.Dispose();
-        RoomTCP.LoadRocks(numberOfRocks, rocksIndexes, rocksPos, rocksRot);
+        BattleLoader.LoadRocks(numberOfRocks, rocksIndexes, rocksPos, rocksRot);
     }
 
     public static void HandleTreeSpawn(byte[] data)
@@ -80,7 +80,7 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
             treesrot[i] = buffer.ReadQuternion();
         }
         buffer.Dispose();
-        RoomTCP.LoadTrees(numberoftrees, treesindexes, treespos, treesrot);
+        BattleLoader.LoadTrees(numberoftrees, treesindexes, treespos, treesrot);
     }
 
     public static void HandleEnemyLoadProgress(byte[] data)

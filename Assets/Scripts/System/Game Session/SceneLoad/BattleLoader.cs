@@ -14,6 +14,14 @@ public class BattleLoader : MonoBehaviour
     private static float thisPlayerProgress = 0f;
     private static float enemyPlayerProgress = 0f;
 
+    private static bool RockSpawn = false;
+    private static bool TreeSpawn = false;
+    private static int count;
+    private static int[] indexes;
+    private static float[][] Position;
+    private static float[][] Rotation;
+
+
     private void Awake()
     {
         _loadScreen = GameObject.Find("LoadScreen");
@@ -22,8 +30,8 @@ public class BattleLoader : MonoBehaviour
     }
 
     private void Update()
-    { 
-        if(loaded)
+    {
+        if (loaded)
         {
             loaded = false;
             _loadScreen.SetActive(false);
@@ -31,6 +39,18 @@ public class BattleLoader : MonoBehaviour
         }
         _yourLoadProgress.value = thisPlayerProgress;
         _enemyLoadProgress.value = enemyPlayerProgress;
+
+        if(RockSpawn)
+        {
+            RockSpawn = false;
+            LoadRocks();
+        }
+
+        if(TreeSpawn)
+        {
+            TreeSpawn = false;
+            LoadTrees();
+        }
 
     }
 
@@ -52,6 +72,58 @@ public class BattleLoader : MonoBehaviour
             ThisPlayerProgressChange(0.33f);
         }
 
+    }
+
+    public static void LoadRocks(int rocksCount, int[] index, float[][] rocksPosition, float[][] rocksRotation)
+    {
+        count = rocksCount;
+        indexes = index;
+        Position = rocksPosition;
+        Rotation = rocksRotation;
+        RockSpawn = true;
+    }
+
+    public static void LoadTrees(int treesCount, int[] index, float[][] treesPosition, float[][] treesRotation)
+    {
+        count = treesCount;
+        indexes = index;
+        Position = treesPosition;
+        Rotation = treesRotation;
+        TreeSpawn = true;
+    }
+
+    private static void LoadRocks()
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject NewRock = Resources.Load("/BattleArena/Rock") as GameObject;
+            NetworkGameObject NewRockNet = NewRock.AddComponent<NetworkGameObject>();
+            NewRockNet.SetIndex(indexes[i]);
+            Vector3 pos = new Vector3(Position[i][0], Position[i][1], Position[i][2]);
+            Quaternion rot = new Quaternion(Rotation[i][0], Rotation[i][1], Rotation[i][2], Rotation[i][3]);
+            NewRockNet.SetTransform(pos, rot);
+            RoomTCP.gameObjects.Add(NewRockNet);
+            Instantiate(NewRock, pos, rot);
+        }
+        RoomSendData.SendRocksSpawned();
+        ThisPlayerProgressChange(0.66f);
+    }
+
+    private static void LoadTrees()
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject NewTree = Resources.Load("/BattleArena/Tree") as GameObject;
+            NetworkGameObject NewTreeNet = NewTree.AddComponent<NetworkGameObject>();
+            NewTreeNet.SetIndex(indexes[i]);
+            Vector3 pos = new Vector3(Position[i][0], Position[i][1], Position[i][2]);
+            Quaternion rot = new Quaternion(Rotation[i][0], Rotation[i][1], Rotation[i][2], Rotation[i][3]);
+            NewTreeNet.SetTransform(pos, rot);
+            RoomTCP.gameObjects.Add(NewTreeNet);
+            Instantiate(NewTree, pos, rot);
+        }
+        RoomSendData.SendTreesSpawned();
+        ThisPlayerProgressChange(1f);
     }
 
     public static void EnemyProgressChange(float progress)

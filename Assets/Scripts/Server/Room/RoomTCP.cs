@@ -11,13 +11,13 @@ public class RoomTCP : MonoBehaviour {
     private static bool receiving = false;
     private static byte[] _buffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static Socket socket;
-    private static List<NetworkGameObject> GameObjects;
+    public static List<NetworkGameObject> gameObjects;
 
     public static void InitRoom(int roomindex)
     {
         socket = NetPlayerTCP.GetSocket();
         index = roomindex;
-        GameObjects = new List<NetworkGameObject>();
+        gameObjects = new List<NetworkGameObject>();
     }
 
     public static void BeginReceive()
@@ -59,39 +59,39 @@ public class RoomTCP : MonoBehaviour {
         }
     }
 
-    public static void LoadRocks(int rocksCount, int[] indexes, float[][] rocksPosition, float[][] rocksRotation)
-    {
-        for(int i = 0; i < rocksCount; i++)
-        {
-            GameObject NewRock = Resources.Load("/BattleArena/Rock") as GameObject;
-            NetworkGameObject NewRockNet = NewRock.AddComponent<NetworkGameObject>();
-            NewRockNet.SetIndex(indexes[i]);
-            Vector3 pos = new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]);
-            Quaternion rot = new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]);
-            NewRockNet.SetTransform(pos, rot);
-            GameObjects.Add(NewRockNet);
-            Instantiate(NewRock, pos, rot);
-        }
-        RoomSendData.SendRocksSpawned();
-        BattleLoader.ThisPlayerProgressChange(0.66f);
-    }
+    //public static void LoadRocks(int rocksCount, int[] indexes, float[][] rocksPosition, float[][] rocksRotation)
+    //{
+    //    for(int i = 0; i < rocksCount; i++)
+    //    {
+    //        GameObject NewRock = Resources.Load("/BattleArena/Rock") as GameObject;
+    //        NetworkGameObject NewRockNet = NewRock.AddComponent<NetworkGameObject>();
+    //        NewRockNet.SetIndex(indexes[i]);
+    //        Vector3 pos = new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]);
+    //        Quaternion rot = new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]);
+    //        NewRockNet.SetTransform(pos, rot);
+    //        GameObjects.Add(NewRockNet);
+    //        Instantiate(NewRock, pos, rot);
+    //    }
+    //    RoomSendData.SendRocksSpawned();
+    //    BattleLoader.ThisPlayerProgressChange(0.66f);
+    //}
 
-    public static void LoadTrees(int treesCount, int[] indexes, float[][] treesPosition, float[][] treesRotation)
-    {
-        for(int i = 0; i == treesCount; i++)
-        {
-            GameObject NewTree = Resources.Load("/BattleArena/Tree") as GameObject;
-            NetworkGameObject NewTreeNet = NewTree.AddComponent<NetworkGameObject>();
-            NewTreeNet.SetIndex(indexes[i]);
-            Vector3 pos = new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]);
-            Quaternion rot = new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]);
-            NewTreeNet.SetTransform(pos, rot);
-            GameObjects.Add(NewTreeNet);
-            Instantiate(NewTree, pos, rot);
-        }
-        RoomSendData.SendTreesSpawned();
-        BattleLoader.ThisPlayerProgressChange(1f);
-    }
+    //public static void LoadTrees(int treesCount, int[] indexes, float[][] treesPosition, float[][] treesRotation)
+    //{
+    //    for(int i = 0; i == treesCount; i++)
+    //    {
+    //        GameObject NewTree = Resources.Load("/BattleArena/Tree") as GameObject;
+    //        NetworkGameObject NewTreeNet = NewTree.AddComponent<NetworkGameObject>();
+    //        NewTreeNet.SetIndex(indexes[i]);
+    //        Vector3 pos = new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]);
+    //        Quaternion rot = new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]);
+    //        NewTreeNet.SetTransform(pos, rot);
+    //        GameObjects.Add(NewTreeNet);
+    //        Instantiate(NewTree, pos, rot);
+    //    }
+    //    RoomSendData.SendTreesSpawned();
+    //    BattleLoader.ThisPlayerProgressChange(1f);
+    //}
 
     public static void Stop()
     {
@@ -124,8 +124,8 @@ public class RoomTCP : MonoBehaviour {
     public static float[] GetBattlegroundScale()
     {
         float[] scale = new float[2];
-        scale[0] = GlobalObjects.terrain_x;
-        scale[1] = GlobalObjects.terrain_z;
+        scale[0] = 5f;
+        scale[1] = 5f;
 
         return scale;
     }
