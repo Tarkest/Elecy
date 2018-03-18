@@ -96,7 +96,7 @@ public class BattleLoader : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            GameObject NewRock = Resources.Load("/BattleArena/Rock") as GameObject;
+            GameObject NewRock = Resources.Load("BattleArena/Rock") as GameObject;
             NetworkGameObject NewRockNet = NewRock.AddComponent<NetworkGameObject>();
             NewRockNet.SetIndex(indexes[i]);
             Vector3 pos = new Vector3(Position[i][0], Position[i][1], Position[i][2]);
@@ -113,7 +113,7 @@ public class BattleLoader : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            GameObject NewTree = Resources.Load("/BattleArena/Tree") as GameObject;
+            GameObject NewTree = Resources.Load("BattleArena/Tree") as GameObject;
             NetworkGameObject NewTreeNet = NewTree.AddComponent<NetworkGameObject>();
             NewTreeNet.SetIndex(indexes[i]);
             Vector3 pos = new Vector3(Position[i][0], Position[i][1], Position[i][2]);
@@ -122,7 +122,7 @@ public class BattleLoader : MonoBehaviour
             RoomTCP.gameObjects.Add(NewTreeNet);
             Instantiate(NewTree, pos, rot);
         }
-        RoomSendData.SendTreesSpawned();
+        RoomSendData.SendLoadComplite();
         ThisPlayerProgressChange(1f);
     }
 
