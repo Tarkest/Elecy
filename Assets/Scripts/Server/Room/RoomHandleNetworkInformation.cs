@@ -50,18 +50,18 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        int numberofrocks = buffer.ReadInteger();
-        int[] rocksindexes = new int[numberofrocks];
-        Vector3[] rockspos = new Vector3[numberofrocks];
-        Quaternion[] rocksrot = new Quaternion[numberofrocks];
-        for(int i = 0; i == numberofrocks; i++)
+        int numberOfRocks = buffer.ReadInteger();
+        int[] rocksIndexes = new int[numberOfRocks];
+        Vector3[] rocksPos = new Vector3[numberOfRocks];
+        Quaternion[] rocksRot = new Quaternion[numberOfRocks];
+        for(int i = 0; i < numberOfRocks; i++)
         {
-            rocksindexes[i] = buffer.ReadInteger();
-            rockspos[i] = buffer.ReadVector3();
-            rocksrot[i] = buffer.ReadQuternion();
+            rocksIndexes[i] = buffer.ReadInteger();
+            rocksPos[i] = buffer.ReadVector3();
+            rocksRot[i] = buffer.ReadQuternion();
         }
         buffer.Dispose();
-        RoomTCP.LoadRocks(numberofrocks, rocksindexes, rockspos, rocksrot);
+        RoomTCP.LoadRocks(numberOfRocks, rocksIndexes, rocksPos, rocksRot);
     }
 
     public static void HandleTreeSpawn(byte[] data)
@@ -73,7 +73,7 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         int[] treesindexes = new int[numberoftrees];
         Vector3[] treespos = new Vector3[numberoftrees];
         Quaternion[] treesrot = new Quaternion[numberoftrees];
-        for (int i = 0; i == numberoftrees; i++)
+        for (int i = 0; i < numberoftrees; i++)
         {
             treesindexes[i] = buffer.ReadInteger();
             treespos[i] = buffer.ReadVector3();

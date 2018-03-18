@@ -61,7 +61,7 @@ public class RoomTCP : MonoBehaviour {
 
     public static void LoadRocks(int rocksCount, int[] indexes, Vector3[] rocksPosition, Quaternion[] rocksRotation)
     {
-        for(int i = 0; i == rocksCount; i++)
+        for(int i = 0; i < rocksCount; i++)
         {
             GameObject NewRock = Resources.Load("/BattleArena/Rock") as GameObject;
             NetworkGameObject NewRockNet = NewRock.AddComponent<NetworkGameObject>();
@@ -120,8 +120,8 @@ public class RoomTCP : MonoBehaviour {
     public static float[] GetBattlegroundScale()
     {
         float[] scale = new float[2];
-        scale[0] = GameObject.Find("Terrain").GetComponent<Transform>().lossyScale.x;
-        scale[1] = GameObject.Find("Terrain").GetComponent<Transform>().lossyScale.z;
+        scale[0] = GlobalObjects.terrain.lossyScale.x;
+        scale[1] = GlobalObjects.terrain.lossyScale.z;
 
         return scale;
     }

@@ -23,6 +23,8 @@ public class GlobalObjects : MonoBehaviour {
     public static Quaternion firstSProt;
     public static Quaternion secondSProt;
 
+    public static Transform terrain;
+
     void Awake()
     { 
         player = GameObject.Find("Test player");
@@ -39,6 +41,7 @@ public class GlobalObjects : MonoBehaviour {
         secondSpawnPoint = GameObject.Find("SpawnPoint2").GetComponent<SpawnPoint>();
         secondSPpos = secondSpawnPoint.transform.position;
         secondSProt = secondSpawnPoint.transform.rotation;
+        terrain = GameObject.Find("Terrain").GetComponent<Transform>();
     }
 
     void FixedUpdate()
