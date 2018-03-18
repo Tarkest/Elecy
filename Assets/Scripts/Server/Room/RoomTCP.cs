@@ -124,8 +124,8 @@ public class RoomTCP : MonoBehaviour {
     public static float[] GetBattlegroundScale()
     {
         float[] scale = new float[2];
-        scale[0] = GlobalObjects.terrain.lossyScale.x;
-        scale[1] = GlobalObjects.terrain.lossyScale.z;
+        scale[0] = GlobalObjects.terrain_x;
+        scale[1] = GlobalObjects.terrain_z;
 
         return scale;
     }
