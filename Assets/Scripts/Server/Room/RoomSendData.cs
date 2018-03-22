@@ -12,19 +12,21 @@ public class RoomSendData : MonoBehaviour {
         float[] scale = RoomTCP.GetBattlegroundScale();
         buffer.WriteFloat(scale[0]);
         buffer.WriteFloat(scale[1]);
+        buffer.WriteFloat(GlobalObjects.firstSPpos.x);
+        buffer.WriteFloat(GlobalObjects.firstSPpos.y);
+        buffer.WriteFloat(GlobalObjects.firstSPpos.z);
+        buffer.WriteFloat(GlobalObjects.secondSPpos.x);
+        buffer.WriteFloat(GlobalObjects.secondSPpos.y);
+        buffer.WriteFloat(GlobalObjects.secondSPpos.z);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
 
-    public static void SendPlayerSpawned(Vector3 playerTransform, Quaternion playerRotation, float loadProgress)
+    public static void SendPlayerSpawned()
     {
-        float[] playerPos = new float[] { playerTransform.x, playerTransform.y, playerTransform.z };
-        float[] playerRot = new float[] { playerRotation.x, playerRotation.y, playerRotation.z, playerRotation.w };
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RPlayerSpawned);
         buffer.WriteInteger(RoomTCP.Getindex());
-        buffer.WriteVector3(playerPos);
-        buffer.WriteQuaternion(playerRot);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

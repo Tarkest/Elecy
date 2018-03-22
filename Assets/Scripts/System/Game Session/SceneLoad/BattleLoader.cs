@@ -68,14 +68,14 @@ public class BattleLoader : MonoBehaviour
         {
             GlobalObjects.firstSpawnPoint.SpawnPlayer();
             GlobalObjects.secondSpawnPoint.SpawnDummy();
-            RoomSendData.SendPlayerSpawned(GlobalObjects.firstSPpos, GlobalObjects.firstSProt, 0.33f);
+            RoomSendData.SendPlayerSpawned();
             ThisPlayerProgressChange(0.33f);
         }
         else
         {
             GlobalObjects.firstSpawnPoint.SpawnDummy();
             GlobalObjects.secondSpawnPoint.SpawnPlayer();
-            RoomSendData.SendPlayerSpawned(GlobalObjects.secondSPpos, GlobalObjects.secondSProt, 0.33f);
+            RoomSendData.SendPlayerSpawned();
             ThisPlayerProgressChange(0.33f);
         }
 
