@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class BattleLoader : MonoBehaviour
     private static bool loaded = false;
     private static float thisPlayerProgress = 0f;
     private static float enemyPlayerProgress = 0f;
+    private static Timer loadTimer;
 
     private static bool RockSpawn = false;
     private static bool TreeSpawn = false;
@@ -27,6 +29,7 @@ public class BattleLoader : MonoBehaviour
         _loadScreen = GameObject.Find("LoadScreen");
         _yourLoadProgress = _loadScreen.transform.Find("ThisPlayerLoad").GetComponent<Slider>();
         _enemyLoadProgress = _loadScreen.transform.Find("EnemyPlayerLoad").GetComponent<Slider>();
+        loadTimer = new Timer(LoadSend, null, 0, 1000 / 2);
     }
 
     private void Update()
@@ -35,7 +38,6 @@ public class BattleLoader : MonoBehaviour
         {
             loaded = false;
             _loadScreen.SetActive(false);
-            //RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
         }
         _yourLoadProgress.value = thisPlayerProgress;
         _enemyLoadProgress.value = enemyPlayerProgress;
@@ -54,21 +56,26 @@ public class BattleLoader : MonoBehaviour
 
     }
 
+    private void LoadSend(object o)
+    {
+        RoomSendData.SendLoadProgress(RoomTCP.Getindex(), thisPlayerProgress);
+    }
+
     //Переписать Нахуй
     public static void SpanwPlayers(string nickname1, string nickname2)
     {
         if (nickname1 == NetPlayerTCP.GetNickname())
         {
-            RoomSendData.SendPlayerSpawned(GlobalObjects.firstSPpos, GlobalObjects.firstSProt);
             GlobalObjects.firstSpawnPoint.SpawnPlayer();
             GlobalObjects.secondSpawnPoint.SpawnDummy();
+            RoomSendData.SendPlayerSpawned(GlobalObjects.firstSPpos, GlobalObjects.firstSProt, 0.33f);
             ThisPlayerProgressChange(0.33f);
         }
         else
         {
-            RoomSendData.SendPlayerSpawned(GlobalObjects.secondSPpos, GlobalObjects.secondSProt);
             GlobalObjects.firstSpawnPoint.SpawnDummy();
             GlobalObjects.secondSpawnPoint.SpawnPlayer();
+            RoomSendData.SendPlayerSpawned(GlobalObjects.secondSPpos, GlobalObjects.secondSProt, 0.33f);
             ThisPlayerProgressChange(0.33f);
         }
 
@@ -138,7 +145,8 @@ public class BattleLoader : MonoBehaviour
 
     public static void StartBattle()
     {
-        loaded = true;
+        loadTimer.Dispose();
+        loaded = true;      
         BattleLogic.BeginBattle();
     }
 }

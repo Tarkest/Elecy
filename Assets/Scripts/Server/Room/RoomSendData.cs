@@ -16,7 +16,7 @@ public class RoomSendData : MonoBehaviour {
         buffer.Dispose();
     }
 
-    public static void SendPlayerSpawned(Vector3 playerTransform, Quaternion playerRotation)
+    public static void SendPlayerSpawned(Vector3 playerTransform, Quaternion playerRotation, float loadProgress)
     {
         float[] playerPos = new float[] { playerTransform.x, playerTransform.y, playerTransform.z };
         float[] playerRot = new float[] { playerRotation.x, playerRotation.y, playerRotation.z, playerRotation.w };
@@ -52,6 +52,16 @@ public class RoomSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RLoadComplite);
         buffer.WriteInteger(RoomTCP.Getindex());
+        RoomTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendLoadProgress(int roomIndex, float loadProgress)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RLoadProgress);
+        buffer.WriteInteger(roomIndex);
+        buffer.WriteFloat(loadProgress);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
