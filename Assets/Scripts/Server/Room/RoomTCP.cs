@@ -12,6 +12,7 @@ public class RoomTCP : MonoBehaviour {
     private static byte[] _buffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static Socket socket;
     public static List<NetworkGameObject> gameObjects;
+    public static int objectCount = 1;
 
     public static void InitRoom(int roomindex)
     {
@@ -92,6 +93,12 @@ public class RoomTCP : MonoBehaviour {
     //    RoomSendData.SendTreesSpawned();
     //    BattleLoader.ThisPlayerProgressChange(1f);
     //}
+
+
+    public static void InstantiateNetworkObject()
+    {
+        ///Here Comesthe instantiation the object on the scene
+    }
 
     public static void Stop()
     {

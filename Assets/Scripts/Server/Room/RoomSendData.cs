@@ -68,6 +68,22 @@ public class RoomSendData : MonoBehaviour {
         buffer.Dispose();
     }
 
+    public static void SendInstatiate(int ID, Vector3 Position, Quaternion Rotation, int InstantiateType, string objectReference)
+    {
+        float[] objectPos = new float[] { Position.x, Position.y, Position.z };
+        float[] objectRot = new float[] { Rotation.x, Rotation.y, Rotation.z, Rotation.w };
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RInstantiate);
+        buffer.WriteInteger(RoomTCP.Getindex());
+        buffer.WriteInteger(ID);
+        buffer.WriteInteger(InstantiateType);
+        buffer.WriteString(objectReference);
+        buffer.WriteVector3(objectPos);
+        buffer.WriteQuaternion(objectRot);
+        RoomTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
     public static void SendTransform(Vector3 playerTransform, Quaternion playerRotation)
     {
         float[] playerPos = new float[] { playerTransform.x, playerTransform.y, playerTransform.z };

@@ -16,7 +16,8 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
             {(int)ServerPackets.STreeSpawn, HandleTreeSpawn },
             {(int)ServerPackets.SEnemyLoadProgress, HandleEnemyLoadProgress },
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
-            {(int)ServerPackets.STransform, HandleEnemyTransform }
+            {(int)ServerPackets.STransform, HandleEnemyTransform },
+            {(int)ServerPackets.SInstantiate, HandleServerInstantiate }
         };
     }
 
@@ -96,6 +97,14 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
     public static void HandleRoomStart(byte[] data)
     {
         BattleLoader.StartBattle();
+    }
+
+    public static void HandleServerInstantiate(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        //get info about object for instatiate? add it to array and start to send observw info 
     }
 
     public static void HandleEnemyTransform(byte[] data)
