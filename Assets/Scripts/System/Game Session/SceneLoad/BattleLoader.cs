@@ -15,7 +15,6 @@ public class BattleLoader : MonoBehaviour
     private static float thisPlayerProgress = 0f;
     private static float enemyPlayerProgress = 0f;
     private static Timer loadTimer;
-
     private static bool RockSpawn = false;
     private static bool TreeSpawn = false;
     private static int count;

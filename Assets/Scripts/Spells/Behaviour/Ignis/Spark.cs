@@ -22,7 +22,7 @@ public class Spark : MonoBehaviour {
         transform.position = _casterPosition;
         _spellPosition = transform.position;
         _startTime = Time.time;
-        _mousePosition = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;
+        _mousePosition = MouseController.mousePosition;
         spellType = GameObject.Find("Test player").GetComponent<SpellInvoker>().spellType;
     }
 

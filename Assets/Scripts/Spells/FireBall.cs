@@ -19,7 +19,7 @@ public class FireBall : MonoBehaviour {
     void Start () {
         _spellRigidbody = GetComponent<Rigidbody>();
         _casterPosition = GameObject.Find("Test player").GetComponent<Transform>().position;
-        _mousePosition = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;
+        _mousePosition = MouseController.mousePosition;
         _target = (_mousePosition - _casterPosition) * _spellRange;
         _startTime = Time.time;
         _spellJourneyLenght = Vector3.Distance(_casterPosition, _target);

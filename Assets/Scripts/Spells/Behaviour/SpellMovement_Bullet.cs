@@ -12,7 +12,7 @@ public class SpellMovement_Bullet : MonoBehaviour {
     public bool isDying = false;
 
 	void Start () {
-        _mousePosition = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;
+        _mousePosition = MouseController.mousePosition;
         _startTime = Time.time;
         _spellPosition = GetComponent<Transform>().position;
         _spell = gameObject.GetComponent<SpellContainer>();

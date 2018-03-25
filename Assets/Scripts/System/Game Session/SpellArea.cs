@@ -26,7 +26,7 @@ public class SpellArea : MonoBehaviour {
         //_spellName = GameObject.Find("Test player").GetComponent<SpellInvoker>().spellName;
         //_spellContainer = (Resources.Load(_spellName, typeof (GameObject)) as GameObject).GetComponent<SpellContainer>();
         //_spellContainer.SpellConteinerLoad();
-        _mousePosition = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;
+        _mousePosition = MouseController.mousePosition;
         _playerPosition = GameObject.Find("Test player").GetComponent<Transform>();
         //_targetType = _spellContainer.targetType;
         //_spellArea = _spellContainer.castArea;
@@ -38,7 +38,7 @@ public class SpellArea : MonoBehaviour {
         _spellName = GameObject.Find("Test player").GetComponent<SpellInvoker>().spellName;
         //_spellContainer = (Resources.Load(_spellName, typeof(GameObject)) as GameObject).GetComponent<SpellContainer>();
         //_spellContainer.SpellConteinerLoad();
-        _mousePosition = GameObject.Find("MouseController").GetComponent<MouseController>().mousePosition;
+        _mousePosition = MouseController.mousePosition;
         _mousePosition.y = 0.5f;
         _playerPosition = GameObject.Find("Test player").GetComponent<Transform>();
         //_targetType = _spellContainer.targetType;

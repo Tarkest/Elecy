@@ -2,9 +2,9 @@
 
 public class MouseController : MonoBehaviour {
 
-    public Vector3 mousePosition;
-    private int _floorMask;
-    private float _camRayLenght = 200f;
+    public static Vector3 mousePosition;
+    private static int _floorMask;
+    private static float _camRayLenght = 200f;
 
     void Awake()
     {

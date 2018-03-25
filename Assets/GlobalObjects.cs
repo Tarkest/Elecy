@@ -44,8 +44,8 @@ public class GlobalObjects : MonoBehaviour {
         secondSPpos = secondSpawnPoint.transform.position;
         secondSProt = secondSpawnPoint.transform.rotation;
         terrain = GameObject.Find("Terrain").GetComponent<Transform>();
-        terrain_x = terrain.lossyScale.x;
-        terrain_z = terrain.lossyScale.z;
+        terrain_x = terrain.localScale.x;
+        terrain_z = terrain.localScale.z;
     }
 
     void FixedUpdate()
