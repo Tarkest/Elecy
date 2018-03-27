@@ -32,8 +32,8 @@ public class EnemyMovement : MonoBehaviour {
 
     public void SetTransform(float[] position, float[] rotation)
     {
-        transPos = GlobalObjects.enemyPos;
-        transrot = GlobalObjects.enemyRot;
+        transPos = ObjectManager.enemyPos;
+        transrot = ObjectManager.enemyRot;
         servPos = new Vector3(position[0], position[1],position[2]);
         servRot = new Quaternion(rotation[0], rotation[1],rotation[2],rotation[3]);
 

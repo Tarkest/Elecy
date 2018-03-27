@@ -9,8 +9,12 @@ public class ObjectManager : MonoBehaviour {
     public Vector3 mousePosition;
 
     public static GameObject Player;
+    public static Vector3 playerPos;
+    public static Quaternion playerRot;
 
     public static GameObject EnemyPlayer;
+    public static Vector3 enemyPos;
+    public static Quaternion enemyRot;
     
 
 	void Awake ()
@@ -21,6 +25,16 @@ public class ObjectManager : MonoBehaviour {
     private void Update()
     {
         mousePosition = MouseController.mousePosition;
+        if (Player != null)
+        {
+            playerPos = Player.transform.position;
+            playerRot = Player.transform.rotation;
+        }
+        if (EnemyPlayer != null)
+        {
+            enemyPos = EnemyPlayer.transform.position;
+            enemyRot = EnemyPlayer.transform.rotation;
+        }
     }
 
     public static void PlayersLoaded(GameObject player, GameObject enemy)

@@ -33,14 +33,14 @@ public class PlayerStats : MonoBehaviour {
         isStunned = false;
         isCasting = false;
         isStucked = false;
-        hpIndicator = GameObject.Find("HPIndicator").GetComponent<Image>();
-        snIndicator = GameObject.Find("SNIndicator").GetComponent<Image>();
+        //hpIndicator = GameObject.Find("HPIndicator").GetComponent<Image>();
+        //snIndicator = GameObject.Find("SNIndicator").GetComponent<Image>();
     }
 	
 	void Update ()
     {
-        hpIndicator.fillAmount = ((float)playerCurrentHP / (float)playerMaxHP);
-        snIndicator.fillAmount = ((float)playerCurrentSN / (float)playerMaxSN);
+        //hpIndicator.fillAmount = ((float)playerCurrentHP / (float)playerMaxHP);
+        //snIndicator.fillAmount = ((float)playerCurrentSN / (float)playerMaxSN);
 
         if(playerCurrentHP <= 0)
         {

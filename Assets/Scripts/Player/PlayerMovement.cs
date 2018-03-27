@@ -59,11 +59,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(battleIsStarted)
+        if (battleIsStarted)
         {
-            isStunned = GetComponent<PlayerStats>().isStunned;
-            isStucked = GetComponent<PlayerStats>().isStucked;
-            isCasting = GetComponent<PlayerStats>().isCasting;
+            //isStunned = GetComponent<PlayerStats>().isStunned;
+            //isStucked = GetComponent<PlayerStats>().isStucked;
+            //isCasting = GetComponent<PlayerStats>().isCasting;
             DashCooldown();
         }
 
@@ -75,8 +75,8 @@ public class PlayerMovement : MonoBehaviour
         {
             movement.Set(h, 0, v);
 
-            if (GetComponent<PlayerStats>().isCasting && h != 0 || v != 0)
-                GetComponent<PlayerStats>().isCasting = false;
+            //if (GetComponent<PlayerStats>().isCasting && h != 0 || v != 0)
+            //    GetComponent<PlayerStats>().isCasting = false;
 
             movement = movement.normalized * speed * Time.deltaTime;
             playerRigidbody.MovePosition(transform.position + movement);
@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
                     dashEnd = transform.position + dash.normalized * dashLenght;
                 }
                 dashReady = false;
-                GetComponent<PlayerStats>().isCasting = false;
+                //GetComponent<PlayerStats>().isCasting = false;
             }
         }
     }

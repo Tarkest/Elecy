@@ -19,8 +19,8 @@ public class BattleLoader : MonoBehaviour
     private static bool TreeSpawn = false;
     private static int count;
     private static int[] indexes;
-    private static float[][] Position;
-    private static float[][] Rotation;
+    private static float[][] Position = new float[2][];
+    private static float[][] Rotation = new float[2][];
 
 
     private void Awake()
@@ -84,6 +84,7 @@ public class BattleLoader : MonoBehaviour
             Position[1] = positions[1];
             Rotation[0] = rotations[0];
             Rotation[1] = rotations[1];
+            PlayerSpawn = true;
         }
         else
         {
@@ -91,6 +92,7 @@ public class BattleLoader : MonoBehaviour
             Position[1] = positions[0];
             Rotation[0] = rotations[1];
             Rotation[1] = rotations[0];
+            PlayerSpawn = true;
         }
 
     }
