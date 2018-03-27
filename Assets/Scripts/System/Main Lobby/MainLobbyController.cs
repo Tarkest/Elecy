@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class MainLobbyController : MonoBehaviour {
 
     private GameObject _findGameButton;
-    private GameObject _armoryButton;
-    private GameObject _shopButton;
+    //private GameObject _armoryButton; Button for go into skillBuild Window
+    //private GameObject _shopButton; Button For go into Shop Window
     private GameObject _machTypeDropdown;
     private GameObject _timeCounter;
 
@@ -18,8 +18,8 @@ public class MainLobbyController : MonoBehaviour {
     void Awake()
     {
         _findGameButton = GameObject.Find("FindGameButton");
-        _armoryButton = GameObject.Find("ArmoryButton");
-        _shopButton = GameObject.Find("ShopButton");
+        //_armoryButton = GameObject.Find("ArmoryButton");
+        //_shopButton = GameObject.Find("ShopButton");
         _machTypeDropdown = GameObject.Find("MatchTypeDropdown");
         _timeCounter = GameObject.Find("TimeCounter");
     }

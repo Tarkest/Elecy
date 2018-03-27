@@ -15,6 +15,6 @@ public class BattleLogic : MonoBehaviour {
 
     private static void SendInfo(object o)
     {
-        RoomSendData.SendTransform(GlobalObjects.playerPos, GlobalObjects.playerRot);
+        RoomSendData.SendTransform(ObjectManager.playerPos, ObjectManager.playerRot);
     }
 }

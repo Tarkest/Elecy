@@ -52,9 +52,6 @@ public static class NetPlayerTCP
                     byte[] data = new byte[received];
                     Array.Copy(_buffer, data, received);
                     NetPlayerHandleNetworkData.HandleNetworkInformation(data);
-                    PacketBuffer packet = new PacketBuffer();
-                    packet.WriteBytes(data);
-                    int packetNum = packet.ReadInteger();
                     if(receiving)
                         socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(PlayerReceiveCallback), socket);
                     else

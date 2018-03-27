@@ -20,7 +20,7 @@ public class EntranceController : MonoBehaviour {
         Name = GameObject.Find("Name").GetComponent<InputField>().text;
         Password = GameObject.Find("Password").GetComponent<InputField>().text;
         Nickname = GameObject.Find("Nickname").GetComponent<InputField>().text;
-        GameObject.Find("InfoField").GetComponent<Text>().text = serverInfo;
+        infoField.text = serverInfo;
     }
 
     public void LoginTry()
