@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour {
+public class EnemyMovement1 : MonoBehaviour {
 
     bool change = false;
     static bool start = false;

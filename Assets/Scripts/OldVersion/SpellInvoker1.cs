@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class SpellInvoker : MonoBehaviour
+public class SpellInvoker1 : MonoBehaviour
 {
     private string _combination;
 
@@ -34,7 +34,7 @@ public class SpellInvoker : MonoBehaviour
 
         _snTextMesh = gameObject.transform.Find("TestUiSnCost").GetComponent<TextMesh>();
 
-        _currentSN = GetComponent<PlayerStats>().playerCurrentSN;
+        _currentSN = GetComponent<PlayerStats1>().playerCurrentSN;
 
         SpellsContainer();
 
@@ -43,10 +43,10 @@ public class SpellInvoker : MonoBehaviour
 
     void Update()
     {
-        isStunned = GetComponent<PlayerStats>().isStunned;
-        isCasting = GetComponent<PlayerStats>().isCasting;
+        isStunned = GetComponent<PlayerStats1>().isStunned;
+        isCasting = GetComponent<PlayerStats1>().isCasting;
 
-        _currentSN = GetComponent<PlayerStats>().playerCurrentSN;
+        _currentSN = GetComponent<PlayerStats1>().playerCurrentSN;
 
         if(!isCasting)
         {
@@ -95,9 +95,9 @@ public class SpellInvoker : MonoBehaviour
         spellName = "Spells/" + _spells[Invoke(_possibleCombinations, _combination)];
 
         spellConteiner = (Resources.Load(spellName, typeof(GameObject)) as GameObject);
-        spellConteiner.GetComponent<SpellContainer>().SpellConteinerLoad();
+        spellConteiner.GetComponent<SpellContainer1>().SpellConteinerLoad();
 
-        _snCost = (Resources.Load(spellName, typeof(GameObject)) as GameObject).GetComponent<SpellContainer>().sunergyCost;
+        _snCost = (Resources.Load(spellName, typeof(GameObject)) as GameObject).GetComponent<SpellContainer1>().sunergyCost;
 
         _snTextMesh.text = Convert.ToString(_snCost);
     }
@@ -121,7 +121,7 @@ public class SpellInvoker : MonoBehaviour
                     
                 }
 
-                GetComponent<PlayerStats>().PlayerSynergyUpdate(-(_snCost));
+                GetComponent<PlayerStats1>().PlayerSynergyUpdate(-(_snCost));
             }
             catch
             {

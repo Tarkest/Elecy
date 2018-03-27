@@ -3,7 +3,7 @@
 public class Spark : MonoBehaviour {
 
     private bool spellType;
-    private SpellContainer _spell;
+    private SpellContainer1 _spell;
     private Vector3 _casterPosition;
 
     //Spell Attack/Defense
@@ -16,14 +16,14 @@ public class Spark : MonoBehaviour {
 
     private void Start()
     {
-        _spell = gameObject.GetComponent<SpellContainer>();
+        _spell = gameObject.GetComponent<SpellContainer1>();
         _spell.SpellConteinerLoad();
         _casterPosition = GameObject.Find("CastPoint").GetComponent<Transform>().position;
         transform.position = _casterPosition;
         _spellPosition = transform.position;
         _startTime = Time.time;
         _mousePosition = MouseController.mousePosition;
-        spellType = GameObject.Find("Test player").GetComponent<SpellInvoker>().spellType;
+        spellType = GameObject.Find("Test player").GetComponent<SpellInvoker1>().spellType;
     }
 
     private void FixedUpdate()

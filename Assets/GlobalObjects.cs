@@ -11,7 +11,7 @@ public class GlobalObjects : MonoBehaviour {
 
     public static GameObject enemy;
     public static Transform enemyTransform;
-    public static EnemyMovement enemyMovement;
+    public static EnemyMovement1 enemyMovement;
     public static Vector3 enemyPos;
     public static Quaternion enemyRot;
 
@@ -34,7 +34,7 @@ public class GlobalObjects : MonoBehaviour {
         playerRot = playerTransform.rotation;
         enemy = GameObject.Find("dummy");
         enemyTransform = enemy.GetComponent<Transform>();
-        enemyMovement = enemy.GetComponent<EnemyMovement>();
+        enemyMovement = enemy.GetComponent<EnemyMovement1>();
         terrain = GameObject.Find("Terrain").GetComponent<Transform>();
         terrain_x = terrain.localScale.x;
         terrain_z = terrain.localScale.z;

@@ -1,9 +1,9 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-public class EffectController : MonoBehaviour {
+public class EffectController1 : MonoBehaviour {
 
-    public Effect effect;
+    public Effect1 effect;
 
     private bool _isStunned;
     private bool _isCast;
@@ -55,13 +55,13 @@ public class EffectController : MonoBehaviour {
         if (_isStunned && _stunDurationModifyer < 6f)
         {
             _stunDurationCounter += Time.deltaTime;
-            if (!GetComponent<PlayerStats>().isStunned)
+            if (!GetComponent<PlayerStats1>().isStunned)
             {
                 _stunDurationModifyer = 2f;
                 _currentstunduration = _stunduration;
-                GetComponent<PlayerStats>().isStunned = true;
+                GetComponent<PlayerStats1>().isStunned = true;
             }
-            else if (GetComponent<PlayerStats>().isStunned && _isStunStackable)
+            else if (GetComponent<PlayerStats1>().isStunned && _isStunStackable)
             {
                 _currentstunduration += _stunduration / _stunDurationModifyer;
                 _isStunStackable = false;
@@ -70,45 +70,45 @@ public class EffectController : MonoBehaviour {
             if (_stunDurationCounter >= _currentstunduration)
             {
                 _isStunned = false;
-                GetComponent<PlayerStats>().isStunned = false;
+                GetComponent<PlayerStats1>().isStunned = false;
                 _stunDurationCounter = 0f;
                 _stunDurationModifyer = 0f;
             }
         }
 
-        if (_isCast && !GetComponent<PlayerStats>().isCasting)
+        if (_isCast && !GetComponent<PlayerStats1>().isCasting)
         {
-            GetComponent<PlayerStats>().castSuccses = false;
-            GetComponent<PlayerStats>().castUnsucces = false;
-            GetComponent<PlayerStats>().isCasting = true;
+            GetComponent<PlayerStats1>().castSuccses = false;
+            GetComponent<PlayerStats1>().castUnsucces = false;
+            GetComponent<PlayerStats1>().isCasting = true;
             _isCast = false;
         }
-        else if (GetComponent<PlayerStats>().isCasting && !GetComponent<PlayerStats>().isStunned)
+        else if (GetComponent<PlayerStats1>().isCasting && !GetComponent<PlayerStats1>().isStunned)
         {
             _castDurationCounter += Time.deltaTime;
             if (_castDurationCounter >= _castduration)
             {
-                GetComponent<PlayerStats>().castSuccses = true;
+                GetComponent<PlayerStats1>().castSuccses = true;
                 _isCast = false;
             }
         }
         else
         {
-            GetComponent<PlayerStats>().castUnsucces = true;
+            GetComponent<PlayerStats1>().castUnsucces = true;
             _isCast = false;
         }
 
-        if (_isStucked && !GetComponent<PlayerStats>().isStucked)
+        if (_isStucked && !GetComponent<PlayerStats1>().isStucked)
         {
-            GetComponent<PlayerStats>().isStucked = true;
+            GetComponent<PlayerStats1>().isStucked = true;
         }
-        else if (GetComponent<PlayerStats>().isStucked)
+        else if (GetComponent<PlayerStats1>().isStucked)
         {
             _stuckDurationCounter += Time.deltaTime;
             if (_stuckDurationCounter >= _stuckduration)
             {
                 _isStucked = false;
-                GetComponent<PlayerStats>().isStucked = false;
+                GetComponent<PlayerStats1>().isStucked = false;
                 _stuckDurationCounter = 0f;
             } 
         }

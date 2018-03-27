@@ -9,7 +9,7 @@ public class BattleLogic : MonoBehaviour {
 
     public static void BeginBattle()
     {
-        PlayerMovement.StartBattle();
+        PlayerMovement1.StartBattle();
         Timer = new Timer(SendInfo, null, 0, 1000 / NetworkConstants.UPDATE_RATE);
     }
 

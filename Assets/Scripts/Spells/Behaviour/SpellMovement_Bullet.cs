@@ -8,14 +8,14 @@ public class SpellMovement_Bullet : MonoBehaviour {
     private Vector3 _direction;
     private float _startTime;
     private float path;
-    private SpellContainer _spell;
+    private SpellContainer1 _spell;
     public bool isDying = false;
 
 	void Start () {
         _mousePosition = MouseController.mousePosition;
         _startTime = Time.time;
         _spellPosition = GetComponent<Transform>().position;
-        _spell = gameObject.GetComponent<SpellContainer>();
+        _spell = gameObject.GetComponent<SpellContainer1>();
         _spell.SpellConteinerLoad();
 	}
 

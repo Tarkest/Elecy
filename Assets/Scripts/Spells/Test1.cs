@@ -11,11 +11,11 @@ public class Test1 : MonoBehaviour
     private Vector3 origin;
     private Vector3 direction;
     private float currentHitDistance;
-    private SpellContainer spell;
+    private SpellContainer1 spell;
 
     private void Start()
     {
-        spell = gameObject.GetComponent<SpellContainer>();
+        spell = gameObject.GetComponent<SpellContainer1>();
         spell.SpellConteinerLoad();
     }
 
@@ -49,8 +49,8 @@ public class Test1 : MonoBehaviour
 
         if (other.tag == "Player")
         {
-            Debug.Log(other.gameObject.GetComponent<PlayerStats>().playerCurrentHP);
-            other.gameObject.GetComponent<PlayerStats>().PlayerHealthPointUpdate(-(spell.damage));
+            Debug.Log(other.gameObject.GetComponent<PlayerStats1>().playerCurrentHP);
+            other.gameObject.GetComponent<PlayerStats1>().PlayerHealthPointUpdate(-(spell.damage));
         }
     }
 

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class SpellContainer : MonoBehaviour {
+public class SpellContainer1 : MonoBehaviour {
 
-    public Spell spellStats;
+    public Spell1 spellStats;
 
     [System.NonSerialized]
     public int spellHP;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollow1 : MonoBehaviour {
 
     public Transform target;
     public float smoothing = 5f;

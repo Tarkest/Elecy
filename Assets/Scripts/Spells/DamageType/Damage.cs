@@ -2,11 +2,11 @@
 
 public class Damage : MonoBehaviour
 {
-    SpellContainer _spell;
+    SpellContainer1 _spell;
 
     void Start()
     {
-        _spell = gameObject.GetComponent<SpellContainer>();
+        _spell = gameObject.GetComponent<SpellContainer1>();
         _spell.SpellConteinerLoad();
     }
 
@@ -33,21 +33,21 @@ public class Damage : MonoBehaviour
 
         if (other.tag == "Player")
         {
-            other.gameObject.GetComponent<PlayerStats>().PlayerHealthPointUpdate(-(_spell.damage));
-            other.gameObject.GetComponent<EffectController>().effect = Resources.Load("Effects/Slow") as Effect;
-            other.gameObject.GetComponent<EffectController>().EffectLoad();
+            other.gameObject.GetComponent<PlayerStats1>().PlayerHealthPointUpdate(-(_spell.damage));
+            other.gameObject.GetComponent<EffectController1>().effect = Resources.Load("Effects/Slow") as Effect1;
+            other.gameObject.GetComponent<EffectController1>().EffectLoad();
         }
 
         if (other.tag == "spell") { 
-            if (other.gameObject.GetComponent<SpellContainer>().spellHP > _spell.spellHP)
+            if (other.gameObject.GetComponent<SpellContainer1>().spellHP > _spell.spellHP)
             { 
-                other.gameObject.GetComponent<SpellContainer>().spellHP -= _spell.spellHP;
+                other.gameObject.GetComponent<SpellContainer1>().spellHP -= _spell.spellHP;
             }
-            else if (other.gameObject.GetComponent<SpellContainer>().spellHP < _spell.spellHP)
+            else if (other.gameObject.GetComponent<SpellContainer1>().spellHP < _spell.spellHP)
             {
-                _spell.spellHP -= other.gameObject.GetComponent<SpellContainer>().spellHP;
+                _spell.spellHP -= other.gameObject.GetComponent<SpellContainer1>().spellHP;
             }
-            else if (other.gameObject.GetComponent<SpellContainer>().spellHP == _spell.spellHP)
+            else if (other.gameObject.GetComponent<SpellContainer1>().spellHP == _spell.spellHP)
             {
                 Destroy(other.gameObject);
             }

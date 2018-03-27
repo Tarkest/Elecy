@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Buff/Debuff", menuName = "Effect")]
-public class Effect : ScriptableObject {
+public class Effect1 : ScriptableObject {
 
     public string effectName;
     public string effectDescription;

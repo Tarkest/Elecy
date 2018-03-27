@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "New Spell", menuName = "Spell")] 
-public class Spell : ScriptableObject
+public class Spell1 : ScriptableObject
 {
     public string spellName;
     public string description;

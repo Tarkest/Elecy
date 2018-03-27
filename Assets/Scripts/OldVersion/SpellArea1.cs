@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SpellArea : MonoBehaviour {
+public class SpellArea1 : MonoBehaviour {
 
     private float _spellArea;
     private float _spellRange;
@@ -10,7 +10,7 @@ public class SpellArea : MonoBehaviour {
     private Vector3 _mousePosition;
     private Transform _playerPosition;
 
-    private SpellContainer _spellContainer;
+    private SpellContainer1 _spellContainer;
 
     private string _spellName;
 
@@ -35,7 +35,7 @@ public class SpellArea : MonoBehaviour {
 
     void Update()
     {
-        _spellName = GameObject.Find("Test player").GetComponent<SpellInvoker>().spellName;
+        _spellName = GameObject.Find("Test player").GetComponent<SpellInvoker1>().spellName;
         //_spellContainer = (Resources.Load(_spellName, typeof(GameObject)) as GameObject).GetComponent<SpellContainer>();
         //_spellContainer.SpellConteinerLoad();
         _mousePosition = MouseController.mousePosition;
