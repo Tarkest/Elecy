@@ -10,7 +10,7 @@ public static class NetPlayerTCP
     private static int index;
     private static string ip;
     private static string nickname;
-    private static playerState state;
+    //private static playerState state; State for checking where player is
     private static bool receiving = false;
     private static Socket socket;
 
@@ -24,7 +24,7 @@ public static class NetPlayerTCP
 
     public static void InitPlayer(int playerIndex, string nick, int[][] data)
     {
-        state = playerState.InMainLobby;
+        //state = playerState.InMainLobby;
         socket = ClientTCP.GetSocket();
         nickname = nick;
         index = playerIndex;
