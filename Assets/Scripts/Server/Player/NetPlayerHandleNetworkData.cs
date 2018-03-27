@@ -73,20 +73,18 @@ public class NetPlayerHandleNetworkData
 
     public static void HandleQueueContinue(byte[] data)
     {
-        Debug.Log("Handle queue continue");
         NetPlayerSendData.SendSearching();
     }
 
     public static void HandleMatchFound(byte[] data)
     {
-        Debug.Log("Handle match found");
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         int roomindex = buffer.ReadInteger();
+        int mapIndex = buffer.ReadInteger();
         buffer.Dispose();
         NetPlayerTCP.Stop();
-        Network.InBattle(roomindex);
-        RoomSendData.SendConnectionOk(roomindex);
+        Network.InBattle(roomindex, mapIndex);
     }
 }

@@ -6,8 +6,11 @@ public class ObjectManager : MonoBehaviour {
 
     public Camera mainCamera;
 
-    public Vector3 mousePosition; 
+    public Vector3 mousePosition;
 
+    public static GameObject Player;
+
+    public static GameObject EnemyPlayer;
     
 
 	void Awake ()
@@ -20,5 +23,10 @@ public class ObjectManager : MonoBehaviour {
         mousePosition = MouseController.mousePosition;
     }
 
-
+    public static void PlayersLoaded(GameObject player, GameObject enemy)
+    {
+        Player = player;
+        EnemyPlayer = enemy;
+        RoomSendData.SendPlayerSpawned();
+    }
 }

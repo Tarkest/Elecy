@@ -54,17 +54,7 @@ public class Network : MonoBehaviour
 
     private void LoadScene(int scenenum)
     {
-        switch(scenenum)
-        {
-            case 1:
-                SceneManager.LoadScene(NetworkConstants.MAIN_LOBBY_NUMBER);
-            break;
-
-            case 2:
-                SceneManager.LoadScene(NetworkConstants.ROOM_ARENA_NUMBER);
-            break;
-        }
-
+        SceneManager.LoadScene(scenenum);
     }
 
     public static void ChangeConnectionStatus(bool connected)
@@ -88,11 +78,11 @@ public class Network : MonoBehaviour
         scenenum = 1;
     }
 
-    public static void InBattle(int roomindex)
+    public static void InBattle(int roomindex, int mapIndex)
     {
         RoomHandleNetworkInformation.InitializeNetworkPackages();
         RoomTCP.InitRoom(roomindex);
-        scenenum = 2;
+        scenenum = mapIndex;
         scenechange = true;
     }
 }

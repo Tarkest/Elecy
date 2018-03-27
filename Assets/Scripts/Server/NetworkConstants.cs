@@ -14,8 +14,8 @@ public class NetworkConstants
     public static int UPDATE_RATE = 40;
 
     #region Scene Numbers
-    public static int MAIN_LOBBY_NUMBER = 2;
-    public static int ROOM_ARENA_NUMBER = 1;
+    public static int MAIN_LOBBY_NUMBER = 1;
+    public static int ROOM_ARENA_NUMBER = 3;
 
     #endregion
 

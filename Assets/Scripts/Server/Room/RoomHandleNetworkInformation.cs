@@ -42,8 +42,14 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         buffer.ReadInteger();
         string Nickname1 = buffer.ReadString();
         string Nickname2 = buffer.ReadString();
+        float[][] spawnPos = new float[2][];
+        float[][] spawnRot = new float[2][];
+        spawnPos[0] = buffer.ReadVector3();
+        spawnPos[1] = buffer.ReadVector3();
+        spawnRot[0] = buffer.ReadQuternion();
+        spawnRot[1] = buffer.ReadQuternion();
         buffer.Dispose();
-        BattleLoader.SpanwPlayers(Nickname1, Nickname2);
+        BattleLoader.SpanwPlayers(Nickname1, Nickname2, spawnPos, spawnRot);
     }
 
     public static void HandleRockSpawn(byte[] data)

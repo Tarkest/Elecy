@@ -9,15 +9,6 @@ public class RoomSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RConnectionComplite);
         buffer.WriteInteger(roomindex);
-        float[] scale = RoomTCP.GetBattlegroundScale();
-        buffer.WriteFloat(scale[0]);
-        buffer.WriteFloat(scale[1]);
-        buffer.WriteFloat(GlobalObjects.firstSPpos.x);
-        buffer.WriteFloat(GlobalObjects.firstSPpos.y);
-        buffer.WriteFloat(GlobalObjects.firstSPpos.z);
-        buffer.WriteFloat(GlobalObjects.secondSPpos.x);
-        buffer.WriteFloat(GlobalObjects.secondSPpos.y);
-        buffer.WriteFloat(GlobalObjects.secondSPpos.z);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
