@@ -18,10 +18,17 @@ public class CameraFollow : MonoBehaviour {
 
     void FixedUpdate()
     {
-        /*mouseOffset = Vector3.Distance(target.position, Input.mousePosition) / mouseOffsetMultiplier;
-        if (mouseOffset > mouseOffsetMultiplierMax) mouseOffset = 1.5f;*/
-        Vector3 targetCamPos = target.position /** mouseOffset*/ + offset;
-        transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
+        if (target == null)
+        {
+            target = ObjectManager.Player.transform;
+        }
+        else
+        {
+            /*mouseOffset = Vector3.Distance(target.position, Input.mousePosition) / mouseOffsetMultiplier;
+            if (mouseOffset > mouseOffsetMultiplierMax) mouseOffset = 1.5f;*/
+            Vector3 targetCamPos = target.position /** mouseOffset*/ + offset;
+            transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
+        }
     }
 
 }

@@ -15,7 +15,11 @@ public class ObjectManager : MonoBehaviour {
     public static GameObject EnemyPlayer;
     public static Vector3 enemyPos;
     public static Quaternion enemyRot;
-    
+
+    public static Vector3 playerStartPosition;
+    public static Vector3 enemyStartPosition;
+    public static Quaternion playerStartRotation;
+    public static Quaternion enemyStartRotation;
 
 	void Awake ()
     {
@@ -42,5 +46,13 @@ public class ObjectManager : MonoBehaviour {
         Player = player;
         EnemyPlayer = enemy;
         RoomSendData.SendPlayerSpawned();
+    }
+
+    public static void SetStartTransform(float[] pos1, float[] pos2, float[] rot1, float[] rot2)
+    {
+        playerStartPosition = new Vector3(pos1[0], pos1[1], pos1[2]);
+        enemyStartPosition = new Vector3(pos2[0], pos2[1], pos2[2]);
+        playerStartRotation = new Quaternion(rot1[0], rot1[1], rot1[2], rot1[3]);
+        enemyStartRotation = new Quaternion(rot2[0], rot2[1], rot2[2], rot2[3]);
     }
 }

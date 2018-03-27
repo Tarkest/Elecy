@@ -51,8 +51,8 @@ public class BattleLoader : MonoBehaviour
         if(PlayerSpawn)
         {
             PlayerSpawn = false;
-            GameObject Player = Instantiate(Resources.Load("Players/TestPlayer"), new Vector3(Position[0][0], Position[0][1], Position[0][2]), new Quaternion(Rotation[0][0], Rotation[0][1], Rotation[0][2], Rotation[0][3])) as GameObject;
-            GameObject EnemyPlayer = Instantiate(Resources.Load("Players/Dummy"), new Vector3(Position[1][0], Position[1][1], Position[1][2]), new Quaternion(Rotation[1][0], Rotation[1][1], Rotation[1][2], Rotation[1][3])) as GameObject;
+            GameObject Player = Instantiate(Resources.Load("Players/TestPlayer"), ObjectManager.playerStartPosition, ObjectManager.playerStartRotation) as GameObject;
+            GameObject EnemyPlayer = Instantiate(Resources.Load("Players/Dummy"), ObjectManager.enemyStartPosition, ObjectManager.enemyStartRotation) as GameObject;
             ObjectManager.PlayersLoaded(Player, EnemyPlayer);
             ThisPlayerProgressChange(0.33f);
         }
@@ -80,18 +80,12 @@ public class BattleLoader : MonoBehaviour
     {
         if (nickname1 == NetPlayerTCP.GetNickname())
         {
-            Position[0] = positions[0];
-            Position[1] = positions[1];
-            Rotation[0] = rotations[0];
-            Rotation[1] = rotations[1];
+            ObjectManager.SetStartTransform(positions[0], positions[1], rotations[0], rotations[1]);
             PlayerSpawn = true;
         }
         else
         {
-            Position[0] = positions[1];
-            Position[1] = positions[0];
-            Rotation[0] = rotations[1];
-            Rotation[1] = rotations[0];
+            ObjectManager.SetStartTransform(positions[1], positions[0], rotations[1], rotations[0]);
             PlayerSpawn = true;
         }
 
