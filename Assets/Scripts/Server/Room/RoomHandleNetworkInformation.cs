@@ -121,7 +121,6 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         float[] enemyTransform = buffer.ReadVector3();
         float[] enemyRotation = buffer.ReadQuternion();
         buffer.Dispose();
-
-        GlobalObjects.enemyMovement.SetTransform(enemyTransform, enemyRotation);
+        ObjectManager.enemyMovementComponent.SetServerPosition(enemyTransform, enemyRotation);
     }
 }

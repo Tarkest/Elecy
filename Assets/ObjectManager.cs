@@ -8,25 +8,29 @@ public class ObjectManager : MonoBehaviour {
 
     public Vector3 mousePosition;
 
+    #region Player
     public static GameObject Player;
     public static Vector3 playerPos;
     public static Quaternion playerRot;
+    public static Vector3 playerStartPosition;
+    public static Quaternion playerStartRotation;
+    #endregion
 
+    #region Enemy
     public static GameObject EnemyPlayer;
     public static Vector3 enemyPos;
     public static Quaternion enemyRot;
-
-    public static Vector3 playerStartPosition;
     public static Vector3 enemyStartPosition;
-    public static Quaternion playerStartRotation;
     public static Quaternion enemyStartRotation;
+    public static EnemyMovement enemyMovementComponent;
+    #endregion
 
-	void Awake ()
+    void Awake ()
     {
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 	}
 
-    private void Update()
+    void Update()
     {
         mousePosition = MouseController.mousePosition;
         if (Player != null)
@@ -45,6 +49,7 @@ public class ObjectManager : MonoBehaviour {
     {
         Player = player;
         EnemyPlayer = enemy;
+        enemyMovementComponent = EnemyPlayer.GetComponent<EnemyMovement>();
         RoomSendData.SendPlayerSpawned();
     }
 
