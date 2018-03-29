@@ -12,8 +12,12 @@ public static class GSC
 
     #region Player
 
-    public static float speed = 10f;
-    public static float gravity = 30f;
+        #region Moving/Turning
+
+        public static float speed = 30f;
+        public static float player_Y = 0.5f;
+
+        #endregion
 
     #endregion
 }

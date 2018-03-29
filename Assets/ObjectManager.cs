@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour {
 
-    public Camera mainCamera;
+    public static Camera mainCamera;
 
-    public Vector3 mousePosition;
+    public static Vector3 mousePosition;
 
     #region Player
     public static GameObject Player;
