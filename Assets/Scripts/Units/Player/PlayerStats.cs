@@ -51,7 +51,7 @@ public class PlayerStats : MonoBehaviour {
 
     private void Update()
     {
-        foreach(Effect Effect in Effects)
+        foreach (Effect Effect in Effects)
         {
 
         }
