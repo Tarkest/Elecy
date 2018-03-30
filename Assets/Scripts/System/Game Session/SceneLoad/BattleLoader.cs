@@ -21,6 +21,10 @@ public class BattleLoader : MonoBehaviour
     private static int[] indexes;
     private static float[][] Position = new float[2][];
     private static float[][] Rotation = new float[2][];
+    private static int _maxHP;
+    private static int _maxSN;
+    private static float _moveSpeed;
+    private static float _attackSpeed;
 
 
     private void Awake()
@@ -53,6 +57,7 @@ public class BattleLoader : MonoBehaviour
             PlayerSpawn = false;
             GameObject Player = Instantiate(Resources.Load("Players/TestPlayer"), ObjectManager.playerStartPosition, ObjectManager.playerStartRotation) as GameObject;
             GameObject EnemyPlayer = Instantiate(Resources.Load("Players/Dummy"), ObjectManager.enemyStartPosition, ObjectManager.enemyStartRotation) as GameObject;
+            Player.GetComponent<PlayerStats>().SetStats(_maxHP, _maxSN, _moveSpeed, _attackSpeed);
             ObjectManager.PlayersLoaded(Player, EnemyPlayer);
             ThisPlayerProgressChange(0.33f);
         }
@@ -78,6 +83,10 @@ public class BattleLoader : MonoBehaviour
 
     public static void SpanwPlayers(string nickname1, string nickname2, float[][]positions, float[][]rotations)
     {
+        _maxHP = 100;
+        _maxSN = 1000;
+        _moveSpeed = 15f;
+        _attackSpeed = 10f;
         if (nickname1 == NetPlayerTCP.GetNickname())
         {
             ObjectManager.SetStartTransform(positions[0], positions[1], rotations[0], rotations[1]);

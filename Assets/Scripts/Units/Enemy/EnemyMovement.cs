@@ -16,8 +16,8 @@ public class EnemyMovement : MonoBehaviour {
 
     void Start ()
     {
-        _transformPos = _serverPos = ObjectManager.enemyPos;
-        _transformRot = _serverRot = ObjectManager.enemyRot;
+        _serverPos = ObjectManager.enemyPos;
+        _serverRot = ObjectManager.enemyRot;
 	}
 	
 	void Update ()
