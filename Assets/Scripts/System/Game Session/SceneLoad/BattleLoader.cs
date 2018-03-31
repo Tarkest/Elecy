@@ -25,7 +25,11 @@ public class BattleLoader : MonoBehaviour
     private static int _maxSN;
     private static float _moveSpeed;
     private static float _attackSpeed;
-
+    private static int _basicDefence;
+    private static int _fireDefence;
+    private static int _earthDefence;
+    private static int _windDefence;
+    private static int _waterDefence;
 
     private void Awake()
     {
@@ -57,7 +61,7 @@ public class BattleLoader : MonoBehaviour
             PlayerSpawn = false;
             GameObject Player = Instantiate(Resources.Load("Players/TestPlayer"), ObjectManager.playerStartPosition, ObjectManager.playerStartRotation) as GameObject;
             GameObject EnemyPlayer = Instantiate(Resources.Load("Players/Dummy"), ObjectManager.enemyStartPosition, ObjectManager.enemyStartRotation) as GameObject;
-            Player.GetComponent<PlayerStats>().SetStats(_maxHP, _maxSN, _moveSpeed, _attackSpeed);
+            Player.GetComponent<PlayerStats>().SetStats(_maxHP, _maxSN, _moveSpeed, _attackSpeed, _basicDefence, _fireDefence, _earthDefence, _windDefence, _waterDefence);
             ObjectManager.PlayersLoaded(Player, EnemyPlayer);
             ThisPlayerProgressChange(0.33f);
         }
@@ -87,6 +91,11 @@ public class BattleLoader : MonoBehaviour
         _maxSN = 1000;
         _moveSpeed = 15f;
         _attackSpeed = 10f;
+        _basicDefence = 10;
+        _fireDefence = 5;
+        _earthDefence = 5;
+        _windDefence = 5;
+        _waterDefence = 5;
         if (nickname1 == NetPlayerTCP.GetNickname())
         {
             ObjectManager.SetStartTransform(positions[0], positions[1], rotations[0], rotations[1]);

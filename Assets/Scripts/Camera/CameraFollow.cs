@@ -2,7 +2,7 @@
 
 public class CameraFollow : MonoBehaviour {
 
-    public GameObject _targetPosition;
+    public Vector3 _targetPosition;
     private static bool _battleMod;
 
     private void Start()
@@ -13,9 +13,9 @@ public class CameraFollow : MonoBehaviour {
 
     void Update ()
     {
-        //if (_targetPosition == null)
-        //    _targetPosition = ObjectManager.playerPos;
-        //else
-            transform.position = _targetPosition.transform.position + new Vector3(0, GSC.cam_target_height, 0);
+        if (_targetPosition == null)
+            _targetPosition = ObjectManager.playerPos;
+        else
+            transform.position = _targetPosition + new Vector3(0, GSC.cam_target_height, 0);
 	}
 }

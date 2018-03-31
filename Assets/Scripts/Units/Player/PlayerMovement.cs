@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         _playerRigidbody = GetComponent<Rigidbody>();
         _playerStats = GetComponent<PlayerStats>();
-        animator = GameObject.Find("TestPlayer0.1").GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate ()
@@ -32,10 +32,10 @@ public class PlayerMovement : MonoBehaviour {
         float v = Input.GetAxisRaw("Vertical");
         if (_playerStats.battleIsOn)
         {
-            if (!_playerStats.isDash && !_playerStats.isStucked && !_playerStats.isStunned)
+            if (_playerStats.isDash <= 0 && _playerStats.isStucked <= 0 && _playerStats.isStunned <= 0)
                 Move(h, v);
 
-            if (!_playerStats.isStunned && !_playerStats.isCasting)
+            if (_playerStats.isStunned <= 0 && _playerStats.isCasting <= 0)
                 Turn();
         }
 	}
@@ -48,10 +48,10 @@ public class PlayerMovement : MonoBehaviour {
             Vector3 moving = Vector3.zero;
             moving.Set(h, 0, v);
             _playerRigidbody.MovePosition(transform.position + moving.normalized * _playerStats.playerMoveSpeed * Time.deltaTime);
-            if (_playerStats.isCasting)
+            if (_playerStats.isCasting >= 0)
             {
-                _playerStats.castUnsuccses = false;
-                _playerStats.isCasting = false;
+                _playerStats.castUnsuccses = true;
+                _playerStats.isCasting  = 0;
             }
         }
         else

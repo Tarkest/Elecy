@@ -14,15 +14,15 @@ public class PlayerStats : MonoBehaviour {
     [System.NonSerialized]
     public int playerCurrentSN;
     [System.NonSerialized]
-    public bool isStunned = false;
+    public int isStunned = 0;
     [System.NonSerialized]
-    public bool isCasting = false;
+    public int isCasting = 0;
     [System.NonSerialized]
-    public bool isStucked = false;
+    public int isStucked = 0;
     [System.NonSerialized]
-    public bool isSylensed = false;
+    public int isSylensed = 0;
     [System.NonSerialized]
-    public bool isDash = false;
+    public int isDash = 0;
     [System.NonSerialized]
     public bool castSuccses = false;
     [System.NonSerialized]
@@ -32,16 +32,31 @@ public class PlayerStats : MonoBehaviour {
     [System.NonSerialized]
     public float playerAttackSpeed;
     [System.NonSerialized]
+    public int playerBasicDefence;
+    [System.NonSerialized]
+    public int playerFireDefence;
+    [System.NonSerialized]
+    public int playerEarthDefence;
+    [System.NonSerialized]
+    public int playerWindDefence;
+    [System.NonSerialized]
+    public int playerWaterDefence;
+    [System.NonSerialized]
     public bool battleIsOn = false;
 
-    private List<Effect> Effects;
+    public List<Effect> Effects;
 
-    public void SetStats(int maxHP, int maxSN, float moveSpeed, float attackSpeed)
+    public void SetStats(int maxHP, int maxSN, float moveSpeed, float attackSpeed, int basicDefence, int fireDefence, int earthDefence, int windDefence, int waterDefence)
     {
         playerMaxHP = playerCurrentHP = maxHP;
         playerMaxSN = playerCurrentSN = maxSN;
         playerMoveSpeed = moveSpeed;
         playerAttackSpeed = attackSpeed;
+        playerBasicDefence = basicDefence;
+        playerFireDefence = fireDefence;
+        playerEarthDefence = earthDefence;
+        playerWindDefence = windDefence;
+        playerWaterDefence = waterDefence;
     }
 
     public void BattleStart()
@@ -53,7 +68,8 @@ public class PlayerStats : MonoBehaviour {
     {
         foreach (Effect Effect in Effects)
         {
-
+            if (Effect.InvokeEffect(Time.deltaTime, this))
+                Effects.Remove(Effect);
         }
     }
 

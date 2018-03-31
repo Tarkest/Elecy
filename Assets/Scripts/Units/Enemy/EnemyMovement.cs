@@ -3,9 +3,7 @@
 public class EnemyMovement : MonoBehaviour {
 
     private Vector3 _serverPos;
-    private Vector3 _transformPos;
     private Quaternion _serverRot;
-    private Quaternion _transformRot;
     private float _positionDist;
     private Rigidbody _enemyRigidbody;
 
