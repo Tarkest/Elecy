@@ -14,6 +14,7 @@ public class ObjectManager : MonoBehaviour {
     public static Quaternion playerRot;
     public static Vector3 playerStartPosition;
     public static Quaternion playerStartRotation;
+    public static PlayerStats playerStats;
     #endregion
 
     #region Enemy
@@ -48,6 +49,7 @@ public class ObjectManager : MonoBehaviour {
     public static void PlayersLoaded(GameObject player, GameObject enemy)
     {
         Player = player;
+        playerStats = Player.GetComponent<PlayerStats>();
         EnemyPlayer = enemy;
         enemyMovementComponent = EnemyPlayer.GetComponent<EnemyMovement>();
         RoomSendData.SendPlayerSpawned();
