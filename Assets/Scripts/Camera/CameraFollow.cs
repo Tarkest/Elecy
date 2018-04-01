@@ -11,11 +11,12 @@ public class CameraFollow : MonoBehaviour {
         _battleMod = false;
     }
 
-    void Update ()
+    void FixedUpdate()
     {
-        if (_targetPosition == null)
+        if (ObjectManager.Player != null)
+        {
             _targetPosition = ObjectManager.playerPos;
-        else
-            transform.position = _targetPosition + new Vector3(0, GSC.cam_target_height, 0);
-	}
+            transform.position = Vector3.Lerp(transform.position, (_targetPosition + new Vector3(0, GSC.cam_target_height, 0)), 5f * Time.deltaTime);
+        }
+    }
 }

@@ -89,7 +89,7 @@ public class BattleLoader : MonoBehaviour
     {
         _maxHP = 100;
         _maxSN = 1000;
-        _moveSpeed = 15f;
+        _moveSpeed = 10f;
         _attackSpeed = 10f;
         _basicDefence = 10;
         _fireDefence = 5;

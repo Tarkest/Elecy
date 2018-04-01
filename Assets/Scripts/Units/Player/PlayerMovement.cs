@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Turn()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(ObjectManager.mousePosition.x, 0, ObjectManager.mousePosition.z));
+        Quaternion rot = Quaternion.LookRotation(new Vector3(ObjectManager.mousePosition.x, 0.5f, ObjectManager.mousePosition.z) - transform.position);
         _playerRigidbody.MoveRotation(rot);
     }
 
