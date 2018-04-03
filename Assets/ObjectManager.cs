@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ObjectManager : MonoBehaviour {
 
     public static Camera mainCamera;
 
     public static Vector3 mousePosition;
+
+    public static GameObject[] Spells = new GameObject[20];
 
     #region Player
     public static GameObject Player;

@@ -27,7 +27,7 @@ public class PlayerStats : MonoBehaviour {
     public bool castSuccses = false;
     [System.NonSerialized]
     public bool castUnsuccses = false;
-    //[System.NonSerialized]
+    [System.NonSerialized]
     public float playerMoveSpeed;
     [System.NonSerialized]
     public float playerAttackSpeed;
