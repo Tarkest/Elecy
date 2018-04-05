@@ -55,7 +55,7 @@ public class RoomSendData : MonoBehaviour {
         buffer.WriteInteger((int)RoomPackets.RLoadProgress);
         buffer.WriteInteger(roomIndex);
         buffer.WriteFloat(loadProgress);
-        //RoomTCP.SendData(buffer.ToArray());
+        RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ObjectManager : MonoBehaviour {
 
@@ -6,7 +7,13 @@ public class ObjectManager : MonoBehaviour {
 
     public static Vector3 mousePosition;
 
-    public static GameObject[] Spells = new GameObject[20];
+    public static int objectCount = 0;
+
+    public static GameObject[] loadedSpells = new GameObject[20];
+
+    public static List<GameObject> staticProps;
+
+    public static List<GameObject> activeProps;
 
     #region Player
     public static GameObject Player;

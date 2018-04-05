@@ -17,10 +17,12 @@ public class BattleLoader : MonoBehaviour
     private static bool PlayerSpawn = false;
     private static bool RockSpawn = false;
     private static bool TreeSpawn = false;
+    private static bool LoadingSpells = false;
     private static int count;
     private static int[] indexes;
     private static float[][] Position = new float[2][];
     private static float[][] Rotation = new float[2][];
+    private static string[] SpellPaths = new string[20];
     private static int _maxHP;
     private static int _maxSN;
     private static float _moveSpeed;
@@ -78,6 +80,15 @@ public class BattleLoader : MonoBehaviour
             LoadTrees();
         }
 
+        if(LoadingSpells)
+        {
+            LoadingSpells = false;
+            for(int i = 0; i == 20; i++)
+            {
+                ObjectManager.loadedSpells[i] = Resources.Load("/Spells/" + SpellPaths[i]) as GameObject;
+            }
+        }
+
     }
 
     private void LoadSend(object o)
@@ -116,7 +127,6 @@ public class BattleLoader : MonoBehaviour
         Position = rocksPosition;
         Rotation = rocksRotation;
         RockSpawn = true;
-        RoomTCP.objectCount += count;
     }
 
     public static void LoadTrees(int treesCount, int[] index, float[][] treesPosition, float[][] treesRotation)
@@ -126,7 +136,11 @@ public class BattleLoader : MonoBehaviour
         Position = treesPosition;
         Rotation = treesRotation;
         TreeSpawn = true;
-        RoomTCP.objectCount += count;
+    }
+
+    public static void LoadSpells(string[] spellPath)
+    {
+        SpellPaths = spellPath;
     }
 
     private static void LoadRocks()
@@ -140,7 +154,7 @@ public class BattleLoader : MonoBehaviour
             NetworkGameObject NewRockNet = NewRockOnField.AddComponent<NetworkGameObject>();
             NewRockNet.SetIndex(indexes[i]);
             NewRockNet.SetTransform(pos, rot);
-            RoomTCP.gameObjects.Add(NewRockNet);
+            ObjectManager.staticProps.Add(NewRockOnField);
         }
         RoomSendData.SendRocksSpawned();
         ThisPlayerProgressChange(0.66f);
@@ -157,7 +171,7 @@ public class BattleLoader : MonoBehaviour
             NetworkGameObject NewTreeNet = NewTreeOnField.AddComponent<NetworkGameObject>();
             NewTreeNet.SetIndex(indexes[i]);
             NewTreeNet.SetTransform(pos, rot);
-            RoomTCP.gameObjects.Add(NewTreeNet);          
+            ObjectManager.staticProps.Add(NewTreeOnField);
         }
         RoomSendData.SendLoadComplite();
         ThisPlayerProgressChange(1f);
@@ -171,6 +185,11 @@ public class BattleLoader : MonoBehaviour
     public static void ThisPlayerProgressChange(float progress)
     {
         thisPlayerProgress = progress;
+    }
+
+    private void OnApplicationQuit()
+    {
+        loadTimer.Dispose();
     }
 
     public static void StartBattle()
