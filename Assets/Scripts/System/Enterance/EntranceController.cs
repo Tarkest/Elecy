@@ -94,6 +94,6 @@ public class EntranceController : MonoBehaviour {
 
     public static void CloseApp()
     {
-        Application.Quit();
+        Network.QuitApp();
     } 
 }

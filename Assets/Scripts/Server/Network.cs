@@ -17,6 +17,8 @@ public class Network : MonoBehaviour
 
     private static bool isConnected = false;
 
+    public static bool quit = false;
+
     private void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
@@ -49,7 +51,11 @@ public class Network : MonoBehaviour
         {
             ClientTCP.Connect(IP_ADDRESS, PORT);
         }
-
+        if(quit)
+        {
+            quit = false;
+            Application.Quit();
+        }
     }
 
     private void LoadScene(int scenenum)
@@ -60,6 +66,11 @@ public class Network : MonoBehaviour
     public static void ChangeConnectionStatus(bool connected)
     {
         isConnected = connected;
+    }
+
+    public static void QuitApp()
+    {
+        quit = true;
     }
 
     private void OnApplicationQuit()

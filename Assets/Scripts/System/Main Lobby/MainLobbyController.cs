@@ -149,6 +149,6 @@ public class MainLobbyController : MonoBehaviour {
 
     public static void CloseApp()
     {
-        Application.Quit();
+        Network.QuitApp();
     }
 }
