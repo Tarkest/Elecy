@@ -34,7 +34,7 @@ public class RoomSendData : MonoBehaviour {
     public static void SendTreesSpawned()
     {
         PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)RoomPackets.RTreesSpawned);
+        buffer.WriteInteger((int)RoomPackets.RTreeSpawned);
         buffer.WriteInteger(RoomTCP.Getindex());
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();

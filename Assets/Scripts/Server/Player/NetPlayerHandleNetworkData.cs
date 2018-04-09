@@ -16,7 +16,9 @@ public class NetPlayerHandleNetworkData
             {(int)ServerPackets.SGlChatMsg, HandleGlobalChatMessage },
             {(int)ServerPackets.SQueueStarted, HandleQueueStarted },
             {(int)ServerPackets.SQueueContinue, HandleQueueContinue },
-            {(int)ServerPackets.SMatchFound, HandleMatchFound }
+            {(int)ServerPackets.SMatchFound, HandleMatchFound },
+            {(int)ServerPackets.SNetPlayerExit, HandleNetPlayerExit },
+            {(int)ServerPackets.SNetPlayerLogOut, HandleNetPlayerLogOut }
         };
     }
 
@@ -86,5 +88,17 @@ public class NetPlayerHandleNetworkData
         buffer.Dispose();
         NetPlayerTCP.Stop();
         Network.InBattle(roomindex, mapIndex);
+    }
+
+    public static void HandleNetPlayerExit(byte[] data)
+    {
+        MainLobbyController.CloseApp();
+    }
+
+    public static void HandleNetPlayerLogOut(byte[] data)
+    {
+        NetPlayerTCP.Stop();
+        ClientTCP.BeginReceive();
+        Network.LogOut();
     }
 }

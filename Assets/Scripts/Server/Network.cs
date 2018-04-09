@@ -69,13 +69,18 @@ public class Network : MonoBehaviour
         RoomTCP.Close();
         BattleLogic.Timer.Dispose();
     }
+    public static void LogOut()
+    {
+        scenenum = 0;
+        scenechange = true;
+    }
 
     public static void Login(int playerIndex, string nickname, int[][] accountData)
     {
         NetPlayerTCP.InitPlayer(playerIndex, nickname, accountData);
         NetPlayerHandleNetworkData.InitializeNetworkPackages();
-        scenechange = true;
         scenenum = 1;
+        scenechange = true;
     }
 
     public static void InBattle(int roomindex, int mapIndex)

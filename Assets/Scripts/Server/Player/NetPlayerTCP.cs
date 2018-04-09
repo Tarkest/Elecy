@@ -78,6 +78,11 @@ public static class NetPlayerTCP
         NetPlayerSendData.SendStopPlayer();
     }
 
+    public static void Stop(string mark)
+    {
+        receiving = false;
+    }
+
     public static bool isConnected()
     {
         return receiving;

@@ -35,7 +35,6 @@ public static class ClientTCP
     {
         receiving = true;
         socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
-        //Send to server inf
     }
 
     public static void SendData(byte[] data)

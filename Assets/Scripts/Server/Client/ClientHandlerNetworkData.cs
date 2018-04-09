@@ -13,6 +13,7 @@ public class ClientHandlerNetworkData
             {(int)ServerPackets.SRegisterOK, HandleRegisterOK },
             {(int)ServerPackets.SLoginOK, HandleLoginOK },
             {(int)ServerPackets.SAlert, HandleServerAlert },
+            {(int)ServerPackets.SClientExit, HandleClientExit }
         };
     }
 
@@ -79,7 +80,11 @@ public class ClientHandlerNetworkData
         buffer.ReadInteger();
         string msg = buffer.ReadString();
         buffer.Dispose();
-        EntranceController.serverInfo = "Alert: " + msg;
+        EntranceController.GetError(msg);
     }
 
+    private static void HandleClientExit(byte[] data)
+    {
+        EntranceController.CloseApp();
+    }
 }

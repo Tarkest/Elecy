@@ -42,4 +42,19 @@ public class ClientSendData
         buffer.Dispose();
     }
 
+    public static void SendExit()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)SystemPackets.SysExit);
+        ClientTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendReconnect()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)ClientPackets.CReconnectComplite);
+        ClientTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
 }

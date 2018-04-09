@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class MainLobbyController : MonoBehaviour {
 
-    private GameObject _findGameButton;
+    private static GameObject _findGameButton;
     //private GameObject _armoryButton; Button for go into skillBuild Window
     //private GameObject _shopButton; Button For go into Shop Window
-    private GameObject _machTypeDropdown;
-    private GameObject _timeCounter;
+    private static GameObject _machTypeDropdown;
+    private static GameObject _timeCounter;
+    private static GameObject _splashMenu;
+    private static GameObject _exitWindow;
+    private static GameObject _logOutWindow;
 
     private int matchType = 0;
     public static bool isSearching = false;
@@ -22,6 +25,16 @@ public class MainLobbyController : MonoBehaviour {
         //_shopButton = GameObject.Find("ShopButton");
         _machTypeDropdown = GameObject.Find("MatchTypeDropdown");
         _timeCounter = GameObject.Find("TimeCounter");
+    }
+
+    void Start()
+    {
+        _splashMenu = GameObject.Find("SplashMenu");
+        _exitWindow = GameObject.Find("ExitWindow");
+        _logOutWindow = GameObject.Find("LogOutWindow");
+        _splashMenu.SetActive(false);
+        _exitWindow.SetActive(false);
+        _logOutWindow.SetActive(false);
     }
 
     public static float GetCounter()
@@ -92,4 +105,50 @@ public class MainLobbyController : MonoBehaviour {
 
     }
 
+    public void ExitPressed()
+    {
+        _splashMenu.SetActive(true);
+        _exitWindow.SetActive(true);
+    }
+
+    public void LogOutPressed()
+    {
+        _splashMenu.SetActive(true);
+        _logOutWindow.SetActive(true);
+    }
+
+    public void Exit(bool answear)
+    {
+        if(answear)
+        {
+            _exitWindow.SetActive(false);
+            _splashMenu.SetActive(false);
+            NetPlayerSendData.SendPlayerExit();
+        }
+        else
+        {
+            _exitWindow.SetActive(false);
+            _splashMenu.SetActive(false);
+        }
+    }
+
+    public void LogOut(bool answear)
+    {
+        if (answear)
+        {
+            _logOutWindow.SetActive(false);
+            _splashMenu.SetActive(false);
+            NetPlayerSendData.SendPlayerLogOut();
+        }
+        else
+        {
+            _logOutWindow.SetActive(false);
+            _splashMenu.SetActive(false);
+        }
+    }
+
+    public static void CloseApp()
+    {
+        Application.Quit();
+    }
 }
