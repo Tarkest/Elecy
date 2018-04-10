@@ -34,10 +34,11 @@ public class ClientSendData
         EntranceController.serverInfo = "Creating new account...";
     }
 
-    public static void SendClose()
+    public static void SendClose(int pIndex)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)ClientPackets.CClose);
+        buffer.WriteInteger(pIndex);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

@@ -15,15 +15,15 @@ public static class ClientTCP
     public static void Close()
     {
         if(receiving)
-            Stop();
+            Stop(0);
         socket.Close();
     }
 
-    public static void Stop()
+    public static void Stop(int  pIndex)
     {
         receiving = false;
         if(socket.Connected)
-            ClientSendData.SendClose();
+            ClientSendData.SendClose(pIndex);
     }
 
     public static bool IsConnected()

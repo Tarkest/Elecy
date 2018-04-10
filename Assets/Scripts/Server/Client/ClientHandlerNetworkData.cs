@@ -69,7 +69,7 @@ public class ClientHandlerNetworkData
         accountData[1] = ranks;
         buffer.Dispose();
         EntranceController.serverInfo = "You Logged On.";
-        ClientTCP.Stop();
+        ClientTCP.Stop(playerIndex);
         Network.Login(playerIndex, nickname, accountData);
     }
 

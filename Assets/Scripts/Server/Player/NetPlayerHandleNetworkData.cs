@@ -97,7 +97,7 @@ public class NetPlayerHandleNetworkData
 
     public static void HandleNetPlayerLogOut(byte[] data)
     {
-        NetPlayerTCP.Stop();
+        NetPlayerTCP.Stop("");
         ClientTCP.BeginReceive();
         Network.LogOut();
     }
