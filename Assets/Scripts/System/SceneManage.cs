@@ -9,7 +9,7 @@ public class SceneManage : MonoBehaviour {
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
+    //Addenterance
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex == NetworkConstants.MAIN_LOBBY_NUMBER)

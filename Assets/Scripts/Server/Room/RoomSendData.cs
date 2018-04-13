@@ -87,4 +87,22 @@ public class RoomSendData : MonoBehaviour {
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
+
+    public static void SendSurrender()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RSurrender);
+        buffer.WriteInteger(RoomTCP.Getindex());
+        RoomTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendRoomLeave()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RRoomLeave);
+        buffer.WriteInteger(RoomTCP.Getindex());
+        RoomTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
 }

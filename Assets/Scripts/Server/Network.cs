@@ -57,7 +57,7 @@ public class Network : MonoBehaviour
             Application.Quit();
         }
     }
-
+    // SceneManger
     private void LoadScene(int scenenum)
     {
         SceneManager.LoadScene(scenenum);
@@ -80,9 +80,16 @@ public class Network : MonoBehaviour
         RoomTCP.Close();
         BattleLogic.Timer.Dispose();
     }
+
     public static void LogOut()
     {
         scenenum = 0;
+        scenechange = true;
+    }
+
+    public static void EndBattle()
+    {
+        scenenum = 1;
         scenechange = true;
     }
 

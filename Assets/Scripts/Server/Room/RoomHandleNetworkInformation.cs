@@ -17,7 +17,9 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
             {(int)ServerPackets.SEnemyLoadProgress, HandleEnemyLoadProgress },
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
             {(int)ServerPackets.STransform, HandleEnemyTransform },
-            {(int)ServerPackets.SInstantiate, HandleServerInstantiate }
+            {(int)ServerPackets.SInstantiate, HandleServerInstantiate },
+            {(int)ServerPackets.SMatchResult, HandleMatchResult },
+            {(int)ServerPackets.SPlayerLogOut, HandlePlayerLogOut }
         };
     }
 
@@ -122,5 +124,21 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         float[] enemyRotation = buffer.ReadQuternion();
         buffer.Dispose();
         ObjectManager.enemyMovementComponent.SetServerPosition(enemyTransform, enemyRotation);
+    }
+
+    public static void HandleMatchResult(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string nickname = buffer.ReadString();
+        buffer.Dispose();
+        BattleLogic.EndBattle(nickname);
+    }
+
+    public static void HandlePlayerLogOut(byte[] data)
+    {
+        RoomTCP.Stop();
+        Network.EndBattle();
     }
 }

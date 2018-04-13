@@ -20,7 +20,7 @@
     SPlayerExit = 18,
     SNetPlayerLogOut = 19,
     SPlayerLogOut = 20,
-    SMatchResult = 21
+    SMatchResult = 21,
 }
 
 public enum SystemPackets
