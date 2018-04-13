@@ -25,7 +25,7 @@ public class RoomController : MonoBehaviour {
         _text = _splashScreen.transform.Find("Text").GetComponent<Text>();
         _popUpScreen = GameObject.Find("PopUpScreen");
         _statisticScreen = GameObject.Find("StatisticScreen");
-        _winnerText = _statisticScreen.transform.Find("WinnerText").GetComponent<Text>();
+        _winnerText = GameObject.Find("WinnerText").GetComponent<Text>();
     }
 
     void Start()
