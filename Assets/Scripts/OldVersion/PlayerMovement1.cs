@@ -29,7 +29,7 @@ public class PlayerMovement1 : MonoBehaviour
     private bool isDash;
     private bool isStunned = false;
     private bool isStucked = false;
-    private bool isCasting = false;
+    //private bool isCasting = false;
     private static bool battleIsStarted = false;
 
     public static void StartBattle()

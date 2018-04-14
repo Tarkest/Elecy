@@ -14,7 +14,7 @@ public class RoomController : MonoBehaviour {
 
     private static bool _menuIsActive = false;
     public static bool battleIsOn = true;
-    private static bool _statisticView = false;
+    //private static bool _statisticView = false;
 
     void Awake()
     {
@@ -97,7 +97,7 @@ public class RoomController : MonoBehaviour {
 
     public static void ViewStatisticScreen(string Nickname)
     {
-        _statisticView = true;
+        //_statisticView = true;
         if (NetPlayerTCP.GetNickname() == Nickname)
         {
             _winnerText.text = "Victory!!! Motherf**cka";

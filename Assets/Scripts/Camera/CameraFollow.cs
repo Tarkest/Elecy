@@ -3,12 +3,10 @@
 public class CameraFollow : MonoBehaviour {
 
     public Vector3 _targetPosition;
-    private static bool _battleMod;
 
     private void Start()
     {
         transform.position = new Vector3(0, 0, 0);
-        _battleMod = false;
     }
 
     void FixedUpdate()

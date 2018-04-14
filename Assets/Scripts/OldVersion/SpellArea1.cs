@@ -2,32 +2,32 @@
 
 public class SpellArea1 : MonoBehaviour {
 
-    private float _spellArea;
-    private float _spellRange;
+    //private float _spellArea;
+    //private float _spellRange;
 
-    private string _targetType;
+    //private string _targetType;
 
-    private Vector3 _mousePosition;
-    private Transform _playerPosition;
+    //private Vector3 _mousePosition;
+    //private Transform _playerPosition;
 
-    private SpellContainer1 _spellContainer;
+    //private SpellContainer1 _spellContainer;
 
-    private string _spellName;
+    //private string _spellName;
 
-    private ParticleSystem _psTarget;
-    private ParticleSystem _psCircle;
-    private ParticleSystem _psArrow;
+    //private ParticleSystem _psTarget;
+    //private ParticleSystem _psCircle;
+    //private ParticleSystem _psArrow;
 
     void Start()
     {
-        _psTarget = GetComponent<ParticleSystem>();
-        _psCircle = gameObject.transform.Find("SpellArea").GetComponent<ParticleSystem>();
-        _psArrow = gameObject.transform.Find("SpellPointer").GetComponent<ParticleSystem>();
+        //_psTarget = GetComponent<ParticleSystem>();
+        //_psCircle = gameObject.transform.Find("SpellArea").GetComponent<ParticleSystem>();
+        //_psArrow = gameObject.transform.Find("SpellPointer").GetComponent<ParticleSystem>();
         //_spellName = GameObject.Find("Test player").GetComponent<SpellInvoker>().spellName;
         //_spellContainer = (Resources.Load(_spellName, typeof (GameObject)) as GameObject).GetComponent<SpellContainer>();
         //_spellContainer.SpellConteinerLoad();
-        _mousePosition = MouseController.mousePosition;
-        _playerPosition = GameObject.Find("Test player").GetComponent<Transform>();
+        //_mousePosition = MouseController.mousePosition;
+        //_playerPosition = GameObject.Find("Test player").GetComponent<Transform>();
         //_targetType = _spellContainer.targetType;
         //_spellArea = _spellContainer.castArea;
         //_spellRange = _spellContainer.distance;
@@ -35,12 +35,12 @@ public class SpellArea1 : MonoBehaviour {
 
     void Update()
     {
-        _spellName = GameObject.Find("Test player").GetComponent<SpellInvoker1>().spellName;
+        //_spellName = GameObject.Find("Test player").GetComponent<SpellInvoker1>().spellName;
         //_spellContainer = (Resources.Load(_spellName, typeof(GameObject)) as GameObject).GetComponent<SpellContainer>();
         //_spellContainer.SpellConteinerLoad();
-        _mousePosition = MouseController.mousePosition;
-        _mousePosition.y = 0.5f;
-        _playerPosition = GameObject.Find("Test player").GetComponent<Transform>();
+        //_mousePosition = MouseController.mousePosition;
+        //_mousePosition.y = 0.5f;
+        //_playerPosition = GameObject.Find("Test player").GetComponent<Transform>();
         //_targetType = _spellContainer.targetType;
         //_spellArea = _spellContainer.castArea;
         //_spellRange = _spellContainer.distance;

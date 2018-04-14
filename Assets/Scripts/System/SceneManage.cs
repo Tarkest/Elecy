@@ -12,10 +12,21 @@ public class SceneManage : MonoBehaviour {
     //Addenterance
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == NetworkConstants.MAIN_LOBBY_NUMBER)
+        if (scene.buildIndex == NetworkConstants.ENTRANCE_NUMBER)
+        {
+            Network.state = Network.GameState.Entrance;
+            ClientTCP.BeginReceive();
+        }
+        else if (scene.buildIndex == NetworkConstants.MAIN_LOBBY_NUMBER)
+        {
+            Network.state = Network.GameState.MainLobby;
             NetPlayerTCP.BeginReceive();
-        if (scene.buildIndex == NetworkConstants.ROOM_ARENA_NUMBER)
+        }
+        else
+        { 
+            Network.state = Network.GameState.GameArena;
             RoomTCP.BeginReceive();
+        }
     }
 
     private void OnDisable()

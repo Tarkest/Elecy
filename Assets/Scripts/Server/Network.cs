@@ -19,10 +19,19 @@ public class Network : MonoBehaviour
 
     public static bool quit = false;
 
+    public static GameState state;
+
     private void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
         ClientHandlerNetworkData.InitializeNetworkPackages();
+    }
+
+    public enum GameState
+    {
+        Entrance = 0,
+        MainLobby = 1,
+        GameArena = 2,
     }
 
     private void Start()
@@ -75,10 +84,22 @@ public class Network : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (state == GameState.Entrance)
+            ClientSendData.SendExit();
+        else if (state == GameState.MainLobby)
+            NetPlayerSendData.SendPlayerExit();
+        else if (state == GameState.GameArena)
+            RoomSendData.SendRoomLeave();
+
         ClientTCP.Close();
         NetPlayerTCP.Close();
         RoomTCP.Close();
-        BattleLogic.Timer.Dispose();
+
+        try
+        {
+            BattleLogic.Timer.Dispose();
+        }
+        catch { }
     }
 
     public static void LogOut()

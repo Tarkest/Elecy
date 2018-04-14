@@ -9,20 +9,20 @@ public class EffectController1 : MonoBehaviour {
     private bool _isCast;
     private bool _isStucked;
     private bool _isStunStackable;
-    private bool _isHpModStackable;
-    private bool _isMsModStackable;
+    //private bool _isHpModStackable;
+    //private bool _isMsModStackable;
 
-    private int _healthMod;
-    private int _synergyMod;
-    private int _damageMod;
+    //private int _healthMod;
+    //private int _synergyMod;
+    //private int _damageMod;
 
-    private float _movespeedMod;
+    //private float _movespeedMod;
     private float _stunduration;
     private float _currentstunduration;
     private float _stunDurationModifyer = 0f;
     private float _castduration;
     private float _stuckduration;
-    private float _modFrequency;
+    //private float _modFrequency;
 
     [System.NonSerialized]
     public Image buffIcon;
@@ -36,17 +36,17 @@ public class EffectController1 : MonoBehaviour {
         _isCast = effect.isCasting;
         _isStucked = effect.isStucking;
         _isStunStackable = effect.isStunStackable;
-        _isHpModStackable = effect.isHpModStackable;
-        _isMsModStackable = effect.isMsModStackable;
-        _healthMod = effect.healthMod;
-        _synergyMod = effect.synergyMod;
-        _damageMod = effect.damageMod;
-        _movespeedMod = effect.movespeedMod;
+        //_isHpModStackable = effect.isHpModStackable;
+        //_isMsModStackable = effect.isMsModStackable;
+        //_healthMod = effect.healthMod;
+        //_synergyMod = effect.synergyMod;
+        //_damageMod = effect.damageMod;
+        //_movespeedMod = effect.movespeedMod;
         _stunduration = effect.stunduration;
         _castduration = effect.castduration;
         _stuckduration = effect.stuckduration;
         buffIcon = effect.buffIcon;
-        _modFrequency = effect.modFrequency;
+        //_modFrequency = effect.modFrequency;
     }
 
 

@@ -36,6 +36,8 @@ public class ObjectManager : MonoBehaviour {
     void Awake ()
     {
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        staticProps = new List<GameObject>();
+        activeProps = new List<GameObject>();
 	}
 
     void Update()
