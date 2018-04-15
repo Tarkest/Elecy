@@ -13,6 +13,7 @@ public class MainLobbyController : MonoBehaviour {
     private static GameObject _splashMenu;
     private static GameObject _exitWindow;
     private static GameObject _logOutWindow;
+    private static GameObject _optionsWindow;
 
     private int matchType = 0;
     public static bool isSearching = false;
@@ -32,9 +33,12 @@ public class MainLobbyController : MonoBehaviour {
         _splashMenu = GameObject.Find("SplashMenu");
         _exitWindow = GameObject.Find("ExitWindow");
         _logOutWindow = GameObject.Find("LogOutWindow");
+        _optionsWindow = GameObject.Find("OptionsMenu");
         _splashMenu.SetActive(false);
+        _optionsWindow.SetActive(false);
         _exitWindow.SetActive(false);
         _logOutWindow.SetActive(false);
+
     }
 
     public static float GetCounter()
@@ -130,6 +134,16 @@ public class MainLobbyController : MonoBehaviour {
             _exitWindow.SetActive(false);
             _splashMenu.SetActive(false);
         }
+    }
+
+    public void Options()
+    {
+        _optionsWindow.SetActive(true);
+    }
+
+    public void OptionsClose()
+    {
+        _optionsWindow.SetActive(false);
     }
 
     public void LogOut(bool answear)
