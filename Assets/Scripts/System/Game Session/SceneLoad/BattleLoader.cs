@@ -180,14 +180,8 @@ public class BattleLoader : MonoBehaviour
         thisPlayerProgress = progress;
     }
 
-    private void OnApplicationQuit()
-    {
-        loadTimer.Dispose();
-    }
-
     public static void StartBattle()
     {
-        loadTimer.Dispose();
         loaded = true;      
         BattleLogic.BeginBattle();
     }

@@ -14,7 +14,8 @@ public class RoomController : MonoBehaviour {
 
     private static bool _menuIsActive = false;
     public static bool battleIsOn = true;
-    //private static bool _statisticView = false;
+    private static bool _statisticView = false;
+    private static bool _won;
 
     void Awake()
     {
@@ -55,6 +56,23 @@ public class RoomController : MonoBehaviour {
                     _inGameMenu.SetActive(true);
                 }
             }
+        }
+        if (_won != null)
+        {
+            if (_won)
+            {
+                _winnerText.text = "Victory!!! Motherf**cka";
+            }
+            else if (!_won)
+            {
+
+                _winnerText.text = "Not today John, not today...";
+            }
+        }
+        if(_statisticView)
+        {
+            _popUpScreen.SetActive(true);
+            _statisticScreen.SetActive(true);
         }
     }
 
@@ -97,16 +115,17 @@ public class RoomController : MonoBehaviour {
 
     public static void ViewStatisticScreen(string Nickname)
     {
-        //_statisticView = true;
+        _statisticView = true;
         if (NetPlayerTCP.GetNickname() == Nickname)
         {
-            _winnerText.text = "Victory!!! Motherf**cka";
+            _won = true;
         }
         else
         {
-            _winnerText.text = "Not today John, not today...";
+            _won = false;
         }
     }
+
     public void LeaveRoom()
     {
         RoomSendData.SendRoomLeave();
