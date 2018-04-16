@@ -13,7 +13,6 @@ public class BattleLoader : MonoBehaviour
     private static bool loaded = false;
     private static float thisPlayerProgress = 0f;
     private static float enemyPlayerProgress = 0f;
-    private static Timer loadTimer;
     private static bool PlayerSpawn = false;
     private static bool RockSpawn = false;
     private static bool TreeSpawn = false;
@@ -38,7 +37,6 @@ public class BattleLoader : MonoBehaviour
         _loadScreen = GameObject.Find("LoadScreen");
         _yourLoadProgress = _loadScreen.transform.Find("ThisPlayerLoad").GetComponent<Slider>();
         _enemyLoadProgress = _loadScreen.transform.Find("EnemyPlayerLoad").GetComponent<Slider>();
-        loadTimer = new Timer(LoadSend, null, 0, 1000 / 2);
     }
 
     private void Start()
@@ -89,11 +87,6 @@ public class BattleLoader : MonoBehaviour
             }
         }
 
-    }
-
-    private void LoadSend(object o)
-    {
-        RoomSendData.SendLoadProgress(RoomTCP.Getindex(), thisPlayerProgress);
     }
 
     public static void SpanwPlayers(string nickname1, string nickname2, float[][]positions, float[][]rotations)

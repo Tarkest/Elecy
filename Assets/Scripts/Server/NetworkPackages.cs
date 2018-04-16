@@ -59,7 +59,7 @@ public enum RoomPackets
     RTransform = 16,
     RRockSpawned = 18,
     RTreeSpawned = 19,
-    RLoadProgress = 20,
+    //REmpty = 20, Пустой!
     RInstantiate = 21,
     RSurrender = 24,
     RRoomLeave = 25,

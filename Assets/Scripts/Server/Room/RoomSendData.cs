@@ -18,6 +18,7 @@ public class RoomSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RPlayerSpawned);
         buffer.WriteInteger(RoomTCP.Getindex());
+        buffer.WriteFloat(0.33f);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -27,6 +28,7 @@ public class RoomSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RRockSpawned);
         buffer.WriteInteger(RoomTCP.Getindex());
+        buffer.WriteFloat(0.66f);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -36,6 +38,7 @@ public class RoomSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RTreeSpawned);
         buffer.WriteInteger(RoomTCP.Getindex());
+        buffer.WriteFloat(0f);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -45,16 +48,7 @@ public class RoomSendData : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RLoadComplite);
         buffer.WriteInteger(RoomTCP.Getindex());
-        RoomTCP.SendData(buffer.ToArray());
-        buffer.Dispose();
-    }
-
-    public static void SendLoadProgress(int roomIndex, float loadProgress)
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)RoomPackets.RLoadProgress);
-        buffer.WriteInteger(roomIndex);
-        buffer.WriteFloat(loadProgress);
+        buffer.WriteFloat(1f);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
