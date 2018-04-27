@@ -57,8 +57,6 @@ public class RoomController : MonoBehaviour {
                 }
             }
         }
-        if (_won != null)
-        {
             if (_won)
             {
                 _winnerText.text = "Victory!!! Motherf**cka";
@@ -68,7 +66,6 @@ public class RoomController : MonoBehaviour {
 
                 _winnerText.text = "Not today John, not today...";
             }
-        }
         if(_statisticView)
         {
             _popUpScreen.SetActive(true);
