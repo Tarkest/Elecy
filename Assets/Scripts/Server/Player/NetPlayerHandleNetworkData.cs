@@ -89,11 +89,6 @@ public class NetPlayerHandleNetworkData
         Network.InBattle(roomindex, mapIndex);
     }
 
-    public static void HandleNetPlayerExit(byte[] data)
-    {
-        MainLobbyController.CloseApp();
-    }
-
     public static void HandleNetPlayerLogOut(byte[] data)
     {
         NetPlayerTCP.Stop("");

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Threading;
 
 public static class NetPlayerTCP
 {
@@ -13,6 +14,8 @@ public static class NetPlayerTCP
     //private static playerState state; State for checking where player is
     private static bool receiving = false;
     private static Socket socket;
+    private static Timer _checkConnectionTimer;
+    private static Timer _badConnectionTimer;
 
     public enum playerState
     {
@@ -37,6 +40,7 @@ public static class NetPlayerTCP
         receiving = true;
         socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(PlayerReceiveCallback), socket);
         NetPlayerSendData.SendConnectionComplpite();
+        CheckConnection();
     }
 
     public static void PlayerReceiveCallback(IAsyncResult ar)
@@ -57,8 +61,8 @@ public static class NetPlayerTCP
                     else
                         return;
                 }
+                CheckConnection();
             }
-
         }
         catch
         {
@@ -92,7 +96,14 @@ public static class NetPlayerTCP
 
     public static void SendData(byte[] data)
     {
-        socket.Send(data);
+        try
+        {
+           socket.Send(data);
+        }
+        catch
+        {
+            MainLobbyController.ConnectionError();
+        }
     }
 
     #region Gets and Sets
@@ -111,5 +122,31 @@ public static class NetPlayerTCP
     }
     #endregion
 
+    private static void SendCheck(object o)
+    {
+        _checkConnectionTimer.Dispose();
+        NetPlayerSendData.SendCheckConnection();
+    }
 
+    private static void CheckConnection()
+    {
+        try
+        {
+            _checkConnectionTimer.Dispose();
+            _badConnectionTimer.Dispose();
+        }
+        catch { return; }
+        _checkConnectionTimer = new Timer(SendCheck, null, 8000, 1);
+    }
+
+    public static void BadConnectionTimerStart()
+    {
+        _badConnectionTimer = new Timer(BadConnectionCallBack, null, 10000, 1);
+    }
+
+    private static void BadConnectionCallBack(object o)
+    {
+        _badConnectionTimer.Dispose();
+        Network.LogOut();
+    }
 }

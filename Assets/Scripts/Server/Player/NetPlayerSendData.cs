@@ -66,5 +66,20 @@ public class NetPlayerSendData
         NetPlayerTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     } 
+
+    public static void SendCheckConnection()
+    {
+        byte[] data = new byte[1];
+        try
+        {
+            NetPlayerTCP.SendData(data);
+            MainLobbyController.BadConnection(true);
+            NetPlayerTCP.BadConnectionTimerStart();
+        }
+        catch
+        {
+            MainLobbyController.ConnectionError();
+        }
+    }
 }
 
