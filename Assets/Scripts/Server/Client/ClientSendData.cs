@@ -2,7 +2,6 @@
 
 public class ClientSendData
 {
-
     public static void SendConnectionComplite()
     {
         PacketBuffer buffer = new PacketBuffer();
@@ -19,7 +18,7 @@ public class ClientSendData
         buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Password);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
-        EntranceController.serverInfo = "Loggin In...";
+        EntranceController.GetInProcess("Loggin in...");
     }
 
     public static void SendRegister()
@@ -31,7 +30,7 @@ public class ClientSendData
         buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Nickname);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
-        EntranceController.serverInfo = "Creating new account...";
+        EntranceController.GetInProcess("Registration...");
     }
 
     public static void SendClose(int pIndex)
@@ -39,14 +38,6 @@ public class ClientSendData
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)ClientPackets.CClose);
         buffer.WriteInteger(pIndex);
-        ClientTCP.SendData(buffer.ToArray());
-        buffer.Dispose();
-    }
-
-    public static void SendExit()
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)SystemPackets.SysExit);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

@@ -15,17 +15,12 @@
     STreeSpawn = 13,
     SEnemyLoadProgress = 14,
     SInstantiate = 15,
-    SClientExit = 16,// Not Needed
-    SNetPlayerExit = 17,// Not Needed
-    SPlayerExit = 18,// Not Needed
+    //SClientExit = 16,// Not Needed
+    //SNetPlayerExit = 17,// Not Needed
+    //SPlayerExit = 18,// Not Needed
     SNetPlayerLogOut = 19,
     SPlayerLogOut = 20,
     SMatchResult = 21,
-}
-
-public enum SystemPackets
-{
-    SysExit = 22,
 }
 
 public enum ClientPackets

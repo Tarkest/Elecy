@@ -12,8 +12,7 @@ public class ClientHandlerNetworkData
             {(int)ServerPackets.SConnectionOK, HandleConnectionOK },
             {(int)ServerPackets.SRegisterOK, HandleRegisterOK },
             {(int)ServerPackets.SLoginOK, HandleLoginOK },
-            {(int)ServerPackets.SAlert, HandleServerAlert },
-            {(int)ServerPackets.SClientExit, HandleClientExit }
+            {(int)ServerPackets.SAlert, HandleServerAlert }
         };
     }
 
@@ -37,7 +36,7 @@ public class ClientHandlerNetworkData
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         buffer.Dispose();
-        EntranceController.serverInfo = "You are connected.";
+        EntranceController.GetOffProcess();
         ClientSendData.SendConnectionComplite();
     }
 
@@ -46,9 +45,8 @@ public class ClientHandlerNetworkData
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        string msg = buffer.ReadString();
         buffer.Dispose();
-        EntranceController.serverInfo = msg;
+        EntranceController.GetOffProcess();
     }
 
     private static void HandleLoginOK(byte[] data)
@@ -68,7 +66,7 @@ public class ClientHandlerNetworkData
         accountData[0] = levels;
         accountData[1] = ranks;
         buffer.Dispose();
-        EntranceController.serverInfo = "You Logged On.";
+        EntranceController.GetOffProcess();
         ClientTCP.Stop(playerIndex);
         Network.Login(playerIndex, nickname, accountData);
     }
@@ -81,10 +79,5 @@ public class ClientHandlerNetworkData
         string msg = buffer.ReadString();
         buffer.Dispose();
         EntranceController.GetError(msg);
-    }
-
-    private static void HandleClientExit(byte[] data)
-    {
-        EntranceController.CloseApp();
     }
 }

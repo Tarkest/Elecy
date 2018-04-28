@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Threading;
 
 public static class ClientTCP
 {
     private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     private static byte[] _asyncBuffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static bool receiving = false;
+    private static Timer _connectTimer;
+    private static int _reconnectTry = 0;
 
     public static void Connect(string IP_ADDRESS, int PORT)
     {
@@ -26,6 +29,21 @@ public static class ClientTCP
             ClientSendData.SendClose(pIndex);
     }
 
+    static void ConnectTimerCallback(object o)
+    {
+        _reconnectTry += 1;
+        Network.ChangeConnectionStatus(false);
+        if (_reconnectTry == 5)
+        {
+            try
+            {
+                _connectTimer.Dispose();
+            }
+            catch { return; }
+            EntranceController.GetError("Server unavaliable /n Try again later");
+        }
+    }
+
     public static bool IsConnected()
     {
         return receiving;
@@ -39,7 +57,16 @@ public static class ClientTCP
 
     public static void SendData(byte[] data)
     {
-        socket.Send(data);
+        try
+        {
+            socket.Send(data);
+        }
+        catch
+        {
+            EntranceController.GetInProcess("Can`t connect to the server /n Reconnecting...");
+            _connectTimer = new Timer(ConnectTimerCallback, null, 3000, 3000);
+            Network.ChangeConnectionStatus(false);
+        }
     }
 
     public static Socket GetSocket()
@@ -49,10 +76,16 @@ public static class ClientTCP
 
     private static void ConnectCallBack(IAsyncResult ar)
     {
-
         socket.EndConnect(ar);
         receiving = true;
+        _reconnectTry = 0;
         ConnectReceive();
+        EntranceController.GetOffProcess();
+        try
+        {
+            _connectTimer.Dispose();
+        }
+        catch { return; }
     }
 
     private static void ConnectReceive()
@@ -68,7 +101,7 @@ public static class ClientTCP
             if (totalRead <= 0)
             {
                 Network.ChangeConnectionStatus(false);
-                EntranceController.serverInfo = "Server unavalible.";
+                EntranceController.GetError("Server unavalible.");
             }
             else
             {
@@ -98,7 +131,7 @@ public static class ClientTCP
         catch
         {
             Network.ChangeConnectionStatus(false);
-            EntranceController.serverInfo = "Server unavalible.";
+            EntranceController.GetError("Server unavalible.");
         }
     }
 
@@ -119,19 +152,13 @@ public static class ClientTCP
                     else
                         return;
                 }
-                else
-                {
-                    Network.ChangeConnectionStatus(false);
-                    EntranceController.serverInfo = "Client received nothing. Connection aborded...";
-                    //socket.Close();
-                }
             }
 
         }
         catch
         {
             Network.ChangeConnectionStatus(false);
-            EntranceController.serverInfo = "Client receive exception";
+            EntranceController.GetError("Client receive exception");
             //socket.;
         }
     }

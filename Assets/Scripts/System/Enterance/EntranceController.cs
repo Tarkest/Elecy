@@ -8,19 +8,23 @@ public class EntranceController : MonoBehaviour {
     public string Password;
     public string Nickname;
     [System.NonSerialized]
-    public static string serverInfo;
     private static Text infoField;
     private static GameObject _splashScreen;
     private static GameObject _exitWindow;
     private static GameObject _errorWindow;
+    private static GameObject _processWindow;
     private static bool _error = false;
+    private static bool _process = false;
     private static string _errorMsg = "";
+    private static string _processMsg = "";
 
     void Start()
     {
         _splashScreen = GameObject.Find("SplashMenu");
         _exitWindow = GameObject.Find("ExitWindow");
         _errorWindow = GameObject.Find("ErrorWindow");
+        _processWindow = GameObject.Find("ProcessWindow");
+        _processWindow.SetActive(false);
         _errorWindow.SetActive(false);
         _exitWindow.SetActive(false);
         _splashScreen.SetActive(false);
@@ -39,11 +43,19 @@ public class EntranceController : MonoBehaviour {
             _errorWindow.transform.Find("Text").GetComponent<Text>().text = _errorMsg;
             _errorMsg = "";
         }
+        if(_process)
+        {
+            _splashScreen.SetActive(true);
+            _processWindow.SetActive(true);
+            _processWindow.transform.Find("Text").GetComponent<Text>().text = _processMsg;
+            _processMsg = "";
+        }
     }
 
     public void LoginTry()
     {
         ClientSendData.SendLogin();
+        GetInProcess("Login in...");
     }
 
     public void RegisterTry()
@@ -51,12 +63,12 @@ public class EntranceController : MonoBehaviour {
         if(Password.Length >= 8)
         {
             ClientSendData.SendRegister();
+            GetInProcess("Registration...");
         }
         else
         {
             GetError("Password must be at least 8 character long");
         }
-
     }
 
     public void Exit()
@@ -69,7 +81,7 @@ public class EntranceController : MonoBehaviour {
     {
         if(answear == true)
         {
-            ClientSendData.SendExit();
+            Network.QuitApp();
             _exitWindow.SetActive(false);
             _splashScreen.SetActive(false);
         }
@@ -90,10 +102,17 @@ public class EntranceController : MonoBehaviour {
     {
         _error = true;
         _errorMsg = errorText;
+        GetOffProcess();
     }
 
-    public static void CloseApp()
+    public static void GetInProcess(string processText)
     {
-        Network.QuitApp();
-    } 
+        _process = true;
+        _processMsg = processText;
+    }
+
+    public static void GetOffProcess()
+    {
+        _process = false;
+    }
 }

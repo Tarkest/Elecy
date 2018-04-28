@@ -57,11 +57,6 @@ public static class NetPlayerTCP
                     else
                         return;
                 }
-                else
-                {
-                    socket.Close();
-                    EntranceController.serverInfo = "Player received nothing. Connection aborded...";
-                }
             }
 
         }

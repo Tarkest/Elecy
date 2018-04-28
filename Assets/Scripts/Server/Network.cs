@@ -44,9 +44,7 @@ public class Network : MonoBehaviour
         {
             IP_ADDRESS = NetworkConstants.IP_ADDRESS;
         }
-
-
-        EntranceController.serverInfo = "Connecting to the server...";
+        EntranceController.GetInProcess("Connecting...");
     }
 
     private void Update()
@@ -84,9 +82,7 @@ public class Network : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (state == GameState.Entrance)
-            ClientSendData.SendExit();
-        else if (state == GameState.MainLobby)
+        if (state == GameState.MainLobby)
             NetPlayerSendData.SendPlayerExit();
         else if (state == GameState.GameArena)
             RoomSendData.SendRoomLeave();
