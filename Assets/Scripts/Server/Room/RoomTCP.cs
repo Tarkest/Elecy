@@ -45,7 +45,7 @@ public class RoomTCP : MonoBehaviour {
                 else
                 {
                     socket.Close();
-                    EntranceController.serverInfo = "Room received nothing. Connection aborded...";
+                    //EntranceController.serverInfo = "Room received nothing. Connection aborded...";
                 }
             }
 
@@ -53,14 +53,14 @@ public class RoomTCP : MonoBehaviour {
         catch
         {
             socket.Close();
-            EntranceController.serverInfo = "Room receive exception";
+            EntranceController.GetError("Room receive exception");
         }
     }
 
 
     public static void InstantiateNetworkObject()
     {
-        ///Here Comesthe instantiation the object on the scene
+        ///Here Comes the instantiation the object on the scene
     }
 
     public static void Stop()

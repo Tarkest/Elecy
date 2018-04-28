@@ -17,7 +17,6 @@ public class NetPlayerHandleNetworkData
             {(int)ServerPackets.SQueueStarted, HandleQueueStarted },
             {(int)ServerPackets.SQueueContinue, HandleQueueContinue },
             {(int)ServerPackets.SMatchFound, HandleMatchFound },
-            {(int)ServerPackets.SNetPlayerExit, HandleNetPlayerExit },
             {(int)ServerPackets.SNetPlayerLogOut, HandleNetPlayerLogOut }
         };
     }

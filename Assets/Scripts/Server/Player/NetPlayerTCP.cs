@@ -63,7 +63,7 @@ public static class NetPlayerTCP
         catch
         {
             socket.Close();
-            EntranceController.serverInfo = "Player receive exception";
+            EntranceController.GetError("Player receive exception");
         }
     }
 

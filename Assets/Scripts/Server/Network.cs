@@ -82,11 +82,6 @@ public class Network : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (state == GameState.MainLobby)
-            NetPlayerSendData.SendPlayerExit();
-        else if (state == GameState.GameArena)
-            RoomSendData.SendRoomLeave();
-
         ClientTCP.Close();
         NetPlayerTCP.Close();
         RoomTCP.Close();

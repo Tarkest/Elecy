@@ -127,7 +127,7 @@ public class MainLobbyController : MonoBehaviour {
         {
             _exitWindow.SetActive(false);
             _splashMenu.SetActive(false);
-            NetPlayerSendData.SendPlayerExit();
+            //NetPlayerSendData.SendPlayerExit();
         }
         else
         {

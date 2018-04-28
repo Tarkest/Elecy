@@ -8,7 +8,6 @@ public class RoomSendData : MonoBehaviour {
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RConnectionComplite);
-        buffer.WriteInteger(roomindex);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -17,7 +16,6 @@ public class RoomSendData : MonoBehaviour {
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RPlayerSpawned);
-        buffer.WriteInteger(RoomTCP.Getindex());
         buffer.WriteFloat(0.33f);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
@@ -27,7 +25,6 @@ public class RoomSendData : MonoBehaviour {
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RRockSpawned);
-        buffer.WriteInteger(RoomTCP.Getindex());
         buffer.WriteFloat(0.66f);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
@@ -37,7 +34,6 @@ public class RoomSendData : MonoBehaviour {
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RTreeSpawned);
-        buffer.WriteInteger(RoomTCP.Getindex());
         buffer.WriteFloat(0f);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
@@ -47,7 +43,6 @@ public class RoomSendData : MonoBehaviour {
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RLoadComplite);
-        buffer.WriteInteger(RoomTCP.Getindex());
         buffer.WriteFloat(1f);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
@@ -59,7 +54,6 @@ public class RoomSendData : MonoBehaviour {
         float[] objectRot = new float[] { Rotation.x, Rotation.y, Rotation.z, Rotation.w };
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RInstantiate);
-        buffer.WriteInteger(RoomTCP.Getindex());
         buffer.WriteInteger(ID);
         buffer.WriteInteger(InstantiateType);
         buffer.WriteString(objectReference);
@@ -75,7 +69,6 @@ public class RoomSendData : MonoBehaviour {
         float[] playerRot = new float[] { playerRotation.x, playerRotation.y, playerRotation.z, playerRotation.w };
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RTransform);
-        buffer.WriteInteger(RoomTCP.Getindex());
         buffer.WriteVector3(playerPos);
         buffer.WriteQuaternion(playerRot);
         RoomTCP.SendData(buffer.ToArray());
@@ -86,7 +79,6 @@ public class RoomSendData : MonoBehaviour {
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RSurrender);
-        buffer.WriteInteger(RoomTCP.Getindex());
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -95,7 +87,6 @@ public class RoomSendData : MonoBehaviour {
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RRoomLeave);
-        buffer.WriteInteger(RoomTCP.Getindex());
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
