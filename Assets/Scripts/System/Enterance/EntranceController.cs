@@ -48,7 +48,12 @@ public class EntranceController : MonoBehaviour {
             _splashScreen.SetActive(true);
             _processWindow.SetActive(true);
             _processWindow.transform.Find("Text").GetComponent<Text>().text = _processMsg;
-            _processMsg = "";
+        }
+        else
+        {
+            _processWindow.SetActive(false);
+            _splashScreen.SetActive(false);
+            _processWindow.transform.Find("Text").GetComponent<Text>().text = "";
         }
     }
 
