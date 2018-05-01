@@ -17,8 +17,6 @@ public static class ClientTCP
 
     public static void Close()
     {
-        if(receiving)
-            Stop(0);
         socket.Close();
     }
 

@@ -15,6 +15,7 @@ public class EntranceController : MonoBehaviour {
     private static GameObject _processWindow;
     private static bool _error = false;
     private static bool _process = false;
+    private static bool _processOff = true;
     private static string _errorMsg = "";
     private static string _processMsg = "";
 
@@ -43,14 +44,16 @@ public class EntranceController : MonoBehaviour {
             _errorWindow.transform.Find("Text").GetComponent<Text>().text = _errorMsg;
             _errorMsg = "";
         }
-        if(_process)
+        if(_process && !_processOff)
         {
+            _process = false;
             _splashScreen.SetActive(true);
             _processWindow.SetActive(true);
             _processWindow.transform.Find("Text").GetComponent<Text>().text = _processMsg;
         }
-        else
+        if(_processOff && !_process)
         {
+            _processOff = true;
             _processWindow.SetActive(false);
             _splashScreen.SetActive(false);
             _processWindow.transform.Find("Text").GetComponent<Text>().text = "";
@@ -113,11 +116,13 @@ public class EntranceController : MonoBehaviour {
     public static void GetInProcess(string processText)
     {
         _process = true;
+        _processOff = false;
         _processMsg = processText;
     }
 
     public static void GetOffProcess()
     {
         _process = false;
+        _processOff = true;
     }
 }
