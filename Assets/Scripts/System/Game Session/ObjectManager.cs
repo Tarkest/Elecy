@@ -11,9 +11,9 @@ public class ObjectManager : MonoBehaviour {
 
     public static GameObject[] loadedSpells = new GameObject[20];
 
-    public static List<GameObject> staticProps;
+    public static List<StaticProp> staticProps;
 
-    public static List<GameObject> activeProps;
+    public static List<DynamicProp> activeProps;
 
     #region Player
     public static GameObject Player;
@@ -36,8 +36,8 @@ public class ObjectManager : MonoBehaviour {
     void Awake ()
     {
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        staticProps = new List<GameObject>();
-        activeProps = new List<GameObject>();
+        staticProps = new List<StaticProp>();
+        activeProps = new List<DynamicProp>();
 	}
 
     void Update()
@@ -70,5 +70,21 @@ public class ObjectManager : MonoBehaviour {
         enemyStartPosition = new Vector3(pos2[0], pos2[1], pos2[2]);
         playerStartRotation = new Quaternion(rot1[0], rot1[1], rot1[2], rot1[3]);
         enemyStartRotation = new Quaternion(rot2[0], rot2[1], rot2[2], rot2[3]);
+    }
+
+    void SendDynamicObjectCallback(object o)
+    {
+        foreach(DynamicProp obj in activeProps)
+        {
+            obj.SendInfo();
+        }
+    }
+
+    void SendStaticObjectUpdate(object o)
+    {
+        foreach(StaticProp obj in staticProps)
+        {
+            obj.SendInfo();
+        }
     }
 }
