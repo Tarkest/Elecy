@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "New Spell", menuName = "Spell")] 
+[CreateAssetMenu(fileName = "Old Spell", menuName = " Old Spell")] 
 public class Spell1 : ScriptableObject
 {
     public string spellName;

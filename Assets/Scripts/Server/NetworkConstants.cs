@@ -11,7 +11,7 @@ public class NetworkConstants
 
     public static string IP_ADDRESS = "77.122.16.14";
 
-    public static int UPDATE_RATE = 40;
+    public static int UPDATE_RATE = 25;
 
     #region Scene Numbers
 

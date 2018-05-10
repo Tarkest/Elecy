@@ -60,17 +60,19 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         int numberOfRocks = buffer.ReadInteger();
+        int[] rocksHP = new int[numberOfRocks];
         int[] rocksIndexes = new int[numberOfRocks];
         float[][] rocksPos = new float[numberOfRocks][];
         float[][] rocksRot = new float[numberOfRocks][];
         for(int i = 0; i < numberOfRocks; i++)
         {
             rocksIndexes[i] = buffer.ReadInteger();
+            rocksHP[i] = buffer.ReadInteger();
             rocksPos[i] = buffer.ReadVector3();
             rocksRot[i] = buffer.ReadQuternion();
         }
         buffer.Dispose();
-        BattleLoader.LoadRocks(numberOfRocks, rocksIndexes, rocksPos, rocksRot);
+        BattleLoader.LoadRocks(numberOfRocks, rocksHP, rocksIndexes, rocksPos, rocksRot);
     }
 
     public static void HandleTreeSpawn(byte[] data)
@@ -79,17 +81,19 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         int numberoftrees = buffer.ReadInteger();
+        int[] treesHP = new int[numberoftrees];
         int[] treesindexes = new int[numberoftrees];
         float[][] treespos = new float[numberoftrees][];
         float[][] treesrot = new float[numberoftrees][];
         for (int i = 0; i < numberoftrees; i++)
         {
             treesindexes[i] = buffer.ReadInteger();
+            treesHP[i] = buffer.ReadInteger();
             treespos[i] = buffer.ReadVector3();
             treesrot[i] = buffer.ReadQuternion();
         }
         buffer.Dispose();
-        BattleLoader.LoadTrees(numberoftrees, treesindexes, treespos, treesrot);
+        BattleLoader.LoadTrees(numberoftrees, treesHP, treesindexes, treespos, treesrot);
     }
 
     public static void HandleEnemyLoadProgress(byte[] data)

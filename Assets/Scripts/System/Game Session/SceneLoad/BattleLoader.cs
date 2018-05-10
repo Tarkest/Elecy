@@ -31,6 +31,8 @@ public class BattleLoader : MonoBehaviour
     private static int _earthDefence;
     private static int _windDefence;
     private static int _waterDefence;
+    private static int[] _rocksHP;
+    private static int[] _treesHP;
 
     private void Awake()
     {
@@ -112,19 +114,21 @@ public class BattleLoader : MonoBehaviour
 
     }
 
-    public static void LoadRocks(int rocksCount, int[] index, float[][] rocksPosition, float[][] rocksRotation)
+    public static void LoadRocks(int rocksCount, int[] rocksHp, int[] index, float[][] rocksPosition, float[][] rocksRotation)
     {
         count = rocksCount;
         indexes = index;
+        _rocksHP = rocksHp;
         Position = rocksPosition;
         Rotation = rocksRotation;
         RockSpawn = true;
     }
 
-    public static void LoadTrees(int treesCount, int[] index, float[][] treesPosition, float[][] treesRotation)
+    public static void LoadTrees(int treesCount, int[] treesHP, int[] index, float[][] treesPosition, float[][] treesRotation)
     {
         count = treesCount;
         indexes = index;
+        _treesHP = treesHP;
         Position = treesPosition;
         Rotation = treesRotation;
         TreeSpawn = true;
@@ -143,10 +147,11 @@ public class BattleLoader : MonoBehaviour
             Vector3 pos = new Vector3(Position[i][0], Position[i][1], Position[i][2]);
             Quaternion rot = new Quaternion(Rotation[i][0], Rotation[i][1], Rotation[i][2], Rotation[i][3]);
             GameObject NewRockOnField = Instantiate(NewRock, pos, rot);
-            NetworkGameObject NewRockNet = NewRockOnField.AddComponent<NetworkGameObject>();
+            StaticProp NewRockNet = NewRockOnField.AddComponent<StaticProp>();
             NewRockNet.SetIndex(indexes[i]);
             NewRockNet.SetTransform(pos, rot);
-            ObjectManager.staticProps.Add(NewRockOnField);
+            NewRockNet.SetHP(_rocksHP[i]);
+            ObjectManager.staticProps.Add(NewRockNet);
         }
         RoomSendData.SendRocksSpawned();
         ThisPlayerProgressChange(0.66f);
@@ -160,10 +165,11 @@ public class BattleLoader : MonoBehaviour
             Vector3 pos = new Vector3(Position[i][0], Position[i][1], Position[i][2]);
             Quaternion rot = new Quaternion(Rotation[i][0], Rotation[i][1], Rotation[i][2], Rotation[i][3]);
             GameObject NewTreeOnField = Instantiate(NewTree, pos, rot);
-            NetworkGameObject NewTreeNet = NewTreeOnField.AddComponent<NetworkGameObject>();
+            StaticProp NewTreeNet = NewTreeOnField.AddComponent<StaticProp>();
             NewTreeNet.SetIndex(indexes[i]);
             NewTreeNet.SetTransform(pos, rot);
-            ObjectManager.staticProps.Add(NewTreeOnField);
+            NewTreeNet.SetHP(_treesHP[i]);
+            ObjectManager.staticProps.Add(NewTreeNet);
         }
         RoomSendData.SendLoadComplite();
         ThisPlayerProgressChange(1f);
