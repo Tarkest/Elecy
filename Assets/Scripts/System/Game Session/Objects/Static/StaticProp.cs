@@ -12,6 +12,10 @@ public class StaticProp : MonoBehaviour {
     public Vector3 serverPos;
     public Quaternion serverRot;
 
+    private int _lastHP;
+    private int[] _lastEffects;
+    private bool _lastState;
+
     private List<Effect> _effects;
 
     void Update()
@@ -25,7 +29,7 @@ public class StaticProp : MonoBehaviour {
 
     public void SendInfo()
     {
-        RoomSendData.SendStaticObjectInfo(_index, _hp, _effectsNet);
+        RoomSendData.SendStaticObjectInfo(_index, _currentHp, _effectsNet);
     }
 
     public void SetIndex(int index)
@@ -46,6 +50,11 @@ public class StaticProp : MonoBehaviour {
     public void SetActivity(bool Activity)
     {
         _isActive = Activity;
+
+        if(_isActive == true)
+        {
+            RoomSendData.SendStaticObjectInfo(_index, _currentHp, _effectsNet, gameObject.transform.position, gameObject.transform.rotation);
+        }
     }
 
     public void SetTransform(Vector3 transform, Quaternion rotation)
@@ -59,11 +68,20 @@ public class StaticProp : MonoBehaviour {
         _effects.Add(effect);
     }
 
-    public void ChangeEffectIndex(int index)
+    public void ChangeEffectIndex(int index, int type)
     {
-        if (_effectsNet[index] == 0)
-            _effectsNet[index] = 1;
-        else
-            _effectsNet[index] = 0;
+        _effectsNet[index] = type;
+    }
+
+    public bool CheckChange()
+    {
+        if(_lastEffects != _effectsNet || _currentHp != _lastHP || _lastState != _isActive)
+        {
+            _lastEffects = _effectsNet;
+            _lastHP = _currentHp;
+            _lastState = _isActive;
+            return true;
+        }
+        else { return false; }
     }
 }

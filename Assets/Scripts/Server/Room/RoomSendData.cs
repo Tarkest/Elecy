@@ -48,29 +48,43 @@ public class RoomSendData : MonoBehaviour {
         buffer.Dispose();
     }
 
-    public static void SendInstatiate(int ID, Vector3 Position, Quaternion Rotation, int InstantiateType, string objectReference)
+    public static void SendInstatiate(int ID, Vector3 Position, Quaternion Rotation)
     {
         float[] objectPos = new float[] { Position.x, Position.y, Position.z };
         float[] objectRot = new float[] { Rotation.x, Rotation.y, Rotation.z, Rotation.w };
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RInstantiate);
         buffer.WriteInteger(ID);
-        buffer.WriteInteger(InstantiateType);
-        buffer.WriteString(objectReference);
         buffer.WriteVector3(objectPos);
         buffer.WriteQuaternion(objectRot);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
 
-    public static void SendTransform(Vector3 playerTransform, Quaternion playerRotation)
+    public static void SendDestroy(int array, int index)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RDestroy);
+        buffer.WriteInteger(array);
+        buffer.WriteInteger(index);
+        RoomTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendPlayerUpdate(Vector3 playerTransform, Quaternion playerRotation, int hp, int synergy, int[] effects)
     {
         float[] playerPos = new float[] { playerTransform.x, playerTransform.y, playerTransform.z };
         float[] playerRot = new float[] { playerRotation.x, playerRotation.y, playerRotation.z, playerRotation.w };
         PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)RoomPackets.RTransform);
+        buffer.WriteInteger((int)RoomPackets.RPlayerUpdate);
         buffer.WriteVector3(playerPos);
         buffer.WriteQuaternion(playerRot);
+        buffer.WriteInteger(hp);
+        buffer.WriteInteger(synergy);
+        for(int i = 0; i <= GSC.PlayerEffectAmount - 1; i++)
+        {
+            buffer.WriteInteger(effects[i]);
+        }
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -81,8 +95,28 @@ public class RoomSendData : MonoBehaviour {
         buffer.WriteInteger((int)RoomPackets.RStaticObjUpdate);
         buffer.WriteInteger(index);
         buffer.WriteInteger(hp);
-        buffer.WriteInteger(effects[0]);
-        buffer.WriteInteger(effects[1]);
+        for(int i = 0; i <= GSC.PropEffectAmount - 1; i++)
+        {
+            buffer.WriteInteger(effects[i]);
+        }
+        RoomTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendStaticObjectInfo(int index, int hp, int[] effects, Vector3 pos, Quaternion rot)
+    {
+        float[] Pos = new float[] { pos.x, pos.y, pos.z };
+        float[] Rot = new float[] { rot.x, rot.y, rot.z, rot.w };
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RStaticObjUpdate);
+        buffer.WriteInteger(index);
+        buffer.WriteInteger(hp);
+        for (int i = 0; i <= GSC.PropEffectAmount - 1; i++)
+        {
+            buffer.WriteInteger(effects[i]);
+        }
+        buffer.WriteVector3(Pos);
+        buffer.WriteQuaternion(Rot);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

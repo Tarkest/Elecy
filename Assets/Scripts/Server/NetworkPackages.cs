@@ -11,16 +11,15 @@
     SLoadStarted = 9,
     SRockSpawn = 10,
     SRoomStart = 11,
-    STransform = 12,
+    SPlayerUpdate = 12,
     STreeSpawn = 13,
     SEnemyLoadProgress = 14,
-    SInstantiate = 15,
-    //SClientExit = 16,// Not Needed
-    //SNetPlayerExit = 17,// Not Needed
-    //SPlayerExit = 18,// Not Needed
-    SNetPlayerLogOut = 19,
-    SPlayerLogOut = 20,
-    SMatchResult = 21,
+    SInstantiate = 15, //Write
+    SDynamicObjUpdate = 16, // Write
+    SDestroy = 17,
+    SNetPlayerLogOut = 18,
+    SPlayerLogOut = 19,
+    SMatchResult = 20,
 }
 
 public enum ClientPackets
@@ -50,7 +49,7 @@ public enum RoomPackets
     RConnectionComplite = 13,
     RPlayerSpawned = 14,
     RLoadComplite = 15,
-    RTransform = 16,
+    RPlayerUpdate = 16,
     RRockSpawned = 18,
     RTreeSpawned = 19,
     RStaticObjUpdate = 20,
@@ -58,6 +57,5 @@ public enum RoomPackets
     RSurrender = 24,
     RRoomLeave = 25,
     RDynamicObjUpdate = 26,
-    RPlayerUpdate = 27,
-    RDestroy = 28,
+    RDestroy = 27,
 }
