@@ -21,10 +21,6 @@ public static class GSC
 
     #region Props Constants
     public static int SpellsEffectCapasity = 4;
-
-    public static int PlayerEffectAmount = 10;
-
-    public static int PropEffectAmount = 2;
     #endregion
 }
 

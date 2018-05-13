@@ -116,7 +116,13 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        //get info about object for instatiate? add it to array and start to send observw info 
+        int PlayerIndex = buffer.ReadInteger();
+        int ObjectIndex = buffer.ReadInteger();
+        int ObjectNetIndex = buffer.ReadInteger();
+        float[] Position = buffer.ReadVector3();
+        float[] Rotation = buffer.ReadQuternion();
+        buffer.Dispose();
+        ObjectManager.InstantiateOnBattleField(PlayerIndex, ObjectIndex, ObjectNetIndex, Position, Rotation);
     }
 
     public static void HandleEnemyTransform(byte[] data)

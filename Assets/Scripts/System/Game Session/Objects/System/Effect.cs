@@ -43,7 +43,6 @@ public class Effect : ScriptableObject
     [Header("Graphics")]
     public Image buffIcon;
     public int effectIndex;
-    public int effectType;
 
     private bool isOn = false;
     private bool isActive = false;
@@ -65,7 +64,6 @@ public class Effect : ScriptableObject
             player.playerEarthDefence += earthDefMod;
             player.playerWindDefence += windDefMod;
             player.playerWaterDefence += waterDefMod;
-            player.AddEffect(effectType, effectIndex);
             if (tickDuration == 0)
                 logicTick = duration / modFrequency;
             else
@@ -116,7 +114,6 @@ public class Effect : ScriptableObject
                 player.playerWindDefence -= windDefMod;
                 player.playerWaterDefence -= waterDefMod;
             }
-            player.AddEffect(effectType, 0);
             return true;
         }
         return false;
@@ -128,12 +125,7 @@ public class Effect : ScriptableObject
         {
             if (propDeactivator)
             {
-                staticProp.ChangeEffectIndex(0, 1);
                 staticProp.SetActivity(false);
-            }
-            else
-            {
-                staticProp.ChangeEffectIndex(effectIndex, effectType);
             }
             staticProp.UpdateHP(propHealthMod);
             if (tickDuration == 0)
@@ -161,12 +153,7 @@ public class Effect : ScriptableObject
         {
             if (propDeactivator)
             {
-                staticProp.ChangeEffectIndex(0, 1);
                 staticProp.SetActivity(true);
-            }
-            else
-            {
-                staticProp.ChangeEffectIndex(effectIndex, effectType);
             }
             return true;
         }
@@ -175,12 +162,7 @@ public class Effect : ScriptableObject
         {
             if (propDeactivator)
             {
-                staticProp.ChangeEffectIndex(0, 1);
                 staticProp.SetActivity(true);
-            }
-            else
-            {
-                staticProp.ChangeEffectIndex(effectIndex, effectType);
             }
             return true;
         }

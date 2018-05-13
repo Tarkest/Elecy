@@ -7,13 +7,13 @@ public class StaticProp : MonoBehaviour {
     public int _index { get; private set; }
     public int _hp { get; private set; }
     public int _currentHp { get; private set; }
-    public int[] _effectsNet = new int[2];
+    public List<int> _effectsNet;
     public bool _isActive { get; private set; }
     public Vector3 serverPos;
     public Quaternion serverRot;
 
     private int _lastHP;
-    private int[] _lastEffects;
+    private List<int> _lastEffects;
     private bool _lastState;
 
     private List<Effect> _effects;
@@ -23,7 +23,10 @@ public class StaticProp : MonoBehaviour {
         foreach(Effect effect in _effects)
         {
             if (effect.InvokeEffect(Time.deltaTime, this))
+            {
                 _effects.Remove(effect);
+                _effectsNet.Remove(_effects.IndexOf(effect));
+            }         
         }
     }
 
@@ -66,6 +69,7 @@ public class StaticProp : MonoBehaviour {
     public void AddEffect(Effect effect)
     {
         _effects.Add(effect);
+        _effectsNet.Add(effect.effectIndex);
     }
 
     public void ChangeEffectIndex(int index, int type)
