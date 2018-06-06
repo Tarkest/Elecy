@@ -45,9 +45,9 @@ public class StaticProp : MonoBehaviour {
         _hp = HP;
     }
 
-    public void UpdateHP(int HP)
+    public void UpdateHP(int BasicDamage, int FireDamage, int EarthDamage, int WindDamage, int WaterDamage)
     {
-        _currentHp += HP; 
+        _currentHp -= (BasicDamage + FireDamage + EarthDamage + WindDamage + WaterDamage); 
     }
 
     public void SetActivity(bool Activity)

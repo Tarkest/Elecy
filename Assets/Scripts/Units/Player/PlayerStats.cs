@@ -90,9 +90,50 @@ public class PlayerStats : MonoBehaviour {
             playerCurrentSN += Convert.ToInt32(((x / 100) * playerCurrentSN));
     }
 
-    public void PlayerHealthPointUpdate(int x)
+    public void PlayerDealDamage(int BasicDamage, int FireDamage, int EarthDamage, int WindDamage, int WaterDamage)
     {
-        playerCurrentHP += x;
+        int Damage = 0;
+        if (BasicDamage > 0)
+        {
+            Damage += (BasicDamage - (BasicDamage / playerBasicDefence));
+        }
+        else
+        {
+            return;
+        }
+        if (FireDamage > 0)
+        {
+            Damage += (FireDamage - playerFireDefence);
+        }
+        else
+        {
+            Damage += FireDamage;
+        }
+        if (EarthDamage > 0)
+        {
+            Damage += (EarthDamage - playerEarthDefence);
+        }
+        else
+        {
+            Damage += EarthDamage;
+        }
+        if (WindDamage > 0)
+        {
+            Damage += (WindDamage - playerWindDefence);
+        }
+        else
+        {
+            Damage += WindDamage;
+        }
+        if (WaterDamage > 0)
+        {
+            Damage += (WaterDamage - playerWaterDefence);
+        }
+        else
+        {
+            Damage += WaterDamage;
+        }
+        playerCurrentHP -= Damage;
     }
 
     public void PlayerHealthPointUpdate(float x, string type)

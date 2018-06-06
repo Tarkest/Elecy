@@ -81,8 +81,8 @@ public class RoomSendData : MonoBehaviour {
         buffer.WriteQuaternion(playerRot);
         buffer.WriteInteger(hp);
         buffer.WriteInteger(synergy);
-        buffer.WriteInteger(effects.Capacity);
-        for(int i = 0; i <= effects.Capacity - 1; i++)
+        buffer.WriteInteger(effects.Count);
+        for(int i = 0; i <= effects.Count - 1; i++)
         {
             buffer.WriteInteger(effects[i]);
         }
@@ -96,8 +96,8 @@ public class RoomSendData : MonoBehaviour {
         buffer.WriteInteger((int)RoomPackets.RStaticObjUpdate);
         buffer.WriteInteger(index);
         buffer.WriteInteger(hp);
-        buffer.WriteInteger(effects.Capacity);
-        for(int i = 0; i <= effects.Capacity - 1; i++)
+        buffer.WriteInteger(effects.Count);
+        for(int i = 0; i <= effects.Count - 1; i++)
         {
             buffer.WriteInteger(effects[i]);
         }
@@ -113,8 +113,8 @@ public class RoomSendData : MonoBehaviour {
         buffer.WriteInteger((int)RoomPackets.RStaticObjUpdate);
         buffer.WriteInteger(index);
         buffer.WriteInteger(hp);
-        buffer.WriteInteger(effects.Capacity);
-        for (int i = 0; i <= effects.Capacity - 1; i++)
+        buffer.WriteInteger(effects.Count);
+        for (int i = 0; i <= effects.Count - 1; i++)
         {
             buffer.WriteInteger(effects[i]);
         }

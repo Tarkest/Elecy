@@ -25,7 +25,7 @@ public class DynamicProp : MonoBehaviour {
             _rotation = gameObject.transform.rotation;
             if (_currentHP <= 0)
             {
-                Send Destroy 
+                //Send Destroy 
             }
         }
     }
@@ -45,6 +45,11 @@ public class DynamicProp : MonoBehaviour {
         _hp = hp;
     }
 
+    public void UpdateHP(int FireDamage, int EarthDamage, int WindDamage, int WaterDamage)
+    {
+        _currentHP -= (FireDamage + EarthDamage + WindDamage + WaterDamage);
+    }
+
     public void SetState(bool state)
     {
         _state = state;
@@ -53,6 +58,16 @@ public class DynamicProp : MonoBehaviour {
     public bool GetState()
     {
         return _state;
+    }
+
+    public int GetHP()
+    {
+        return _hp;
+    }
+
+    public int GetCurrentHP()
+    {
+        return _currentHP;
     }
 
     public void SetUpdate(Vector3 Position, Quaternion Rotation)
