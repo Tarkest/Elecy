@@ -58,4 +58,5 @@ public enum RoomPackets
     RRoomLeave = 25,
     RDynamicObjUpdate = 26,
     RDestroy = 27,
+    RHit = 28,
 }
