@@ -152,21 +152,4 @@ public class RoomSendData : MonoBehaviour {
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
-
-    public static void SendRoomHit(int[] damage, int[] effectsIndex)
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)RoomPackets.RHit);
-        buffer.WriteInteger(damage[0]);
-        buffer.WriteInteger(damage[1]);
-        buffer.WriteInteger(damage[2]);
-        buffer.WriteInteger(damage[3]);
-        buffer.WriteInteger(damage[4]);
-        buffer.WriteInteger(effectsIndex[0]);
-        buffer.WriteInteger(effectsIndex[1]);
-        buffer.WriteInteger(effectsIndex[2]);
-        buffer.WriteInteger(effectsIndex[3]);
-        RoomTCP.SendData(buffer.ToArray());
-        buffer.Dispose();
-    }
 }
