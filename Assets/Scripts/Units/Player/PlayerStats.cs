@@ -44,8 +44,7 @@ public class PlayerStats : MonoBehaviour {
     [System.NonSerialized]
     public bool battleIsOn = false;
 
-    private List<Effect> Effects;
-    private int[] _effectsNet = new int[GSC.PlayerEffectAmount];
+    public List<Effect> Effects;
 
     public void SetStats(int maxHP, int maxSN, float moveSpeed, float attackSpeed, int basicDefence, int fireDefence, int earthDefence, int windDefence, int waterDefence)
     {
@@ -98,20 +97,5 @@ public class PlayerStats : MonoBehaviour {
             playerCurrentHP += Convert.ToInt32(((x / 100) * playerMaxHP));
         else if (type == "Current")
             playerCurrentHP += Convert.ToInt32(((x / 100) * playerCurrentHP));
-    }
-
-    public int[] GetPlayerEffects()
-    {
-        return _effectsNet;
-    }
-
-    public void AddEffect(Effect Effect)
-    {
-        Effects.Add(Effect);
-    }
-
-    public void AddEffect(int EffectID, int EffectNumber)
-    {
-        _effectsNet[EffectID] = EffectNumber;
     }
 }

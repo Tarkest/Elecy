@@ -27,11 +27,6 @@ public class BattleLogic : MonoBehaviour {
         ObjectManager.SendStaticObjectUpdate();
     }
 
-    public static void Instatiate(int id, Vector3 position, Quaternion rotation)
-    {
-        RoomSendData.SendInstatiate(id, position, rotation);
-    }
-
     public static void EndBattle(string Nickname)
     {
         try

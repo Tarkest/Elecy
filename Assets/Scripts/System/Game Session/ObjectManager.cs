@@ -74,7 +74,7 @@ public class ObjectManager : MonoBehaviour {
 
     public static void SendPlayerUpdate()
     {
-        RoomSendData.SendPlayerUpdate(playerPos, playerRot, playerStats.playerCurrentHP, playerStats.playerCurrentSN, playerStats.GetPlayerEffects());
+        RoomSendData.SendTransform(playerPos, playerRot);
     }
 
     public static void SendDynamicObjectUpdate()
@@ -89,10 +89,7 @@ public class ObjectManager : MonoBehaviour {
     {
         foreach(StaticProp obj in staticProps)
         {
-            if (obj.CheckChange())
-            {
-                obj.SendInfo();
-            }
+            obj.SendInfo();
         }
     }
 }

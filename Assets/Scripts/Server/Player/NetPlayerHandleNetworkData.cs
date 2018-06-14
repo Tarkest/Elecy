@@ -84,10 +84,9 @@ public class NetPlayerHandleNetworkData
         buffer.ReadInteger();
         int roomindex = buffer.ReadInteger();
         int mapIndex = buffer.ReadInteger();
-        int playerIndex = buffer.ReadInteger();
         buffer.Dispose();
         NetPlayerTCP.Stop();
-        Network.InBattle(roomindex, mapIndex, playerIndex);
+        Network.InBattle(roomindex, mapIndex);
     }
 
     public static void HandleNetPlayerLogOut(byte[] data)

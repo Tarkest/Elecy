@@ -11,13 +11,11 @@ public class RoomTCP : MonoBehaviour {
     private static bool receiving = false;
     private static byte[] _buffer = new byte[NetworkConstants.BUFFER_SIZE];
     private static Socket socket;
-    private static int _thisPlayerIndex;
 
-    public static void InitRoom(int roomindex, int playerIndex)
+    public static void InitRoom(int roomindex)
     {
         socket = NetPlayerTCP.GetSocket();
         index = roomindex;
-        _thisPlayerIndex = playerIndex;
     }
 
     public static void BeginReceive()

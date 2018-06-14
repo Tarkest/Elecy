@@ -118,10 +118,10 @@ public class Network : MonoBehaviour
         scenechange = true;
     }
 
-    public static void InBattle(int roomindex, int mapIndex, int playerIndex)
+    public static void InBattle(int roomindex, int mapIndex)
     {
         RoomHandleNetworkInformation.InitializeNetworkPackages();
-        RoomTCP.InitRoom(roomindex, playerIndex);
+        RoomTCP.InitRoom(roomindex);
         scenenum = mapIndex;
         scenechange = true;
     }

@@ -16,7 +16,7 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
             {(int)ServerPackets.STreeSpawn, HandleTreeSpawn },
             {(int)ServerPackets.SEnemyLoadProgress, HandleEnemyLoadProgress },
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
-            {(int)ServerPackets.SPlayerUpdate, HandleEnemyTransform },
+            {(int)ServerPackets.STransform, HandleEnemyTransform },
             {(int)ServerPackets.SInstantiate, HandleServerInstantiate },
             {(int)ServerPackets.SMatchResult, HandleMatchResult },
             {(int)ServerPackets.SPlayerLogOut, HandlePlayerLogOut }

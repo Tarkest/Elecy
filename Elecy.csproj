@@ -354,9 +354,9 @@
     <Compile Include="Assets\Scripts\System\Game Session\GameSessionConstants.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\GSC.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\MouseController.cs" />
+    <Compile Include="Assets\Scripts\System\Game Session\ObjectManager.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\Objects\Dynamic\DynamicProp.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\Objects\Dynamic\SpellHolder.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\Objects\ObjectManager.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\Objects\Static\StaticProp.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\Objects\System\Effect.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\Objects\System\Spell.cs" />
