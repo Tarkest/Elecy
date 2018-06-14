@@ -23,12 +23,7 @@ public class Network : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-
-        if(FindObjectsOfType(GetType()).Length > 1)
-        {
-            Destroy(gameObject);
-        }
+        DontDestroyOnLoad(transform.gameObject);
         ClientHandlerNetworkData.InitializeNetworkPackages();
     }
 
@@ -93,7 +88,7 @@ public class Network : MonoBehaviour
 
         try
         {
-            BattleLogic.MainTimer.Dispose();
+            BattleLogic.Timer.Dispose();
         }
         catch { }
     }

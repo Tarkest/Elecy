@@ -72,12 +72,7 @@ public class ObjectManager : MonoBehaviour {
         enemyStartRotation = new Quaternion(rot2[0], rot2[1], rot2[2], rot2[3]);
     }
 
-    public static void SendPlayerUpdate()
-    {
-        RoomSendData.SendTransform(playerPos, playerRot);
-    }
-
-    public static void SendDynamicObjectUpdate()
+    void SendDynamicObjectCallback(object o)
     {
         foreach(DynamicProp obj in activeProps)
         {
@@ -85,7 +80,7 @@ public class ObjectManager : MonoBehaviour {
         }
     }
 
-    public static void SendStaticObjectUpdate()
+    void SendStaticObjectUpdate(object o)
     {
         foreach(StaticProp obj in staticProps)
         {

@@ -5,35 +5,23 @@ using System.Threading;
 
 public class BattleLogic : MonoBehaviour {
 
-    public static Timer MainTimer;
-    public static Timer StaticTimer;
+    public static Timer Timer;
 
     public static void BeginBattle()
     {
         ObjectManager.playerStats.battleIsOn = true;
         RoomController.battleIsOn = true;
-        MainTimer = new Timer(SendInfo, null, 0, 1000 / NetworkConstants.UPDATE_RATE);
-        StaticTimer = new Timer(SendStaticInfo, null, 0, 1000 / (NetworkConstants.UPDATE_RATE / 5));
+        Timer = new Timer(SendInfo, null, 0, 1000 / NetworkConstants.UPDATE_RATE);
     }
 
     private static void SendInfo(object o)
     {
-        ObjectManager.SendPlayerUpdate();
-        ObjectManager.SendDynamicObjectUpdate();
-    }
-
-    private static void SendStaticInfo(object o)
-    {
-        ObjectManager.SendStaticObjectUpdate();
+        RoomSendData.SendTransform(ObjectManager.playerPos, ObjectManager.playerRot);
     }
 
     public static void EndBattle(string Nickname)
     {
-        try
-        {
-            MainTimer.Dispose();
-            StaticTimer.Dispose();
-        } catch { return; }
+        Timer.Dispose();
         ObjectManager.playerStats.battleIsOn = false;
         RoomController.battleIsOn = false;
         RoomController.ViewStatisticScreen(Nickname);

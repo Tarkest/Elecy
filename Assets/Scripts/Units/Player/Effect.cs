@@ -2,13 +2,11 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Effect", menuName = "Effect")]
-public class Effect : ScriptableObject
-{
-    [Header("Text")]
+public class Effect : ScriptableObject {
+
     public string effectName;
     public string effectDescription;
-    [Space]
-    [Header("Changin block")]
+
     public bool isStunning;
     public bool isCasting;
     public bool isStucking;
@@ -16,14 +14,7 @@ public class Effect : ScriptableObject
     public bool isStunStackable;
     public bool isModTicking;
     public bool isMsModStackable;
-    [Space]
-    [Header("Static Props")]
-    public int propHealthMod;
-    public int propEffectIndex;
-    public float propDuration;
-    public bool propDeactivator;
-    [Space]
-    [Header("Modification block")]
+
     public int healthMod;
     public int synergyMod;
     public int damageMod;
@@ -35,18 +26,14 @@ public class Effect : ScriptableObject
 
     public float movespeedMod;
     public float attackSpeedMod;
-    [Space]
-    [Header("Durations")]
     public float duration;
     public float modFrequency;
     public float tickDuration;
     private float logicTick;
-    [Space]
-    [Header("Graphics")]
+
     public Image buffIcon;
 
     private bool isOn = false;
-    private bool isActive = false;
 
     public bool InvokeEffect(float deltaTime, PlayerStats player)
     {
@@ -119,69 +106,4 @@ public class Effect : ScriptableObject
         }
         return false;
     } 
-
-    public bool InvokeEffect(float deltaTime, StaticProp staticProp)
-    {
-        if (!isOn)
-        {
-            if (propDeactivator)
-            {
-                staticProp.ChangeEffectIndex(0);
-                staticProp.SetActivity(false);
-            }
-            else
-            {
-                staticProp.ChangeEffectIndex(propEffectIndex);
-            }
-            staticProp.UpdateHP(propHealthMod);
-            if (tickDuration == 0)
-                logicTick = propDuration / modFrequency;
-            else
-                logicTick = tickDuration;
-            isOn = true;
-        }
-
-        propDuration -= deltaTime;
-        if (isModTicking)
-        {
-            logicTick -= deltaTime;
-            if (logicTick <= 0)
-            {
-                staticProp.UpdateHP(propHealthMod);
-                if (tickDuration == 0)
-                    logicTick = propDuration / modFrequency;
-                else
-                    logicTick = tickDuration;
-            }
-        }
-
-        if (propDuration <= 0f)
-        {
-            if (propDeactivator)
-            {
-                staticProp.ChangeEffectIndex(0);
-                staticProp.SetActivity(true);
-            }
-            else
-            {
-                staticProp.ChangeEffectIndex(propEffectIndex);
-            }
-            return true;
-        }
-
-        if (!isActive)
-        {
-            if (propDeactivator)
-            {
-                staticProp.ChangeEffectIndex(0);
-                staticProp.SetActivity(true);
-            }
-            else
-            {
-                staticProp.ChangeEffectIndex(propEffectIndex);
-            }
-            return true;
-        }
-        return false;
-    }
 }

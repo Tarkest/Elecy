@@ -75,19 +75,17 @@ public class RoomSendData : MonoBehaviour {
         buffer.Dispose();
     }
 
-    public static void SendStaticObjectInfo(int index, int hp, int[] effects)
+    public static void SendStaticObjectInfo(int index, int hp/* state,effect */)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RStaticObjUpdate);
         buffer.WriteInteger(index);
         buffer.WriteInteger(hp);
-        buffer.WriteInteger(effects[0]);
-        buffer.WriteInteger(effects[1]);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
 
-    public static void SendDynamicObjectInfo(int index, Vector3 position, Quaternion rotation)
+    public static void SendDynamicObjectInfo(int index, Vector3 position, Quaternion rotation, string state, int hp, int damage)
     {
         float[] objectPos = new float[] { position.x, position.y, position.z };
         float[] objectRot = new float[] { rotation.x, rotation.y, rotation.z, rotation.w };
@@ -96,6 +94,9 @@ public class RoomSendData : MonoBehaviour {
         buffer.WriteInteger(index);
         buffer.WriteVector3(objectPos);
         buffer.WriteQuaternion(objectRot);
+        buffer.WriteString(state);
+        buffer.WriteInteger(hp);
+        buffer.WriteInteger(damage);
         RoomTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
