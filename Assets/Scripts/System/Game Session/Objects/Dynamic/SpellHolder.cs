@@ -11,15 +11,4 @@ public class SpellHolder : MonoBehaviour
     {
         gameObject.GetComponent<DynamicProp>().SetHp(ScriptableObject.spellHP);       
     }
-
-    public int[] GetDamage()
-    {
-        int[] damage = new int[5];
-        damage[0] = ScriptableObject.physicDamage;
-        damage[1] = ScriptableObject.fireDamage;
-        damage[2] = ScriptableObject.earthDamage;
-        damage[3] = ScriptableObject.windDamage;
-        damage[4] = ScriptableObject.waterDamage;
-        return damage;
-    }
 }
