@@ -283,9 +283,7 @@
     <Compile Include="Assets\Scripts\System\Game Session\GSC.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\MouseController.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\ObjectManager.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\Objects\DynamicProp.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\Objects\Spell.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\Objects\StaticProp.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\RoomController.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\SceneLoad\BattleLoader.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\ChatMessageController.cs" />

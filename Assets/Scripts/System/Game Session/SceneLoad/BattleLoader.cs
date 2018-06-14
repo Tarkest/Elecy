@@ -86,6 +86,7 @@ public class BattleLoader : MonoBehaviour
                 ObjectManager.loadedSpells[i] = Resources.Load("/Spells/" + SpellPaths[i]) as GameObject;
             }
         }
+
     }
 
     public static void SpanwPlayers(string nickname1, string nickname2, float[][]positions, float[][]rotations)

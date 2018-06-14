@@ -53,11 +53,8 @@ public enum RoomPackets
     RTransform = 16,
     RRockSpawned = 18,
     RTreeSpawned = 19,
-    RStaticObjUpdate = 20,
+    //REmpty = 20, Пустой!
     RInstantiate = 21,
     RSurrender = 24,
     RRoomLeave = 25,
-    RDynamicObjUpdate = 26,
-    RPlayerUpdate = 27,
-    RDestroy = 28,
 }
