@@ -59,6 +59,12 @@ public class RoomTCP : MonoBehaviour {
         }
     }
 
+
+    public static void InstantiateNetworkObject()
+    {
+        ///Here Comes the instantiation the object on the scene
+    }
+
     public static void Stop()
     {
         receiving = false;
@@ -87,8 +93,12 @@ public class RoomTCP : MonoBehaviour {
         return index;
     }
 
-    public static int GetPlayerIndex()
+    public static float[] GetBattlegroundScale()
     {
-        return _thisPlayerIndex;
+        float[] scale = new float[2];
+        scale[0] = 5f;
+        scale[1] = 5f;
+
+        return scale;
     }
 }

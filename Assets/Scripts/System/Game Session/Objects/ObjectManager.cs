@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ObjectManager : MonoBehaviour {
 
@@ -11,9 +11,9 @@ public class ObjectManager : MonoBehaviour {
 
     public static GameObject[] loadedSpells = new GameObject[20];
 
-    public static StaticProp[] staticProps;
+    public static List<StaticProp> staticProps;
 
-    public static DynamicProp[] activeProps;
+    public static List<DynamicProp> activeProps;
 
     #region Player
     public static GameObject Player;
@@ -36,8 +36,8 @@ public class ObjectManager : MonoBehaviour {
     void Awake ()
     {
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        staticProps = new StaticProp[30];
-        activeProps = new DynamicProp[30];
+        staticProps = new List<StaticProp>();
+        activeProps = new List<DynamicProp>();
 	}
 
     void Update()
@@ -81,10 +81,7 @@ public class ObjectManager : MonoBehaviour {
     {
         foreach(DynamicProp obj in activeProps)
         {
-            if(obj.GetState())
-            {
-                obj.SendInfo();
-            }
+            obj.SendInfo();
         }
     }
 
@@ -97,33 +94,5 @@ public class ObjectManager : MonoBehaviour {
                 obj.SendInfo();
             }
         }
-    }
-
-    public static void InstantiateOnBattleField(int PlayerIndex, int ObjectIndex, int NetObjectindex, float[] Position, float[] Rotation)
-    {
-        Vector3 position = new Vector3(Position[0], Position[1], Position[2]);
-        Quaternion rotation = new Quaternion(Rotation[0], Rotation[1], Rotation[2], Rotation[3]);
-        GameObject Instance = Instantiate(loadedSpells[ObjectIndex], position, rotation);
-        if(NetObjectindex >= activeProps.Length)
-        {
-            int Length = activeProps.Length;
-            Array.Resize(ref activeProps, Length + 10);
-        }
-        if(PlayerIndex == RoomTCP.GetPlayerIndex())
-        {
-            Instance.GetComponent<ObjectNetworkListener>().RemoveComponent();
-            DynamicProp prop = Instance.GetComponent<DynamicProp>();
-            prop.SetIndex(NetObjectindex);
-            prop.SetState(true);
-        }
-        else
-        {
-            Behavior on another computer
-        }
-    }
-
-    public static void HoldUpdate(int NetObjectIndex, float[] Position, float[] Rotation)
-    {
-        Take update from Server
     }
 }

@@ -45,7 +45,7 @@ public class PlayerStats : MonoBehaviour {
     public bool battleIsOn = false;
 
     private List<Effect> Effects;
-    private List<int> _effectsNet;
+    private int[] _effectsNet = new int[GSC.PlayerEffectAmount];
 
     public void SetStats(int maxHP, int maxSN, float moveSpeed, float attackSpeed, int basicDefence, int fireDefence, int earthDefence, int windDefence, int waterDefence)
     {
@@ -70,10 +70,7 @@ public class PlayerStats : MonoBehaviour {
         foreach (Effect Effect in Effects)
         {
             if (Effect.InvokeEffect(Time.deltaTime, this))
-            {
                 Effects.Remove(Effect);
-                _effectsNet.Remove(Effects.IndexOf(Effect));
-            }
         }
     }
 
@@ -103,7 +100,7 @@ public class PlayerStats : MonoBehaviour {
             playerCurrentHP += Convert.ToInt32(((x / 100) * playerCurrentHP));
     }
 
-    public List<int> GetPlayerEffects()
+    public int[] GetPlayerEffects()
     {
         return _effectsNet;
     }
@@ -111,6 +108,10 @@ public class PlayerStats : MonoBehaviour {
     public void AddEffect(Effect Effect)
     {
         Effects.Add(Effect);
-        _effectsNet.Add(Effect.effectIndex);
+    }
+
+    public void AddEffect(int EffectID, int EffectNumber)
+    {
+        _effectsNet[EffectID] = EffectNumber;
     }
 }

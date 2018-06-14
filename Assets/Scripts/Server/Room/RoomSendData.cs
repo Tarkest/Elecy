@@ -71,7 +71,7 @@ public class RoomSendData : MonoBehaviour {
         buffer.Dispose();
     }
 
-    public static void SendPlayerUpdate(Vector3 playerTransform, Quaternion playerRotation, int hp, int synergy, List<int> effects)
+    public static void SendPlayerUpdate(Vector3 playerTransform, Quaternion playerRotation, int hp, int synergy, int[] effects)
     {
         float[] playerPos = new float[] { playerTransform.x, playerTransform.y, playerTransform.z };
         float[] playerRot = new float[] { playerRotation.x, playerRotation.y, playerRotation.z, playerRotation.w };
@@ -81,8 +81,7 @@ public class RoomSendData : MonoBehaviour {
         buffer.WriteQuaternion(playerRot);
         buffer.WriteInteger(hp);
         buffer.WriteInteger(synergy);
-        buffer.WriteInteger(effects.Capacity);
-        for(int i = 0; i <= effects.Capacity - 1; i++)
+        for(int i = 0; i <= GSC.PlayerEffectAmount - 1; i++)
         {
             buffer.WriteInteger(effects[i]);
         }
@@ -90,14 +89,13 @@ public class RoomSendData : MonoBehaviour {
         buffer.Dispose();
     }
 
-    public static void SendStaticObjectInfo(int index, int hp, List<int> effects)
+    public static void SendStaticObjectInfo(int index, int hp, int[] effects)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RStaticObjUpdate);
         buffer.WriteInteger(index);
         buffer.WriteInteger(hp);
-        buffer.WriteInteger(effects.Capacity);
-        for(int i = 0; i <= effects.Capacity - 1; i++)
+        for(int i = 0; i <= GSC.PropEffectAmount - 1; i++)
         {
             buffer.WriteInteger(effects[i]);
         }
@@ -105,7 +103,7 @@ public class RoomSendData : MonoBehaviour {
         buffer.Dispose();
     }
 
-    public static void SendStaticObjectInfo(int index, int hp, List<int> effects, Vector3 pos, Quaternion rot)
+    public static void SendStaticObjectInfo(int index, int hp, int[] effects, Vector3 pos, Quaternion rot)
     {
         float[] Pos = new float[] { pos.x, pos.y, pos.z };
         float[] Rot = new float[] { rot.x, rot.y, rot.z, rot.w };
@@ -113,8 +111,7 @@ public class RoomSendData : MonoBehaviour {
         buffer.WriteInteger((int)RoomPackets.RStaticObjUpdate);
         buffer.WriteInteger(index);
         buffer.WriteInteger(hp);
-        buffer.WriteInteger(effects.Capacity);
-        for (int i = 0; i <= effects.Capacity - 1; i++)
+        for (int i = 0; i <= GSC.PropEffectAmount - 1; i++)
         {
             buffer.WriteInteger(effects[i]);
         }
