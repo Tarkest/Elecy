@@ -19,7 +19,8 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
             {(int)ServerPackets.STransform, HandleEnemyTransform },
             {(int)ServerPackets.SInstantiate, HandleServerInstantiate },
             {(int)ServerPackets.SMatchResult, HandleMatchResult },
-            {(int)ServerPackets.SPlayerLogOut, HandlePlayerLogOut }
+            {(int)ServerPackets.SPlayerLogOut, HandlePlayerLogOut },
+            {(int)ServerPackets.SSpellLoad, HandleSpellLoad }
         };
     }
 
@@ -113,6 +114,21 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         //get info about object for instatiate? add it to array and start to send observw info 
+    }
+
+    public static void HandleSpellLoad(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        int SpellArrayLenght = buffer.ReadInteger() + buffer.ReadInteger();
+        int[] SpellsIndexes = new int[SpellArrayLenght];
+        for(int i = 0; i == SpellArrayLenght; i++)
+        {
+            buffer.ReadInteger();
+        }
+        ObjectManager.LoadSpells(SpellsIndexes);
+        buffer.Dispose();
     }
 
     public static void HandleEnemyTransform(byte[] data)

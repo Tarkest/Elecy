@@ -17,7 +17,9 @@ public class NetPlayerHandleNetworkData
             {(int)ServerPackets.SQueueStarted, HandleQueueStarted },
             {(int)ServerPackets.SQueueContinue, HandleQueueContinue },
             {(int)ServerPackets.SMatchFound, HandleMatchFound },
-            {(int)ServerPackets.SNetPlayerLogOut, HandleNetPlayerLogOut }
+            {(int)ServerPackets.SNetPlayerLogOut, HandleNetPlayerLogOut },
+            {(int)ServerPackets.SBuildInfo, HandleBuild },
+            {(int)ServerPackets.SBuildSaved, HandleBuildSaved }
         };
     }
 
@@ -94,5 +96,34 @@ public class NetPlayerHandleNetworkData
         NetPlayerTCP.Stop("");
         //ClientTCP.BeginReceive();
         Network.LogOut();
+    }
+
+    public static void HandleBuild(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        int[] IgnisArray = new int[buffer.ReadInteger()];
+        int[] TerraArray = new int[buffer.ReadInteger()];
+        int[] CaeliArray = new int[buffer.ReadInteger()];
+        int[] AquaArray = new int[buffer.ReadInteger()];
+        for(int i= 0; i == IgnisArray.Length; i++)
+        {
+            IgnisArray[i] = buffer.ReadInteger();
+        }
+        for (int i = 0; i == TerraArray.Length; i++)
+        {
+            TerraArray[i] = buffer.ReadInteger();
+        }
+        for (int i = 0; i == CaeliArray.Length; i++)
+        {
+            CaeliArray[i] = buffer.ReadInteger();
+        }
+        for (int i = 0; i == AquaArray.Length; i++)
+        {
+            AquaArray[i] = buffer.ReadInteger();
+        }
+        buffer.Dispose();
+        hgtygt
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectManager : MonoBehaviour {
@@ -9,7 +10,7 @@ public class ObjectManager : MonoBehaviour {
 
     public static int objectCount = 0;
 
-    public static GameObject[] loadedSpells = new GameObject[20];
+    public static GameObject[] loadedSpells;
 
     public static List<GameObject> staticProps;
 
@@ -62,6 +63,18 @@ public class ObjectManager : MonoBehaviour {
         EnemyPlayer = enemy;
         enemyMovementComponent = EnemyPlayer.GetComponent<EnemyMovement>();
         RoomSendData.SendPlayerSpawned();
+    }
+
+    public static void LoadSpells(int[] spellsNumbers)
+    {
+        loadedSpells = new GameObject[spellsNumbers.Length];
+        foreach(int i in spellsNumbers)
+        {
+            //loadedSpells[Array.IndexOf(spellsNumbers, i)] = Resources.Load("Spells/" + spellsNumbers[Array.IndexOf(spellsNumbers, i)]) as GameObject; 
+        }
+        int[] Spells = spellsNumbers;
+        RoomSendData.SendLoadComplite();
+        ghnghnghn
     }
 
     public static void SetStartTransform(float[] pos1, float[] pos2, float[] rot1, float[] rot2)

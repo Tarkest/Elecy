@@ -63,7 +63,7 @@ public class BattleLoader : MonoBehaviour
             GameObject EnemyPlayer = Instantiate(Resources.Load("Players/Dummy"), ObjectManager.enemyStartPosition, ObjectManager.enemyStartRotation) as GameObject;
             Player.GetComponent<PlayerStats>().SetStats(_maxHP, _maxSN, _moveSpeed, _attackSpeed, _basicDefence, _fireDefence, _earthDefence, _windDefence, _waterDefence);
             ObjectManager.PlayersLoaded(Player, EnemyPlayer);
-            ThisPlayerProgressChange(0.33f);
+            ThisPlayerProgressChange(0.25f);
         }
 
         if(RockSpawn)
@@ -150,7 +150,7 @@ public class BattleLoader : MonoBehaviour
             ObjectManager.staticProps.Add(NewRockOnField);
         }
         RoomSendData.SendRocksSpawned();
-        ThisPlayerProgressChange(0.66f);
+        ThisPlayerProgressChange(0.5f);
     }
 
     private static void LoadTrees()
@@ -166,8 +166,13 @@ public class BattleLoader : MonoBehaviour
             NewTreeNet.SetTransform(pos, rot);
             ObjectManager.staticProps.Add(NewTreeOnField);
         }
-        RoomSendData.SendLoadComplite();
-        ThisPlayerProgressChange(1f);
+        RoomSendData.SendTreesSpawned();
+        ThisPlayerProgressChange(0.75f);
+    }
+
+    public static void LoadSpells(int[] SpellsIndexes)
+    {
+        trghtrghehtrh
     }
 
     public static void EnemyProgressChange(float progress)

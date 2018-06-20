@@ -5,17 +5,17 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E10E0CAD-8D1B-E05A-B2A4-34A151A9FF46}</ProjectGuid>
+    <ProjectGuid>{6877705C-FBD9-0C4F-5AFB-6FB431E5D39D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Unity.PackageManagerUI.Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile>
     </CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2018.1.3f1</UnityVersion>
     <RootNamespace>
@@ -237,8 +237,17 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
@@ -249,26 +258,77 @@
     <Reference Include="UnityEngine.Timeline">
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Timeline">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UIAutomation">
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UIAutomation">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/UIAutomation/Editor/UnityEditor.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.GoogleAudioSpatializer">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GoogleAudioSpatializer">
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.SpatialTracking">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.LinuxStandalone.Extensions">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.OSXStandalone.Extensions">
+      <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>C:/Users/1/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.7/Editor/UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/1/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>C:/Users/1/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/Editor/UnityEditor.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>C:/Users/1/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.1/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>C:/Users/1/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.1/Editor/UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/1/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -277,100 +337,71 @@
       <HintPath>D:/Games/Unity/2018.1.3f1/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
-      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\mscorlib.dll</HintPath>
+      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="System">
-      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\System.dll</HintPath>
+      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Core">
-      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\System.Core.dll</HintPath>
+      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\System.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization">
-      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\System.Runtime.Serialization.dll</HintPath>
+      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\System.Runtime.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml">
-      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\System.Xml.dll</HintPath>
+      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\System.Xml.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq">
-      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\System.Xml.Linq.dll</HintPath>
+      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\System.Xml.Linq.dll</HintPath>
     </Reference>
     <Reference Include="UnityScript">
-      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\UnityScript.dll</HintPath>
+      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\UnityScript.dll</HintPath>
     </Reference>
     <Reference Include="UnityScript.Lang">
-      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\UnityScript.Lang.dll</HintPath>
+      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\UnityScript.Lang.dll</HintPath>
     </Reference>
     <Reference Include="Boo.Lang">
-      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\Boo.Lang.dll</HintPath>
+      <HintPath>D:\Games\Unity\2018.1.3f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\Boo.Lang.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="UnityEditor.StandardEvents.csproj">
-      <Project>{6800202F-4402-D405-F8CB-03DC7BD78B92}</Project>
-      <Name>UnityEditor.StandardEvents</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.PackageManagerUI.Editor.csproj">
-      <Project>{6877705C-FBD9-0C4F-5AFB-6FB431E5D39D}</Project>
-      <Name>Unity.PackageManagerUI.Editor</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assets\Scripts\Background_Stats.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraProperties.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\CameraFollow1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\Effect1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\EffectController1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\EnemyMovement1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\PlayerMovement1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\PlayerStats1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\Spell1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\SpellArea1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\SpellContainer1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\SpellInvoker1.cs" />
-    <Compile Include="Assets\Scripts\Server\Client\ClientHandlerNetworkData.cs" />
-    <Compile Include="Assets\Scripts\Server\Client\ClientSendData.cs" />
-    <Compile Include="Assets\Scripts\Server\Client\ClientTCP.cs" />
-    <Compile Include="Assets\Scripts\Server\Network.cs" />
-    <Compile Include="Assets\Scripts\Server\NetworkConstants.cs" />
-    <Compile Include="Assets\Scripts\Server\NetworkPackages.cs" />
-    <Compile Include="Assets\Scripts\Server\PacketBuffer.cs" />
-    <Compile Include="Assets\Scripts\Server\Player\NetPlayerHandleNetworkData.cs" />
-    <Compile Include="Assets\Scripts\Server\Player\NetPlayerSendData.cs" />
-    <Compile Include="Assets\Scripts\Server\Player\NetPlayerTCP.cs" />
-    <Compile Include="Assets\Scripts\Server\Room\NetworkGameObject.cs" />
-    <Compile Include="Assets\Scripts\Server\Room\RoomHandleNetworkInformation.cs" />
-    <Compile Include="Assets\Scripts\Server\Room\RoomSendData.cs" />
-    <Compile Include="Assets\Scripts\Server\Room\RoomTCP.cs" />
-    <Compile Include="Assets\Scripts\SpellInvoker_2.cs" />
-    <Compile Include="Assets\Scripts\Spells\Behaviour\Ignis\Spark.cs" />
-    <Compile Include="Assets\Scripts\Spells\Behaviour\SpellMovement_Bullet.cs" />
-    <Compile Include="Assets\Scripts\Spells\DamageType\Damage.cs" />
-    <Compile Include="Assets\Scripts\Spells\FireBall.cs" />
-    <Compile Include="Assets\Scripts\Spells\Test1.cs" />
-    <Compile Include="Assets\Scripts\Spells\Test2.cs" />
-    <Compile Include="Assets\Scripts\System\Enterance\EntranceController.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\BattleLogic\BattleLogic.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\GameSessionConstants.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\GSC.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\MouseController.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\ObjectManager.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\Objects\Spell.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\RoomController.cs" />
-    <Compile Include="Assets\Scripts\System\Game Session\SceneLoad\BattleLoader.cs" />
-    <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\ChatMessageController.cs" />
-    <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\GlobalChatController.cs" />
-    <Compile Include="Assets\Scripts\System\Main Lobby\FriendlistScripts\FriendFieldController.cs" />
-    <Compile Include="Assets\Scripts\System\Main Lobby\FriendlistScripts\FriendListController.cs" />
-    <Compile Include="Assets\Scripts\System\Main Lobby\MainLobbyController.cs" />
-    <Compile Include="Assets\Scripts\System\Main Lobby\OptionsController.cs" />
-    <Compile Include="Assets\Scripts\System\SceneManage.cs" />
-    <Compile Include="Assets\Scripts\System\SoundManager.cs" />
-    <Compile Include="Assets\Scripts\Units\Enemy\EnemyMovement.cs" />
-    <Compile Include="Assets\Scripts\Units\Player\Effect.cs" />
-    <Compile Include="Assets\Scripts\Units\Player\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\Units\Player\PlayerStats.cs" />
-    <Compile Include="Assets\Scripts\Units\Player\SpellInvoker.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\AssemblyInfo.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\External\SemVersion.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\External\SemVersionExtension.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Common\OperationSignal.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Common\ThreadedDelay.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Interfaces\IAddOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Interfaces\IBaseOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Interfaces\IListOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Interfaces\IOperationFactory.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Interfaces\IRemoveOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Interfaces\ISearchOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\OperationFactory.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\Package.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\PackageCollection.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\PackageFilter.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\PackageGroupOrigins.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\PackageInfo.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\PackageInfoListExtensions.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\PackageListExtensions.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\PackageOrigin.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\PackageState.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Packages\PackageTag.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Upm\UpmAddOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Upm\UpmBaseOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Upm\UpmListOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Upm\UpmOperationFactory.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Upm\UpmRemoveOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\Services\Upm\UpmSearchOperation.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\UI\Common\Alert.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\UI\Common\LoadingSpinner.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\UI\Common\UIUtils.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\UI\PackageDetails.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\UI\PackageGroup.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\UI\PackageItem.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\UI\PackageList.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\UI\PackageManagerWindow.cs" />
+    <Compile Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Sources\UI\PackageSearchFilterTabs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\1\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />

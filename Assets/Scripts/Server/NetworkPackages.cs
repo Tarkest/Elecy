@@ -1,4 +1,5 @@
-﻿public enum ServerPackets
+﻿//get send from server to client
+public enum ServerPackets
 {
     SConnectionOK = 1,
     SRegisterOK = 2,
@@ -15,14 +16,19 @@
     STreeSpawn = 13,
     SEnemyLoadProgress = 14,
     SInstantiate = 15,
-    //SClientExit = 16,// Not Needed
-    //SNetPlayerExit = 17,// Not Needed
-    //SPlayerExit = 18,// Not Needed
+    //SClientExit = 16,
+    //SNetPlayerExit = 17,
+    //SPlayerExit = 18,
     SNetPlayerLogOut = 19,
     SPlayerLogOut = 20,
     SMatchResult = 21,
+    SSpellLoad = 22,
+    SBuildInfo = 23,
+    SBuildSaved = 24,
 }
 
+
+//get send from client to server
 public enum ClientPackets
 {
     CConnectComplite = 1,
@@ -33,6 +39,7 @@ public enum ClientPackets
     CReconnectComplite = 6,
 }
 
+//get send from player to server
 public enum NetPlayerPackets
 {
     PConnectionComplite = 7,
@@ -43,6 +50,8 @@ public enum NetPlayerPackets
     PAlert = 12,
     PStopPlayer = 17,
     PLogOut = 23,
+    PGetSkillsBuild = 26,
+    PSaveSkillsBuild = 27
 }
 
 public enum RoomPackets
@@ -50,10 +59,9 @@ public enum RoomPackets
     RConnectionComplite = 13,
     RPlayerSpawned = 14,
     RLoadComplite = 15,
-    RTransform = 16,
+    //RTransform = 16,
     RRockSpawned = 18,
-    RTreeSpawned = 19,
-    //REmpty = 20, Пустой!
+    RTreesSpawned = 19,
     RInstantiate = 21,
     RSurrender = 24,
     RRoomLeave = 25,
