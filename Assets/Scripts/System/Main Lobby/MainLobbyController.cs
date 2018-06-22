@@ -16,6 +16,7 @@ public class MainLobbyController : MonoBehaviour {
     private static GameObject _optionsWindow;
     private static GameObject _badConnectionPad;
     private static GameObject _errorWindow;
+    private static int[] ArmorySpells;
 
     private int matchType = 0;
     public static bool isSearching = false;
@@ -197,5 +198,11 @@ public class MainLobbyController : MonoBehaviour {
     public void ErrorOK()
     {
         Network.LogOut();
+    }
+
+    public static void LoadSpells(int[] spellsNumbers)
+    {
+        //Change
+
     }
 }
