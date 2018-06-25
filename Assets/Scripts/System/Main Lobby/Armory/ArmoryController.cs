@@ -20,11 +20,11 @@ public class ArmoryController : MonoBehaviour {
 		
 	}
 
-    public static void SetSkills(int[][] Spells)
+    public static void SetSkills(int[] Spells)
     {
         for(int i = 0; i == IgnisButtons.Length-1; i++)
         {
-            IgnisButtons[i].spellIndex = Spells[0][i];
+            IgnisButtons[i].spellIndex = Spells[i];
         }
     }
 

@@ -103,33 +103,14 @@ public class NetPlayerHandleNetworkData
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        int[] IgnisArray = new int[buffer.ReadInteger()];
-        int[] TerraArray = new int[buffer.ReadInteger()];
-        int[] CaeliArray = new int[buffer.ReadInteger()];
-        int[] AquaArray = new int[buffer.ReadInteger()];
-        for(int i= 0; i == IgnisArray.Length; i++)
+        string race = buffer.ReadString();
+        int[] SkillArray = new int[buffer.ReadInteger()];
+        for(int i= 0; i == SkillArray.Length; i++)
         {
-            IgnisArray[i] = buffer.ReadInteger();
-        }
-        for (int i = 0; i == TerraArray.Length; i++)
-        {
-            TerraArray[i] = buffer.ReadInteger();
-        }
-        for (int i = 0; i == CaeliArray.Length; i++)
-        {
-            CaeliArray[i] = buffer.ReadInteger();
-        }
-        for (int i = 0; i == AquaArray.Length; i++)
-        {
-            AquaArray[i] = buffer.ReadInteger();
+            SkillArray[i] = buffer.ReadInteger();
         }
         buffer.Dispose();
-        int[][] Spells = new int[4][];
-        Spells[0] = IgnisArray;
-        Spells[1] = TerraArray;
-        Spells[2] = CaeliArray;
-        Spells[3] = AquaArray;
-        ArmoryController.SetSkills(Spells);
+        ArmoryController.SetSkills(SkillArray);
     }
 
     public static void HandleBuildSaved(byte[] data)
