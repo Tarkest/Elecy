@@ -97,7 +97,7 @@ public class NetPlayerSendData
         buffer.WriteInteger((int)NetPlayerPackets.PSaveSkillsBuild);
         buffer.WriteString(race);
         buffer.WriteInteger(Build.Length);
-        for(int i = 0; i == Build.Length - 1; i++)
+        for(int i = 0; i < Build.Length; i++)
         {
             buffer.WriteInteger(Build[i]);
         }

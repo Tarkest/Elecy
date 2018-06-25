@@ -105,7 +105,7 @@ public class NetPlayerHandleNetworkData
         buffer.ReadInteger();
         string race = buffer.ReadString();
         int[] SkillArray = new int[buffer.ReadInteger()];
-        for(int i= 0; i == SkillArray.Length; i++)
+        for(int i= 0; i < SkillArray.Length; i++)
         {
             SkillArray[i] = buffer.ReadInteger();
         }
