@@ -82,10 +82,11 @@ public class NetPlayerSendData
         }
     }
 
-    public static void SendGetSkillBuild()
+    public static void SendGetSkillBuild(string race)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)NetPlayerPackets.PGetSkillsBuild);
+        buffer.WriteString(race);
         NetPlayerTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

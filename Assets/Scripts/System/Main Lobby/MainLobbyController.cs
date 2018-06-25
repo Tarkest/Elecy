@@ -206,7 +206,7 @@ public class MainLobbyController : MonoBehaviour {
     public void ArmoryPressed()
     {
         _armoryScreen.SetActive(true);
-        NetPlayerSendData.SendGetSkillBuild();
+        NetPlayerSendData.SendGetSkillBuild("Ignis");
     }
 
     public void ArmorySave()
