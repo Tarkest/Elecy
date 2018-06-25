@@ -214,6 +214,11 @@ public class MainLobbyController : MonoBehaviour {
         ArmoryController.SaveBuild();
     }
 
+    public void ArmoryBack()
+    {
+        _armoryScreen.SetActive(false);
+    }
+
     public static void LoadSpells(int[] spellsNumbers)
     {
         //Change
