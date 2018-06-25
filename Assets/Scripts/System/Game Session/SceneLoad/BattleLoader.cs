@@ -172,7 +172,7 @@ public class BattleLoader : MonoBehaviour
 
     public static void LoadSpells(int[] SpellsIndexes)
     {
-        trghtrghehtrh
+        //
     }
 
     public static void EnemyProgressChange(float progress)

@@ -75,7 +75,6 @@ public class RoomSendData : MonoBehaviour {
     //    buffer.Dispose();ghrgrt
     //}
 
-        ytjytjyj
     public static void SendSurrender()
     {
         PacketBuffer buffer = new PacketBuffer();

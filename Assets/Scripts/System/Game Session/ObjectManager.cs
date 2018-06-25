@@ -74,7 +74,6 @@ public class ObjectManager : MonoBehaviour {
         }
         int[] Spells = spellsNumbers;
         RoomSendData.SendLoadComplite();
-        ghnghnghn
     }
 
     public static void SetStartTransform(float[] pos1, float[] pos2, float[] rot1, float[] rot2)

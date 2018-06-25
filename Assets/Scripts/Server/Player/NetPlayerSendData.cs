@@ -81,5 +81,27 @@ public class NetPlayerSendData
             MainLobbyController.ConnectionError();
         }
     }
+
+    public static void SendGetSkillBuild()
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)NetPlayerPackets.PGetSkillsBuild);
+        NetPlayerTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    public static void SendSaveSkillBuild(int[] Build, string race)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)NetPlayerPackets.PSaveSkillsBuild);
+        buffer.WriteString(race);
+        buffer.WriteInteger(Build.Length);
+        for(int i = 0; i == Build.Length - 1; i++)
+        {
+            buffer.WriteInteger(Build[i]);
+        }
+        NetPlayerTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
 }
 

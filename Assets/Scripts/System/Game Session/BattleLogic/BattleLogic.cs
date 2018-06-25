@@ -11,12 +11,12 @@ public class BattleLogic : MonoBehaviour {
     {
         ObjectManager.playerStats.battleIsOn = true;
         RoomController.battleIsOn = true;
-        Timer = new Timer(SendInfo, null, 0, 1000 / NetworkConstants.UPDATE_RATE);
+        //Timer = new Timer(SendInfo, null, 0, 1000 / NetworkConstants.UPDATE_RATE);
     }
 
     private static void SendInfo(object o)
     {
-        RoomSendData.SendTransform(ObjectManager.playerPos, ObjectManager.playerRot);
+        //RoomSendData.SendTransform(ObjectManager.playerPos, ObjectManager.playerRot);
     }
 
     public static void EndBattle(string Nickname)

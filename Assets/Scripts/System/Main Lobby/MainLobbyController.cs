@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MainLobbyController : MonoBehaviour {
 
     private static GameObject _findGameButton;
-    //private GameObject _armoryButton; Button for go into skillBuild Window
+    private GameObject _armoryButton;
     //private GameObject _shopButton; Button For go into Shop Window
     private static GameObject _machTypeDropdown;
     private static GameObject _timeCounter;
@@ -16,7 +16,8 @@ public class MainLobbyController : MonoBehaviour {
     private static GameObject _optionsWindow;
     private static GameObject _badConnectionPad;
     private static GameObject _errorWindow;
-    private static int[] ArmorySpells;
+    private static GameObject _armoryScreen;
+    private static int[][] ArmorySpells;
 
     private int matchType = 0;
     public static bool isSearching = false;
@@ -26,7 +27,7 @@ public class MainLobbyController : MonoBehaviour {
     void Awake()
     {
         _findGameButton = GameObject.Find("FindGameButton");
-        //_armoryButton = GameObject.Find("ArmoryButton");
+        _armoryButton = GameObject.Find("ArmoryButton");
         //_shopButton = GameObject.Find("ShopButton");
         _machTypeDropdown = GameObject.Find("MatchTypeDropdown");
         _timeCounter = GameObject.Find("TimeCounter");
@@ -40,12 +41,14 @@ public class MainLobbyController : MonoBehaviour {
         _optionsWindow = GameObject.Find("OptionsMenu");
         _badConnectionPad = GameObject.Find("BadConnectionPad");
         _errorWindow = GameObject.Find("ErrorWindow");
+        _armoryScreen = GameObject.Find("ArmoryScreen");
         _errorWindow.SetActive(false);
         _badConnectionPad.SetActive(false);
         _splashMenu.SetActive(false);
         _optionsWindow.SetActive(false);
         _exitWindow.SetActive(false);
         _logOutWindow.SetActive(false);
+        _armoryScreen.SetActive(false);
     }
 
     public static float GetCounter()
@@ -198,6 +201,17 @@ public class MainLobbyController : MonoBehaviour {
     public void ErrorOK()
     {
         Network.LogOut();
+    }
+
+    public void ArmoryPressed()
+    {
+        _armoryScreen.SetActive(true);
+        NetPlayerSendData.SendGetSkillBuild();
+    }
+
+    public void ArmorySave()
+    {
+        ArmoryController.SaveBuild();
     }
 
     public static void LoadSpells(int[] spellsNumbers)

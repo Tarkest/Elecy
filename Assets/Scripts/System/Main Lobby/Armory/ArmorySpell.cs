@@ -1,16 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ArmorySpell : MonoBehaviour {
+    
+    public int arrayNumber;
 
-	// Use this for initialization
+    public int spellIndex;
+
+    private Image _spellIcon;
+
 	void Start () {
-		
+        //_spellIcon = Resources.Load("/Spells" + "/" + spellIndex.ToString()).GetComponent<SpellHolder>().GetSpellIcon();
+        //gameObject.GetComponent<Image>().sprite = _spellIcon.sprite;
+        gameObject.transform.Find("Text").GetComponent<Text>().text = spellIndex.ToString();
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		
-	}
+        gameObject.transform.Find("Text").GetComponent<Text>().text = spellIndex.ToString();
+    }
+
+    public void AddSpellIndex()
+    {
+        spellIndex += 1;
+    }
 }

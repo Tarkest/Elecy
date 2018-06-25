@@ -124,6 +124,17 @@ public class NetPlayerHandleNetworkData
             AquaArray[i] = buffer.ReadInteger();
         }
         buffer.Dispose();
-        hgtygt
+        int[][] Spells = new int[4][];
+        Spells[0] = IgnisArray;
+        Spells[1] = TerraArray;
+        Spells[2] = CaeliArray;
+        Spells[3] = AquaArray;
+        ArmoryController.SetSkills(Spells);
+    }
+
+    public static void HandleBuildSaved(byte[] data)
+    {
+        //Close procces window
+        Debug.Log("Build Saved");
     }
 }
