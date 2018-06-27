@@ -16,7 +16,7 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
             {(int)ServerPackets.STreeSpawn, HandleTreeSpawn },
             {(int)ServerPackets.SEnemyLoadProgress, HandleEnemyLoadProgress },
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
-            {(int)ServerPackets.STransform, HandleEnemyTransform },
+            //{(int)ServerPackets.STransform, HandleEnemyTransform },
             {(int)ServerPackets.SInstantiate, HandleServerInstantiate },
             {(int)ServerPackets.SMatchResult, HandleMatchResult },
             {(int)ServerPackets.SPlayerLogOut, HandlePlayerLogOut },
@@ -121,25 +121,14 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        int SpellArrayLenght = buffer.ReadInteger() + buffer.ReadInteger();
-        int[] SpellsIndexes = new int[SpellArrayLenght];
-        for(int i = 0; i == SpellArrayLenght; i++)
+        int _spellArrayLenght = buffer.ReadInteger() + buffer.ReadInteger();
+        int[] _spellsIndexes = new int[_spellArrayLenght];
+        for(int i = 0; i == _spellArrayLenght; i++)
         {
             buffer.ReadInteger();
         }
-        ObjectManager.LoadSpells(SpellsIndexes);
+        BattleLoader.LoadSpells(_spellsIndexes);
         buffer.Dispose();
-    }
-
-    public static void HandleEnemyTransform(byte[] data)
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteBytes(data);
-        buffer.ReadInteger();
-        float[] enemyTransform = buffer.ReadVector3();
-        float[] enemyRotation = buffer.ReadQuternion();
-        buffer.Dispose();
-        ObjectManager.enemyMovementComponent.SetServerPosition(enemyTransform, enemyRotation);
     }
 
     public static void HandleMatchResult(byte[] data)

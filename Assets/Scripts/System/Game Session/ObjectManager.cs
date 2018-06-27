@@ -16,6 +16,8 @@ public class ObjectManager : MonoBehaviour {
 
     public static List<GameObject> activeProps;
 
+    public static int[] Spells;
+
     #region Player
     public static GameObject Player;
     public static Vector3 playerPos;
@@ -72,7 +74,7 @@ public class ObjectManager : MonoBehaviour {
         {
             //loadedSpells[Array.IndexOf(spellsNumbers, i)] = Resources.Load("Spells/" + spellsNumbers[Array.IndexOf(spellsNumbers, i)]) as GameObject; 
         }
-        int[] Spells = spellsNumbers;
+        Spells = spellsNumbers;
         RoomSendData.SendLoadComplite();
     }
 

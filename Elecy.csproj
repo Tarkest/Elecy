@@ -362,6 +362,7 @@
     <Compile Include="Assets\Scripts\System\Main Lobby\Armory\ArmorySpell.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\ChatMessageController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\GlobalChatController.cs" />
+    <Compile Include="Assets\Scripts\System\Main Lobby\DeveloperScreenController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\FriendlistScripts\FriendFieldController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\FriendlistScripts\FriendListController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\MainLobbyController.cs" />

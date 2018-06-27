@@ -9,8 +9,8 @@ public class BattleLogic : MonoBehaviour {
 
     public static void BeginBattle()
     {
-        ObjectManager.playerStats.battleIsOn = true;
-        RoomController.battleIsOn = true;
+        //ObjectManager.playerStats.battleIsOn = true;
+        //RoomController.battleIsOn = true;
         //Timer = new Timer(SendInfo, null, 0, 1000 / NetworkConstants.UPDATE_RATE);
     }
 
@@ -21,7 +21,7 @@ public class BattleLogic : MonoBehaviour {
 
     public static void EndBattle(string Nickname)
     {
-        Timer.Dispose();
+        //Timer.Dispose();
         ObjectManager.playerStats.battleIsOn = false;
         RoomController.battleIsOn = false;
         RoomController.ViewStatisticScreen(Nickname);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -21,7 +22,6 @@ public class BattleLoader : MonoBehaviour
     private static int[] indexes;
     private static float[][] Position = new float[2][];
     private static float[][] Rotation = new float[2][];
-    private static string[] SpellPaths = new string[20];
     private static int _maxHP;
     private static int _maxSN;
     private static float _moveSpeed;
@@ -64,6 +64,8 @@ public class BattleLoader : MonoBehaviour
             Player.GetComponent<PlayerStats>().SetStats(_maxHP, _maxSN, _moveSpeed, _attackSpeed, _basicDefence, _fireDefence, _earthDefence, _windDefence, _waterDefence);
             ObjectManager.PlayersLoaded(Player, EnemyPlayer);
             ThisPlayerProgressChange(0.25f);
+            DeveloperScreenController.AddInfo("Player pos: " + ObjectManager.playerStartPosition.x.ToString() + "," + ObjectManager.playerStartPosition.y.ToString() + "," + ObjectManager.playerStartPosition.z.ToString());
+            DeveloperScreenController.AddInfo("Enemy pos: " + ObjectManager.enemyStartPosition.x.ToString() + "," + ObjectManager.enemyStartPosition.y.ToString() + "," + ObjectManager.enemyStartPosition.z.ToString());
         }
 
         if(RockSpawn)
@@ -77,16 +79,6 @@ public class BattleLoader : MonoBehaviour
             TreeSpawn = false;
             LoadTrees();
         }
-
-        if(LoadingSpells)
-        {
-            LoadingSpells = false;
-            for(int i = 0; i == 20; i++)
-            {
-                ObjectManager.loadedSpells[i] = Resources.Load("/Spells/" + SpellPaths[i]) as GameObject;
-            }
-        }
-
     }
 
     public static void SpanwPlayers(string nickname1, string nickname2, float[][]positions, float[][]rotations)
@@ -131,11 +123,6 @@ public class BattleLoader : MonoBehaviour
         TreeSpawn = true;
     }
 
-    public static void LoadSpells(string[] spellPath)
-    {
-        SpellPaths = spellPath;
-    }
-
     private static void LoadRocks()
     {
         for (int i = 0; i < count; i++)
@@ -148,6 +135,7 @@ public class BattleLoader : MonoBehaviour
             NewRockNet.SetIndex(indexes[i]);
             NewRockNet.SetTransform(pos, rot);
             ObjectManager.staticProps.Add(NewRockOnField);
+            DeveloperScreenController.AddInfo("Rock"+i.ToString()+"/n"+" Pos: "+ pos.x.ToString()+","+ pos.y.ToString() + "," + pos.z.ToString() + "/n" + " Rot: " + rot.x.ToString() + "," + rot.y.ToString() + "," + rot.z.ToString());
         }
         RoomSendData.SendRocksSpawned();
         ThisPlayerProgressChange(0.5f);
@@ -165,6 +153,7 @@ public class BattleLoader : MonoBehaviour
             NewTreeNet.SetIndex(indexes[i]);
             NewTreeNet.SetTransform(pos, rot);
             ObjectManager.staticProps.Add(NewTreeOnField);
+            DeveloperScreenController.AddInfo("Tree" + i.ToString() + "/n" + " Pos: " + pos.x.ToString() + "," + pos.y.ToString() + "," + pos.z.ToString() + "/n" + " Rot: " + rot.x.ToString() + "," + rot.y.ToString() + "," + rot.z.ToString());
         }
         RoomSendData.SendTreesSpawned();
         ThisPlayerProgressChange(0.75f);
@@ -172,7 +161,12 @@ public class BattleLoader : MonoBehaviour
 
     public static void LoadSpells(int[] SpellsIndexes)
     {
-        //
+        ObjectManager.LoadSpells(SpellsIndexes);
+        DeveloperScreenController.AddInfo("Spells: ");
+        foreach(int i in SpellsIndexes)
+        {
+            DeveloperScreenController.AddInfo(Array.IndexOf(SpellsIndexes, i).ToString()+ ": "+ i.ToString());
+        }
     }
 
     public static void EnemyProgressChange(float progress)

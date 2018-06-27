@@ -11,11 +11,13 @@ public class RoomController : MonoBehaviour {
     private static Text _text;
     private static Text _winnerText;
     private static GameObject _statisticScreen;
+    private static GameObject _devScreen;
 
     private static bool _menuIsActive = false;
     public static bool battleIsOn = true;
     private static bool _statisticView = false;
     private static bool _won;
+    private bool _devScreenIsOn;
 
     void Awake()
     {
@@ -27,6 +29,7 @@ public class RoomController : MonoBehaviour {
         _popUpScreen = GameObject.Find("PopUpScreen");
         _statisticScreen = GameObject.Find("StatisticScreen");
         _winnerText = GameObject.Find("WinnerText").GetComponent<Text>();
+        _devScreen = GameObject.Find("DeveloperScreen");
     }
 
     void Start()
@@ -35,6 +38,7 @@ public class RoomController : MonoBehaviour {
         _splashScreen.SetActive(false);
         _statisticScreen.SetActive(false);
         _popUpScreen.SetActive(false);
+        _devScreen.SetActive(false);
     }
 
     void Update()
@@ -70,6 +74,20 @@ public class RoomController : MonoBehaviour {
         {
             _popUpScreen.SetActive(true);
             _statisticScreen.SetActive(true);
+        }
+
+        if(Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            if(_devScreenIsOn)
+            {
+                _devScreenIsOn = false;
+                _devScreen.SetActive(false);
+            }
+            else
+            {
+                _devScreenIsOn = true;
+                _devScreen.SetActive(true);
+            }
         }
     }
 
