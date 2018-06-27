@@ -116,7 +116,7 @@ public class MainLobbyController : MonoBehaviour {
         { 
             _searchTimeCounter = 0;
             isSearching = true;
-            NetPlayerSendData.SendQueueStart(matchType);
+            NetPlayerSendData.SendQueueStart(matchType, "Ignis");
         }
         else if(isSearching)
         {

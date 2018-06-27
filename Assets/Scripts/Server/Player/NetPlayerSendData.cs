@@ -20,11 +20,12 @@ public class NetPlayerSendData
         buffer.Dispose();
     }
 
-    public static void SendQueueStart(int MatchType)
+    public static void SendQueueStart(int MatchType, string race)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)NetPlayerPackets.PQueueStart);
         buffer.WriteInteger(MatchType);
+        buffer.WriteString(race);
         NetPlayerTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
