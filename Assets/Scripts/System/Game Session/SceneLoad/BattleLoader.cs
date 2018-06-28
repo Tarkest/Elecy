@@ -135,7 +135,7 @@ public class BattleLoader : MonoBehaviour
             NewRockNet.SetIndex(indexes[i]);
             NewRockNet.SetTransform(pos, rot);
             ObjectManager.staticProps.Add(NewRockOnField);
-            DeveloperScreenController.AddInfo("Rock"+i.ToString()+"/n"+" Pos: "+ pos.x.ToString()+","+ pos.y.ToString() + "," + pos.z.ToString() + "/n" + " Rot: " + rot.x.ToString() + "," + rot.y.ToString() + "," + rot.z.ToString());
+            DeveloperScreenController.AddInfo("Rock"+i.ToString()+"\n"+" Pos: "+ pos.x.ToString()+","+ pos.y.ToString() + "," + pos.z.ToString() + "\n" + " Rot: " + rot.x.ToString() + "," + rot.y.ToString() + "," + rot.z.ToString());
         }
         RoomSendData.SendRocksSpawned();
         ThisPlayerProgressChange(0.5f);
@@ -153,7 +153,7 @@ public class BattleLoader : MonoBehaviour
             NewTreeNet.SetIndex(indexes[i]);
             NewTreeNet.SetTransform(pos, rot);
             ObjectManager.staticProps.Add(NewTreeOnField);
-            DeveloperScreenController.AddInfo("Tree" + i.ToString() + "/n" + " Pos: " + pos.x.ToString() + "," + pos.y.ToString() + "," + pos.z.ToString() + "/n" + " Rot: " + rot.x.ToString() + "," + rot.y.ToString() + "," + rot.z.ToString());
+            DeveloperScreenController.AddInfo("Tree" + i.ToString() + "\n" + " Pos: " + pos.x.ToString() + "," + pos.y.ToString() + "," + pos.z.ToString() + "\n" + " Rot: " + rot.x.ToString() + "," + rot.y.ToString() + "," + rot.z.ToString());
         }
         RoomSendData.SendTreesSpawned();
         ThisPlayerProgressChange(0.75f);
