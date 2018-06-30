@@ -64,8 +64,8 @@ public class BattleLoader : MonoBehaviour
             Player.GetComponent<PlayerStats>().SetStats(_maxHP, _maxSN, _moveSpeed, _attackSpeed, _basicDefence, _fireDefence, _earthDefence, _windDefence, _waterDefence);
             ObjectManager.PlayersLoaded(Player, EnemyPlayer);
             ThisPlayerProgressChange(0.25f);
-            DeveloperScreenController.AddInfo("Player pos: " + ObjectManager.playerStartPosition.x.ToString() + "," + ObjectManager.playerStartPosition.y.ToString() + "," + ObjectManager.playerStartPosition.z.ToString());
-            DeveloperScreenController.AddInfo("Enemy pos: " + ObjectManager.enemyStartPosition.x.ToString() + "," + ObjectManager.enemyStartPosition.y.ToString() + "," + ObjectManager.enemyStartPosition.z.ToString());
+            DeveloperScreenController.AddInfo("Player pos: " + ObjectManager.playerStartPosition.x.ToString() + ", " + ObjectManager.playerStartPosition.y.ToString() + ", " + ObjectManager.playerStartPosition.z.ToString(), 1);
+            DeveloperScreenController.AddInfo("Enemy pos: " + ObjectManager.enemyStartPosition.x.ToString() + ", " + ObjectManager.enemyStartPosition.y.ToString() + ", " + ObjectManager.enemyStartPosition.z.ToString(), 1);
         }
 
         if(RockSpawn)
@@ -135,7 +135,7 @@ public class BattleLoader : MonoBehaviour
             NewRockNet.SetIndex(indexes[i]);
             NewRockNet.SetTransform(pos, rot);
             ObjectManager.staticProps.Add(NewRockOnField);
-            DeveloperScreenController.AddInfo("Rock"+i.ToString()+"\n"+" Pos: "+ pos.x.ToString()+","+ pos.y.ToString() + "," + pos.z.ToString() + "\n" + " Rot: " + rot.x.ToString() + "," + rot.y.ToString() + "," + rot.z.ToString());
+            DeveloperScreenController.AddInfo("Rock"+i.ToString() + "\n" + " Pos: "+ pos.x.ToString()+", "+ pos.y.ToString() + ", " + pos.z.ToString() + "\n" + " Rot: " + rot.x.ToString() + ", " + rot.y.ToString() + ", " + rot.z.ToString(), 3);
         }
         RoomSendData.SendRocksSpawned();
         ThisPlayerProgressChange(0.5f);
@@ -153,7 +153,7 @@ public class BattleLoader : MonoBehaviour
             NewTreeNet.SetIndex(indexes[i]);
             NewTreeNet.SetTransform(pos, rot);
             ObjectManager.staticProps.Add(NewTreeOnField);
-            DeveloperScreenController.AddInfo("Tree" + i.ToString() + "\n" + " Pos: " + pos.x.ToString() + "," + pos.y.ToString() + "," + pos.z.ToString() + "\n" + " Rot: " + rot.x.ToString() + "," + rot.y.ToString() + "," + rot.z.ToString());
+            DeveloperScreenController.AddInfo("Tree" + i.ToString() + "\n" + " Pos: " + pos.x.ToString() + ", " + pos.y.ToString() + ", " + pos.z.ToString() + "\n" + " Rot: " + rot.x.ToString() + ", " + rot.y.ToString() + ", " + rot.z.ToString(), 3);
         }
         RoomSendData.SendTreesSpawned();
         ThisPlayerProgressChange(0.75f);
@@ -162,10 +162,10 @@ public class BattleLoader : MonoBehaviour
     public static void LoadSpells(int[] SpellsIndexes)
     {
         ObjectManager.LoadSpells(SpellsIndexes);
-        DeveloperScreenController.AddInfo("Spells: ");
+        DeveloperScreenController.AddInfo("Spells: ", 1);
         foreach(int i in SpellsIndexes)
         {
-            DeveloperScreenController.AddInfo(Array.IndexOf(SpellsIndexes, i).ToString()+ ": "+ i.ToString());
+            DeveloperScreenController.AddInfo(Array.IndexOf(SpellsIndexes, i).ToString()+ ": "+ i.ToString(), 1);
         }
     }
 

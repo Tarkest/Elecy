@@ -26,9 +26,9 @@ public class DeveloperScreenController : MonoBehaviour {
         gameObject.transform.Find("Scroll View").Find("Viewport").Find("Content").GetComponent<RectTransform>().sizeDelta = new Vector2(0, (float)_messageCount * 16);
     }
 
-    public static void AddInfo(string info)
+    public static void AddInfo(string info, int massageCount)
     {
-        _messageCount++;
-        _debugText += "/n" + info;
+        _messageCount += massageCount;
+        _debugText += "\n" + info;
     }
 }
