@@ -163,9 +163,9 @@ public class BattleLoader : MonoBehaviour
     {
         ObjectManager.LoadSpells(SpellsIndexes);
         DeveloperScreenController.AddInfo("Spells: ", 1);
-        foreach(int i in SpellsIndexes)
+        for(int i = 0; i < SpellsIndexes.Length; i++)
         {
-            DeveloperScreenController.AddInfo(Array.IndexOf(SpellsIndexes, i).ToString()+ ": "+ i.ToString(), 1);
+            DeveloperScreenController.AddInfo(i.ToString()+ ": "+ SpellsIndexes[i].ToString(), 1);
         }
     }
 
