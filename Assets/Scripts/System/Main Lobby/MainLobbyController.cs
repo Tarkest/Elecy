@@ -17,12 +17,15 @@ public class MainLobbyController : MonoBehaviour {
     private static GameObject _badConnectionPad;
     private static GameObject _errorWindow;
     private static GameObject _armoryScreen;
+    private static GameObject _processScreen;
     private static int[][] ArmorySpells;
 
     private int matchType = 0;
     public static bool isSearching = false;
     private static float _searchTimeCounter = 0f;
     private static bool _badConnectionStatus;
+    private static bool _process = false;
+    private static bool _processOff = true;
 
     void Awake()
     {
@@ -222,6 +225,11 @@ public class MainLobbyController : MonoBehaviour {
     public static void LoadSpells(int[] spellsNumbers)
     {
         //Change
+
+    }
+
+    public static void GetInProcess(string processName)
+    {
 
     }
 }

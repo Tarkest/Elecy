@@ -123,9 +123,9 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
         buffer.ReadInteger();
         int _spellArrayLenght = buffer.ReadInteger() + buffer.ReadInteger();
         int[] _spellsIndexes = new int[_spellArrayLenght];
-        for(int i = 0; i == _spellArrayLenght; i++)
+        for(int i = 0; i < _spellArrayLenght; i++)
         {
-            buffer.ReadInteger();
+            _spellsIndexes[i] = buffer.ReadInteger();
         }
         BattleLoader.LoadSpells(_spellsIndexes);
         buffer.Dispose();
