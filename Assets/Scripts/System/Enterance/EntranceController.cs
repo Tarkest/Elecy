@@ -1,76 +1,96 @@
-﻿using System.Threading;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class EntranceController : MonoBehaviour {
 
-    public string Name;
-    public string Password;
-    public string Nickname;
-    [System.NonSerialized]
-    private static Text infoField;
+    private string _name;
+    private string _password;
+    private string _nickname;
     private static GameObject _splashScreen;
-    private static GameObject _exitWindow;
     private static GameObject _errorWindow;
-    private static GameObject _processWindow;
-    private static bool _error = false;
-    private static bool _process = false;
-    private static bool _processOff = true;
-    private static string _errorMsg = "";
-    private static string _processMsg = "";
+    private static GameObject _exitWindow;
+    private static GameObject _processWindowRes;
+    private static EntranceProcessWindow _processWindow;
+    private static int tablesCount;
+
+    private static bool _error;
+    private static bool _exit;
+    private static bool _process;
+    private static bool _processOff;
+    private static string _errorText;
+    private static string _processText;
 
     void Start()
     {
         _splashScreen = GameObject.Find("SplashMenu");
-        _exitWindow = GameObject.Find("ExitWindow");
-        _errorWindow = GameObject.Find("ErrorWindow");
-        _processWindow = GameObject.Find("ProcessWindow");
-        _processWindow.SetActive(false);
-        _errorWindow.SetActive(false);
-        _exitWindow.SetActive(false);
+        _errorWindow = Resources.Load("Entrance/ErrorWindow") as GameObject;
+        _exitWindow = Resources.Load("Entrance/ExitWindow") as GameObject;
+        _processWindowRes = Resources.Load("Entrance/ProcessWindow") as GameObject;
         _splashScreen.SetActive(false);
+        _error = false;
+        _exit = false;
+        _process = false;
+        tablesCount = 0;
     }
 
     void Update()
     {
-        Name = GameObject.Find("Name").GetComponent<InputField>().text;
-        Password = GameObject.Find("Password").GetComponent<InputField>().text;
-        Nickname = GameObject.Find("Nickname").GetComponent<InputField>().text;
+        _name = GameObject.Find("Name").GetComponent<InputField>().text;
+        _password = GameObject.Find("Password").GetComponent<InputField>().text;
+        _nickname = GameObject.Find("Nickname").GetComponent<InputField>().text;
+
+        if (tablesCount == 0)
+            _splashScreen.SetActive(false);
+        else
+            _splashScreen.SetActive(true);
+
         if(_error)
         {
             _error = false;
-            _splashScreen.SetActive(true);
-            _errorWindow.SetActive(true);
-            _errorWindow.transform.Find("Text").GetComponent<Text>().text = _errorMsg;
-            _errorMsg = "";
+            GameObject o = Instantiate(_errorWindow, _splashScreen.transform) as GameObject;
+            o.GetComponent<EntranceErrorWindow>().SetMsg(_errorText);
         }
-        if(_process && !_processOff)
+
+        if(_exit)
+        {
+            _exit = false;
+            Instantiate(_exitWindow, _splashScreen.transform);
+            Increase();
+        }
+
+        if(_process)
         {
             _process = false;
-            _splashScreen.SetActive(true);
-            _processWindow.SetActive(true);
-            _processWindow.transform.Find("Text").GetComponent<Text>().text = _processMsg;
+            GameObject o = Instantiate(_processWindowRes, _splashScreen.transform) as GameObject;
+            _processWindow = o.GetComponent<EntranceProcessWindow>();
+            _processWindow.SetText(_processText);
         }
-        if(_processOff && !_process)
+    }
+
+    public static void Increase()
+    {
+        tablesCount++;
+    }
+
+    public static void Decrease()
+    {
+        if(!(tablesCount <= 0))
         {
-            _processOff = true;
-            _processWindow.SetActive(false);
-            _splashScreen.SetActive(false);
-            _processWindow.transform.Find("Text").GetComponent<Text>().text = "";
+            tablesCount--;
         }
     }
 
     public void LoginTry()
     {
-        ClientSendData.SendLogin();
+        ClientSendData.SendLogin(_name, _password);
         GetInProcess("Login in...");
     }
 
     public void RegisterTry()
     {
-        if(Password.Length >= 8)
+        if(_password.Length >= 8)
         {
-            ClientSendData.SendRegister();
+            ClientSendData.SendRegister(_name, _password, _nickname);
             GetInProcess("Registration...");
         }
         else
@@ -79,50 +99,26 @@ public class EntranceController : MonoBehaviour {
         }
     }
 
-    public void Exit()
-    {
-        _splashScreen.SetActive(true);
-        _exitWindow.SetActive(true);
-    }
-
-    public void Exit(bool answear)
-    {
-        if(answear == true)
-        {
-            Network.QuitApp();
-            _exitWindow.SetActive(false);
-            _splashScreen.SetActive(false);
-        }
-        else
-        {
-            _exitWindow.SetActive(false);
-            _splashScreen.SetActive(false);
-        }
-    }
-
-    public void OK()
-    {
-        _errorWindow.SetActive(false);
-        _splashScreen.SetActive(false);
-    }
-
     public static void GetError(string errorText)
     {
+        _errorText = errorText;
         _error = true;
-        _errorMsg = errorText;
-        GetOffProcess();
+    }
+
+    public void Exit()
+    {
+        _exit = true;
     }
 
     public static void GetInProcess(string processText)
     {
+        _processText = processText;
         _process = true;
-        _processOff = false;
-        _processMsg = processText;
     }
 
     public static void GetOffProcess()
     {
-        _process = false;
-        _processOff = true;
+        if(_processWindow != null)
+            _processWindow.Destroy();
     }
 }

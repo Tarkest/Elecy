@@ -78,6 +78,7 @@ public class ClientHandlerNetworkData
         buffer.ReadInteger();
         string msg = buffer.ReadString();
         buffer.Dispose();
+        EntranceController.GetOffProcess();
         EntranceController.GetError(msg);
     }
 }

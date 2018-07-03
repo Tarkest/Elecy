@@ -10,24 +10,24 @@ public class ClientSendData
         buffer.Dispose();
     }
 
-    public static void SendLogin()
+    public static void SendLogin(string name, string password)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)ClientPackets.CLoginTry);
-        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Name);
-        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Password);
+        buffer.WriteString(name);
+        buffer.WriteString(password);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
         EntranceController.GetInProcess("Loggin in...");
     }
 
-    public static void SendRegister()
+    public static void SendRegister(string name, string password, string nickname)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)ClientPackets.CRegisterTry);
-        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Name);
-        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Password);
-        buffer.WriteString(GameObject.Find("EntranceController").GetComponent<EntranceController>().Nickname);
+        buffer.WriteString(name);
+        buffer.WriteString(password);
+        buffer.WriteString(nickname);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
         EntranceController.GetInProcess("Registration...");
