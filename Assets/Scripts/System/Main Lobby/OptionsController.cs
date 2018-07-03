@@ -90,6 +90,11 @@ public class OptionsController : MonoBehaviour {
         }
     }
 
+    public void SaveOptions()
+    {
+
+    }
+
     public void Graphic()
     {
         if(_menuState != 0)

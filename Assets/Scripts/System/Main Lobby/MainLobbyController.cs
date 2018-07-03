@@ -11,21 +11,21 @@ public class MainLobbyController : MonoBehaviour {
     private static GameObject _machTypeDropdown;
     private static GameObject _timeCounter;
     private static GameObject _splashMenu;
-    private static GameObject _exitWindow;
-    private static GameObject _logOutWindow;
     private static GameObject _optionsWindow;
     private static GameObject _badConnectionPad;
-    private static GameObject _errorWindow;
     private static GameObject _armoryScreen;
     private static GameObject _processScreen;
+    private static MainLobbyProcessWindow _processWindow;
     private static int[][] ArmorySpells;
 
     private int matchType = 0;
     public static bool isSearching = false;
     private static float _searchTimeCounter = 0f;
-    private static bool _badConnectionStatus;
     private static bool _process = false;
-    private static bool _processOff = true;
+    public static int windowsCount = 0;
+    private static bool _error;
+    private static string _errorMsg;
+    private static string _processText;
 
     void Awake()
     {
@@ -39,19 +39,15 @@ public class MainLobbyController : MonoBehaviour {
     void Start()
     {
         _splashMenu = GameObject.Find("SplashMenu");
-        _exitWindow = GameObject.Find("ExitWindow");
-        _logOutWindow = GameObject.Find("LogOutWindow");
         _optionsWindow = GameObject.Find("OptionsMenu");
         _badConnectionPad = GameObject.Find("BadConnectionPad");
-        _errorWindow = GameObject.Find("ErrorWindow");
         _armoryScreen = GameObject.Find("ArmoryScreen");
-        _errorWindow.SetActive(false);
+        _processScreen = GameObject.Find("ProcessPanel");
         _badConnectionPad.SetActive(false);
         _splashMenu.SetActive(false);
         _optionsWindow.SetActive(false);
-        _exitWindow.SetActive(false);
-        _logOutWindow.SetActive(false);
         _armoryScreen.SetActive(false);
+        _processScreen.SetActive(false);
     }
 
     public static float GetCounter()
@@ -73,13 +69,29 @@ public class MainLobbyController : MonoBehaviour {
             _machTypeDropdown.SetActive(true);
             _findGameButton.transform.Find("Text").GetComponent<Text>().text = "Find Game";
         }
-        if(_badConnectionStatus)
+        if(windowsCount > 0)
         {
-            _badConnectionPad.SetActive(true);
+            _splashMenu.SetActive(true);
         }
         else
         {
-            _badConnectionPad.SetActive(false);
+            _splashMenu.SetActive(false);
+        }
+        if(_error)
+        {
+            GameObject error = Resources.Load("Interface/MainLobbyInterface/ErrorWindow") as GameObject;
+            error.GetComponent<MainLobbyErrorWindow>().SetText(_errorMsg);
+            _errorMsg = "";
+            Instantiate(error, _splashMenu.transform);
+            _error = false;
+        }
+        if(_process)
+        {
+            _process = false;
+            _processScreen.SetActive(true);
+            _processWindow = Instantiate(Resources.Load("Interface/MainLobbyInterface/ProcessWindow") as GameObject, _processScreen.transform).GetComponent<MainLobbyProcessWindow>();
+            _processWindow.ChangeText(_processText);
+            _processText = "";
         }
     }
 
@@ -127,34 +139,23 @@ public class MainLobbyController : MonoBehaviour {
             _timeCounter.GetComponent<Text>().text = "";
             NetPlayerSendData.SendQueueStop();
         }
-
     }
 
     public void ExitPressed()
     {
-        _splashMenu.SetActive(true);
-        _exitWindow.SetActive(true);
+        windowsCount += 1;
+        Instantiate(Resources.Load("Interface/MainLobbyInterface/ExitWindow"), _splashMenu.transform);  
     }
 
     public void LogOutPressed()
     {
-        _splashMenu.SetActive(true);
-        _logOutWindow.SetActive(true);
+        windowsCount += 1;
+        Instantiate(Resources.Load("Interface/MainLobbyInterface/LogOutWindow"), _splashMenu.transform);
     }
 
-    public void Exit(bool answear)
+    public static void Exit()
     {
-        if(answear)
-        {
-            _exitWindow.SetActive(false);
-            _splashMenu.SetActive(false);
-            CloseApp();
-        }
-        else
-        {
-            _exitWindow.SetActive(false);
-            _splashMenu.SetActive(false);
-        }
+        Network.QuitApp();
     }
 
     public void Options()
@@ -167,43 +168,16 @@ public class MainLobbyController : MonoBehaviour {
         _optionsWindow.SetActive(false);
     }
 
-    public void LogOut(bool answear)
+    public static void LogOut()
     {
-        if (answear)
-        {
-            _logOutWindow.SetActive(false);
-            _splashMenu.SetActive(false);
-            NetPlayerSendData.SendPlayerLogOut();
-        }
-        else
-        {
-            _logOutWindow.SetActive(false);
-            _splashMenu.SetActive(false);
-        }
+        NetPlayerSendData.SendPlayerLogOut();
     }
 
-    public static void CloseApp()
+    public static void Error(string ErrorMassage)
     {
-        Network.QuitApp();
-    }
-
-    public static void BadConnection(bool status)
-    {
-        _badConnectionStatus = status;
-    }
-
-    public static void ConnectionError()
-    {
-        if(_errorWindow != null)
-        {
-           _errorWindow.SetActive(true);
-        }
-        _splashMenu.SetActive(true);
-    }
-
-    public void ErrorOK()
-    {
-        Network.LogOut();
+        windowsCount += 1;
+        _error = true;
+        _errorMsg = ErrorMassage;
     }
 
     public void ArmoryPressed()
@@ -215,6 +189,7 @@ public class MainLobbyController : MonoBehaviour {
     public void ArmorySave()
     {
         ArmoryController.SaveBuild();
+        GetInProcess("Saving Build");
     }
 
     public void ArmoryBack()
@@ -225,11 +200,16 @@ public class MainLobbyController : MonoBehaviour {
     public static void LoadSpells(int[] spellsNumbers)
     {
         //Change
-
     }
 
     public static void GetInProcess(string processName)
     {
+        _process = true;
+        _processText = processName;
+    }
 
+    public static void GetOffProcess()
+    {
+        _processWindow.GetOffProcess();
     }
 }

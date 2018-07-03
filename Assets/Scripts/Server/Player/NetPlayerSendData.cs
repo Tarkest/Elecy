@@ -68,21 +68,6 @@ public class NetPlayerSendData
         buffer.Dispose();
     } 
 
-    public static void SendCheckConnection()
-    {
-        byte[] data = new byte[1];
-        try
-        {
-            NetPlayerTCP.SendData(data);
-            MainLobbyController.BadConnection(true);
-            NetPlayerTCP.BadConnectionTimerStart();
-        }
-        catch
-        {
-            MainLobbyController.ConnectionError();
-        }
-    }
-
     public static void SendGetSkillBuild(string race)
     {
         PacketBuffer buffer = new PacketBuffer();

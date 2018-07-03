@@ -111,6 +111,7 @@ public class NetPlayerHandleNetworkData
         }
         buffer.Dispose();
         ArmoryController.SetSkills(SkillArray);
+        MainLobbyController.GetOffProcess();
     }
 
     public static void HandleBuildSaved(byte[] data)
