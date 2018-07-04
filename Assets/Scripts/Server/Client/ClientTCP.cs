@@ -29,16 +29,17 @@ public static class ClientTCP
 
     static void ConnectTimerCallback(object o)
     {
-        _reconnectTry += 1;
+        _reconnectTry++;
         Network.ChangeConnectionStatus(false);
-        if (_reconnectTry == 5)
+        if (_reconnectTry >= 5)
         {
             try
             {
                 _connectTimer.Dispose();
             }
-            catch { return; }
+            catch { }
             EntranceController.GetError("Server unavaliable /n Try again later");
+            _reconnectTry = 0;
         }
     }
 
@@ -75,10 +76,8 @@ public static class ClientTCP
     private static void ConnectCallBack(IAsyncResult ar)
     {
         socket.EndConnect(ar);
-        receiving = true;
         _reconnectTry = 0;
         ConnectReceive();
-        EntranceController.GetOffProcess();
         try
         {
             _connectTimer.Dispose();
@@ -103,7 +102,6 @@ public static class ClientTCP
             }
             else
             {
-                Network.ChangeConnectionStatus(true);
                 while (totalRead < _sizeInfo.Length && currentRead > 0)
                 {
                     currentRead = socket.Receive(_sizeInfo, totalRead, _sizeInfo.Length - totalRead, SocketFlags.None);
@@ -124,6 +122,7 @@ public static class ClientTCP
                 }
                 ClientHandlerNetworkData.HandleNetworkInformation(receivedBuffer);
                 BeginReceive();
+                Network.ChangeConnectionStatus(true);
             }
         }
         catch
@@ -137,7 +136,7 @@ public static class ClientTCP
     {
         try
         {
-            if (socket.Connected)
+            if (receiving)
             {
                 int received = socket.EndReceive(ar);
                 if (received > 0)
@@ -147,17 +146,13 @@ public static class ClientTCP
                     ClientHandlerNetworkData.HandleNetworkInformation(data);
                     if (receiving)
                         socket.BeginReceive(_asyncBuffer, 0, _asyncBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
-                    else
-                        return;
                 }
             }
-
         }
-        catch
+        catch(Exception ex)
         {
             Network.ChangeConnectionStatus(false);
-            EntranceController.GetError("Client receive exception");
-            //socket.;
+            EntranceController.GetError(ex + "");
         }
     }
 

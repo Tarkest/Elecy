@@ -16,20 +16,16 @@ public class EntranceController : MonoBehaviour {
     private static bool _error;
     private static bool _exit;
     private static bool _process;
-    private static bool _processOff;
     private static string _errorText;
     private static string _processText;
 
     void Start()
     {
         _splashScreen = GameObject.Find("SplashMenu");
-        _errorWindow = Resources.Load("Entrance/ErrorWindow") as GameObject;
-        _exitWindow = Resources.Load("Entrance/ExitWindow") as GameObject;
-        _processWindowRes = Resources.Load("Entrance/ProcessWindow") as GameObject;
+        _errorWindow = Resources.Load("Interface/Entrance/ErrorWindow") as GameObject;
+        _exitWindow = Resources.Load("Interface/Entrance/ExitWindow") as GameObject;
+        _processWindowRes = Resources.Load("Interface/Entrance/ProcessWindow") as GameObject;
         _splashScreen.SetActive(false);
-        _error = false;
-        _exit = false;
-        _process = false;
         tablesCount = 0;
     }
 

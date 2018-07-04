@@ -15,7 +15,11 @@ public class SceneManage : MonoBehaviour {
         if (scene.buildIndex == NetworkConstants.ENTRANCE_NUMBER)
         {
             Network.state = Network.GameState.Entrance;
-            ClientTCP.BeginReceive();
+            if(Network.isConnected)
+            {
+                ClientTCP.BeginReceive();
+            }
+
         }
         else if (scene.buildIndex == NetworkConstants.MAIN_LOBBY_NUMBER)
         {

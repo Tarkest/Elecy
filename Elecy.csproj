@@ -359,6 +359,10 @@
     <Compile Include="Assets\Scripts\System\Main Lobby\DeveloperScreenController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\FriendlistScripts\FriendFieldController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\FriendlistScripts\FriendListController.cs" />
+    <Compile Include="Assets\Scripts\System\Main Lobby\Interface\MainLobbyErrorWindow.cs" />
+    <Compile Include="Assets\Scripts\System\Main Lobby\Interface\MainLobbyExitWindow.cs" />
+    <Compile Include="Assets\Scripts\System\Main Lobby\Interface\MainLobbyLogOutWindow.cs" />
+    <Compile Include="Assets\Scripts\System\Main Lobby\Interface\MainLobbyProcessWindow.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\MainLobbyController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\OptionsController.cs" />
     <Compile Include="Assets\Scripts\System\SceneManage.cs" />

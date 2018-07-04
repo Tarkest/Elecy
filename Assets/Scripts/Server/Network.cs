@@ -15,7 +15,7 @@ public class Network : MonoBehaviour
 
     private static int scenenum;
 
-    private static bool isConnected = false;
+    public static bool isConnected { get; private set; }
 
     public static bool quit = false;
 
@@ -25,6 +25,7 @@ public class Network : MonoBehaviour
     {
         DontDestroyOnLoad(transform.gameObject);
         ClientHandlerNetworkData.InitializeNetworkPackages();
+        isConnected = false;
     }
 
     public enum GameState
