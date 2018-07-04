@@ -71,6 +71,7 @@ public class MainLobbyController : MonoBehaviour {
         }
         if(windowsCount > 0)
         {
+            Debug.Log(windowsCount);
             _splashMenu.SetActive(true);
         }
         else
@@ -170,7 +171,7 @@ public class MainLobbyController : MonoBehaviour {
 
     public static void LogOut()
     {
-        NetPlayerSendData.SendPlayerLogOut();
+        Network.LogOut();
     }
 
     public static void Error(string ErrorMassage)

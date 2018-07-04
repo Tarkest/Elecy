@@ -20,6 +20,14 @@ public static class ClientTCP
         socket.Close();
     }
 
+    public static void Refresh()
+    {
+        socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        _asyncBuffer = new byte[NetworkConstants.BUFFER_SIZE];
+        receiving = false;
+        _reconnectTry = 0;
+    }
+
     public static void Stop(int  pIndex)
     {
         receiving = false;

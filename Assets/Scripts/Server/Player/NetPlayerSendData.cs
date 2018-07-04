@@ -60,14 +60,6 @@ public class NetPlayerSendData
 
     }
 
-    public static void SendPlayerLogOut()
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)NetPlayerPackets.PLogOut);
-        NetPlayerTCP.SendData(buffer.ToArray());
-        buffer.Dispose();
-    } 
-
     public static void SendGetSkillBuild(string race)
     {
         PacketBuffer buffer = new PacketBuffer();

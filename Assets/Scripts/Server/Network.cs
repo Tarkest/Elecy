@@ -21,9 +21,19 @@ public class Network : MonoBehaviour
 
     public static GameState state;
 
+    private static GameObject _networkInstanse;
+
     private void Awake()
     {
-        DontDestroyOnLoad(transform.gameObject);
+        DontDestroyOnLoad(gameObject);
+        if (_networkInstanse == null)
+        {
+            _networkInstanse = gameObject;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         ClientHandlerNetworkData.InitializeNetworkPackages();
         isConnected = false;
     }
@@ -86,7 +96,6 @@ public class Network : MonoBehaviour
         ClientTCP.Close();
         NetPlayerTCP.Close();
         RoomTCP.Close();
-
         try
         {
             BattleLogic.Timer.Dispose();
@@ -96,8 +105,12 @@ public class Network : MonoBehaviour
 
     public static void LogOut()
     {
+        ClientTCP.Close();
+        NetPlayerTCP.Close();
         scenenum = 0;
         scenechange = true;
+        ClientTCP.Refresh();
+        ChangeConnectionStatus(false);
     }
 
     public static void EndBattle()

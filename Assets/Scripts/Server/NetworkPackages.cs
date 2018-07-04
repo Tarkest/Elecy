@@ -19,7 +19,7 @@ public enum ServerPackets
     //SClientExit = 16,
     //SNetPlayerExit = 17,
     //SPlayerExit = 18,
-    SNetPlayerLogOut = 19,
+    //SNetPlayerLogOut = 19,
     SPlayerLogOut = 20,
     SMatchResult = 21,
     SSpellLoad = 22,
@@ -49,7 +49,7 @@ public enum NetPlayerPackets
     PQueueStop = 11,
     PAlert = 12,
     PStopPlayer = 17,
-    PLogOut = 23,
+    //PLogOut = 23,
     PGetSkillsBuild = 26,
     PSaveSkillsBuild = 27
 }

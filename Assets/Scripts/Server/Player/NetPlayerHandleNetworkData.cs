@@ -17,7 +17,6 @@ public class NetPlayerHandleNetworkData
             {(int)ServerPackets.SQueueStarted, HandleQueueStarted },
             {(int)ServerPackets.SQueueContinue, HandleQueueContinue },
             {(int)ServerPackets.SMatchFound, HandleMatchFound },
-            {(int)ServerPackets.SNetPlayerLogOut, HandleNetPlayerLogOut },
             {(int)ServerPackets.SBuildInfo, HandleBuild },
             {(int)ServerPackets.SBuildSaved, HandleBuildSaved }
         };
@@ -89,13 +88,6 @@ public class NetPlayerHandleNetworkData
         buffer.Dispose();
         NetPlayerTCP.Stop();
         Network.InBattle(roomindex, mapIndex);
-    }
-
-    public static void HandleNetPlayerLogOut(byte[] data)
-    {
-        NetPlayerTCP.Stop("");
-        //ClientTCP.BeginReceive();
-        Network.LogOut();
     }
 
     public static void HandleBuild(byte[] data)

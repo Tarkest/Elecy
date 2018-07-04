@@ -19,12 +19,26 @@ public class SceneManage : MonoBehaviour {
             {
                 ClientTCP.BeginReceive();
             }
-
+            try
+            {
+                SceneManager.UnloadSceneAsync(NetworkConstants.MAIN_LOBBY_NUMBER);
+            }
+            catch { }
         }
         else if (scene.buildIndex == NetworkConstants.MAIN_LOBBY_NUMBER)
         {
             Network.state = Network.GameState.MainLobby;
             NetPlayerTCP.BeginReceive();
+            try
+            {
+                SceneManager.UnloadSceneAsync(NetworkConstants.ENTRANCE_NUMBER);
+            }
+            catch { }
+            try
+            {
+                SceneManager.UnloadSceneAsync(NetworkConstants.ROOM_ARENA_NUMBER);
+            }
+            catch { }
         }
         else
         { 
