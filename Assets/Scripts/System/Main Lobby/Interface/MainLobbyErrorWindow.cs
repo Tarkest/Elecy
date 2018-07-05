@@ -1,23 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class MainLobbyErrorWindow : MonoBehaviour {
-
-    public string thisText = "";
-
-    void Update()
-    {
-        gameObject.transform.Find("Text").GetComponent<Text>().text = thisText;
-    }
+public class MainLobbyErrorWindow : MonoBehaviour
+{
 
     public void SetText(string text)
     {
-        thisText = text;
+        gameObject.transform.Find("Text").GetComponent<Text>().text = text;
+        MainLobbyController.IncreaseCount();
     }
 
     public void OK()
     {
-        MainLobbyController.windowsCount -= 1;
+        MainLobbyController.DecreaseCount();
         Destroy(gameObject);
     }
 

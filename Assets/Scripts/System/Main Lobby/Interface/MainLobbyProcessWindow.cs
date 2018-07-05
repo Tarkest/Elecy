@@ -3,12 +3,10 @@ using UnityEngine.UI;
 
 public class MainLobbyProcessWindow : MonoBehaviour {
 
-    private string _text;
     private bool _destroy;
 
     void Update()
     {
-        gameObject.transform.Find("Text").GetComponent<Text>().text = _text;
         if(_destroy)
         {
             Destroy(gameObject);
@@ -17,7 +15,7 @@ public class MainLobbyProcessWindow : MonoBehaviour {
 
     public void ChangeText(string text)
     {
-        _text = text;
+        gameObject.transform.Find("Text").GetComponent<Text>().text = text;
     }
 
     public void GetOffProcess()

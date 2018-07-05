@@ -7,7 +7,6 @@ public class EntranceController : MonoBehaviour {
     private string _password;
     private string _nickname;
     private static GameObject _splashScreen;
-    private static GameObject _errorWindow;
     private static GameObject _exitWindow;
     private static GameObject _processWindowRes;
     private static EntranceProcessWindow _processWindow;
@@ -22,7 +21,6 @@ public class EntranceController : MonoBehaviour {
     void Start()
     {
         _splashScreen = GameObject.Find("SplashMenu");
-        _errorWindow = Resources.Load("Interface/Entrance/ErrorWindow") as GameObject;
         _exitWindow = Resources.Load("Interface/Entrance/ExitWindow") as GameObject;
         _processWindowRes = Resources.Load("Interface/Entrance/ProcessWindow") as GameObject;
         _splashScreen.SetActive(false);
@@ -43,8 +41,7 @@ public class EntranceController : MonoBehaviour {
         if(_error)
         {
             _error = false;
-            GameObject o = Instantiate(_errorWindow, _splashScreen.transform) as GameObject;
-            o.GetComponent<EntranceErrorWindow>().SetMsg(_errorText);
+            Instantiate(Resources.Load("Interface/Entrance/ErrorWindow") as GameObject, _splashScreen.transform).GetComponent<EntranceErrorWindow>().SetMsg(_errorText);
         }
 
         if(_exit)

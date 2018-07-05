@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainLobbyController : MonoBehaviour {
+public class MainLobbyController : MonoBehaviour
+{
+
+    public static bool isSearching;
+    public static int windowsCount;
+    public static float searchTimeCounter { get; private set; }
 
     private static GameObject _findGameButton;
-    private GameObject _armoryButton;
+    private static GameObject _armoryButton;
     //private GameObject _shopButton; Button For go into Shop Window
     private static GameObject _machTypeDropdown;
     private static GameObject _timeCounter;
@@ -16,13 +21,12 @@ public class MainLobbyController : MonoBehaviour {
     private static GameObject _armoryScreen;
     private static GameObject _processScreen;
     private static MainLobbyProcessWindow _processWindow;
+    private static GameObject _errorWindow;
     private static int[][] ArmorySpells;
 
     private int matchType = 0;
-    public static bool isSearching = false;
-    private static float _searchTimeCounter = 0f;
+
     private static bool _process = false;
-    public static int windowsCount = 0;
     private static bool _error;
     private static string _errorMsg;
     private static string _processText;
@@ -34,33 +38,31 @@ public class MainLobbyController : MonoBehaviour {
         //_shopButton = GameObject.Find("ShopButton");
         _machTypeDropdown = GameObject.Find("MatchTypeDropdown");
         _timeCounter = GameObject.Find("TimeCounter");
-    }
-
-    void Start()
-    {
         _splashMenu = GameObject.Find("SplashMenu");
         _optionsWindow = GameObject.Find("OptionsMenu");
         _badConnectionPad = GameObject.Find("BadConnectionPad");
         _armoryScreen = GameObject.Find("ArmoryScreen");
         _processScreen = GameObject.Find("ProcessPanel");
+    }
+
+    void Start()
+    {
         _badConnectionPad.SetActive(false);
         _splashMenu.SetActive(false);
         _optionsWindow.SetActive(false);
         _armoryScreen.SetActive(false);
         _processScreen.SetActive(false);
-    }
-
-    public static float GetCounter()
-    {
-        return _searchTimeCounter;
+        isSearching = false;
+        windowsCount = 0;
+        searchTimeCounter = 0f;
     }
 
     void Update()
     {
         if(isSearching)
         {
-            _searchTimeCounter += Time.deltaTime;
-            _timeCounter.GetComponent<Text>().text = TimeInText(_searchTimeCounter);
+            searchTimeCounter += Time.deltaTime;
+            _timeCounter.GetComponent<Text>().text = TimeInText(searchTimeCounter);
             _machTypeDropdown.SetActive(false);
             _findGameButton.transform.Find("Text").GetComponent<Text>().text = "Searching...";
         }
@@ -71,7 +73,6 @@ public class MainLobbyController : MonoBehaviour {
         }
         if(windowsCount > 0)
         {
-            Debug.Log(windowsCount);
             _splashMenu.SetActive(true);
         }
         else
@@ -80,19 +81,16 @@ public class MainLobbyController : MonoBehaviour {
         }
         if(_error)
         {
+            _error = false;
             GameObject error = Resources.Load("Interface/MainLobbyInterface/ErrorWindow") as GameObject;
             error.GetComponent<MainLobbyErrorWindow>().SetText(_errorMsg);
-            _errorMsg = "";
             Instantiate(error, _splashMenu.transform);
-            _error = false;
         }
         if(_process)
         {
             _process = false;
             _processScreen.SetActive(true);
-            _processWindow = Instantiate(Resources.Load("Interface/MainLobbyInterface/ProcessWindow") as GameObject, _processScreen.transform).GetComponent<MainLobbyProcessWindow>();
-            _processWindow.ChangeText(_processText);
-            _processText = "";
+            Instantiate(Resources.Load("Interface/MainLobbyInterface/ProcessWindow") as GameObject, _processScreen.transform).GetComponent<MainLobbyProcessWindow>().ChangeText(_processText);
         }
     }
 
@@ -110,6 +108,19 @@ public class MainLobbyController : MonoBehaviour {
             return secString;
         else
             return minutes.ToString() + ":" + secString;
+    }
+
+    public static void IncreaseCount()
+    {
+        windowsCount++;
+    }
+    
+    public static void DecreaseCount()
+    {
+        if(windowsCount > 0)
+        {
+            windowsCount--;
+        }
     }
 
     public void ChangeMatchType()
@@ -130,7 +141,7 @@ public class MainLobbyController : MonoBehaviour {
     {
         if(!isSearching)
         { 
-            _searchTimeCounter = 0;
+            searchTimeCounter = 0;
             isSearching = true;
             NetPlayerSendData.SendQueueStart(matchType, "Ignis");
         }
@@ -144,19 +155,14 @@ public class MainLobbyController : MonoBehaviour {
 
     public void ExitPressed()
     {
-        windowsCount += 1;
+        IncreaseCount();
         Instantiate(Resources.Load("Interface/MainLobbyInterface/ExitWindow"), _splashMenu.transform);  
     }
 
     public void LogOutPressed()
     {
-        windowsCount += 1;
+        IncreaseCount();
         Instantiate(Resources.Load("Interface/MainLobbyInterface/LogOutWindow"), _splashMenu.transform);
-    }
-
-    public static void Exit()
-    {
-        Network.QuitApp();
     }
 
     public void Options()
@@ -169,16 +175,10 @@ public class MainLobbyController : MonoBehaviour {
         _optionsWindow.SetActive(false);
     }
 
-    public static void LogOut()
-    {
-        Network.LogOut();
-    }
-
     public static void Error(string ErrorMassage)
     {
-        windowsCount += 1;
-        _error = true;
         _errorMsg = ErrorMassage;
+        _error = true;
     }
 
     public void ArmoryPressed()
@@ -198,19 +198,15 @@ public class MainLobbyController : MonoBehaviour {
         _armoryScreen.SetActive(false);
     }
 
-    public static void LoadSpells(int[] spellsNumbers)
-    {
-        //Change
-    }
-
     public static void GetInProcess(string processName)
     {
-        _process = true;
         _processText = processName;
+        _process = true;
     }
 
     public static void GetOffProcess()
     {
         _processWindow.GetOffProcess();
+        _processScreen.SetActive(false);
     }
 }
