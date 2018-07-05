@@ -5,7 +5,7 @@ using System.Threading;
 public static class ClientTCP
 {
     private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-    private static byte[] _asyncBuffer = new byte[NetworkConstants.BUFFER_SIZE];
+    private static byte[] _asyncBuffer = new byte[NetworkConstants.TCP_BUFFER_SIZE];
     private static bool receiving = false;
     private static Timer _connectTimer;
     private static int _reconnectTry = 0;
@@ -23,12 +23,12 @@ public static class ClientTCP
     public static void Refresh()
     {
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        _asyncBuffer = new byte[NetworkConstants.BUFFER_SIZE];
+        _asyncBuffer = new byte[NetworkConstants.TCP_BUFFER_SIZE];
         receiving = false;
         _reconnectTry = 0;
     }
 
-    public static void Stop(int  pIndex)
+    public static void Stop(int pIndex)
     {
         receiving = false;
         if(socket.Connected)

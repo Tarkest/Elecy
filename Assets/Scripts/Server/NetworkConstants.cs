@@ -1,7 +1,9 @@
 ﻿
 public class NetworkConstants
 {
-    public static int BUFFER_SIZE = 1024;
+    public static int TCP_BUFFER_SIZE = 1024;
+
+    public static int UDP_BUFFER_SIZE = 1024;
 
     public static int RACES_NUMBER = 5;
 
@@ -20,7 +22,5 @@ public class NetworkConstants
     public static int ROOM_ARENA_NUMBER = 3;
 
     #endregion
-
-
 }
 

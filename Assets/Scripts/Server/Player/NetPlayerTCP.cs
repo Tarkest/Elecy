@@ -7,7 +7,7 @@ public static class NetPlayerTCP
     public static int[] level = new int[NetworkConstants.RACES_NUMBER];
     public static int[] rank = new int[NetworkConstants.RACES_NUMBER];
 
-    private static byte[] _buffer = new byte[NetworkConstants.BUFFER_SIZE];
+    private static byte[] _buffer = new byte[NetworkConstants.TCP_BUFFER_SIZE];
     private static int index;
     private static string ip;
     private static string nickname;

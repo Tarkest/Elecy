@@ -27,6 +27,11 @@ public enum ServerPackets
     SBuildSaved = 24,
 }
 
+public enum UDPServerPackets
+{
+    USConnectionOK = 1,
+}
+
 
 //get send from client to server
 public enum ClientPackets
@@ -65,4 +70,9 @@ public enum RoomPackets
     RInstantiate = 21,
     RSurrender = 24,
     RRoomLeave = 25,
+}
+
+public enum UDPRoomPackets
+{
+    URConnectionComplite = 1,
 }
