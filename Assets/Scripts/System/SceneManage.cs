@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneManage : MonoBehaviour {
@@ -15,9 +13,9 @@ public class SceneManage : MonoBehaviour {
         if (scene.buildIndex == NetworkConstants.ENTRANCE_NUMBER)
         {
             Network.state = Network.GameState.Entrance;
-            if(Network.isConnected)
+            if(Network.Connect == Network.ConnectStatus.Unconnected)
             {
-                ClientTCP.BeginReceive();
+                ClientTCP.Init();
             }
             try
             {

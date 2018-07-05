@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class MainLobbyExitWindow : MonoBehaviour {
 
-    private Text _thisTextComponent;
     public string thisText = "Do you really want exit to Desktop?";
 
     void Awake()
@@ -13,14 +12,14 @@ public class MainLobbyExitWindow : MonoBehaviour {
 
     public void Yes()
     {
-        MainLobbyController.windowsCount -= 1;
-        MainLobbyController.Exit();
+        MainLobbyController.DecreaseCount();
         Destroy(gameObject);
+        Network.QuitApp();
     }
 
     public void No()
     {
-        MainLobbyController.windowsCount -= 1;
+        MainLobbyController.DecreaseCount();
         Destroy(gameObject);
     }
 }

@@ -16,8 +16,8 @@ public class EntranceProcessWindow : MonoBehaviour
 
     public void SetText(string text)
     {
-        EntranceController.Increase();
         gameObject.transform.Find("Text").GetComponent<Text>().text = text;
+        EntranceController.Increase();
     }
 
     public void Destroy()

@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class MainLobbyLogOutWindow : MonoBehaviour {
 
-    private Text _thisTextComponent;
     public string thisText = "Do you really want to switch account";
 
     void Awake()
@@ -13,14 +12,14 @@ public class MainLobbyLogOutWindow : MonoBehaviour {
 
     public void Yes()
     {
-        MainLobbyController.windowsCount -= 1;
-        MainLobbyController.LogOut();
+        MainLobbyController.DecreaseCount();
         Destroy(gameObject);
+        Network.LogOut();
     }
 
     public void No()
     {
-        MainLobbyController.windowsCount -= 1;
+        MainLobbyController.DecreaseCount();
         Destroy(gameObject);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Threading;
 using UnityEngine.SceneManagement;
 
 public class Network : MonoBehaviour
@@ -9,19 +8,29 @@ public class Network : MonoBehaviour
     [System.NonSerialized]
     public int PORT = NetworkConstants.PORT;
 
-    public bool connectToLocal;
-
-    private static bool scenechange = false;
-
-    private static int scenenum;
-
-    public static bool isConnected { get; private set; }
-
-    public static bool quit = false;
-
+    public static ConnectStatus Connect;
     public static GameState state;
 
+    public bool connectToLocal;
+
+    private static bool scenechange;
+    private static int scenenum;
+    private static bool quit;
     private static GameObject _networkInstanse;
+
+    public enum GameState
+    {
+        Entrance = 0,
+        MainLobby = 1,
+        GameArena = 2,
+    }
+
+    public enum ConnectStatus
+    {
+        Unconnected = 0,
+        Connecting = 1,
+        Connected = 2,
+    }
 
     private void Awake()
     {
@@ -35,14 +44,7 @@ public class Network : MonoBehaviour
             Destroy(gameObject);
         }
         ClientHandlerNetworkData.InitializeNetworkPackages();
-        isConnected = false;
-    }
-
-    public enum GameState
-    {
-        Entrance = 0,
-        MainLobby = 1,
-        GameArena = 2,
+        Connect = ConnectStatus.Unconnected;
     }
 
     private void Start()
@@ -65,7 +67,7 @@ public class Network : MonoBehaviour
             scenechange = false;
             LoadScene(scenenum);
         }
-        if(!isConnected)
+        if(Connect == ConnectStatus.Connecting)
         {
             ClientTCP.Connect(IP_ADDRESS, PORT);
         }
@@ -75,42 +77,13 @@ public class Network : MonoBehaviour
             Application.Quit();
         }
     }
-    // SceneManger
-    private void LoadScene(int scenenum)
-    {
-        SceneManager.LoadScene(scenenum);
-    }
-
-    public static void ChangeConnectionStatus(bool connected)
-    {
-        isConnected = connected;
-    }
-
-    public static void QuitApp()
-    {
-        quit = true;
-    }
-
-    private void OnApplicationQuit()
-    {
-        ClientTCP.Close();
-        NetPlayerTCP.Close();
-        RoomTCP.Close();
-        try
-        {
-            BattleLogic.Timer.Dispose();
-        }
-        catch { }
-    }
 
     public static void LogOut()
     {
-        ClientTCP.Close();
         NetPlayerTCP.Close();
+        ClientTCP.Close();
         scenenum = 0;
         scenechange = true;
-        ClientTCP.Refresh();
-        ChangeConnectionStatus(false);
     }
 
     public static void EndBattle()
@@ -134,5 +107,28 @@ public class Network : MonoBehaviour
         scenenum = mapIndex;
         scenechange = true;
     }
+
+    public static void QuitApp()
+    {
+        quit = true;
+    }
+
+    private void LoadScene(int scenenum)
+    {
+        SceneManager.LoadScene(scenenum);
+    }
+
+    private void OnApplicationQuit()
+    {
+        ClientTCP.Close();
+        NetPlayerTCP.Close();
+        RoomTCP.Close();
+        try
+        {
+            BattleLogic.Timer.Dispose();
+        }
+        catch { }
+    }
+
 }
 
