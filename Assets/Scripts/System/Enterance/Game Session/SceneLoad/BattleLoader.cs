@@ -96,11 +96,13 @@ public class BattleLoader : MonoBehaviour
         {
             ObjectManager.SetStartTransform(positions[0], positions[1], rotations[0], rotations[1]);
             PlayerSpawn = true;
+            RoomTCP.SetPlayerIndex(1);
         }
         else
         {
             ObjectManager.SetStartTransform(positions[1], positions[0], rotations[1], rotations[0]);
             PlayerSpawn = true;
+            RoomTCP.SetPlayerIndex(2);
         }
 
     }

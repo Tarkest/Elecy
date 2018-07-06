@@ -7,14 +7,12 @@ public static class ClientTCP
     private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     private static byte[] _asyncBuffer = new byte[NetworkConstants.TCP_BUFFER_SIZE];
     private static bool receiving = false;
-    private static int _reconnectTry = 0;
 
     public static void Init()
     {
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        _asyncBuffer = new byte[NetworkConstants.BUFFER_SIZE];
+        _asyncBuffer = new byte[NetworkConstants.TCP_BUFFER_SIZE];
         receiving = false;
-        _reconnectTry = 0;
         Network.Connect = Network.ConnectStatus.Connecting;
     }
 
@@ -26,7 +24,6 @@ public static class ClientTCP
     public static void Close()
     {
         socket.Close();
-<<<<<<< HEAD
     }
 
     public static void Refresh()
@@ -34,10 +31,7 @@ public static class ClientTCP
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         _asyncBuffer = new byte[NetworkConstants.TCP_BUFFER_SIZE];
         receiving = false;
-        _reconnectTry = 0;
-=======
         Network.Connect = Network.ConnectStatus.Unconnected;
->>>>>>> master
     }
 
     public static void Stop(int pIndex)
@@ -79,7 +73,6 @@ public static class ClientTCP
     private static void ConnectCallBack(IAsyncResult ar)
     {
         socket.EndConnect(ar);
-        _reconnectTry = 0;
         ConnectReceive();
     }
 

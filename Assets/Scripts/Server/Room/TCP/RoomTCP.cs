@@ -11,6 +11,7 @@ public class RoomTCP : MonoBehaviour {
     private static bool receiving = false;
     private static byte[] _buffer = new byte[NetworkConstants.TCP_BUFFER_SIZE];
     private static Socket socket;
+    private static int _inRoomIndex;
 
     public static void InitRoom(int roomindex)
     {
@@ -20,7 +21,6 @@ public class RoomTCP : MonoBehaviour {
 
     public static void BeginReceive()
     {
-        //RoomSendData.SendConnectionOk(index);
         receiving = true;
         socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(RoomReceiveCallback), socket);
     }
@@ -45,7 +45,7 @@ public class RoomTCP : MonoBehaviour {
                 else
                 {
                     socket.Close();
-                    //EntranceController.serverInfo = "Room received nothing. Connection aborded...";
+                    DeveloperScreenController.AddInfo("Room received nothing. Connection aborded...", 1);
                 }
             }
 
@@ -57,16 +57,9 @@ public class RoomTCP : MonoBehaviour {
         }
     }
 
-
-    public static void InstantiateNetworkObject()
-    {
-        ///Here Comes the instantiation the object on the scene
-    }
-
     public static void Stop()
     {
         receiving = false;
-        // Send to server close
     }
 
     public static bool isConnected()
@@ -98,5 +91,15 @@ public class RoomTCP : MonoBehaviour {
         scale[1] = 5f;
 
         return scale;
+    }
+
+    public static void SetPlayerIndex(int index)
+    {
+        _inRoomIndex = index;
+    }
+
+    public static int GetPlayerIndex()
+    {
+        return _inRoomIndex;
     }
 }
