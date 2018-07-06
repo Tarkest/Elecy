@@ -127,6 +127,9 @@ public class RoomHandleNetworkInformation : MonoBehaviour {
             _spellsIndexes[i] = buffer.ReadInteger();
         }
         BattleLoader.LoadSpells(_spellsIndexes);
+        RoomUDP.Create();
+        RoomUDP.BeginReceive();
+        RoomUDPSendData.SendConnectionOk();
         buffer.Dispose();
     }
 

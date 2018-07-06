@@ -15,17 +15,16 @@ public class RoomUDP : MonoBehaviour
     private static int _port;
     
 
-    public static void Create(string IPAdress, int Port)
+    public static void Create()
     {
         _udpClient = new UdpClient();
-        _ipAdress = new IPEndPoint(IPAddress.Parse(IPAdress), Port);
+        _ipAdress = new IPEndPoint(IPAddress.Parse(Network.IP_ADDRESS), Network.PORT);
     }
 
     public static void BeginReceive()
     {
         _receiving = true;
         _udpClient.BeginReceive(new AsyncCallback(ReceiveCallback), null);
-        RoomUDPSendData.SendConnectionOk();
     }
 
     public static void Stop()

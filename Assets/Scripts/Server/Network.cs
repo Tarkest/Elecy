@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 public class Network : MonoBehaviour
 {
     [System.NonSerialized]
-    public string IP_ADDRESS;
+    public static string IP_ADDRESS;
     [System.NonSerialized]
-    public int PORT = NetworkConstants.PORT;
+    public static int PORT = NetworkConstants.PORT;
 
     public static ConnectStatus Connect;
     public static GameState state;
@@ -129,6 +129,5 @@ public class Network : MonoBehaviour
         }
         catch { }
     }
-
 }
 

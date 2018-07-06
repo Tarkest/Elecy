@@ -11,7 +11,7 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
     {
         _Packets = new Dictionary<int, Packet_>
         {
-
+            {(int)UDPServerPackets.USConnectionOK, HandleConnectionOk},
         };
     }
 
@@ -27,5 +27,16 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         {
             Packet.Invoke(data);
         }
+    }
+
+    public static void HandleConnectionOk(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string msg = buffer.ReadString();
+        buffer.Dispose();
+        DeveloperScreenController.AddInfo(msg, 1);
+        Debug.Log(msg);
     }
 }
