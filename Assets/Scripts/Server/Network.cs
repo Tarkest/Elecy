@@ -7,6 +7,7 @@ public class Network : MonoBehaviour
     public static string IP_ADDRESS;
     [System.NonSerialized]
     public static int PORT = NetworkConstants.PORT;
+    public static int UDP_PORT = NetworkConstants.UDP_PORT;
 
     public static ConnectStatus Connect;
     public static GameState state;

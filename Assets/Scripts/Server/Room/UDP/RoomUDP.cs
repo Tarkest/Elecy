@@ -18,7 +18,7 @@ public class RoomUDP : MonoBehaviour
     public static void Create()
     {
         _udpClient = new UdpClient();
-        _ipAdress = new IPEndPoint(IPAddress.Parse(Network.IP_ADDRESS), Network.PORT);
+        _ipAdress = new IPEndPoint(IPAddress.Parse(Network.IP_ADDRESS), Network.UDP_PORT);
     }
 
     public static void BeginReceive()
