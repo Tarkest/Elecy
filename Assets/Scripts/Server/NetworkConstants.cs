@@ -11,7 +11,7 @@ public class NetworkConstants
 
     public static int UDP_PORT = 24986;
 
-    public static string LOCAL_IP_ADDRESS = "127.0.0.1";
+    public static string LOCAL_IP_ADDRESS = "178.150.164.139";
 
     public static string IP_ADDRESS = "77.122.16.14";
 

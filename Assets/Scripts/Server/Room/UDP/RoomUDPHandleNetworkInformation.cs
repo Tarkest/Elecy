@@ -34,9 +34,7 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        string msg = buffer.ReadString();
         buffer.Dispose();
-        DeveloperScreenController.AddInfo(msg, 1);
-        Debug.Log(msg);
+        DeveloperScreenController.AddInfo("UDP Connection...OK", 1);
     }
 }

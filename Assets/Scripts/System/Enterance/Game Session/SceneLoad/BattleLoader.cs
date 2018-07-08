@@ -58,14 +58,15 @@ public class BattleLoader : MonoBehaviour
 
         if(PlayerSpawn)
         {
+            DeveloperScreenController.AddInfo("Begin Load: Players", 1);
             PlayerSpawn = false;
             GameObject Player = Instantiate(Resources.Load("Players/TestPlayer"), ObjectManager.playerStartPosition, ObjectManager.playerStartRotation) as GameObject;
             GameObject EnemyPlayer = Instantiate(Resources.Load("Players/Dummy"), ObjectManager.enemyStartPosition, ObjectManager.enemyStartRotation) as GameObject;
             Player.GetComponent<PlayerStats>().SetStats(_maxHP, _maxSN, _moveSpeed, _attackSpeed, _basicDefence, _fireDefence, _earthDefence, _windDefence, _waterDefence);
             ObjectManager.PlayersLoaded(Player, EnemyPlayer);
             ThisPlayerProgressChange(0.25f);
-            DeveloperScreenController.AddInfo("Player pos: " + ObjectManager.playerStartPosition.x.ToString() + ", " + ObjectManager.playerStartPosition.y.ToString() + ", " + ObjectManager.playerStartPosition.z.ToString(), 1);
-            DeveloperScreenController.AddInfo("Enemy pos: " + ObjectManager.enemyStartPosition.x.ToString() + ", " + ObjectManager.enemyStartPosition.y.ToString() + ", " + ObjectManager.enemyStartPosition.z.ToString(), 1);
+            DeveloperScreenController.AddInfo("Player Load...OK", 1);
+            DeveloperScreenController.AddInfo("Enemy Load...OK", 1);
         }
 
         if(RockSpawn)
@@ -127,6 +128,8 @@ public class BattleLoader : MonoBehaviour
 
     private static void LoadRocks()
     {
+        DeveloperScreenController.AddInfo("Begin Load: Rocks", 1);
+        DeveloperScreenController.AddInfo("Rock Count: " + count.ToString(), 1);
         for (int i = 0; i < count; i++)
         {
             GameObject NewRock = Resources.Load("BattleArena/Rock") as GameObject;
@@ -137,14 +140,16 @@ public class BattleLoader : MonoBehaviour
             NewRockNet.SetIndex(indexes[i]);
             NewRockNet.SetTransform(pos, rot);
             ObjectManager.staticProps.Add(NewRockOnField);
-            DeveloperScreenController.AddInfo("Rock"+i.ToString() + "\n" + " Pos: "+ pos.x.ToString()+", "+ pos.y.ToString() + ", " + pos.z.ToString() + "\n" + " Rot: " + rot.x.ToString() + ", " + rot.y.ToString() + ", " + rot.z.ToString(), 3);
         }
+        DeveloperScreenController.AddInfo("Rock Load...OK", 1);
         RoomSendData.SendRocksSpawned();
         ThisPlayerProgressChange(0.5f);
     }
 
     private static void LoadTrees()
     {
+        DeveloperScreenController.AddInfo("Begin Load: Trees", 1);
+        DeveloperScreenController.AddInfo("Trees Count: " + count.ToString(), 1);
         for (int i = 0; i < count; i++)
         {
             GameObject NewTree = Resources.Load("BattleArena/Tree") as GameObject;
@@ -155,20 +160,23 @@ public class BattleLoader : MonoBehaviour
             NewTreeNet.SetIndex(indexes[i]);
             NewTreeNet.SetTransform(pos, rot);
             ObjectManager.staticProps.Add(NewTreeOnField);
-            DeveloperScreenController.AddInfo("Tree" + i.ToString() + "\n" + " Pos: " + pos.x.ToString() + ", " + pos.y.ToString() + ", " + pos.z.ToString() + "\n" + " Rot: " + rot.x.ToString() + ", " + rot.y.ToString() + ", " + rot.z.ToString(), 3);
         }
+        DeveloperScreenController.AddInfo("Trees Load...OK", 1);
         RoomSendData.SendTreesSpawned();
         ThisPlayerProgressChange(0.75f);
     }
 
     public static void LoadSpells(int[] SpellsIndexes)
     {
+        DeveloperScreenController.AddInfo("Begin Load: Spells", 1);
+        DeveloperScreenController.AddInfo("Speels Count: " + SpellsIndexes.Length.ToString(), 1);
         ObjectManager.LoadSpells(SpellsIndexes);
         DeveloperScreenController.AddInfo("Spells: ", 1);
         for(int i = 0; i < SpellsIndexes.Length; i++)
         {
             DeveloperScreenController.AddInfo(i.ToString()+ ": "+ SpellsIndexes[i].ToString(), 1);
         }
+        DeveloperScreenController.AddInfo("Spells Load...OK", 1);
     }
 
     public static void EnemyProgressChange(float progress)
