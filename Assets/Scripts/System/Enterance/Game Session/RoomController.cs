@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RoomController : MonoBehaviour {
@@ -12,7 +10,6 @@ public class RoomController : MonoBehaviour {
     private static GameObject _button;
     private static Text _text;
     private static Text _winnerText;
-    private static Text _testText;
     private static GameObject _statisticScreen;
     private static GameObject _devScreen;
 
@@ -21,10 +18,6 @@ public class RoomController : MonoBehaviour {
     private static bool _statisticView = false;
     private static bool _won;
     private bool _devScreenIsOn;
-    private static Timer TestTimer;
-    private static int packetsCount = 0;
-
-    private static List<int> everySecond;
 
     void Awake()
     {
@@ -37,7 +30,6 @@ public class RoomController : MonoBehaviour {
         _statisticScreen = GameObject.Find("StatisticScreen");
         _winnerText = GameObject.Find("WinnerText").GetComponent<Text>();
         _devScreen = GameObject.Find("DeveloperScreen");
-        _testText = GameObject.Find("TestText").GetComponent<Text>();
     }
 
     void Start()
@@ -97,8 +89,6 @@ public class RoomController : MonoBehaviour {
                 _devScreen.SetActive(true);
             }
         }
-
-        _testText.text = packetsCount.ToString() + " / 10";
     }
 
     public void Resume()
@@ -158,25 +148,5 @@ public class RoomController : MonoBehaviour {
         _splashScreen.SetActive(false);
         _statisticScreen.SetActive(false);
         _popUpScreen.SetActive(false);
-    }
-
-    public static void AddPacket(int i)
-    {
-        packetsCount += i;
-    }
-
-    public static void StartTest()
-    {
-        TestTimer = new Timer(TestCallback, null, 0, 1000);
-    }
-
-    private static void TestCallback(object o)
-    {
-        everySecond.Add(packetsCount);
-        packetsCount = 0;
-        foreach(int i in everySecond)
-        {
-            DeveloperScreenController.AddInfo(i.ToString() + " / 10", 1);
-        }
     }
 }

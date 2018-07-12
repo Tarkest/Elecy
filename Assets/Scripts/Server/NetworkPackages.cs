@@ -30,7 +30,6 @@ public enum ServerPackets
 public enum UDPServerPackets
 {
     USConnectionOK = 1,
-    USTest = 2,
 }
 
 
