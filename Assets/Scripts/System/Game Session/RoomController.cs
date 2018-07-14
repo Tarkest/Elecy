@@ -25,7 +25,7 @@ public class RoomController : MonoBehaviour {
     private static int packetsCount = 0;
     private static int testTryCount = 0;
 
-    private static List<int> everySecond;
+    private static List<int> everySecond = new List<int>();
 
     void Awake()
     {
@@ -98,7 +98,7 @@ public class RoomController : MonoBehaviour {
                 _devScreen.SetActive(true);
             }
         }
-        _testText.text = packetsCount.ToString() + " / 10";
+        _testText.text = packetsCount.ToString() + " / 2";
     }
 
     public void Resume()
@@ -163,7 +163,7 @@ public class RoomController : MonoBehaviour {
 
     public static void AddPacket(int i)
     {
-        packetsCount += i;
+        packetsCount += 1;
     }
 
     public static void StartTest()
@@ -173,11 +173,12 @@ public class RoomController : MonoBehaviour {
 
     private static void TestCallback(object o)
     {
-        everySecond.Add(packetsCount);
+        DeveloperScreenController.AddInfo(packetsCount + " / 2", 1);
         packetsCount = 0;
-        foreach (int i in everySecond)
-        {
-            DeveloperScreenController.AddInfo(i.ToString() + " / 10", 1);
-        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        TestTimer.Dispose();
     }
 }

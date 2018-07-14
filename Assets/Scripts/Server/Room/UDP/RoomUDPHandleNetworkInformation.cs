@@ -37,6 +37,7 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         buffer.ReadInteger();
         buffer.Dispose();
         DeveloperScreenController.AddInfo("UDP Connection...OK", 1);
+        RoomController.StartTest();
     }
 
 
@@ -47,6 +48,5 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         int packet = buffer.ReadInteger();
         buffer.Dispose();
         RoomController.AddPacket(packet);
-        RoomController.StartTest();
     }
 }
