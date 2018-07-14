@@ -46,6 +46,6 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         buffer.WriteBytes(data);
         int packet = buffer.ReadInteger();
         buffer.Dispose();
-
+        RoomController.AddPacket(packet);
     }
 }
