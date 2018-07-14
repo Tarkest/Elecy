@@ -13,7 +13,7 @@ public class NetworkConstants
 
     public static string LOCAL_IP_ADDRESS = "178.150.164.139";
 
-    public static string IP_ADDRESS = "77.122.16.14";
+    public static string IP_ADDRESS = "77.122.21.147";
 
     public static int UPDATE_RATE = 40;
 
