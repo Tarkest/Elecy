@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomSendData : MonoBehaviour {
 
-    public static void SendConnectionOk(int roomindex)
+    public static void SendConnectionOk()
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RConnectionComplite);

@@ -30,7 +30,7 @@ public class NetPlayerSendData
         buffer.Dispose();
     }
 
-    public static void SendSearching()
+    public static void SendSearching() // unusable
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)NetPlayerPackets.PSearch);
@@ -55,7 +55,7 @@ public class NetPlayerSendData
         buffer.Dispose();
     }
 
-    public static void SendAlert(string alert)
+    public static void SendAlert(string alert) // ???
     {
 
     }

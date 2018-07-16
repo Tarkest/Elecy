@@ -34,11 +34,11 @@ public static class ClientTCP
         Network.Connect = Network.ConnectStatus.Unconnected;
     }
 
-    public static void Stop(int pIndex)
+    public static void Stop()
     {
         receiving = false;
-        if(socket.Connected)
-            ClientSendData.SendClose(pIndex);
+        //if(socket.Connected)
+        //    ClientSendData.SendClose(pIndex);
     }
 
     public static bool IsConnected()

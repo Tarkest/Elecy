@@ -6,10 +6,10 @@ public class RoomUDPSendData : MonoBehaviour {
 
     public static void SendConnectionOk()
     {
-        PacketBuffer buffer = new PacketBuffer();
+        PacketBuffer buffer = new PacketBuffer(); 
         buffer.WriteInteger((int)UDPRoomPackets.URConnectionComplite);
-        buffer.WriteInteger(RoomTCP.GetPlayerIndex());
-        buffer.WriteInteger(RoomTCP.Getindex());
+        //buffer.WriteInteger(RoomTCP.GetPlayerIndex()); // unusable
+        //buffer.WriteInteger(RoomTCP.Getindex());
         RoomUDP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

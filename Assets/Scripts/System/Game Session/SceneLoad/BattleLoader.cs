@@ -41,7 +41,7 @@ public class BattleLoader : MonoBehaviour
 
     private void Start()
     {
-        RoomSendData.SendConnectionOk(RoomTCP.Getindex());
+        RoomSendData.SendConnectionOk();
     }
 
     private void Update()

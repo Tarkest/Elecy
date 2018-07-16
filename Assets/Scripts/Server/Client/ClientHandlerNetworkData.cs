@@ -54,7 +54,6 @@ public class ClientHandlerNetworkData
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        int playerIndex = buffer.ReadInteger();
         string nickname = buffer.ReadString();
         int[][] accountData = new int[2][];
         int[] levels = new int[5];
@@ -67,8 +66,8 @@ public class ClientHandlerNetworkData
         accountData[1] = ranks;
         buffer.Dispose();
         EntranceController.GetOffProcess();
-        ClientTCP.Stop(playerIndex);
-        Network.Login(playerIndex, nickname, accountData);
+        ClientTCP.Stop();
+        Network.Login(1, nickname, accountData);
     }
 
     private static void HandleServerAlert(byte[] data)

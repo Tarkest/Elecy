@@ -101,10 +101,10 @@ public class Network : MonoBehaviour
         scenechange = true;
     }
 
-    public static void InBattle(int roomindex, int mapIndex)
+    public static void InBattle(int mapIndex)
     {
         RoomHandleNetworkInformation.InitializeNetworkPackages();
-        RoomTCP.InitRoom(roomindex);
+        RoomTCP.InitRoom();
         scenenum = mapIndex;
         scenechange = true;
     }

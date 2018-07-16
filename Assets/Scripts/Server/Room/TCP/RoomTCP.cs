@@ -7,16 +7,14 @@ using System;
 
 public class RoomTCP : MonoBehaviour {
 
-    private static int index;
     private static bool receiving = false;
     private static byte[] _buffer = new byte[NetworkConstants.TCP_BUFFER_SIZE];
     private static Socket socket;
     private static int _inRoomIndex;
 
-    public static void InitRoom(int roomindex)
+    public static void InitRoom()
     {
         socket = NetPlayerTCP.GetSocket();
-        index = roomindex;
     }
 
     public static void BeginReceive()
@@ -77,11 +75,6 @@ public class RoomTCP : MonoBehaviour {
     public static void SendData(byte[] data)
     {
         socket.Send(data);
-    }
-
-    public static int Getindex()
-    {
-        return index;
     }
 
     public static float[] GetBattlegroundScale()

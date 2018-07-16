@@ -83,11 +83,10 @@ public class NetPlayerHandleNetworkData
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        int roomindex = buffer.ReadInteger();
         int mapIndex = buffer.ReadInteger();
         buffer.Dispose();
         NetPlayerTCP.Stop();
-        Network.InBattle(roomindex, mapIndex);
+        Network.InBattle(mapIndex);
     }
 
     public static void HandleBuild(byte[] data)
