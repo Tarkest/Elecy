@@ -3,28 +3,24 @@ using UnityEngine.SceneManagement;
 
 public class Network : MonoBehaviour
 {
-    [System.NonSerialized]
+
+    #region Variables
+
     public static string IP_ADDRESS;
-    [System.NonSerialized]
     public static int PORT = NetworkConstants.PORT;
     public static int UDP_PORT = NetworkConstants.UDP_PORT;
-
     public static ConnectStatus Connect;
-    public static GameState state;
 
     public bool connectToLocal;
 
     private static bool scenechange;
-    private static int scenenum;
     private static bool quit;
+    private static int scenenum;
     private static GameObject _networkInstanse;
 
-    public enum GameState
-    {
-        Entrance = 0,
-        MainLobby = 1,
-        GameArena = 2,
-    }
+    #endregion
+
+    #region Enum
 
     public enum ConnectStatus
     {
@@ -32,6 +28,10 @@ public class Network : MonoBehaviour
         Connecting = 1,
         Connected = 2,
     }
+
+    #endregion
+
+    #region Unity's
 
     private void Awake()
     {
@@ -44,7 +44,6 @@ public class Network : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        ClientHandlerNetworkData.InitializeNetworkPackages();
         Connect = ConnectStatus.Unconnected;
     }
 
@@ -58,7 +57,8 @@ public class Network : MonoBehaviour
         {
             IP_ADDRESS = NetworkConstants.IP_ADDRESS;
         }
-        EntranceController.GetInProcess("Connecting...");
+        HandleDataTCP.InitializeNetworkPackages();
+        ClientTCP.Init();
     }
 
     private void Update()
@@ -79,39 +79,36 @@ public class Network : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Transitions
+
+    public static void Login(int playerIndex, string nickname, int[][] accountData)
+    {
+        ClientTCP.Login(nickname, accountData);
+        scenenum = 1;
+        scenechange = true;
+    }
+
     public static void LogOut()
     {
-        NetPlayerTCP.Close();
         ClientTCP.Close();
         scenenum = 0;
         scenechange = true;
     }
 
-    public static void EndBattle()
-    {
-        scenenum = 1;
-        scenechange = true;
-    }
-
-    public static void Login(int playerIndex, string nickname, int[][] accountData)
-    {
-        NetPlayerTCP.InitPlayer(playerIndex, nickname, accountData);
-        NetPlayerHandleNetworkData.InitializeNetworkPackages();
-        scenenum = 1;
-        scenechange = true;
-    }
-
     public static void InBattle(int mapIndex)
     {
-        RoomHandleNetworkInformation.InitializeNetworkPackages();
-        RoomTCP.InitRoom();
+        ClientTCP.EnterRoom();
         scenenum = mapIndex;
         scenechange = true;
     }
 
-    public static void QuitApp()
+    public static void EndBattle()
     {
-        quit = true;
+        ClientTCP.LeaveRoom();
+        scenenum = 1;
+        scenechange = true;
     }
 
     private void LoadScene(int scenenum)
@@ -119,16 +116,26 @@ public class Network : MonoBehaviour
         SceneManager.LoadScene(scenenum);
     }
 
+    #endregion
+
+    #region Quit
+
+    public static void QuitApp()
+    {
+        quit = true;
+    }
+
     private void OnApplicationQuit()
     {
         ClientTCP.Close();
-        NetPlayerTCP.Close();
-        RoomTCP.Close();
         try
         {
             BattleLogic.Timer.Dispose();
         }
         catch { }
     }
+
+    #endregion
+
 }
 

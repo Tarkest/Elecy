@@ -126,7 +126,7 @@ public class RoomController : MonoBehaviour {
     {
         if(answear)
         {
-            RoomSendData.SendSurrender();
+            SendDataTCP.SendSurrender();
             _splashScreen.SetActive(false);
             _inGameMenu.SetActive(false);
             _popUpScreen.SetActive(false);
@@ -141,7 +141,7 @@ public class RoomController : MonoBehaviour {
     public static void ViewStatisticScreen(string Nickname)
     {
         _statisticView = true;
-        if (NetPlayerTCP.GetNickname() == Nickname)
+        if (ClientTCP.nickname == Nickname)
         {
             _won = true;
         }
@@ -153,7 +153,7 @@ public class RoomController : MonoBehaviour {
 
     public void LeaveRoom()
     {
-        RoomSendData.SendRoomLeave();
+        SendDataTCP.SendRoomLeave();
         _inGameMenu.SetActive(false);
         _splashScreen.SetActive(false);
         _statisticScreen.SetActive(false);

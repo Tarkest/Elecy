@@ -64,7 +64,7 @@ public class ObjectManager : MonoBehaviour {
         playerStats = Player.GetComponent<PlayerStats>();
         EnemyPlayer = enemy;
         enemyMovementComponent = EnemyPlayer.GetComponent<EnemyMovement>();
-        RoomSendData.SendPlayerSpawned();
+        SendDataTCP.SendPlayerSpawned();
     }
 
     public static void LoadSpells(int[] spellsNumbers)
@@ -75,7 +75,7 @@ public class ObjectManager : MonoBehaviour {
             //loadedSpells[Array.IndexOf(spellsNumbers, i)] = Resources.Load("Spells/" + spellsNumbers[Array.IndexOf(spellsNumbers, i)]) as GameObject; 
         }
         Spells = spellsNumbers;
-        RoomSendData.SendLoadComplite();
+        SendDataTCP.SendLoadComplite();
     }
 
     public static void SetStartTransform(float[] pos1, float[] pos2, float[] rot1, float[] rot2)

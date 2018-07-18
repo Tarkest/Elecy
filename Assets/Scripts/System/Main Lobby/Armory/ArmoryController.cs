@@ -15,11 +15,6 @@ public class ArmoryController : MonoBehaviour {
         }
     }
 
-    void Update ()
-    {
-		
-	}
-
     public static void SetSkills(int[] Spells)
     {
         for(int i = 0; i < IgnisButtons.Length; i++)
@@ -35,6 +30,7 @@ public class ArmoryController : MonoBehaviour {
         {
             build[i] = IgnisButtons[i].spellIndex;
         }
-        NetPlayerSendData.SendSaveSkillBuild(build, "Ignis");
+        MainLobbyController.GetInProcess("Saving...");
+        SendDataTCP.SendSaveSkillBuild(build, "Ignis");
     }
 }

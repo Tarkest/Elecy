@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class EntranceController : MonoBehaviour {
+public class EntranceController : MonoBehaviour
+{
+
+    #region Variables
 
     private string _name;
     private string _password;
@@ -17,6 +20,10 @@ public class EntranceController : MonoBehaviour {
     private static bool _process;
     private static string _errorText;
     private static string _processText;
+
+    #endregion
+
+    #region Unity's
 
     void Start()
     {
@@ -60,6 +67,10 @@ public class EntranceController : MonoBehaviour {
         }
     }
 
+    #endregion
+
+    #region Panels
+
     public static void Increase()
     {
         tablesCount++;
@@ -73,34 +84,10 @@ public class EntranceController : MonoBehaviour {
         }
     }
 
-    public void LoginTry()
-    {
-        ClientSendData.SendLogin(_name, _password);
-        GetInProcess("Login in...");
-    }
-
-    public void RegisterTry()
-    {
-        if(_password.Length >= 8)
-        {
-            ClientSendData.SendRegister(_name, _password, _nickname);
-            GetInProcess("Registration...");
-        }
-        else
-        {
-            GetError("Password must be at least 8 character long");
-        }
-    }
-
     public static void GetError(string errorText)
     {
         _errorText = errorText;
         _error = true;
-    }
-
-    public void Exit()
-    {
-        _exit = true;
     }
 
     public static void GetInProcess(string processText)
@@ -114,4 +101,31 @@ public class EntranceController : MonoBehaviour {
         if(_processWindow != null)
             _processWindow.Destroy();
     }
+
+    #endregion
+
+    public void LoginTry()
+    {
+        SendDataTCP.SendLogin(_name, _password);
+        GetInProcess("Login in...");
+    }
+
+    public void RegisterTry()
+    {
+        if(_password.Length >= 8)
+        {
+            SendDataTCP.SendRegister(_name, _password, _nickname);
+            GetInProcess("Registration...");
+        }
+        else
+        {
+            GetError("Password must be at least 8 character long");
+        }
+    }
+
+    public void Exit()
+    {
+        _exit = true;
+    }
+
 }

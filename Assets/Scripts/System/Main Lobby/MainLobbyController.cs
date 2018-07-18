@@ -143,13 +143,13 @@ public class MainLobbyController : MonoBehaviour
         { 
             searchTimeCounter = 0;
             isSearching = true;
-            NetPlayerSendData.SendQueueStart(matchType, "Ignis");
+            SendDataTCP.SendQueueStart(matchType, "Ignis");
         }
         else if(isSearching)
         {
             isSearching = false;
             _timeCounter.GetComponent<Text>().text = "";
-            NetPlayerSendData.SendQueueStop();
+            SendDataTCP.SendQueueStop();
         }
     }
 
@@ -184,7 +184,7 @@ public class MainLobbyController : MonoBehaviour
     public void ArmoryPressed()
     {
         _armoryScreen.SetActive(true);
-        NetPlayerSendData.SendGetSkillBuild("Ignis");
+        SendDataTCP.SendGetSkillBuild("Ignis");
     }
 
     public void ArmorySave()

@@ -39,11 +39,6 @@ public class BattleLoader : MonoBehaviour
         _enemyLoadProgress = _loadScreen.transform.Find("EnemyPlayerLoad").GetComponent<Slider>();
     }
 
-    private void Start()
-    {
-        RoomSendData.SendConnectionOk();
-    }
-
     private void Update()
     {
         if (loaded)
@@ -93,17 +88,15 @@ public class BattleLoader : MonoBehaviour
         _earthDefence = 5;
         _windDefence = 5;
         _waterDefence = 5;
-        if (nickname1 == NetPlayerTCP.GetNickname())
+        if (nickname1 == ClientTCP.nickname)
         {
             ObjectManager.SetStartTransform(positions[0], positions[1], rotations[0], rotations[1]);
             PlayerSpawn = true;
-            RoomTCP.SetPlayerIndex(1);
         }
         else
         {
             ObjectManager.SetStartTransform(positions[1], positions[0], rotations[1], rotations[0]);
             PlayerSpawn = true;
-            RoomTCP.SetPlayerIndex(2);
         }
 
     }
@@ -142,7 +135,7 @@ public class BattleLoader : MonoBehaviour
             ObjectManager.staticProps.Add(NewRockOnField);
         }
         DeveloperScreenController.AddInfo("Rock Load...OK", 1);
-        RoomSendData.SendRocksSpawned();
+        SendDataTCP.SendRocksSpawned();
         ThisPlayerProgressChange(0.5f);
     }
 
@@ -162,7 +155,7 @@ public class BattleLoader : MonoBehaviour
             ObjectManager.staticProps.Add(NewTreeOnField);
         }
         DeveloperScreenController.AddInfo("Trees Load...OK", 1);
-        RoomSendData.SendTreesSpawned();
+        SendDataTCP.SendTreesSpawned();
         ThisPlayerProgressChange(0.75f);
     }
 

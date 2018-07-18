@@ -10,6 +10,7 @@ public class PacketBuffer : IDisposable {
     bool _buffUpdate = false;
 
     #region Public Commands
+
     public PacketBuffer()
     {
         _bufferList = new List<byte>();

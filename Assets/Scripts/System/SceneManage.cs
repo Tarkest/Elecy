@@ -1,18 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManage : MonoBehaviour {
+public class SceneManage : MonoBehaviour
+{
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    //Addenterance
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex == NetworkConstants.ENTRANCE_NUMBER)
         {
-            Network.state = Network.GameState.Entrance;
             if(Network.Connect == Network.ConnectStatus.Unconnected)
             {
                 ClientTCP.Init();
@@ -25,8 +30,6 @@ public class SceneManage : MonoBehaviour {
         }
         else if (scene.buildIndex == NetworkConstants.MAIN_LOBBY_NUMBER)
         {
-            Network.state = Network.GameState.MainLobby;
-            NetPlayerTCP.BeginReceive();
             try
             {
                 SceneManager.UnloadSceneAsync(NetworkConstants.ENTRANCE_NUMBER);
@@ -38,15 +41,6 @@ public class SceneManage : MonoBehaviour {
             }
             catch { }
         }
-        else
-        { 
-            Network.state = Network.GameState.GameArena;
-            RoomTCP.BeginReceive();
-        }
     }
 
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
 }
