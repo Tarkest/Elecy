@@ -20,7 +20,7 @@ public class CameraFollow1 : MonoBehaviour {
     {
         if (target == null)
         {
-            target = ObjectManager.Player.transform;
+            target = ObjectManagerOld.Player.transform;
         }
         else
         {

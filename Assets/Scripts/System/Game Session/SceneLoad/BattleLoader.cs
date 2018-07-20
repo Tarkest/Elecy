@@ -55,10 +55,10 @@ public class BattleLoader : MonoBehaviour
         {
             DeveloperScreenController.AddInfo("Begin Load: Players", 1);
             PlayerSpawn = false;
-            GameObject Player = Instantiate(Resources.Load("Players/TestPlayer"), ObjectManager.playerStartPosition, ObjectManager.playerStartRotation) as GameObject;
-            GameObject EnemyPlayer = Instantiate(Resources.Load("Players/Dummy"), ObjectManager.enemyStartPosition, ObjectManager.enemyStartRotation) as GameObject;
+            GameObject Player = Instantiate(Resources.Load("Players/TestPlayer"), ObjectManagerOld.playerStartPosition, ObjectManagerOld.playerStartRotation) as GameObject;
+            GameObject EnemyPlayer = Instantiate(Resources.Load("Players/Dummy"), ObjectManagerOld.enemyStartPosition, ObjectManagerOld.enemyStartRotation) as GameObject;
             Player.GetComponent<PlayerStats>().SetStats(_maxHP, _maxSN, _moveSpeed, _attackSpeed, _basicDefence, _fireDefence, _earthDefence, _windDefence, _waterDefence);
-            ObjectManager.PlayersLoaded(Player, EnemyPlayer);
+            ObjectManagerOld.PlayersLoaded(Player, EnemyPlayer);
             ThisPlayerProgressChange(0.25f);
             DeveloperScreenController.AddInfo("Player Load...OK", 1);
             DeveloperScreenController.AddInfo("Enemy Load...OK", 1);
@@ -90,12 +90,12 @@ public class BattleLoader : MonoBehaviour
         _waterDefence = 5;
         if (nickname1 == ClientTCP.nickname)
         {
-            ObjectManager.SetStartTransform(positions[0], positions[1], rotations[0], rotations[1]);
+            ObjectManagerOld.SetStartTransform(positions[0], positions[1], rotations[0], rotations[1]);
             PlayerSpawn = true;
         }
         else
         {
-            ObjectManager.SetStartTransform(positions[1], positions[0], rotations[1], rotations[0]);
+            ObjectManagerOld.SetStartTransform(positions[1], positions[0], rotations[1], rotations[0]);
             PlayerSpawn = true;
         }
 
@@ -132,7 +132,7 @@ public class BattleLoader : MonoBehaviour
             NetworkGameObject NewRockNet = NewRockOnField.AddComponent<NetworkGameObject>();
             NewRockNet.SetIndex(indexes[i]);
             NewRockNet.SetTransform(pos, rot);
-            ObjectManager.staticProps.Add(NewRockOnField);
+            ObjectManagerOld.staticProps.Add(NewRockOnField);
         }
         DeveloperScreenController.AddInfo("Rock Load...OK", 1);
         SendDataTCP.SendRocksSpawned();
@@ -152,7 +152,7 @@ public class BattleLoader : MonoBehaviour
             NetworkGameObject NewTreeNet = NewTreeOnField.AddComponent<NetworkGameObject>();
             NewTreeNet.SetIndex(indexes[i]);
             NewTreeNet.SetTransform(pos, rot);
-            ObjectManager.staticProps.Add(NewTreeOnField);
+            ObjectManagerOld.staticProps.Add(NewTreeOnField);
         }
         DeveloperScreenController.AddInfo("Trees Load...OK", 1);
         SendDataTCP.SendTreesSpawned();
@@ -163,7 +163,7 @@ public class BattleLoader : MonoBehaviour
     {
         DeveloperScreenController.AddInfo("Begin Load: Spells", 1);
         DeveloperScreenController.AddInfo("Speels Count: " + SpellsIndexes.Length.ToString(), 1);
-        ObjectManager.LoadSpells(SpellsIndexes);
+        ObjectManagerOld.LoadSpells(SpellsIndexes);
         DeveloperScreenController.AddInfo("Spells: ", 1);
         for(int i = 0; i < SpellsIndexes.Length; i++)
         {

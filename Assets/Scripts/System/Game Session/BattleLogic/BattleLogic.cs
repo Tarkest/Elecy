@@ -22,7 +22,7 @@ public class BattleLogic : MonoBehaviour {
     public static void EndBattle(string Nickname)
     {
         //Timer.Dispose();
-        ObjectManager.playerStats.battleIsOn = false;
+        ObjectManagerOld.playerStats.battleIsOn = false;
         RoomController.battleIsOn = false;
         RoomController.ViewStatisticScreen(Nickname);
     }

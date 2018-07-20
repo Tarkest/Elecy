@@ -14,8 +14,8 @@ public class EnemyMovement : MonoBehaviour {
 
     void Start ()
     {
-        _serverPos = ObjectManager.enemyPos;
-        _serverRot = ObjectManager.enemyRot;
+        _serverPos = ObjectManagerOld.enemyPos;
+        _serverRot = ObjectManagerOld.enemyRot;
 	}
 	
 	void Update ()
@@ -23,12 +23,12 @@ public class EnemyMovement : MonoBehaviour {
         _positionDist = Vector3.Distance(gameObject.transform.position, _serverPos);
         if(_positionDist > 0.1f && _positionDist < 10.5f)
         {
-            _enemyRigidbody.MovePosition(Vector3.Lerp(ObjectManager.enemyPos, _serverPos, 0.1f));
+            _enemyRigidbody.MovePosition(Vector3.Lerp(ObjectManagerOld.enemyPos, _serverPos, 0.1f));
         } else
         {
             _enemyRigidbody.MovePosition(_serverPos);
         }
-        _enemyRigidbody.MoveRotation(Quaternion.Lerp(ObjectManager.enemyRot, _serverRot, 0.1f));
+        _enemyRigidbody.MoveRotation(Quaternion.Lerp(ObjectManagerOld.enemyRot, _serverRot, 0.1f));
 	}
 
     public void SetServerPosition(float[]Position, float[]Rotation)
