@@ -6,36 +6,35 @@ public class ObjectManager : MonoBehaviour {
 
     #region Prefabs
 
-    public GameObject bigTreesPrefab;
-    public GameObject middleTreesPrefab;
-    public GameObject smallTreesPrefab;
+    public GameObject[] bigTreesPrefab;
+    public GameObject[] middleTreesPrefab;
+    public GameObject[] smallTreesPrefab;
 
-    public GameObject bigRocksPrefab;
-    public GameObject middleRocksPrefab;
-    public GameObject smallRocksPrefab;
+    public GameObject[] bigRocksPrefab;
+    public GameObject[] middleRocksPrefab;
+    public GameObject[] smallRocksPrefab;
 
     #endregion
 
     #region ObjectsContainer
 
-    [System.NonSerialized]
-    public GameObject[] players;
+    public static GameObject[] players;
 
-    public List<GameObject> dynamicPropList = new List<GameObject>();
+    public static List<GameObject> dynamicPropList = new List<GameObject>();
 
-    public List<GameObject> staticPropsList = new List<GameObject>();
+    public static List<GameObject> staticPropsList = new List<GameObject>();
 
     #endregion
 
     #region Variables
 
-    public bool _isRocksExist;
-    public bool _isTreesExist;
+    public int treesCount;
+    public int rocksCount;
 
     #endregion
 
     void Start()
     {
-        
+        BattleLoader.SceneLoaded(this);
     }
 }

@@ -99,7 +99,7 @@ public class Network : MonoBehaviour
 
     public static void InBattle(int mapIndex)
     {
-        ClientTCP.EnterRoom();
+        //ClientTCP.EnterRoom();
         scenenum = mapIndex;
         scenechange = true;
     }
