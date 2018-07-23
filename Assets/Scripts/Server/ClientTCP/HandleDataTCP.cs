@@ -31,7 +31,8 @@ class HandleDataTCP
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
             {(int)ServerPackets.SMatchResult, HandleMatchResult },
             {(int)ServerPackets.SPlayerLogOut, HandlePlayerLogOut },
-            {(int)ServerPackets.SSpellLoad, HandleSpellLoad }
+            {(int)ServerPackets.SSpellLoad, HandleSpellLoad },
+            {(int)ServerPackets.SMapLoad, HandleMapLoad },
         };
     }
 
@@ -197,9 +198,8 @@ class HandleDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        int mapIndex = buffer.ReadInteger();
         buffer.Dispose();
-        Network.InBattle(mapIndex);
+        Network.InBattle();
     }
 
     /// <summary>
@@ -238,6 +238,17 @@ class HandleDataTCP
 
     #region GameRoom
 
+    public static void HandleMapLoad(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        BattleLoader.LoadScene(
+                             buffer.ReadInteger()
+                             );
+        buffer.Dispose();
+    }
+
     /// <summary>
     ///             Buffer:
     ///                     int PacketNum;
@@ -253,14 +264,14 @@ class HandleDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        BattleLoaderOld.SpanwPlayers(
-                                  buffer.ReadString(),
-                                  buffer.ReadString(),
-                                  new float[][] { buffer.ReadVector3(), buffer.ReadVector3() },
-                                  new float[][] { buffer.ReadQuternion(), buffer.ReadQuternion() }
-                                  );
+        MainThread.executeInUpdate(() => BattleLoader.SpanwPlayers(
+                                                                    buffer.ReadString(),
+                                                                    buffer.ReadString(),
+                                                                    new float[][] { buffer.ReadVector3(), buffer.ReadVector3() },
+                                                                    new float[][] { buffer.ReadQuternion(), buffer.ReadQuternion() }
+                                                                    )
+        );
         buffer.Dispose();
-
     }
 
     /// <summary>

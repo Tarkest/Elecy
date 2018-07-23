@@ -45,19 +45,57 @@ public class BattleLoader : MonoBehaviour {
 
     public static void LoadScene(int MapIndex)
     {
-
+        MainThread.executeInUpdate(() => Instantiate(Resources.Load("Maps/" + MapIndex + "/GameArea"), Vector3.zero, Quaternion.identity));
     }
 
     public static void SceneLoaded(ObjectManager LoadedManager)
     {
         _thisLoadedmanager = LoadedManager;
         _loadStages += 3;
-        if (_thisLoadedmanager.bigRocksPrefab.Length > 0|| _thisLoadedmanager.middleRocksPrefab.Length > 0|| _thisLoadedmanager.smallRocksPrefab.Length > 0)
+        if (_thisLoadedmanager.bigRocksPrefab.Length > 0 || _thisLoadedmanager.middleRocksPrefab.Length > 0 || _thisLoadedmanager.smallRocksPrefab.Length > 0)
             _loadStages += 1;
         if (_thisLoadedmanager.bigTreesPrefab.Length > 0 || _thisLoadedmanager.middleTreesPrefab.Length > 0 || _thisLoadedmanager.smallTreesPrefab.Length > 0)
             _loadStages += 1;
         ThisPlayerProgressChange(1f / _loadStages);
+        SendDataTCP.SendBeginLoading(_thisPlayerProgress);
     }
+
+    public static void SpanwPlayers(string nickname1, string nickname2, float[][] positions, float[][] rotations)
+    {
+        DeveloperScreenController.AddInfo("Begin Load: Players", 1);
+        if (nickname1 == ClientTCP.nickname)
+        {
+            _thisLoadedmanager.SetStartTransform(positions[0], positions[1], rotations[0], rotations[1]);
+            GameObject _player = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetPlayerStartPosition(), _thisLoadedmanager.GetPlayerStartRotation()) as GameObject;
+            _player.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
+            ObjectManager.players[0] = _player;
+            DeveloperScreenController.AddInfo("Player Load...OK", 1);
+            ThisPlayerProgressChange(1f / _loadStages + (1f / _loadStages) / 2);
+            GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetEnemyStartPosition(), _thisLoadedmanager.GetEnemyStartRotation()) as GameObject;
+            _enemy.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
+            ObjectManager.players[1] = _enemy;
+            DeveloperScreenController.AddInfo("Enemy Load...OK", 1);
+            ThisPlayerProgressChange(1f / _loadStages + (1f / _loadStages));
+        }
+        else
+        {
+            _thisLoadedmanager.SetStartTransform(positions[1], positions[0], rotations[1], rotations[0]);
+            GameObject _player = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetPlayerStartPosition(), _thisLoadedmanager.GetPlayerStartRotation()) as GameObject;
+            _player.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
+            ObjectManager.players[1] = _player;
+            DeveloperScreenController.AddInfo("Player Load...OK", 1);
+            ThisPlayerProgressChange(1f / _loadStages + (1f / _loadStages) / 2);
+            GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetEnemyStartPosition(), _thisLoadedmanager.GetEnemyStartRotation()) as GameObject;
+            _enemy.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
+            ObjectManager.players[0] = _enemy;
+            DeveloperScreenController.AddInfo("Enemy Load...OK", 1);
+            ThisPlayerProgressChange(1f / _loadStages + (1f / _loadStages));
+        }
+
+    }
+
+    private static void 
+
 
     #region LoadScreen
     public static void EnemyProgressChange(float progress)

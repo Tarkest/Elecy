@@ -15,7 +15,7 @@
     STreeSpawn = 13,
     SEnemyLoadProgress = 14,
     SInstantiate = 15, // Write
-    //SClientExit = 16,
+    SMapLoad = 16,
     //SNetPlayerExit = 17,
     //SPlayerExit = 18,
     //SNetPlayerLogOut = 19,
@@ -63,7 +63,7 @@ public enum RoomPackets
     RConnectionComplite = 13,
     RPlayerSpawned = 14,
     RLoadComplite = 15,
-    //RTransform = 16,
+    RLoadStart = 16,
     RRockSpawned = 18,
     RTreesSpawned = 19,
     RInstantiate = 21, // Write

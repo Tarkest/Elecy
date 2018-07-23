@@ -168,11 +168,25 @@ class SendDataTCP
     ///                     int PacketNum;
     ///                     float loadProgress;
     /// </summary>
-    public static void SendPlayerSpawned()
+    public static void SendBeginLoading(float LoadProgress)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RLoadStart);
+        buffer.WriteFloat(LoadProgress);
+        ClientTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    /// <summary>
+    ///             Buffer:
+    ///                     int PacketNum;
+    ///                     float loadProgress;
+    /// </summary>
+    public static void SendPlayerSpawned(float LoadProgress)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RPlayerSpawned);
-        buffer.WriteFloat(0.25f);
+        buffer.WriteFloat(LoadProgress);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -182,11 +196,11 @@ class SendDataTCP
     ///                     int PacketNum;
     ///                     float loadProgress;
     /// </summary>
-    public static void SendRocksSpawned()
+    public static void SendRocksSpawned(float LoadProgress)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RRockSpawned);
-        buffer.WriteFloat(0.5f);
+        buffer.WriteFloat(LoadProgress);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -196,11 +210,11 @@ class SendDataTCP
     ///                     int PacketNum;
     ///                     float loadProgress;
     /// </summary>
-    public static void SendTreesSpawned()
+    public static void SendTreesSpawned(float LoadProgress)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RTreesSpawned);
-        buffer.WriteFloat(0.75f);
+        buffer.WriteFloat(LoadProgress);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -210,11 +224,11 @@ class SendDataTCP
     ///                     int PacketNum;
     ///                     float loadProgress;
     /// </summary>
-    public static void SendLoadComplite()
+    public static void SendLoadComplite(float LoadProgress)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RLoadComplite);
-        buffer.WriteFloat(1f);
+        buffer.WriteFloat(LoadProgress);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }

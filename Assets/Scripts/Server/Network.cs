@@ -97,10 +97,9 @@ public class Network : MonoBehaviour
         scenechange = true;
     }
 
-    public static void InBattle(int mapIndex)
+    public static void InBattle()
     {
-        //ClientTCP.EnterRoom();
-        scenenum = mapIndex;
+        scenenum = 2;
         scenechange = true;
     }
 
