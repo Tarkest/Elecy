@@ -11,7 +11,6 @@ public class BattleLoader : MonoBehaviour {
     private static GameObject _loadScreen;
     private static Slider _yourLoadProgress;
     private static Slider _enemyLoadProgress;
-    private static bool _loaded = false;
     private static float _thisPlayerProgress = 0f;
     private static float _enemyPlayerProgress = 0f;
     private static int _loadStages = 0;
@@ -29,18 +28,10 @@ public class BattleLoader : MonoBehaviour {
         ClientTCP.EnterRoom();    
     }
 
-    private void Update()
+    void Update()
     {
-        if (_loaded)
-        {
-            _loaded = false;
-            _loadScreen.SetActive(false);
-        }
-        else
-        {
-            _yourLoadProgress.value = _thisPlayerProgress;
-            _enemyLoadProgress.value = _enemyPlayerProgress;
-        }
+        _yourLoadProgress.value = _thisPlayerProgress;
+        _enemyLoadProgress.value = _enemyPlayerProgress;
     }
 
     public static void LoadScene(int MapIndex)
@@ -60,6 +51,39 @@ public class BattleLoader : MonoBehaviour {
         SendDataTCP.SendBeginLoading(_thisPlayerProgress);
     }
 
+    private static void CheckForLoadingRocks()
+    {
+        if(_thisLoadedmanager.bigRocksPrefab.Length > 0 || _thisLoadedmanager.middleRocksPrefab.Length > 0 || _thisLoadedmanager.smallRocksPrefab.Length > 0)
+        {
+            int _rocksTypeCount = _thisLoadedmanager.rocksCount;
+            bool _bigRocks = _thisLoadedmanager.bigRocksPrefab.Length > 0;
+            bool _middleRocks = _thisLoadedmanager.middleRocksPrefab.Length > 0;
+            bool _smallRocks = _thisLoadedmanager.smallRocksPrefab.Length > 0;
+            SendDataTCP.SendSpawnRocks(_thisPlayerProgress, _rocksTypeCount, _bigRocks, _middleRocks, _smallRocks);
+        }
+        else
+        {
+            CheckForLoadingTrees();
+        }
+    }
+
+    private static void CheckForLoadingTrees()
+    {
+        if(_thisLoadedmanager.bigTreesPrefab.Length > 0 || _thisLoadedmanager.middleTreesPrefab.Length > 0 || _thisLoadedmanager.smallTreesPrefab.Length > 0)
+        {
+            int _treesTypeCount = _thisLoadedmanager.rocksCount;
+            bool _bigTrees = _thisLoadedmanager.bigRocksPrefab.Length > 0;
+            bool _middleTrees = _thisLoadedmanager.middleRocksPrefab.Length > 0;
+            bool _smallTrees = _thisLoadedmanager.smallRocksPrefab.Length > 0;
+            SendDataTCP.SendSpawnTrees(_thisPlayerProgress, _treesTypeCount, _bigTrees, _middleTrees, _smallTrees);
+        }
+        else
+        {
+            SendDataTCP.SendGetSpells(_thisPlayerProgress);
+        }
+    }
+
+    #region Procesing
     public static void SpanwPlayers(string nickname1, string nickname2, float[][] positions, float[][] rotations)
     {
         DeveloperScreenController.AddInfo("Begin Load: Players", 1);
@@ -70,12 +94,12 @@ public class BattleLoader : MonoBehaviour {
             _player.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
             ObjectManager.players[0] = _player;
             DeveloperScreenController.AddInfo("Player Load...OK", 1);
-            ThisPlayerProgressChange(1f / _loadStages + (1f / _loadStages) / 2);
+            ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
             GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetEnemyStartPosition(), _thisLoadedmanager.GetEnemyStartRotation()) as GameObject;
             _enemy.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
             ObjectManager.players[1] = _enemy;
             DeveloperScreenController.AddInfo("Enemy Load...OK", 1);
-            ThisPlayerProgressChange(1f / _loadStages + (1f / _loadStages));
+            ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
         }
         else
         {
@@ -84,20 +108,151 @@ public class BattleLoader : MonoBehaviour {
             _player.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
             ObjectManager.players[1] = _player;
             DeveloperScreenController.AddInfo("Player Load...OK", 1);
-            ThisPlayerProgressChange(1f / _loadStages + (1f / _loadStages) / 2);
+            ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
             GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetEnemyStartPosition(), _thisLoadedmanager.GetEnemyStartRotation()) as GameObject;
             _enemy.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
             ObjectManager.players[0] = _enemy;
             DeveloperScreenController.AddInfo("Enemy Load...OK", 1);
-            ThisPlayerProgressChange(1f / _loadStages + (1f / _loadStages));
+            ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
         }
+        CheckForLoadingRocks();
 
     }
 
-    private static void 
+    public static void SpawnRocks(int rocksCount, int[] index ,int[] rocksHP, float[][] rocksPosition, float[][] rocksRotation)
+    {
+        DeveloperScreenController.AddInfo("Begin Load: Rocks", 1);
+        DeveloperScreenController.AddInfo("Rock Count: " + rocksCount.ToString(), 1);
+        GameObject NewRock = new GameObject();
+        int small = 0;
+        int middle = 0;
+        int big = 0;
+        for (int i = 0; i < rocksCount; i++)
+        {
+            if(rocksHP[i] < 20)
+            {
+                if(_thisLoadedmanager.smallRocksPrefab.Length > 1)
+                {
+                    NewRock = Instantiate(_thisLoadedmanager.smallRocksPrefab[small], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                    small++;
+                    if (small > _thisLoadedmanager.smallRocksPrefab.Length)
+                        small = 0;
+                }
+                else
+                {
+                    NewRock = Instantiate(_thisLoadedmanager.smallRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                }
+            }
+            else if(rocksHP[i] > 20 && rocksHP[i] < 30)
+            {
+                if (_thisLoadedmanager.middleRocksPrefab.Length > 1)
+                {
+                    NewRock = Instantiate(_thisLoadedmanager.middleRocksPrefab[middle], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                    middle++;
+                    if (middle > _thisLoadedmanager.middleRocksPrefab.Length)
+                        middle = 0;
+                }
+                else
+                {
+                    NewRock = Instantiate(_thisLoadedmanager.middleRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                }
+            }
+            else if(rocksHP[i] > 30)
+            {
+                if (_thisLoadedmanager.bigRocksPrefab.Length > 1)
+                {
+                    NewRock = Instantiate(_thisLoadedmanager.bigRocksPrefab[big], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                    big++;
+                    if (big > _thisLoadedmanager.bigRocksPrefab.Length)
+                        big = 0;
+                }
+                else
+                {
+                    NewRock = Instantiate(_thisLoadedmanager.bigRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                }
+            }
+            ObjectManager.staticPropsList.Add(NewRock);
+            ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / rocksCount);
+        }
+        DeveloperScreenController.AddInfo("Rock Load...OK", 1);
+        CheckForLoadingTrees();
+    }
 
+    public static void SpawnTrees(int treesCount, int[] index, int[] treesHP, float[][] treesPosition, float[][] treesRotation)
+    {
+        DeveloperScreenController.AddInfo("Begin Load: Trees", 1);
+        DeveloperScreenController.AddInfo("Trees Count: " + treesCount.ToString(), 1);
+        GameObject NewTrees = new GameObject();
+        int small = 0;
+        int middle = 0;
+        int big = 0;
+        for (int i = 0; i < treesCount; i++)
+        {
+            if (treesHP[i] < 20)
+            {
+                if (_thisLoadedmanager.smallTreesPrefab.Length > 1)
+                {
+                    NewTrees = Instantiate(_thisLoadedmanager.smallTreesPrefab[small], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                    small++;
+                    if (small > _thisLoadedmanager.smallTreesPrefab.Length)
+                        small = 0;
+                }
+                else
+                {
+                    NewTrees = Instantiate(_thisLoadedmanager.smallTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                }
+            }
+            else if (treesHP[i] > 20 && treesHP[i] < 30)
+            {
+                if (_thisLoadedmanager.middleTreesPrefab.Length > 1)
+                {
+                    NewTrees = Instantiate(_thisLoadedmanager.middleTreesPrefab[middle], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                    middle++;
+                    if (middle > _thisLoadedmanager.middleTreesPrefab.Length)
+                        middle = 0;
+                }
+                else
+                {
+                    NewTrees = Instantiate(_thisLoadedmanager.middleTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                }
+            }
+            else if (treesHP[i] > 30)
+            {
+                if (_thisLoadedmanager.bigTreesPrefab.Length > 1)
+                {
+                    NewTrees = Instantiate(_thisLoadedmanager.bigTreesPrefab[big], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                    big++;
+                    if (big > _thisLoadedmanager.bigTreesPrefab.Length)
+                        big = 0;
+                }
+                else
+                {
+                    NewTrees = Instantiate(_thisLoadedmanager.bigTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                }
+            }
+            ObjectManager.staticPropsList.Add(NewTrees);
+            ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / treesCount);
+        }
+        DeveloperScreenController.AddInfo("Trees Load...OK", 1);
+        SendDataTCP.SendGetSpells(_thisPlayerProgress);
+    }
+
+    public static void LoadSpells(int[] SpellsIndexes)
+    {
+        DeveloperScreenController.AddInfo("Begin Load: Spells", 1);
+        DeveloperScreenController.AddInfo("Speels Count: " + SpellsIndexes.Length.ToString(), 1);
+        DeveloperScreenController.AddInfo("Spells: ", 1);
+        for (int i = 0; i < SpellsIndexes.Length; i++)
+        {
+            DeveloperScreenController.AddInfo(i.ToString() + ": " + SpellsIndexes[i].ToString(), 1);
+            ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / SpellsIndexes.Length);
+        }
+        DeveloperScreenController.AddInfo("Spells Load...OK", 1);
+    }
+    #endregion
 
     #region LoadScreen
+
     public static void EnemyProgressChange(float progress)
     {
         _enemyPlayerProgress = progress;
@@ -108,4 +263,10 @@ public class BattleLoader : MonoBehaviour {
         _thisPlayerProgress = progress;
     }
     #endregion
+
+    public static void StartBattle()
+    {
+        MainThread.executeInUpdate(() => _loadScreen.SetActive(false));
+        BattleLogic.BeginBattle();
+    }
 }

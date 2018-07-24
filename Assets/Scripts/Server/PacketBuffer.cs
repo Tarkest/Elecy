@@ -92,6 +92,12 @@ public class PacketBuffer : IDisposable {
         _bufferList.AddRange(BitConverter.GetBytes(rot[3]));
         _buffUpdate = true;
     }
+
+    public void WriteBoolean(bool input)
+    {
+        _bufferList.Add(Convert.ToByte(input));
+        _buffUpdate = true;
+    }
     #endregion
 
     #region Read Data
@@ -205,6 +211,29 @@ public class PacketBuffer : IDisposable {
     public float[] ReadQuternion()
     {
         return new float[] { ReadFloat(), ReadFloat(), ReadFloat(), ReadFloat() };
+    }
+
+    public bool ReadBoolean(bool peek = true)
+    {
+        if (_bufferList.Count > _readPos)
+        {
+            if (_buffUpdate)
+            {
+                _readBuffer = _bufferList.ToArray();
+                _buffUpdate = false;
+            }
+
+            bool value = BitConverter.ToBoolean(_readBuffer, _readPos);
+            if (peek & _bufferList.Count > _readPos)
+            {
+                _readPos += 1;
+            }
+            return value;
+        }
+        else
+        {
+            throw new Exception("Buffer past it's limit!");
+        }
     }
     #endregion
 

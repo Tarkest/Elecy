@@ -8,7 +8,7 @@
     SQueueStarted = 6,
     //SQueueContinue = 7,
     SMatchFound = 8,
-    SLoadStarted = 9,
+    SPlayerSpawn = 9,
     SRockSpawn = 10,
     SRoomStart = 11,
     STransform = 12,
@@ -61,11 +61,11 @@ public enum NetPlayerPackets
 public enum RoomPackets
 {
     RConnectionComplite = 13,
-    RPlayerSpawned = 14,
-    RLoadComplite = 15,
-    RLoadStart = 16,
-    RRockSpawned = 18,
-    RTreesSpawned = 19,
+    RGetPlayers = 14,
+    RGetRocks = 15,
+    RGetTrees = 16,
+    RGetSpells = 18,
+    RLoadComplite = 19,
     RInstantiate = 21, // Write
     RSurrender = 24,
     RRoomLeave = 25,

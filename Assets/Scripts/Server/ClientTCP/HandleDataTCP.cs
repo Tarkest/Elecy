@@ -24,15 +24,16 @@ class HandleDataTCP
             {(int)ServerPackets.SBuildInfo, HandleBuild },
             {(int)ServerPackets.SBuildSaved, HandleBuildSaved },
 
-            {(int)ServerPackets.SLoadStarted, HandleLoadStarted },
+            {(int)ServerPackets.SMapLoad, HandleMapLoad },
+            {(int)ServerPackets.SPlayerSpawn, HandlePlayerSpawn },
             {(int)ServerPackets.SRockSpawn, HandleRockSpawn },
             {(int)ServerPackets.STreeSpawn, HandleTreeSpawn },
-            {(int)ServerPackets.SEnemyLoadProgress, HandleEnemyLoadProgress },
+            {(int)ServerPackets.SSpellLoad, HandleSpellLoad },
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
+            {(int)ServerPackets.SEnemyLoadProgress, HandleEnemyLoadProgress },
             {(int)ServerPackets.SMatchResult, HandleMatchResult },
             {(int)ServerPackets.SPlayerLogOut, HandlePlayerLogOut },
-            {(int)ServerPackets.SSpellLoad, HandleSpellLoad },
-            {(int)ServerPackets.SMapLoad, HandleMapLoad },
+
         };
     }
 
@@ -244,8 +245,8 @@ class HandleDataTCP
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         BattleLoader.LoadScene(
-                             buffer.ReadInteger()
-                             );
+                                buffer.ReadInteger()
+                                );
         buffer.Dispose();
     }
 
@@ -259,7 +260,7 @@ class HandleDataTCP
     ///                     float[4] firstPlayerRotation;
     ///                     float[4] secondPlayerRotation;
     /// </summary>
-    public static void HandleLoadStarted(byte[] data)
+    public static void HandlePlayerSpawn(byte[] data)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
@@ -281,6 +282,7 @@ class HandleDataTCP
     ///                     for(rockCount)
     ///                     {
     ///                         int Index;
+    ///                         int Hp;
     ///                         float[3] pos;
     ///                         float[4] rot;
     ///                     }
@@ -293,16 +295,18 @@ class HandleDataTCP
         buffer.ReadInteger();
         int numberOfRocks = buffer.ReadInteger();
         int[] rocksIndexes = new int[numberOfRocks];
+        int[] rocksHP = new int[numberOfRocks];
         float[][] rocksPos = new float[numberOfRocks][];
         float[][] rocksRot = new float[numberOfRocks][];
         for (int i = 0; i < numberOfRocks; i++)
         {
             rocksIndexes[i] = buffer.ReadInteger();
+            rocksHP[i] = buffer.ReadInteger();
             rocksPos[i] = buffer.ReadVector3();
             rocksRot[i] = buffer.ReadQuternion();
         }
         buffer.Dispose();
-        BattleLoaderOld.LoadRocks(numberOfRocks, rocksIndexes, rocksPos, rocksRot);
+        MainThread.executeInUpdate(() => BattleLoader.SpawnRocks(numberOfRocks, rocksIndexes, rocksHP,rocksPos, rocksRot));
     }
 
     /// <summary>
@@ -312,6 +316,7 @@ class HandleDataTCP
     ///                     for(treeCount)
     ///                     {
     ///                         int Index;
+    ///                         int Hp;
     ///                         float[3] pos;
     ///                         float[4] rot;
     ///                     }
@@ -324,16 +329,18 @@ class HandleDataTCP
         buffer.ReadInteger();
         int numberoftrees = buffer.ReadInteger();
         int[] treesindexes = new int[numberoftrees];
+        int[] treesHP = new int[numberoftrees];
         float[][] treespos = new float[numberoftrees][];
         float[][] treesrot = new float[numberoftrees][];
         for (int i = 0; i < numberoftrees; i++)
         {
             treesindexes[i] = buffer.ReadInteger();
+            treesHP[i] = buffer.ReadInteger();
             treespos[i] = buffer.ReadVector3();
             treesrot[i] = buffer.ReadQuternion();
         }
         buffer.Dispose();
-        BattleLoaderOld.LoadTrees(numberoftrees, treesindexes, treespos, treesrot);
+        MainThread.executeInUpdate(() => BattleLoader.SpawnTrees(numberoftrees, treesindexes, treesHP, treespos, treesrot));
     }
 
     /// <summary>
@@ -356,7 +363,7 @@ class HandleDataTCP
     /// </summary>
     public static void HandleRoomStart(byte[] data)
     {
-        BattleLoaderOld.StartBattle();
+        BattleLoader.StartBattle();
     }
 
     /// <summary>
@@ -378,7 +385,7 @@ class HandleDataTCP
         {
             _spellsIndexes[i] = buffer.ReadInteger();
         }
-        BattleLoaderOld.LoadSpells(_spellsIndexes);
+        BattleLoader.LoadSpells(_spellsIndexes);
         RoomUDP.Create();
         RoomUDP.BeginReceive();
         RoomUDPSendData.SendConnectionOk();

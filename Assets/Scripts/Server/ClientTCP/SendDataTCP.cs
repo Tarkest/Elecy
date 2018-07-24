@@ -171,7 +171,7 @@ class SendDataTCP
     public static void SendBeginLoading(float LoadProgress)
     {
         PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)RoomPackets.RLoadStart);
+        buffer.WriteInteger((int)RoomPackets.RGetPlayers);
         buffer.WriteFloat(LoadProgress);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
@@ -181,12 +181,42 @@ class SendDataTCP
     ///             Buffer:
     ///                     int PacketNum;
     ///                     float loadProgress;
+    ///                     int RocksTypeCount;
+    ///                     bool BigExist;
+    ///                     bool MiddleExist;
+    ///                     bool SmallExist;
     /// </summary>
-    public static void SendPlayerSpawned(float LoadProgress)
+    public static void SendSpawnRocks(float LoadProgress, int RocksTypeCount, bool BigExist, bool MiddleExist, bool SmallExist)
     {
         PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)RoomPackets.RPlayerSpawned);
+        buffer.WriteInteger((int)RoomPackets.RGetRocks);
         buffer.WriteFloat(LoadProgress);
+        buffer.WriteInteger(RocksTypeCount);
+        buffer.WriteBoolean(BigExist);
+        buffer.WriteBoolean(MiddleExist);
+        buffer.WriteBoolean(SmallExist);
+        ClientTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    /// <summary>
+    ///             Buffer:
+    ///                     int PacketNum;
+    ///                     float loadProgress;
+    ///                     int TreesTypeCount;
+    ///                     bool BigExist;
+    ///                     bool MiddleExist;
+    ///                     bool SmallExist;
+    /// </summary>
+    public static void SendSpawnTrees(float LoadProgress, int TreesTypeCount, bool BigExist, bool MiddleExist, bool SmallExist)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)RoomPackets.RGetTrees);
+        buffer.WriteFloat(LoadProgress);
+        buffer.WriteInteger(TreesTypeCount);
+        buffer.WriteBoolean(BigExist);
+        buffer.WriteBoolean(MiddleExist);
+        buffer.WriteBoolean(SmallExist);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
@@ -196,24 +226,10 @@ class SendDataTCP
     ///                     int PacketNum;
     ///                     float loadProgress;
     /// </summary>
-    public static void SendRocksSpawned(float LoadProgress)
+    public static void SendGetSpells(float LoadProgress)
     {
         PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)RoomPackets.RRockSpawned);
-        buffer.WriteFloat(LoadProgress);
-        ClientTCP.SendData(buffer.ToArray());
-        buffer.Dispose();
-    }
-
-    /// <summary>
-    ///             Buffer:
-    ///                     int PacketNum;
-    ///                     float loadProgress;
-    /// </summary>
-    public static void SendTreesSpawned(float LoadProgress)
-    {
-        PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)RoomPackets.RTreesSpawned);
+        buffer.WriteInteger((int)RoomPackets.RGetSpells);
         buffer.WriteFloat(LoadProgress);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();

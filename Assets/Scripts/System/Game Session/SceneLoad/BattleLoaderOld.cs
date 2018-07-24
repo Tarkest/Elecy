@@ -135,7 +135,7 @@ public class BattleLoaderOld : MonoBehaviour
             ObjectManagerOld.staticProps.Add(NewRockOnField);
         }
         DeveloperScreenController.AddInfo("Rock Load...OK", 1);
-        SendDataTCP.SendRocksSpawned();
+        //SendDataTCP.SendRocksSpawned();
         ThisPlayerProgressChange(0.5f);
     }
 
@@ -155,7 +155,7 @@ public class BattleLoaderOld : MonoBehaviour
             ObjectManagerOld.staticProps.Add(NewTreeOnField);
         }
         DeveloperScreenController.AddInfo("Trees Load...OK", 1);
-        SendDataTCP.SendTreesSpawned();
+        //SendDataTCP.SendTreesSpawned();
         ThisPlayerProgressChange(0.75f);
     }
 
