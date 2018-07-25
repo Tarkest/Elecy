@@ -265,14 +265,15 @@ class HandleDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        MainThread.executeInUpdate(() => BattleLoader.SpanwPlayers(
-                                                                    buffer.ReadString(),
-                                                                    buffer.ReadString(),
-                                                                    new float[][] { buffer.ReadVector3(), buffer.ReadVector3() },
-                                                                    new float[][] { buffer.ReadQuternion(), buffer.ReadQuternion() }
-                                                                    )
-        );
+        MainThread.executeInUpdate(() => {
+            BattleLoader.SpanwPlayers(
+                                      buffer.ReadString(),
+                                      buffer.ReadString(),
+                                      new float[][] { buffer.ReadVector3(), buffer.ReadVector3() },
+                                      new float[][] { buffer.ReadQuternion(), buffer.ReadQuternion() }
+                                      );
         buffer.Dispose();
+        }); 
     }
 
     /// <summary>

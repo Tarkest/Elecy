@@ -18,7 +18,7 @@ public class ObjectManager : MonoBehaviour {
 
     #region ObjectsContainer
 
-    public static GameObject[] players;
+    public static GameObject[] players = new GameObject[2];
 
     public static List<GameObject> dynamicPropList = new List<GameObject>();
 

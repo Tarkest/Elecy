@@ -36,7 +36,7 @@ public class BattleLoader : MonoBehaviour {
 
     public static void LoadScene(int MapIndex)
     {
-        MainThread.executeInUpdate(() => Instantiate(Resources.Load("Maps/" + MapIndex + "/GameArea"), Vector3.zero, Quaternion.identity));
+        MainThread.executeInUpdate(() => Instantiate(Resources.Load("Maps/" + MapIndex.ToString() + "/GameArea"), Vector3.zero, Quaternion.identity));
     }
 
     public static void SceneLoaded(ObjectManager LoadedManager)
@@ -123,7 +123,9 @@ public class BattleLoader : MonoBehaviour {
     {
         DeveloperScreenController.AddInfo("Begin Load: Rocks", 1);
         DeveloperScreenController.AddInfo("Rock Count: " + rocksCount.ToString(), 1);
-        GameObject NewRock = new GameObject();
+        GameObject _rocks = new GameObject("Rocks");
+        _rocks.transform.parent = _thisLoadedmanager.gameObject.transform;
+        GameObject NewRock = null;
         int small = 0;
         int middle = 0;
         int big = 0;
@@ -133,45 +135,48 @@ public class BattleLoader : MonoBehaviour {
             {
                 if(_thisLoadedmanager.smallRocksPrefab.Length > 1)
                 {
-                    NewRock = Instantiate(_thisLoadedmanager.smallRocksPrefab[small], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                    NewRock = Instantiate(_thisLoadedmanager.smallRocksPrefab[small], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]), _rocks.transform);
                     small++;
                     if (small > _thisLoadedmanager.smallRocksPrefab.Length)
                         small = 0;
                 }
                 else
                 {
-                    NewRock = Instantiate(_thisLoadedmanager.smallRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                    NewRock = Instantiate(_thisLoadedmanager.smallRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]), _rocks.transform);
                 }
             }
             else if(rocksHP[i] > 20 && rocksHP[i] < 30)
             {
                 if (_thisLoadedmanager.middleRocksPrefab.Length > 1)
                 {
-                    NewRock = Instantiate(_thisLoadedmanager.middleRocksPrefab[middle], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                    NewRock = Instantiate(_thisLoadedmanager.middleRocksPrefab[middle], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]), _rocks.transform);
                     middle++;
                     if (middle > _thisLoadedmanager.middleRocksPrefab.Length)
                         middle = 0;
                 }
                 else
                 {
-                    NewRock = Instantiate(_thisLoadedmanager.middleRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                    NewRock = Instantiate(_thisLoadedmanager.middleRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]), _rocks.transform);
                 }
             }
             else if(rocksHP[i] > 30)
             {
                 if (_thisLoadedmanager.bigRocksPrefab.Length > 1)
                 {
-                    NewRock = Instantiate(_thisLoadedmanager.bigRocksPrefab[big], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                    NewRock = Instantiate(_thisLoadedmanager.bigRocksPrefab[big], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]), _rocks.transform);
                     big++;
                     if (big > _thisLoadedmanager.bigRocksPrefab.Length)
                         big = 0;
                 }
                 else
                 {
-                    NewRock = Instantiate(_thisLoadedmanager.bigRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]));
+                    NewRock = Instantiate(_thisLoadedmanager.bigRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]), _rocks.transform);
                 }
             }
-            ObjectManager.staticPropsList.Add(NewRock);
+            if(NewRock != null)
+            {
+                ObjectManager.staticPropsList.Add(NewRock);
+            }
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / rocksCount);
         }
         DeveloperScreenController.AddInfo("Rock Load...OK", 1);
@@ -182,7 +187,9 @@ public class BattleLoader : MonoBehaviour {
     {
         DeveloperScreenController.AddInfo("Begin Load: Trees", 1);
         DeveloperScreenController.AddInfo("Trees Count: " + treesCount.ToString(), 1);
-        GameObject NewTrees = new GameObject();
+        GameObject _trees = new GameObject("Trees");
+        _trees.transform.parent = _thisLoadedmanager.gameObject.transform;
+        GameObject NewTree = null;
         int small = 0;
         int middle = 0;
         int big = 0;
@@ -192,45 +199,48 @@ public class BattleLoader : MonoBehaviour {
             {
                 if (_thisLoadedmanager.smallTreesPrefab.Length > 1)
                 {
-                    NewTrees = Instantiate(_thisLoadedmanager.smallTreesPrefab[small], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                    NewTree = Instantiate(_thisLoadedmanager.smallTreesPrefab[small], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]), _trees.transform);
                     small++;
                     if (small > _thisLoadedmanager.smallTreesPrefab.Length)
                         small = 0;
                 }
                 else
                 {
-                    NewTrees = Instantiate(_thisLoadedmanager.smallTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                    NewTree = Instantiate(_thisLoadedmanager.smallTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]), _trees.transform);
                 }
             }
             else if (treesHP[i] > 20 && treesHP[i] < 30)
             {
                 if (_thisLoadedmanager.middleTreesPrefab.Length > 1)
                 {
-                    NewTrees = Instantiate(_thisLoadedmanager.middleTreesPrefab[middle], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                    NewTree = Instantiate(_thisLoadedmanager.middleTreesPrefab[middle], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]), _trees.transform);
                     middle++;
                     if (middle > _thisLoadedmanager.middleTreesPrefab.Length)
                         middle = 0;
                 }
                 else
                 {
-                    NewTrees = Instantiate(_thisLoadedmanager.middleTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                    NewTree = Instantiate(_thisLoadedmanager.middleTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]), _trees.transform);
                 }
             }
             else if (treesHP[i] > 30)
             {
                 if (_thisLoadedmanager.bigTreesPrefab.Length > 1)
                 {
-                    NewTrees = Instantiate(_thisLoadedmanager.bigTreesPrefab[big], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                    NewTree = Instantiate(_thisLoadedmanager.bigTreesPrefab[big], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]), _trees.transform);
                     big++;
                     if (big > _thisLoadedmanager.bigTreesPrefab.Length)
                         big = 0;
                 }
                 else
                 {
-                    NewTrees = Instantiate(_thisLoadedmanager.bigTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]));
+                    NewTree = Instantiate(_thisLoadedmanager.bigTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]), _trees.transform);
                 }
             }
-            ObjectManager.staticPropsList.Add(NewTrees);
+            if(NewTree != null)
+            {
+                ObjectManager.staticPropsList.Add(NewTree);
+            }
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / treesCount);
         }
         DeveloperScreenController.AddInfo("Trees Load...OK", 1);
