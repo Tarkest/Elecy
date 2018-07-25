@@ -36,5 +36,6 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         buffer.ReadInteger();
         buffer.Dispose();
         DeveloperScreenController.AddInfo("UDP Connection...OK", 1);
+        BattleLoader.LoadComplite();
     }
 }

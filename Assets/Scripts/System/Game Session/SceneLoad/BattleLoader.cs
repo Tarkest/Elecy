@@ -259,6 +259,11 @@ public class BattleLoader : MonoBehaviour {
         }
         DeveloperScreenController.AddInfo("Spells Load...OK", 1);
     }
+
+    public static void LoadComplite()
+    {
+        SendDataTCP.SendLoadComplite(_thisPlayerProgress);
+    }
     #endregion
 
     #region LoadScreen
