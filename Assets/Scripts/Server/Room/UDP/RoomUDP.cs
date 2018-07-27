@@ -19,7 +19,6 @@ public class RoomUDP : MonoBehaviour
         _udpClient = new UdpClient();
         _ipAdress = new IPEndPoint(IPAddress.Parse(Network.IP_ADDRESS), Network.UDP_PORT);
         _udpClient.Connect(_ipAdress);
-
     }
 
     public static void BeginReceive()
@@ -54,13 +53,17 @@ public class RoomUDP : MonoBehaviour
 
     private static void ReceiveCallback(IAsyncResult ar)
     {
+
         try
         {
             if(_receiving)
             {
+                UdpClient _client = (UdpClient)ar.AsyncState;
                 IPEndPoint _ipEndPointOfThis = null;
-                byte[] data = _udpClient.EndReceive(ar, ref _ipEndPointOfThis);
+                byte[] data = _client.EndReceive(ar, ref _ipEndPointOfThis);
                 RoomUDPHandleNetworkInformation.HandleNetworkInformation(data);
+                if (_receiving)
+                    _client.BeginReceive(new AsyncCallback(ReceiveCallback), _client);
             }
         }
         catch (Exception ex)
@@ -69,8 +72,6 @@ public class RoomUDP : MonoBehaviour
             DeveloperScreenController.AddInfo("UDP Recieve exception", 1);
             Debug.Log(ex + "");
         }
-        if(_receiving)
-            _udpClient.BeginReceive(new AsyncCallback(ReceiveCallback), _udpClient);
     }
 
     public static bool IsConnected()

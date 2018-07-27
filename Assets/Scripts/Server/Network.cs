@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Network : MonoBehaviour
 {
 
     #region Variables
-
     public static string IP_ADDRESS;
     public static int PORT = NetworkConstants.PORT;
     public static int UDP_PORT = NetworkConstants.UDP_PORT;
@@ -17,7 +17,6 @@ public class Network : MonoBehaviour
     private static bool quit;
     private static int scenenum;
     private static GameObject _networkInstanse;
-
     #endregion
 
     #region Enum

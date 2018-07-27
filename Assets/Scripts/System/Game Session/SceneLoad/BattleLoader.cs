@@ -53,7 +53,7 @@ public class BattleLoader : MonoBehaviour {
 
     private static void CheckForLoadingRocks()
     {
-        if(_thisLoadedmanager.bigRocksPrefab.Length > 0 || _thisLoadedmanager.middleRocksPrefab.Length > 0 || _thisLoadedmanager.smallRocksPrefab.Length > 0)
+        if((_thisLoadedmanager.bigRocksPrefab.Length > 0 || _thisLoadedmanager.middleRocksPrefab.Length > 0 || _thisLoadedmanager.smallRocksPrefab.Length > 0) && _thisLoadedmanager.rocksCount > 0)
         {
             int _rocksTypeCount = _thisLoadedmanager.rocksCount;
             bool _bigRocks = _thisLoadedmanager.bigRocksPrefab.Length > 0;
@@ -69,12 +69,12 @@ public class BattleLoader : MonoBehaviour {
 
     private static void CheckForLoadingTrees()
     {
-        if(_thisLoadedmanager.bigTreesPrefab.Length > 0 || _thisLoadedmanager.middleTreesPrefab.Length > 0 || _thisLoadedmanager.smallTreesPrefab.Length > 0)
+        if((_thisLoadedmanager.bigTreesPrefab.Length > 0 || _thisLoadedmanager.middleTreesPrefab.Length > 0 || _thisLoadedmanager.smallTreesPrefab.Length > 0) && _thisLoadedmanager.treesCount > 0)
         {
-            int _treesTypeCount = _thisLoadedmanager.rocksCount;
-            bool _bigTrees = _thisLoadedmanager.bigRocksPrefab.Length > 0;
-            bool _middleTrees = _thisLoadedmanager.middleRocksPrefab.Length > 0;
-            bool _smallTrees = _thisLoadedmanager.smallRocksPrefab.Length > 0;
+            int _treesTypeCount = _thisLoadedmanager.treesCount;
+            bool _bigTrees = _thisLoadedmanager.bigTreesPrefab.Length > 0;
+            bool _middleTrees = _thisLoadedmanager.middleTreesPrefab.Length > 0;
+            bool _smallTrees = _thisLoadedmanager.smallTreesPrefab.Length > 0;
             SendDataTCP.SendSpawnTrees(_thisPlayerProgress, _treesTypeCount, _bigTrees, _middleTrees, _smallTrees);
         }
         else
@@ -92,12 +92,12 @@ public class BattleLoader : MonoBehaviour {
             _thisLoadedmanager.SetStartTransform(positions[0], positions[1], rotations[0], rotations[1]);
             GameObject _player = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetPlayerStartPosition(), _thisLoadedmanager.GetPlayerStartRotation()) as GameObject;
             _player.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
-            ObjectManager.players[0] = _player;
+            _thisLoadedmanager.players[0] = _player;
             DeveloperScreenController.AddInfo("Player Load...OK", 1);
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
             GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetEnemyStartPosition(), _thisLoadedmanager.GetEnemyStartRotation()) as GameObject;
             _enemy.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
-            ObjectManager.players[1] = _enemy;
+            _thisLoadedmanager.players[1] = _enemy;
             DeveloperScreenController.AddInfo("Enemy Load...OK", 1);
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
         }
@@ -106,17 +106,16 @@ public class BattleLoader : MonoBehaviour {
             _thisLoadedmanager.SetStartTransform(positions[1], positions[0], rotations[1], rotations[0]);
             GameObject _player = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetPlayerStartPosition(), _thisLoadedmanager.GetPlayerStartRotation()) as GameObject;
             _player.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
-            ObjectManager.players[1] = _player;
+            _thisLoadedmanager.players[1] = _player;
             DeveloperScreenController.AddInfo("Player Load...OK", 1);
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
             GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetEnemyStartPosition(), _thisLoadedmanager.GetEnemyStartRotation()) as GameObject;
             _enemy.GetComponent<PlayerStats>().SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
-            ObjectManager.players[0] = _enemy;
+            _thisLoadedmanager.players[0] = _enemy;
             DeveloperScreenController.AddInfo("Enemy Load...OK", 1);
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
         }
         CheckForLoadingRocks();
-
     }
 
     public static void SpawnRocks(int rocksCount, int[] index ,int[] rocksHP, float[][] rocksPosition, float[][] rocksRotation)
@@ -131,7 +130,7 @@ public class BattleLoader : MonoBehaviour {
         int big = 0;
         for (int i = 0; i < rocksCount; i++)
         {
-            if(rocksHP[i] < 20)
+            if(rocksHP[i] <= 20)
             {
                 if(_thisLoadedmanager.smallRocksPrefab.Length > 1)
                 {
@@ -159,7 +158,7 @@ public class BattleLoader : MonoBehaviour {
                     NewRock = Instantiate(_thisLoadedmanager.middleRocksPrefab[0], new Vector3(rocksPosition[i][0], rocksPosition[i][1], rocksPosition[i][2]), new Quaternion(rocksRotation[i][0], rocksRotation[i][1], rocksRotation[i][2], rocksRotation[i][3]), _rocks.transform);
                 }
             }
-            else if(rocksHP[i] > 30)
+            else if(rocksHP[i] >= 30)
             {
                 if (_thisLoadedmanager.bigRocksPrefab.Length > 1)
                 {
@@ -175,7 +174,7 @@ public class BattleLoader : MonoBehaviour {
             }
             if(NewRock != null)
             {
-                ObjectManager.staticPropsList.Add(NewRock);
+                _thisLoadedmanager.staticPropsList.Add(NewRock);
             }
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / rocksCount);
         }
@@ -195,7 +194,7 @@ public class BattleLoader : MonoBehaviour {
         int big = 0;
         for (int i = 0; i < treesCount; i++)
         {
-            if (treesHP[i] < 20)
+            if (treesHP[i] <= 20)
             {
                 if (_thisLoadedmanager.smallTreesPrefab.Length > 1)
                 {
@@ -223,7 +222,7 @@ public class BattleLoader : MonoBehaviour {
                     NewTree = Instantiate(_thisLoadedmanager.middleTreesPrefab[0], new Vector3(treesPosition[i][0], treesPosition[i][1], treesPosition[i][2]), new Quaternion(treesRotation[i][0], treesRotation[i][1], treesRotation[i][2], treesRotation[i][3]), _trees.transform);
                 }
             }
-            else if (treesHP[i] > 30)
+            else if (treesHP[i] >= 30)
             {
                 if (_thisLoadedmanager.bigTreesPrefab.Length > 1)
                 {
@@ -239,7 +238,8 @@ public class BattleLoader : MonoBehaviour {
             }
             if(NewTree != null)
             {
-                ObjectManager.staticPropsList.Add(NewTree);
+                _thisLoadedmanager.staticPropsList.Add(NewTree);
+                NewTree = null;
             }
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / treesCount);
         }

@@ -1,9 +1,9 @@
 ﻿
 public class NetworkConstants
 {
-    public static int TCP_BUFFER_SIZE = 1024;
+    public static int TCP_BUFFER_SIZE = 2048;
 
-    public static int UDP_BUFFER_SIZE = 1024;
+    public static int UDP_BUFFER_SIZE = 2048;
 
     public static int RACES_NUMBER = 5;
 
