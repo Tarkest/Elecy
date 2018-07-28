@@ -156,11 +156,11 @@ public static class ClientTCP
                 int received = _socket.EndReceive(ar);
                 if (received > 0)
                 {
+                    if (clientState != GameState.Sleep)
+                        _socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), null);
                     byte[] data = new byte[received];
                     Array.Copy(_buffer, data, received);
                     HandleDataTCP.HandleNetworkInformation(data);
-                    if (clientState != GameState.Sleep)
-                        _socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), null);
                 }
                 else
                 {

@@ -8,7 +8,7 @@ public class DeveloperScreenController : MonoBehaviour {
     GameObject text;
     GameObject content;
     private static string _debugText = "Elecy Client V 0.00.1";
-    private static float _messageCount;
+    private static float _messageCount = 1;
 
     //void Awake()
     //{

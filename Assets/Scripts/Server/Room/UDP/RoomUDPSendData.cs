@@ -11,6 +11,7 @@ public class RoomUDPSendData : MonoBehaviour {
         //buffer.WriteInteger(RoomTCP.GetPlayerIndex()); // unusable
         //buffer.WriteInteger(RoomTCP.Getindex());
         RoomUDP.SendData(buffer.ToArray());
+        DeveloperScreenController.AddInfo("Udp Conection Ok Sended", 1);
         buffer.Dispose();
     }
 }

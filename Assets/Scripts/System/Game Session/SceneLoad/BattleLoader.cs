@@ -36,7 +36,9 @@ public class BattleLoader : MonoBehaviour {
 
     public static void LoadScene(int MapIndex)
     {
-        MainThread.executeInUpdate(() => Instantiate(Resources.Load("Maps/" + MapIndex.ToString() + "/GameArea"), Vector3.zero, Quaternion.identity));
+        MainThread.executeInUpdate(() => { Instantiate(Resources.Load("Maps/" + MapIndex.ToString() + "/GameArea"), Vector3.zero, Quaternion.identity);
+            DeveloperScreenController.AddInfo("Map Loaded", 1);
+        });
     }
 
     public static void SceneLoaded(ObjectManager LoadedManager)
@@ -270,6 +272,7 @@ public class BattleLoader : MonoBehaviour {
 
     public static void EnemyProgressChange(float progress)
     {
+        DeveloperScreenController.AddInfo("Enemy Load Handled "+progress, 1);
         _enemyPlayerProgress = progress;
     }
 
@@ -281,7 +284,10 @@ public class BattleLoader : MonoBehaviour {
 
     public static void StartBattle()
     {
-        MainThread.executeInUpdate(() => _loadScreen.SetActive(false));
+        MainThread.executeInUpdate(() => {
+            DeveloperScreenController.AddInfo("Room Start Handled", 1);
+            _loadScreen.SetActive(false);
+        });
         BattleLogic.BeginBattle();
     }
 }

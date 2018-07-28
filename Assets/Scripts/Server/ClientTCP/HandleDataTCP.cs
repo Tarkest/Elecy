@@ -244,9 +244,8 @@ class HandleDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        BattleLoader.LoadScene(
-                                buffer.ReadInteger()
-                                );
+        BattleLoader.LoadScene(buffer.ReadInteger());
+        DeveloperScreenController.AddInfo("Handled Map Load", 1);
         buffer.Dispose();
     }
 
@@ -262,18 +261,16 @@ class HandleDataTCP
     /// </summary>
     public static void HandlePlayerSpawn(byte[] data)
     {
+        DeveloperScreenController.AddInfo("Player Spawn handled", 1);
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        MainThread.executeInUpdate(() => {
-            BattleLoader.SpanwPlayers(
-                                      buffer.ReadString(),
-                                      buffer.ReadString(),
-                                      new float[][] { buffer.ReadVector3(), buffer.ReadVector3() },
-                                      new float[][] { buffer.ReadQuternion(), buffer.ReadQuternion() }
-                                      );
+        string Nickname1 = buffer.ReadString();
+        string Nickname2 = buffer.ReadString();
+        float[][] pos = new float[][] { buffer.ReadVector3(), buffer.ReadVector3() };
+        float[][] rot = new float[][] { buffer.ReadQuternion(), buffer.ReadQuternion() };
         buffer.Dispose();
-        }); 
+        MainThread.executeInUpdate(() => { BattleLoader.SpanwPlayers(Nickname1, Nickname2, pos, rot); });
     }
 
     /// <summary>
@@ -351,6 +348,7 @@ class HandleDataTCP
     /// </summary>
     public static void HandleEnemyLoadProgress(byte[] data)
     {
+        DeveloperScreenController.AddInfo("Handled Enemy Load", 1);
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
@@ -364,6 +362,7 @@ class HandleDataTCP
     /// </summary>
     public static void HandleRoomStart(byte[] data)
     {
+        DeveloperScreenController.AddInfo("Room Start Handled", 1);
         BattleLoader.StartBattle();
     }
 
@@ -377,6 +376,7 @@ class HandleDataTCP
     /// </summary>
     public static void HandleSpellLoad(byte[] data)
     {
+        DeveloperScreenController.AddInfo("Spells handled", 1);
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
@@ -386,11 +386,11 @@ class HandleDataTCP
         {
             _spellsIndexes[i] = buffer.ReadInteger();
         }
+        buffer.Dispose();
         BattleLoader.LoadSpells(_spellsIndexes);
         RoomUDP.Create();
         RoomUDP.BeginReceive();
         RoomUDPSendData.SendConnectionOk();
-        buffer.Dispose();
     }
 
     /// <summary>
