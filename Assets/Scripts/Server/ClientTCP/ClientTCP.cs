@@ -144,7 +144,7 @@ public static class ClientTCP
     {
         clientState = s ?? clientState;
         if(clientState != GameState.Sleep)
-            _socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), null);
+            _socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), _socket);
     }
 
     private static void ReceiveCallback(IAsyncResult ar)
@@ -157,7 +157,7 @@ public static class ClientTCP
                 if (received > 0)
                 {
                     if (clientState != GameState.Sleep)
-                        _socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), null);
+                        _socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), _socket);
                     byte[] data = new byte[received];
                     Array.Copy(_buffer, data, received);
                     HandleDataTCP.HandleNetworkInformation(data);
@@ -186,6 +186,7 @@ public static class ClientTCP
     {
         try
         {
+            System.Threading.Thread.Sleep(250);
             _socket.Send(data);
         }
         catch
@@ -194,7 +195,6 @@ public static class ClientTCP
             Network.Connect = Network.ConnectStatus.Connecting;
         }
     }
-
     #endregion
 
     #region Finalization
