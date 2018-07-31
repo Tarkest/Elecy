@@ -285,7 +285,6 @@ public class BattleLoader : MonoBehaviour {
     public static void StartBattle()
     {
         MainThread.executeInUpdate(() => {
-            DeveloperScreenController.AddInfo("Room Start Handled", 1);
             _loadScreen.SetActive(false);
         });
         BattleLogic.BeginBattle();

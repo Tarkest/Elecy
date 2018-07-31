@@ -1,77 +1,76 @@
-﻿public enum ServerPackets
-{
-    SConnectionOK = 1,
-    SRegisterOK = 2,
-    SLoginOK = 3,
-    SAlert = 4,
-    SGlChatMsg = 5,
-    SQueueStarted = 6,
-    //SQueueContinue = 7,
-    SMatchFound = 8,
-    SPlayerSpawn = 9,
-    SRockSpawn = 10,
-    SRoomStart = 11,
-    STransform = 12,
-    STreeSpawn = 13,
-    SEnemyLoadProgress = 14,
-    SInstantiate = 15, // Write
-    SMapLoad = 16,
-    //SNetPlayerExit = 17,
-    //SPlayerExit = 18,
-    //SNetPlayerLogOut = 19,
-    SPlayerLogOut = 20,
-    SMatchResult = 21,
-    SSpellLoad = 22,
-    SBuildInfo = 23,
-    SBuildSaved = 24,
-}
+﻿#region ServerTCP
 
-public enum UDPServerPackets
-{
-    USConnectionOK = 1,
-}
+    public enum ServerPackets
+    {
+        SConnectionOK,
+        SRegisterOK,
+        SLoginOK,
+        SAlert,
+        SGlChatMsg,
+        SQueueStarted,
+        SMatchFound,
+        SMapLoad,
+        SPlayerSpawned,
+        SRockSpawned,
+        STreeSpawned,
+        SSpellLoaded,
+        SRoomStart,
+        SEnemyLoadProgress,
+        SPlayerLogOut,
+        SMatchResult,
+        SBuildInfo,
+        SBuildSaved,
+    }
 
+#endregion
 
-//get send from client to server
-public enum ClientPackets
-{
-    CConnectComplite = 1,
-    CRegisterTry = 2,
-    CLoginTry = 3,
-    CAlert = 4,
-    //CClose = 5,
-    //CReconnectComplite = 6,
-}
+#region ClientTCP
 
-//get send from player to server
-public enum NetPlayerPackets
-{
-    PConnectionComplite = 7,
-    PGlChatMsg = 8,
-    PQueueStart = 9,
-    //PSearch = 10,
-    PQueueStop = 11,
-    //PAlert = 12,
-    //PStopPlayer = 17,
-    //PLogOut = 23,
-    PGetSkillsBuild = 26,
-    PSaveSkillsBuild = 27
-}
+    public enum ClientPackets
+    {
+        CConnectComplite,
+        CRegisterTry,
+        CLoginTry,
 
-public enum RoomPackets
-{
-    RConnectionComplite = 13,
-    RGetPlayers = 14,
-    RGetRocks = 15,
-    RGetTrees = 16,
-    RGetSpells = 18,
-    RLoadComplite = 19,
-    RInstantiate = 21, // Write
-    RSurrender = 24,
-    RRoomLeave = 25,
-}
+        ClientPacketsNum // Number
+    }
 
-public enum UDPRoomPackets
-{
-    URConnectionComplite = 1,
-}
+    public enum NetPlayerPackets
+    {
+        PConnectionComplite = ClientPackets.ClientPacketsNum,
+        PGlChatMsg,
+        PQueueStart,
+        PQueueStop,
+        PGetSkillsBuild,
+        PSaveSkillsBuild,
+
+        NetPlayerPacketsNum // Number
+    }
+
+    public enum RoomPackets
+    {
+        RConnectionComplite = NetPlayerPackets.NetPlayerPacketsNum,
+        RGetPlayers,
+        RGetRocks,
+        RGetTrees,
+        RGetSpells,
+        RLoadComplite,
+        RSurrender,
+        RRoomLeave,
+    }
+
+#endregion
+
+#region UDP
+
+    public enum UDPRoomPackets
+    {
+        URConnectionComplite = 1,
+    }
+
+    public enum UDPServerPackets
+    {
+        USConnectionOK = 1,
+    }
+
+#endregion

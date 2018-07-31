@@ -161,7 +161,6 @@ class SendDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RConnectionComplite);
         ClientTCP.SendData(buffer.ToArray());
-        DeveloperScreenController.AddInfo("Enter Room Sended", 1);
         buffer.Dispose();
     }
 
@@ -176,7 +175,6 @@ class SendDataTCP
         buffer.WriteInteger((int)RoomPackets.RGetPlayers);
         buffer.WriteFloat(LoadProgress);
         ClientTCP.SendData(buffer.ToArray());
-        DeveloperScreenController.AddInfo("Player Spawn Sended", 1);
         buffer.Dispose();
     }
 
@@ -235,7 +233,6 @@ class SendDataTCP
         buffer.WriteInteger((int)RoomPackets.RGetSpells);
         buffer.WriteFloat(LoadProgress);
         ClientTCP.SendData(buffer.ToArray());
-        DeveloperScreenController.AddInfo("Get Spells Sended", 1);
         buffer.Dispose();
     }
 
@@ -250,7 +247,6 @@ class SendDataTCP
         buffer.WriteInteger((int)RoomPackets.RLoadComplite);
         buffer.WriteFloat(LoadProgress);
         ClientTCP.SendData(buffer.ToArray());
-        DeveloperScreenController.AddInfo("Load Complite sended", 1);
         buffer.Dispose();
     }
 

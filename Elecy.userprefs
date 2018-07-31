@@ -1,10 +1,10 @@
 ﻿<Properties StartupItem="Elecy.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\System\Enterance\EntranceController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MainThread.cs">
     <Files>
-      <File FileName="Assets\Scripts\Server\Client\ClientHandlerNetworkData.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\System\Main Lobby\MainLobbyController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\System\Enterance\EntranceController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MainThread.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

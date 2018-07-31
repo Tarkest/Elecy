@@ -13,27 +13,23 @@ class HandleDataTCP
         _Packets = new Dictionary<int, Packet_>
         {
             {(int)ServerPackets.SConnectionOK, HandleConnectionOK },
-            {(int)ServerPackets.SAlert, HandleServerAlert },
-
             {(int)ServerPackets.SRegisterOK, HandleRegisterOK },
             {(int)ServerPackets.SLoginOK, HandleLoginOK },
-
+            {(int)ServerPackets.SAlert, HandleServerAlert },
             {(int)ServerPackets.SGlChatMsg, HandleGlobalChatMessage },
             {(int)ServerPackets.SQueueStarted, HandleQueueStarted },
             {(int)ServerPackets.SMatchFound, HandleMatchFound },
-            {(int)ServerPackets.SBuildInfo, HandleBuild },
-            {(int)ServerPackets.SBuildSaved, HandleBuildSaved },
-
             {(int)ServerPackets.SMapLoad, HandleMapLoad },
-            {(int)ServerPackets.SPlayerSpawn, HandlePlayerSpawn },
-            {(int)ServerPackets.SRockSpawn, HandleRockSpawn },
-            {(int)ServerPackets.STreeSpawn, HandleTreeSpawn },
-            {(int)ServerPackets.SSpellLoad, HandleSpellLoad },
+            {(int)ServerPackets.SPlayerSpawned, HandlePlayerSpawn },
+            {(int)ServerPackets.SRockSpawned, HandleRockSpawn },
+            {(int)ServerPackets.STreeSpawned, HandleTreeSpawn },
+            {(int)ServerPackets.SSpellLoaded, HandleSpellLoad },
             {(int)ServerPackets.SRoomStart, HandleRoomStart },
             {(int)ServerPackets.SEnemyLoadProgress, HandleEnemyLoadProgress },
-            {(int)ServerPackets.SMatchResult, HandleMatchResult },
             {(int)ServerPackets.SPlayerLogOut, HandlePlayerLogOut },
-
+            {(int)ServerPackets.SMatchResult, HandleMatchResult },
+            {(int)ServerPackets.SBuildInfo, HandleBuild },
+            {(int)ServerPackets.SBuildSaved, HandleBuildSaved },
         };
     }
 
@@ -245,7 +241,6 @@ class HandleDataTCP
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         BattleLoader.LoadScene(buffer.ReadInteger());
-        DeveloperScreenController.AddInfo("Handled Map Load", 1);
         buffer.Dispose();
     }
 
@@ -261,7 +256,6 @@ class HandleDataTCP
     /// </summary>
     public static void HandlePlayerSpawn(byte[] data)
     {
-        DeveloperScreenController.AddInfo("Player Spawn handled", 1);
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
@@ -348,7 +342,6 @@ class HandleDataTCP
     /// </summary>
     public static void HandleEnemyLoadProgress(byte[] data)
     {
-        DeveloperScreenController.AddInfo("Handled Enemy Load", 1);
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
@@ -362,7 +355,6 @@ class HandleDataTCP
     /// </summary>
     public static void HandleRoomStart(byte[] data)
     {
-        DeveloperScreenController.AddInfo("Room Start Handled", 1);
         BattleLoader.StartBattle();
     }
 
@@ -376,7 +368,6 @@ class HandleDataTCP
     /// </summary>
     public static void HandleSpellLoad(byte[] data)
     {
-        DeveloperScreenController.AddInfo("Spells handled", 1);
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
