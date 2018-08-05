@@ -1,28 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading;
+using System.Timers;
 
 public class BattleLogic : MonoBehaviour {
 
-    public static Timer Timer;
+    private static Timer battleTimer;
 
     public static void BeginBattle()
     {
-        //ObjectManager.playerStats.battleIsOn = true;
-        //RoomController.battleIsOn = true;
-        //Timer = new Timer(SendInfo, null, 0, 1000 / NetworkConstants.UPDATE_RATE);
+        battleTimer = new Timer(GSC.timerTick);
+        battleTimer.Elapsed += OnBattleTimerEvent;
+        battleTimer.AutoReset = true;
     }
 
-    private static void SendInfo(object o)
+    public static void StartTimer()
     {
-        //RoomSendData.SendTransform(ObjectManager.playerPos, ObjectManager.playerRot);
+        battleTimer.Start();
+    }
+
+    public static void StopTimer(bool dispose = false)
+    {
+        if (dispose)
+            battleTimer.Dispose();
+        else
+            battleTimer.Stop();
+    }
+
+    private static void OnBattleTimerEvent(object o, ElapsedEventArgs e)
+    {
+        PlayerMovement.Move();
     }
 
     public static void EndBattle(string Nickname)
     {
-        //Timer.Dispose();
-        //ObjectManagerOld.playerStats.battleIsOn = false;
+        battleTimer.Dispose();
         RoomController.battleIsOn = false;
         RoomController.ViewStatisticScreen(Nickname);
     }

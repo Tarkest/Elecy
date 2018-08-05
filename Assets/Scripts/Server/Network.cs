@@ -128,7 +128,7 @@ public class Network : MonoBehaviour
         ClientTCP.Close();
         try
         {
-            BattleLogic.Timer.Dispose();
+            BattleLogic.StopTimer(true);
         }
         catch { }
     }

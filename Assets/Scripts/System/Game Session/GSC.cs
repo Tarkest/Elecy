@@ -16,9 +16,10 @@ public static class GSC
         public static float speed = 30f;
         public static float player_Y = 0.5f;
 
-        #endregion
+    #endregion
 
     #endregion
 
+    public const double timerTick = 1000d / 10d;
 }
 

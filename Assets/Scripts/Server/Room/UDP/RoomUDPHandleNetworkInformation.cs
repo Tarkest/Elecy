@@ -12,6 +12,7 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         _Packets = new Dictionary<int, Packet_>
         {
             {(int)UDPServerPackets.USConnectionOK, HandleConnectionOk},
+            {(int)UDPServerPackets.USTransformUpdate, HandleMovePosition },
         };
     }
 
@@ -36,5 +37,24 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         buffer.ReadInteger();
         buffer.Dispose();
         BattleLoader.LoadComplite();
+    }
+
+    public static void HandleMovePosition(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.ReadInteger();
+        byte type = buffer.ReadByte();
+        int index = buffer.ReadInteger();
+        float[] pos = new float[] { buffer.ReadFloat(), buffer.ReadFloat() };
+        buffer.Dispose();
+        if(type == 1)
+        {
+            PlayerMovement.CheckPosition(index, pos);
+        }
+        else if(type == 2)
+        {
+            EnemyMovement.UpdatePosition(pos);
+        }
+
     }
 }

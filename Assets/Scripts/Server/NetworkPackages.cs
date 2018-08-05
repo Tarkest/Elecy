@@ -2,7 +2,7 @@
 
     public enum ServerPackets
     {
-        SConnectionOK,
+        SConnectionOK = 1,
         SRegisterOK,
         SLoginOK,
         SAlert,
@@ -28,7 +28,7 @@
 
     public enum ClientPackets
     {
-        CConnectComplite,
+        CConnectComplite = 1,
         CRegisterTry,
         CLoginTry,
 
@@ -66,11 +66,14 @@
     public enum UDPRoomPackets
     {
         URConnectionComplite = 1,
-    }
+        URTransformUpdate,
+        URTransformStepback,
+}
 
     public enum UDPServerPackets
     {
         USConnectionOK = 1,
+        USTransformUpdate,
     }
 
 #endregion

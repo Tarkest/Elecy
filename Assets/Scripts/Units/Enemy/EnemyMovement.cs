@@ -2,38 +2,31 @@
 
 public class EnemyMovement : MonoBehaviour {
 
-    private Vector3 _serverPos;
-    private Quaternion _serverRot;
-    private float _positionDist;
+    private static Vector3 _curPosition;
     private Rigidbody _enemyRigidbody;
+    bool moving;
 
-    void Awake()
+    public void SetStats(Vector3 pos)
     {
-        _enemyRigidbody = gameObject.GetComponent<Rigidbody>();    
+        _curPosition = pos;
+        moving = true;
     }
 
     void Start ()
     {
-        _serverPos = ObjectManagerOld.enemyPos;
-        _serverRot = ObjectManagerOld.enemyRot;
-	}
-	
-	void Update ()
-    {
-        _positionDist = Vector3.Distance(gameObject.transform.position, _serverPos);
-        if(_positionDist > 0.1f && _positionDist < 10.5f)
-        {
-            _enemyRigidbody.MovePosition(Vector3.Lerp(ObjectManagerOld.enemyPos, _serverPos, 0.1f));
-        } else
-        {
-            _enemyRigidbody.MovePosition(_serverPos);
-        }
-        _enemyRigidbody.MoveRotation(Quaternion.Lerp(ObjectManagerOld.enemyRot, _serverRot, 0.1f));
+        _enemyRigidbody = gameObject.GetComponent<Rigidbody>();    
 	}
 
-    public void SetServerPosition(float[]Position, float[]Rotation)
+    void FixedUpdate()
     {
-        _serverPos = new Vector3(Position[0], Position[1], Position[2]);
-        _serverRot = new Quaternion(Rotation[0], Rotation[1], Rotation[2], Rotation[3]);
+        if(moving)
+            _enemyRigidbody.MovePosition(Vector3.Lerp(transform.position, _curPosition, Time.fixedDeltaTime));    
     }
+
+    public static void UpdatePosition(float[] pos)
+    {
+        _curPosition.x = pos[0];
+        _curPosition.z = pos[1];
+    }
+
 }
