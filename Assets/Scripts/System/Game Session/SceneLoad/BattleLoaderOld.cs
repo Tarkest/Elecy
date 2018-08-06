@@ -185,6 +185,6 @@ public class BattleLoaderOld : MonoBehaviour
     public static void StartBattle()
     {
         loaded = true;      
-        BattleLogic.BeginBattle();
+        //BattleLogic.BeginBattle();
     }
 }

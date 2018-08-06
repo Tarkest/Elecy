@@ -1,17 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Timers;
+using System.Threading;
 
 public class BattleLogic : MonoBehaviour {
 
-    private static Timer battleTimer;
+    private static System.Timers.Timer battleTimer;
 
     public static void BeginBattle()
     {
-        battleTimer = new Timer(GSC.timerTick);
+        battleTimer = new System.Timers.Timer(GSC.timerTick);
         battleTimer.Elapsed += OnBattleTimerEvent;
         battleTimer.AutoReset = true;
+        Thread.Sleep(5000);
+        StartTimer();
     }
 
     public static void StartTimer()
@@ -29,7 +30,7 @@ public class BattleLogic : MonoBehaviour {
 
     private static void OnBattleTimerEvent(object o, ElapsedEventArgs e)
     {
-        PlayerMovement.Move();
+        ObjectManager.players[ObjectManager.playerMovement].Move();
     }
 
     public static void EndBattle(string Nickname)

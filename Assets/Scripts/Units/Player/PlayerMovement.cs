@@ -11,10 +11,11 @@ public class PlayerMovement : MonoBehaviour
     private static PlayerStats _playerStats;
     private Animator animator;
 
-    private static Vector3 curPosition;
-    private static int curPosIndex;
-    private static Dictionary<int, MovementUpdate> _moveUpdate;
+    private Vector3 curPosition;
+    private int curPosIndex;
+    private Dictionary<int, MovementUpdate> _moveUpdate;
 
+    bool isPlayer;
     bool moving;
 
     #endregion
@@ -44,18 +45,22 @@ public class PlayerMovement : MonoBehaviour
 
     #region Initialize
 
-    public void SetStats(Vector3 spawnPosition)
+    public void SetStats(Vector3 spawnPosition, bool isPlayer = false)
     {
+        this.isPlayer = isPlayer;
+        if(isPlayer)
+        {
+            curPosIndex = 0;
+            _moveUpdate.Add(curPosIndex, new MovementUpdate(spawnPosition));
+        }
         curPosition = spawnPosition;
-        curPosIndex = 0;
-        _moveUpdate.Add(curPosIndex, new MovementUpdate(curPosition));
         moving = true;
     }
 
     #endregion
 
 
-    public static void Move()
+    public void Move()
     {
         int index = ++curPosIndex;
         Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
@@ -65,42 +70,50 @@ public class PlayerMovement : MonoBehaviour
         _moveUpdate[index].Sended();
     }
 
-    public static void CheckPosition(int index, float[] pos)
+    public void CheckPosition(int index, float[] pos)
     {
-        if(!_moveUpdate[index].received)
+        if(isPlayer)
         {
-            if(!_moveUpdate[index].position.Equals(pos))
+            if(!_moveUpdate[index].received)
             {
-                BattleLogic.StopTimer();
-                List<int> removeIndexes = new List<int>();
-                foreach(KeyValuePair<int, MovementUpdate> k in _moveUpdate.Reverse())
+                if(!_moveUpdate[index].position.Equals(pos))
                 {
-                    if(k.Value.received && k.Key < index)
+                    BattleLogic.StopTimer();
+                    List<int> removeIndexes = new List<int>();
+                    foreach(KeyValuePair<int, MovementUpdate> k in _moveUpdate.Reverse())
                     {
-                        curPosIndex = k.Key;
-                        RoomUDPSendData.SendMoveBack(k.Key);
-                        break;
+                        if(k.Value.received && k.Key < index)
+                        {
+                            curPosIndex = k.Key;
+                            RoomUDPSendData.SendMoveBack(k.Key);
+                            break;
+                        }
+                        else
+                        {
+                            removeIndexes.Add(k.Key);
+                        }
+                        foreach(int i in removeIndexes)
+                        {
+                            _moveUpdate.Remove(i);
+                        }
+                        BattleLogic.StartTimer();
                     }
-                    else
+                }
+                else
+                {
+                    foreach(int key in _moveUpdate.Keys)
                     {
-                        removeIndexes.Add(k.Key);
+                        if (key < index)
+                            _moveUpdate.Remove(key);
                     }
-                    foreach(int i in removeIndexes)
-                    {
-                        _moveUpdate.Remove(i);
-                    }
-                    BattleLogic.StartTimer();
+                    _moveUpdate[index].Received();
                 }
             }
-            else
-            {
-                foreach(int key in _moveUpdate.Keys)
-                {
-                    if (key < index)
-                        _moveUpdate.Remove(key);
-                }
-                _moveUpdate[index].Received();
-            }
+        }
+        else
+        {
+            curPosition.x = pos[0];
+            curPosition.z = pos[1];
         }
     }
 

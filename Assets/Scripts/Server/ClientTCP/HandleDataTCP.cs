@@ -261,7 +261,7 @@ class HandleDataTCP
         buffer.ReadInteger();
         string Nickname1 = buffer.ReadString();
         string Nickname2 = buffer.ReadString();
-        float[][] pos = new float[][] { buffer.ReadVector3(), buffer.ReadVector3() };
+        float[][] pos = new float[][] { new float[] { buffer.ReadFloat(), 0.5f, buffer.ReadFloat() }, new float[] { buffer.ReadFloat(), 0.5f, buffer.ReadFloat() } };
         float[][] rot = new float[][] { buffer.ReadQuternion(), buffer.ReadQuternion() };
         buffer.Dispose();
         MainThread.executeInUpdate(() => { BattleLoader.SpanwPlayers(Nickname1, Nickname2, pos, rot); });

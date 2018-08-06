@@ -45,15 +45,12 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         buffer.ReadInteger();
         byte type = buffer.ReadByte();
         int index = buffer.ReadInteger();
+        int updateIndex = buffer.ReadInteger();
         float[] pos = new float[] { buffer.ReadFloat(), buffer.ReadFloat() };
         buffer.Dispose();
         if(type == 1)
         {
-            PlayerMovement.CheckPosition(index, pos);
-        }
-        else if(type == 2)
-        {
-            EnemyMovement.UpdatePosition(pos);
+            ObjectManager.players[index].CheckPosition(updateIndex, pos);
         }
 
     }

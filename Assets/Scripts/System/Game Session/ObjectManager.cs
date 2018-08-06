@@ -18,7 +18,7 @@ public class ObjectManager : MonoBehaviour {
 
     #region ObjectsContainer
 
-    public static GameObject[] players = new GameObject[2];
+    public static PlayerMovement[] players = new PlayerMovement[2];
 
     public List<GameObject> dynamicPropList = new List<GameObject>();
 
@@ -30,6 +30,8 @@ public class ObjectManager : MonoBehaviour {
 
     public int treesCount;
     public int rocksCount;
+
+    public static int playerMovement;
 
     #endregion
 
