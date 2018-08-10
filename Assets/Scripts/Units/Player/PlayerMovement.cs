@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,10 +14,11 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 curPosition;
     private int curPosIndex;
-    private Dictionary<int, MovementUpdate> _moveUpdate;
+    private Dictionary<int, MovementUpdate> _moveUpdate = new Dictionary<int, MovementUpdate>();
 
     bool isPlayer;
     bool moving;
+    public int[] _keys;
 
     #endregion
 
@@ -27,18 +29,32 @@ public class PlayerMovement : MonoBehaviour
         _playerRigidbody = GetComponent<Rigidbody>();
         _playerStats = GetComponent<PlayerStats>();
         animator = GetComponent<Animator>();
-        _moveUpdate = new Dictionary<int, MovementUpdate>();
+        //_moveUpdate = new Dictionary<int, MovementUpdate>();
     }
 
     void Update()
     {
-        curPosition = _moveUpdate[curPosIndex].position;
+        if (isPlayer && moving)
+        {
+            MovementUpdate value;
+            if (_moveUpdate.TryGetValue(curPosIndex, out value))
+                curPosition = value.position;
+        }
     }
 
     void FixedUpdate ()
     {
-        if(moving)
-            _playerRigidbody.MovePosition(Vector3.Lerp(transform.position, curPosition, Time.fixedDeltaTime));
+        if (moving)
+        {
+            if (Vector3.Distance(transform.position, curPosition) > 0.01f)
+            {
+                _playerRigidbody.MovePosition(transform.position + (curPosition - transform.position).normalized * _playerStats.playerMoveSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                _playerRigidbody.position = curPosition;
+            }
+        }
 	}
 
     #endregion
@@ -50,8 +66,12 @@ public class PlayerMovement : MonoBehaviour
         this.isPlayer = isPlayer;
         if(isPlayer)
         {
-            curPosIndex = 0;
+            curPosIndex = 1;
             _moveUpdate.Add(curPosIndex, new MovementUpdate(spawnPosition));
+            MovementUpdate _value;
+            if(_moveUpdate.TryGetValue(curPosIndex, out _value)) 
+                _value.Received();
+            else { throw new Exception("Set Stats Exception: There is no value in dictionary."); }
         }
         curPosition = spawnPosition;
         moving = true;
@@ -59,56 +79,72 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-
     public void Move()
     {
-        int index = ++curPosIndex;
-        Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        Vector3 newPosition = curPosition + direction.normalized * _playerStats.playerMoveSpeed * (float)GSC.timerTick;
-        _moveUpdate.Add(index, new MovementUpdate(newPosition));
-        RoomUDPSendData.SendMovePosition(index, newPosition);
-        _moveUpdate[index].Sended();
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        if (h != 0 || v != 0)
+        {
+            int index = curPosIndex + 1;
+            Vector3 direction = new Vector3(h, 0, v);
+            Vector3 newPosition = curPosition + direction.normalized * _playerStats.playerMoveSpeed * (float)GSC.timerTick / 1000f;
+            _moveUpdate.Add(index, new MovementUpdate(newPosition));
+            curPosIndex++;
+            RoomUDPSendData.SendMovePosition(index, newPosition);
+            MovementUpdate value;
+            if (_moveUpdate.TryGetValue(index, out value))
+                value.Sended();
+            else
+                throw new Exception("Move send exception");
+        }
     }
 
     public void CheckPosition(int index, float[] pos)
     {
-        if(isPlayer)
+        if (isPlayer)
         {
-            if(!_moveUpdate[index].received)
+            MovementUpdate value;
+            if (_moveUpdate.TryGetValue(index, out value))
             {
-                if(!_moveUpdate[index].position.Equals(pos))
+                if (!value.received)
                 {
-                    BattleLogic.StopTimer();
-                    List<int> removeIndexes = new List<int>();
-                    foreach(KeyValuePair<int, MovementUpdate> k in _moveUpdate.Reverse())
+                    if (!value.position.Equals(new Vector3(pos[0], 0.5f, pos[1])))
                     {
-                        if(k.Value.received && k.Key < index)
+                        BattleLogic.StopTimer();
+                        List<int> removeIndexes = new List<int>();
+                        foreach (var k in _moveUpdate.Reverse())
                         {
-                            curPosIndex = k.Key;
-                            RoomUDPSendData.SendMoveBack(k.Key);
-                            break;
+                            if (k.Value.received && k.Key < index)
+                            {
+                                curPosIndex = k.Key;
+                                RoomUDPSendData.SendMoveBack(k.Key);
+                                break;
+                            }
+                            else
+                            {
+                                removeIndexes.Add(k.Key);
+                            }
                         }
-                        else
-                        {
-                            removeIndexes.Add(k.Key);
-                        }
-                        foreach(int i in removeIndexes)
+                        foreach (int i in removeIndexes)
                         {
                             _moveUpdate.Remove(i);
                         }
                         BattleLogic.StartTimer();
                     }
-                }
-                else
-                {
-                    foreach(int key in _moveUpdate.Keys)
+                    else
                     {
-                        if (key < index)
-                            _moveUpdate.Remove(key);
+                        _keys = _moveUpdate.Keys.ToArray();
+                        foreach (int key in _keys)
+                        {
+                            if (key < index)
+                                _moveUpdate.Remove(key);
+                        }
+                        value.Received();
                     }
-                    _moveUpdate[index].Received();
                 }
             }
+            else
+                throw new Exception("Не чекнул позицию");
         }
         else
         {

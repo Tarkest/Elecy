@@ -97,6 +97,7 @@ public class BattleLoader : MonoBehaviour {
             ObjectManager.players[0] = _player.GetComponent<PlayerMovement>();
             ObjectManager.players[0].SetStats(_thisLoadedmanager.GetPlayerStartPosition(), true);
             ObjectManager.playerMovement = 0;
+            CameraFollow.playerIndex = 0;
             DeveloperScreenController.AddInfo("Player Load...OK", 1);
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
             GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetEnemyStartPosition(), _thisLoadedmanager.GetEnemyStartRotation()) as GameObject;
@@ -114,6 +115,7 @@ public class BattleLoader : MonoBehaviour {
             ObjectManager.players[1] = _player.GetComponent<PlayerMovement>();
             ObjectManager.players[1].SetStats(_thisLoadedmanager.GetPlayerStartPosition(), true);
             ObjectManager.playerMovement = 1;
+            CameraFollow.playerIndex = 1;
             DeveloperScreenController.AddInfo("Player Load...OK", 1);
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
             GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetEnemyStartPosition(), _thisLoadedmanager.GetEnemyStartRotation()) as GameObject;

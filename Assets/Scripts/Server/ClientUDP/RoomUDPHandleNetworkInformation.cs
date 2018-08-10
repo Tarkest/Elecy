@@ -42,6 +42,7 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
     public static void HandleMovePosition(byte[] data)
     {
         PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
         buffer.ReadInteger();
         byte type = buffer.ReadByte();
         int index = buffer.ReadInteger();

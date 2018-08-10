@@ -68,7 +68,6 @@ public class RoomUDP : MonoBehaviour
         }
         catch (Exception ex)
         {
-            _receiving = false;
             DeveloperScreenController.AddInfo("UDP Recieve exception", 1);
             Debug.Log(ex + "");
         }

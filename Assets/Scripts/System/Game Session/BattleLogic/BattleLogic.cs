@@ -30,7 +30,8 @@ public class BattleLogic : MonoBehaviour {
 
     private static void OnBattleTimerEvent(object o, ElapsedEventArgs e)
     {
-        ObjectManager.players[ObjectManager.playerMovement].Move();
+        MainThread.executeInUpdate(() => { ObjectManager.players[ObjectManager.playerMovement].Move(); });
+
     }
 
     public static void EndBattle(string Nickname)
