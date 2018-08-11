@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool isPlayer;
     bool moving;
+    private float _currentLerpTime = 0f;
     public int[] _keys;
 
     #endregion
@@ -46,14 +47,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (moving)
         {
-            if (Vector3.Distance(transform.position, curPosition) > 0.01f)
-            {
-                _playerRigidbody.MovePosition(transform.position + (curPosition - transform.position).normalized * _playerStats.playerMoveSpeed * Time.fixedDeltaTime);
-            }
-            else
-            {
-                _playerRigidbody.position = curPosition;
-            }
+            _currentLerpTime += Time.fixedDeltaTime;
+            if (_currentLerpTime > (float)GSC.timerTick / 1000)
+                _currentLerpTime = (float)GSC.timerTick / 1000;
+            float _delta = _currentLerpTime * 1000 / (float)GSC.timerTick;
+            Debug.Log(_delta);
+            _playerRigidbody.MovePosition(Vector3.Lerp(transform.position, curPosition, _delta));
         }
 	}
 
@@ -90,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 newPosition = curPosition + direction.normalized * _playerStats.playerMoveSpeed * (float)GSC.timerTick / 1000f;
             _moveUpdate.Add(index, new MovementUpdate(newPosition));
             curPosIndex++;
+            _currentLerpTime = 0f;
             RoomUDPSendData.SendMovePosition(index, newPosition);
             MovementUpdate value;
             if (_moveUpdate.TryGetValue(index, out value))
@@ -110,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (!value.position.Equals(new Vector3(pos[0], 0.5f, pos[1])))
                     {
+                        Debug.Log(index + " pos in client: " + value.position + ", pos in server: " + pos[0] + ",0.5," + pos[1]);
                         BattleLogic.StopTimer();
                         List<int> removeIndexes = new List<int>();
                         foreach (var k in _moveUpdate.Reverse())
@@ -117,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
                             if (k.Value.received && k.Key < index)
                             {
                                 curPosIndex = k.Key;
+                                _currentLerpTime = 0f;
                                 RoomUDPSendData.SendMoveBack(k.Key);
                                 break;
                             }
@@ -144,12 +146,23 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
             else
-                throw new Exception("Не чекнул позицию");
+            {
+                MovementUpdate _value;
+                if (_moveUpdate.TryGetValue(index, out _value))
+                {
+                    throw new Exception("Не чекнул позицию на индексе: " + index + " и на позиции: " + pos[0] + "," + 0.5f + "," + pos[1] + ", на момент выдрасывания ошибки этот индекс присутствует и хранит позицию: " + _value.position.x + "," +_value.position.y + "," + _value.position.z + " этотскрипт висит на игроке: " + isPlayer);
+                } 
+                else
+                {
+                    throw new Exception("Не чекнул позицию на индексе: " + index + " и на позиции: " + pos[0] + "," + 0.5f + "," + pos[1] +", в словаре данный индекс отсутствует" + " этотскрипт висит на игроке: " + isPlayer);
+                }
+            }
         }
         else
         {
             curPosition.x = pos[0];
             curPosition.z = pos[1];
+            _currentLerpTime = 0f;
         }
     }
 
