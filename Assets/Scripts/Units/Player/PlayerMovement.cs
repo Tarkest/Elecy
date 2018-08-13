@@ -5,7 +5,6 @@ using System;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     #region Variables
 
     private Rigidbody _playerRigidbody;
@@ -189,5 +188,4 @@ public class PlayerMovement : MonoBehaviour
             received = true;
         }
     }
-
 }
