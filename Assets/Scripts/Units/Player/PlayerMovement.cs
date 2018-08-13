@@ -84,8 +84,18 @@ public class PlayerMovement : MonoBehaviour
         if (h != 0 || v != 0)
         {
             int index = curPosIndex + 1;
+            Vector3 newPosition;
             Vector3 direction = new Vector3(h, 0, v);
-            Vector3 newPosition = curPosition + direction.normalized * _playerStats.playerMoveSpeed * (float)GSC.timerTick / 1000f;
+            Ray _ray = new Ray(transform.position, direction.normalized);
+            RaycastHit _hit;
+            if(Physics.Raycast(_ray, out _hit))
+            {
+                newPosition = _hit.point;
+            }
+            else
+            {
+                newPosition = curPosition + direction.normalized * _playerStats.playerMoveSpeed * (float)GSC.timerTick / 1000f;
+            }      
             _moveUpdate.Add(index, new MovementUpdate(newPosition));
             curPosIndex++;
             _currentLerpTime = 0f;
