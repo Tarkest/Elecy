@@ -97,15 +97,18 @@ public class PlayerMovement : MonoBehaviour
                 newPosition = curPosition + direction.normalized * _playerStats.playerMoveSpeed * (float)GSC.timerTick / 1000f;
             }
             newPosition.y = 0.5f;      
-            _moveUpdate.Add(index, new MovementUpdate(newPosition));
-            curPosIndex++;
-            _currentLerpTime = 0f;
-            RoomUDPSendData.SendMovePosition(index, newPosition);
-            MovementUpdate value;
-            if (_moveUpdate.TryGetValue(index, out value))
-                value.Sended();
-            else
-                throw new Exception("Move send exception");
+            lock(_moveUpdate)
+            {
+                _moveUpdate.Add(index, new MovementUpdate(newPosition));
+                curPosIndex++;
+                _currentLerpTime = 0f;
+                RoomUDPSendData.SendMovePosition(index, newPosition);
+                MovementUpdate value;
+                if (_moveUpdate.TryGetValue(index, out value))
+                    value.Sended();
+                else
+                    throw new Exception("Move send exception");
+            }
         }
     }
 
@@ -113,57 +116,48 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isPlayer)
         {
-            MovementUpdate value;
-            if (_moveUpdate.TryGetValue(index, out value))
+            lock(_moveUpdate)
             {
-                if (!value.received)
+                MovementUpdate value;
+                if (_moveUpdate.TryGetValue(index, out value))
                 {
-                    if (!value.position.Equals(new Vector3(pos[0], 0.5f, pos[1])))
+                    if (!value.received)
                     {
-                        BattleLogic.StopTimer();
-                        List<int> removeIndexes = new List<int>();
-                        foreach (var k in _moveUpdate.Reverse())
+                        if (!value.position.Equals(new Vector3(pos[0], 0.5f, pos[1])))
                         {
-                            if (k.Value.received && k.Key < index)
+                            BattleLogic.StopTimer();
+                            List<int> removeIndexes = new List<int>();
+                            foreach (var k in _moveUpdate.Reverse())
                             {
-                                curPosIndex = k.Key;
-                                _currentLerpTime = 0f;
-                                RoomUDPSendData.SendMoveBack(k.Key);
-                                break;
+                                if (k.Value.received && k.Key < index)
+                                {
+                                    curPosIndex = k.Key;
+                                    _currentLerpTime = 0f;
+                                    RoomUDPSendData.SendMoveBack(k.Key);
+                                    break;
+                                }
+                                else
+                                {
+                                    removeIndexes.Add(k.Key);
+                                }
                             }
-                            else
+                            foreach (int i in removeIndexes)
                             {
-                                removeIndexes.Add(k.Key);
+                                _moveUpdate.Remove(i);
                             }
+                            BattleLogic.StartTimer();
                         }
-                        foreach (int i in removeIndexes)
+                        else
                         {
-                            _moveUpdate.Remove(i);
+                            _keys = _moveUpdate.Keys.ToArray();
+                            foreach (int key in _keys)
+                            {
+                                if (key < index)
+                                    _moveUpdate.Remove(key);
+                            }
+                            value.Received();
                         }
-                        BattleLogic.StartTimer();
                     }
-                    else
-                    {
-                        _keys = _moveUpdate.Keys.ToArray();
-                        foreach (int key in _keys)
-                        {
-                            if (key < index)
-                                _moveUpdate.Remove(key);
-                        }
-                        value.Received();
-                    }
-                }
-            }
-            else
-            {
-                MovementUpdate _value;
-                if (_moveUpdate.TryGetValue(index, out _value))
-                {
-                    throw new Exception("Не чекнул позицию на индексе: " + index + " и на позиции: " + pos[0] + "," + 0.5f + "," + pos[1] + ", на момент выдрасывания ошибки этот индекс присутствует и хранит позицию: " + _value.position.x + "," +_value.position.y + "," + _value.position.z + " этотскрипт висит на игроке: " + isPlayer);
-                } 
-                else
-                {
-                    throw new Exception("Не чекнул позицию на индексе: " + index + " и на позиции: " + pos[0] + "," + 0.5f + "," + pos[1] +", в словаре данный индекс отсутствует" + " этотскрипт висит на игроке: " + isPlayer);
                 }
             }
         }
