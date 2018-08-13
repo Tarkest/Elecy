@@ -86,16 +86,17 @@ public class PlayerMovement : MonoBehaviour
             int index = curPosIndex + 1;
             Vector3 newPosition;
             Vector3 direction = new Vector3(h, 0, v);
-            Ray _ray = new Ray(transform.position, direction.normalized);
             RaycastHit _hit;
-            if(Physics.Raycast(_ray, out _hit))
+            if(Physics.Raycast(transform.position, direction.normalized, out _hit, Vector3.Distance(transform.position, curPosition + direction.normalized * _playerStats.playerMoveSpeed * (float)GSC.timerTick / 1000f)))
             {
                 newPosition = _hit.point;
+
             }
             else
             {
                 newPosition = curPosition + direction.normalized * _playerStats.playerMoveSpeed * (float)GSC.timerTick / 1000f;
-            }      
+            }
+            newPosition.y = 0.5f;      
             _moveUpdate.Add(index, new MovementUpdate(newPosition));
             curPosIndex++;
             _currentLerpTime = 0f;
@@ -119,7 +120,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (!value.position.Equals(new Vector3(pos[0], 0.5f, pos[1])))
                     {
-                        Debug.Log(index + " pos in client: " + value.position + ", pos in server: " + pos[0] + ",0.5," + pos[1]);
                         BattleLogic.StopTimer();
                         List<int> removeIndexes = new List<int>();
                         foreach (var k in _moveUpdate.Reverse())
