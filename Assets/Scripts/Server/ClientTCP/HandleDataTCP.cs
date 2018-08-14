@@ -213,16 +213,16 @@ class HandleDataTCP
         buffer.ReadInteger();
         string race = buffer.ReadString();
         int spellcount = buffer.ReadInteger();
-        short[] _skillArray = new short[spellcount];
-        short[] _skillVariation = new short[spellcount];
-        for (int i = 0; i < spellcount; i++)
+        short[] _skillArray = new short[spellcount/2];
+        short[] _skillVariation = new short[spellcount/2];
+        for (int i = 0; i < spellcount/2; i++)
         {
             _skillArray[i] = buffer.ReadShort();
             _skillVariation[i] = buffer.ReadShort();
         }
         buffer.Dispose();
         ArmoryController.SetSkills(_skillArray, _skillVariation);
-        MainLobbyController.GetOffProcess();
+        //MainLobbyController.GetOffProcess();
     }
 
     /// <summary>
@@ -375,17 +375,15 @@ class HandleDataTCP
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         int _spellArrayLenght = buffer.ReadInteger() + buffer.ReadInteger();
-        short[] _spellsIndexes = new short[_spellArrayLenght];
-        short[] _spellsVariation = new short[_spellArrayLenght];
-        for (int i = 0; i < _spellArrayLenght; i++)
+        short[] _spellsIndexes = new short[_spellArrayLenght/2];
+        short[] _spellsVariation = new short[_spellArrayLenght/2];
+        for (int i = 0; i < _spellArrayLenght/2; i++)
         {
             _spellsIndexes[i] = buffer.ReadShort();
             _spellsVariation[i] = buffer.ReadShort();
         }
         buffer.Dispose();
         MainThread.executeInUpdate(() => BattleLoader.LoadSpells(_spellsIndexes, _spellsVariation));
-        RoomUDP.Create();
-        RoomUDP.BeginReceive();
     }
 
     /// <summary>

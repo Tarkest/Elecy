@@ -19,13 +19,13 @@ public class ArmorySpell : MonoBehaviour {
         //_spellIcon = Resources.Load("/Spells" + "/" + spellIndex.ToString()).GetComponent<SpellHolder>().GetSpellIcon();
         //gameObject.GetComponent<Image>().sprite = _spellIcon.sprite;
         gameObject.transform.Find("Text").GetComponent<Text>().text = spellIndex.ToString();
-        gameObject.transform.Find("Variation").GetComponent<Text>().text = spellVariation.ToString();
+        gameObject.transform.Find("Variation").Find("Text").GetComponent<Text>().text = spellVariation.ToString();
     }
 	
 	void Update ()
     {
         gameObject.transform.Find("Text").GetComponent<Text>().text = spellIndex.ToString();
-        gameObject.transform.Find("Variation").GetComponent<Text>().text = spellVariation.ToString();
+        gameObject.transform.Find("Variation").Find("Text").GetComponent<Text>().text = spellVariation.ToString();
     }
 
     public void AddSpellIndex()

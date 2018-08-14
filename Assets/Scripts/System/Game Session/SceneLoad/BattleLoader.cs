@@ -278,6 +278,8 @@ public class BattleLoader : MonoBehaviour {
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / SpellsIndexes.Length);
         }
         DeveloperScreenController.AddInfo("Spells Load...OK", 1);
+        RoomUDP.Create();
+        RoomUDP.BeginReceive();
         RoomUDPSendData.SendConnectionOk();
     }
 

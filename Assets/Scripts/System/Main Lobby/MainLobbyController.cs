@@ -90,7 +90,12 @@ public class MainLobbyController : MonoBehaviour
         {
             _process = false;
             _processScreen.SetActive(true);
-            Instantiate(Resources.Load("Interface/MainLobbyInterface/ProcessWindow") as GameObject, _processScreen.transform).GetComponent<MainLobbyProcessWindow>().ChangeText(_processText);
+            _processWindow = Instantiate(Resources.Load("Interface/MainLobbyInterface/ProcessWindow") as GameObject, _processScreen.transform).GetComponent<MainLobbyProcessWindow>();
+            _processWindow.ChangeText(_processText);
+        }
+        if(_processScreen.activeSelf && _processWindow == null)
+        {
+            _processScreen.SetActive(false);
         }
     }
 
@@ -207,6 +212,5 @@ public class MainLobbyController : MonoBehaviour
     public static void GetOffProcess()
     {
         _processWindow.GetOffProcess();
-        _processScreen.SetActive(false);
     }
 }
