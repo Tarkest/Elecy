@@ -270,7 +270,7 @@ public class BattleLoader : MonoBehaviour {
             {
                 if (container.CheckHash(SpellsIndexes[i]))
                 {
-                    ObjectManager.prefabList.Add(container.GetSpellVariation(VariationIndexes[i]));
+                    _thisLoadedmanager.prefabList.Add(container.GetSpellVariation(VariationIndexes[i]));
                     break;
                 }
             }

@@ -9,9 +9,9 @@ public class SpellContainer : MonoBehaviour {
 
     public GameObject GetSpellVariation(short Hash)
     {
-        for(int i = 1; i <= gameObject.transform.childCount - 1; i++)
+        for(int i = 1; i <= gameObject.transform.childCount; i++)
         {
-            variation[i] = transform.GetChild(i).gameObject;
+            variation.Add(transform.GetChild(i - 1).gameObject);
         }
         foreach(GameObject child in variation)
         {

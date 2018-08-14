@@ -38,7 +38,7 @@ public class ArmorySpell : MonoBehaviour {
     public void AddVariationIndex()
     {
         spellVariation += 1;
-        if (spellVariation > 5)
-            spellVariation = 0;
+        if (spellVariation > 3)
+            spellVariation = 1;
     }
 }
