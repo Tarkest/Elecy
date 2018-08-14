@@ -57,6 +57,12 @@ public class PacketBuffer : IDisposable {
         _buffUpdate = true;
     }
 
+    public void WriteShort(short input)
+    {
+        _bufferList.AddRange(BitConverter.GetBytes(input));
+        _buffUpdate = true;
+    }
+
     public void WriteInteger(int input)
     {
         _bufferList.AddRange(BitConverter.GetBytes(input));
@@ -138,6 +144,29 @@ public class PacketBuffer : IDisposable {
             _readPos += Length;
         }
         return value;
+    }
+
+    public short ReadShort(bool peek = true)
+    {
+        if(_bufferList.Count > _readPos)
+        {
+            if(_buffUpdate)
+            {
+                _readBuffer = _bufferList.ToArray();
+                _buffUpdate = false;
+            }
+
+            short value = BitConverter.ToInt16(_readBuffer, _readPos);
+            if(peek & _bufferList.Count > _readPos)
+            {
+                _readPos += 2;
+            }
+            return value;
+        }
+        else
+        {
+            throw new Exception("Buffer past it's limit!");
+        }
     }
 
     public int ReadInteger(bool peek = true)

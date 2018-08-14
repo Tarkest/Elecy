@@ -212,13 +212,16 @@ class HandleDataTCP
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         string race = buffer.ReadString();
-        int[] SkillArray = new int[buffer.ReadInteger()];
-        for (int i = 0; i < SkillArray.Length; i++)
+        int spellcount = buffer.ReadInteger();
+        short[] _skillArray = new short[spellcount];
+        short[] _skillVariation = new short[spellcount];
+        for (int i = 0; i < spellcount; i++)
         {
-            SkillArray[i] = buffer.ReadInteger();
+            _skillArray[i] = buffer.ReadShort();
+            _skillVariation[i] = buffer.ReadShort();
         }
         buffer.Dispose();
-        ArmoryController.SetSkills(SkillArray);
+        ArmoryController.SetSkills(_skillArray, _skillVariation);
         MainLobbyController.GetOffProcess();
     }
 
@@ -372,16 +375,17 @@ class HandleDataTCP
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         int _spellArrayLenght = buffer.ReadInteger() + buffer.ReadInteger();
-        int[] _spellsIndexes = new int[_spellArrayLenght];
+        short[] _spellsIndexes = new short[_spellArrayLenght];
+        short[] _spellsVariation = new short[_spellArrayLenght];
         for (int i = 0; i < _spellArrayLenght; i++)
         {
-            _spellsIndexes[i] = buffer.ReadInteger();
+            _spellsIndexes[i] = buffer.ReadShort();
+            _spellsVariation[i] = buffer.ReadShort();
         }
         buffer.Dispose();
-        BattleLoader.LoadSpells(_spellsIndexes);
+        MainThread.executeInUpdate(() => BattleLoader.LoadSpells(_spellsIndexes, _spellsVariation));
         RoomUDP.Create();
         RoomUDP.BeginReceive();
-        RoomUDPSendData.SendConnectionOk();
     }
 
     /// <summary>

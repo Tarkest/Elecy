@@ -257,17 +257,28 @@ public class BattleLoader : MonoBehaviour {
         SendDataTCP.SendGetSpells(_thisPlayerProgress);
     }
 
-    public static void LoadSpells(int[] SpellsIndexes)
+    public static void LoadSpells(short[] SpellsIndexes, short[] VariationIndexes)
     {
         DeveloperScreenController.AddInfo("Begin Load: Spells", 1);
+        SpellContainer[] _resourses;
+        _resourses = Resources.FindObjectsOfTypeAll(typeof(SpellContainer)) as SpellContainer[];
         DeveloperScreenController.AddInfo("Speels Count: " + SpellsIndexes.Length.ToString(), 1);
         DeveloperScreenController.AddInfo("Spells: ", 1);
         for (int i = 0; i < SpellsIndexes.Length; i++)
         {
+            foreach(SpellContainer container in _resourses)
+            {
+                if (container.CheckHash(SpellsIndexes[i]))
+                {
+                    ObjectManager.prefabList.Add(container.GetSpellVariation(VariationIndexes[i]));
+                    break;
+                }
+            }
             DeveloperScreenController.AddInfo(i.ToString() + ": " + SpellsIndexes[i].ToString(), 1);
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / SpellsIndexes.Length);
         }
         DeveloperScreenController.AddInfo("Spells Load...OK", 1);
+        RoomUDPSendData.SendConnectionOk();
     }
 
     public static void LoadComplite()

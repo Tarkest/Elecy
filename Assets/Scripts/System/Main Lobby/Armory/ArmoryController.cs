@@ -15,22 +15,25 @@ public class ArmoryController : MonoBehaviour {
         }
     }
 
-    public static void SetSkills(int[] Spells)
+    public static void SetSkills(short[] Spells, short[] Variations)
     {
         for(int i = 0; i < IgnisButtons.Length; i++)
         {
             IgnisButtons[i].spellIndex = Spells[i];
+            IgnisButtons[i].spellVariation = Variations[i];
         }
     }
 
     public static void SaveBuild()
     {
-        int[] build = new int[9];
+        short[] _build = new short[9];
+        short[] _variation = new short[9];
         for (int i = 0; i < IgnisButtons.Length; i++)
         {
-            build[i] = IgnisButtons[i].spellIndex;
+            _build[i] = IgnisButtons[i].spellIndex;
+            _variation[i] = IgnisButtons[i].spellVariation;
         }
         MainLobbyController.GetInProcess("Saving...");
-        SendDataTCP.SendSaveSkillBuild(build, "Ignis");
+        SendDataTCP.SendSaveSkillBuild(_build, _variation, "Ignis");
     }
 }

@@ -24,6 +24,8 @@ public class ObjectManager : MonoBehaviour {
 
     public List<GameObject> staticPropsList = new List<GameObject>();
 
+    public static List<GameObject> prefabList = new List<GameObject>();
+
     #endregion
 
     #region Variables

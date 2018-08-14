@@ -134,7 +134,7 @@ class SendDataTCP
     ///                     int spellCount;
     ///                     int[spellCount] spellIndex;
     /// </summary>
-    public static void SendSaveSkillBuild(int[] Build, string race)
+    public static void SendSaveSkillBuild(short[] Build, short[] Variation, string race)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)NetPlayerPackets.PSaveSkillsBuild);
@@ -142,7 +142,8 @@ class SendDataTCP
         buffer.WriteInteger(Build.Length);
         for (int i = 0; i < Build.Length; i++)
         {
-            buffer.WriteInteger(Build[i]);
+            buffer.WriteShort(Build[i]);
+            buffer.WriteShort(Variation[i]);
         }
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
