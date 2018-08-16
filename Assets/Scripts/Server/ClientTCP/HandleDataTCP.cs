@@ -30,6 +30,7 @@ class HandleDataTCP
             {(int)ServerPackets.SMatchResult, HandleMatchResult },
             {(int)ServerPackets.SBuildInfo, HandleBuild },
             {(int)ServerPackets.SBuildSaved, HandleBuildSaved },
+            {(int)ServerPackets.SInstantiate, HandleInstantiate }
         };
     }
 
@@ -384,6 +385,21 @@ class HandleDataTCP
         }
         buffer.Dispose();
         MainThread.executeInUpdate(() => BattleLoader.LoadSpells(_spellsIndexes, _spellsVariation));
+    }
+
+    public static void HandleInstantiate(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        int _prefabIndex = buffer.ReadInteger();
+        int _objectIndex = buffer.ReadInteger();
+        int _instanceIndex = buffer.ReadInteger();
+        float[] _pos = buffer.ReadVector3();
+        float[] _rot = buffer.ReadQuternion();
+        int hp = buffer.ReadInteger();
+        string _casterNickname = buffer.ReadString();
+        MainThread.executeInUpdate(() => Network.NetworkInstantiate(_prefabIndex, _objectIndex, _instanceIndex, _pos, _rot, hp, _casterNickname));
     }
 
     /// <summary>

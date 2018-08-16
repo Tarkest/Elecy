@@ -49,10 +49,15 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         int updateIndex = buffer.ReadInteger();
         float[] pos = new float[] { buffer.ReadFloat(), buffer.ReadFloat() };
         buffer.Dispose();
-        if(type == 1)
+        switch(type)
         {
-            ObjectManager.players[index].CheckPosition(updateIndex, pos);
-        }
+            case 1:
+                ObjectManager.players[index].CheckPosition(updateIndex, pos);
+                break;
 
+            case 2:
+                Network.currentManager.dynamicPropList.Get(index).CheckPosition(updateIndex, pos);
+                break;
+        }
     }
 }

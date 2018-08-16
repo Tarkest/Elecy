@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ public class ObjectManager : MonoBehaviour {
 
     public static PlayerMovement[] players = new PlayerMovement[2];
 
-    public List<GameObject> dynamicPropList = new List<GameObject>();
+    public NetworkObjectList dynamicPropList = new NetworkObjectList();
 
     public List<GameObject> staticPropsList = new List<GameObject>();
 
@@ -47,6 +48,7 @@ public class ObjectManager : MonoBehaviour {
     void Start()
     {
         BattleLoader.SceneLoaded(this);
+        Network.SetManager(this);
     }
 
     #region Get & Set
@@ -81,4 +83,45 @@ public class ObjectManager : MonoBehaviour {
     }
 
     #endregion
+}
+
+public class NetworkObjectList
+{
+    NetworkObjectController[] List;
+
+    public NetworkObjectList()
+    {
+        List = new NetworkObjectController[1];
+    }
+
+    public void Add(NetworkObjectController Object, int index)
+    {
+        if(List.Length < index)
+        {
+            Array.Resize(ref List, index);
+        }
+        List[index] = Object;
+    }
+
+    public NetworkObjectController Get(int index)
+    {
+        return List[index];
+    }
+
+    public void Remove(int index)
+    {
+        List[index].Destroy();
+        List[index] = null;
+        for (int i = List.Length; i > 0; i--)
+        {
+            if (List[i] == null)
+            {
+                Array.Resize(ref List, i);
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
 }

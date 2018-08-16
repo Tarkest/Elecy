@@ -6,6 +6,8 @@ public class SpellProperties : MonoBehaviour {
 
     public short variationHash;
 
+    public int hp;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -26,5 +28,10 @@ public class SpellProperties : MonoBehaviour {
         {
             return false;
         }
+    }
+
+    public GameObject GetPrefab()
+    {
+        return gameObject;
     }
 }

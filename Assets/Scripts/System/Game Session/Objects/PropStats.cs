@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PropStats : MonoBehaviour {
 
+    public int hp;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -13,4 +15,9 @@ public class PropStats : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public GameObject GetPrefab()
+    {
+        return gameObject;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,7 @@ public class Network : MonoBehaviour
     private static bool quit;
     private static int scenenum;
     private static GameObject _networkInstanse;
+    public static ObjectManager currentManager;
     #endregion
 
     #region Enum
@@ -112,6 +114,64 @@ public class Network : MonoBehaviour
     private void LoadScene(int scenenum)
     {
         SceneManager.LoadScene(scenenum);
+    }
+
+    #endregion
+
+    #region Ingame
+    
+    public static void SetManager(ObjectManager manager)
+    {
+        currentManager = manager;
+    }
+
+    public static void NetworkInstantiate(GameObject Object, Vector3? Position = null, Quaternion? Rotation = null, Transform parent = null)
+    {
+        if (currentManager.prefabList.Contains(Object))
+        {
+            int _index = currentManager.prefabList.BinarySearch(Object);
+            int _parentIndex;
+            Vector3 pos = Position ?? Vector3.zero;
+            Quaternion rot = Rotation ?? Quaternion.identity;
+            float[] _pos = new float[3] { pos.x, pos.y, pos.z };
+            float[] _rot = new float[4] { rot.x, rot.y, rot.z, rot.w };
+            if(parent != null)
+            {
+               _parentIndex = parent.gameObject.GetComponent<NetworkObjectController>().index;
+            }
+            else
+            {
+                _parentIndex = -1;
+            }
+            SendDataTCP.SendInstantiate(_index, _parentIndex, _pos, _rot, Object.GetComponent<NetworkObjectController>().hp);
+        }
+        else
+        {
+            throw new Exception("В предзагрузке отсутсвует обьект");
+        }
+    }
+
+    public static void NetworkInstantiate(int PrefabIndex, int ObjectIndex, int InstanceIndex, float[] Position, float[] Rotation, int HP, string Owner)
+    {
+        GameObject _prefab = currentManager.prefabList[PrefabIndex];
+        Vector3 _position = new Vector3(Position[0], Position[1], Position[2]);
+        Quaternion _rotation = new Quaternion(Rotation[0], Rotation[1], Rotation[2], Rotation[3]);
+        GameObject _instance;
+        if (InstanceIndex != -1)
+        {
+            Transform _parent = currentManager.dynamicPropList.Get(InstanceIndex).transform;
+            _instance = Instantiate(_prefab, _position, _rotation, _parent);
+        }
+        else
+        {
+            _instance = Instantiate(_prefab, _position, _rotation);
+        }
+        _instance.GetComponent<NetworkObjectController>().hp = HP;
+        if (Owner == ClientTCP.nickname)
+        {
+            _instance.GetComponent<NetworkObjectController>().owner = true;
+        }
+        currentManager.dynamicPropList.Add(_instance.GetComponent<NetworkObjectController>(), ObjectIndex);
     }
 
     #endregion
