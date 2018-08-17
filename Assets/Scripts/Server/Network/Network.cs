@@ -78,6 +78,21 @@ public class Network : MonoBehaviour
             quit = false;
             Application.Quit();
         }
+        if(currentManager != null)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                NetworkInstantiate(currentManager.prefabList[0], MouseController.mousePosition, Quaternion.identity);
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                NetworkInstantiate(currentManager.prefabList[1], MouseController.mousePosition, Quaternion.identity);
+            }
+            if (Input.GetMouseButtonDown(2))
+            {
+                NetworkInstantiate(currentManager.prefabList[2], MouseController.mousePosition, Quaternion.identity);
+            }
+        }
     }
 
     #endregion
@@ -129,7 +144,7 @@ public class Network : MonoBehaviour
     {
         if (currentManager.prefabList.Contains(Object))
         {
-            int _index = currentManager.prefabList.BinarySearch(Object);
+            int _index = currentManager.prefabList.IndexOf(Object);
             int _parentIndex;
             Vector3 pos = Position ?? Vector3.zero;
             Quaternion rot = Rotation ?? Quaternion.identity;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class BattleLoader : MonoBehaviour {
 
@@ -261,7 +262,10 @@ public class BattleLoader : MonoBehaviour {
     {
         DeveloperScreenController.AddInfo("Begin Load: Spells", 1);
         SpellContainer[] _resourses;
-        _resourses = Resources.FindObjectsOfTypeAll(typeof(SpellContainer)) as SpellContainer[];
+        //_resourses = Resources.FindObjectsOfTypeAll(typeof(SpellContainer)) as SpellContainer[];
+        _resourses = Resources.LoadAll("Spells", typeof(SpellContainer)).Cast<SpellContainer>().ToArray();
+        //Debug.Log(Resources.LoadAll("Spell/Ignis/")[0].name + " /");
+        //Debug.Log(Resources.LoadAll("Spell/Ignis")[0].name);
         DeveloperScreenController.AddInfo("Speels Count: " + SpellsIndexes.Length.ToString(), 1);
         DeveloperScreenController.AddInfo("Spells: ", 1);
         for (int i = 0; i < SpellsIndexes.Length; i++)
