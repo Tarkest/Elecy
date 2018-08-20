@@ -96,10 +96,11 @@ public class NetworkObjectList
 
     public void Add(NetworkObjectController Object, int index)
     {
-        if(List.Length < index)
+        if(List.Length < index + 1)
         {
-            Array.Resize(ref List, index);
+            Array.Resize(ref List, index + 1);
         }
+        Object.index = index;
         List[index] = Object;
     }
 
