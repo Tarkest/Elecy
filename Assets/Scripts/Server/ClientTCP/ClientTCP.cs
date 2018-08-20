@@ -186,6 +186,19 @@ public static class ClientTCP
     {
         try
         {
+            _socket.Send(data);
+        }
+        catch
+        {
+            EntranceController.GetInProcess("Can`t connect to the server /n Reconnecting...");
+            Network.Connect = Network.ConnectStatus.Connecting;
+        }
+    }
+
+    public static void SendLoadingData(byte[] data)
+    {
+        try
+        {
             System.Threading.Thread.Sleep(250);
             _socket.Send(data);
         }
@@ -195,6 +208,7 @@ public static class ClientTCP
             Network.Connect = Network.ConnectStatus.Connecting;
         }
     }
+
     #endregion
 
     #region Finalization

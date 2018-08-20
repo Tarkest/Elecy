@@ -400,6 +400,16 @@ class HandleDataTCP
         int hp = buffer.ReadInteger();
         string _casterNickname = buffer.ReadString();
         MainThread.executeInUpdate(() => Network.NetworkInstantiate(_prefabIndex, _objectIndex, _instanceIndex, _pos, _rot, hp, _casterNickname));
+        buffer.Dispose();
+    }
+
+    public static void HandleDestroy(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        int index = buffer.ReadInteger();
+        Network.currentManager.dynamicPropList.Remove(index);
     }
 
     /// <summary>

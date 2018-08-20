@@ -20,6 +20,10 @@ public class NetworkObjectController : MonoBehaviour {
     {
         
     }
+    public void NetworkDestoy()
+    {
+        SendDataTCP.SendDestroy(index);
+    }
 
     public void Destroy()
     {

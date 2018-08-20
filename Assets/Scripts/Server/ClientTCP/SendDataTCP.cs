@@ -161,7 +161,7 @@ class SendDataTCP
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RConnectionComplite);
-        ClientTCP.SendData(buffer.ToArray());
+        ClientTCP.SendLoadingData(buffer.ToArray());
         buffer.Dispose();
     }
 
@@ -175,7 +175,7 @@ class SendDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RGetPlayers);
         buffer.WriteFloat(LoadProgress);
-        ClientTCP.SendData(buffer.ToArray());
+        ClientTCP.SendLoadingData(buffer.ToArray());
         buffer.Dispose();
     }
 
@@ -197,7 +197,7 @@ class SendDataTCP
         buffer.WriteBoolean(BigExist);
         buffer.WriteBoolean(MiddleExist);
         buffer.WriteBoolean(SmallExist);
-        ClientTCP.SendData(buffer.ToArray());
+        ClientTCP.SendLoadingData(buffer.ToArray());
         buffer.Dispose();
     }
 
@@ -219,7 +219,7 @@ class SendDataTCP
         buffer.WriteBoolean(BigExist);
         buffer.WriteBoolean(MiddleExist);
         buffer.WriteBoolean(SmallExist);
-        ClientTCP.SendData(buffer.ToArray());
+        ClientTCP.SendLoadingData(buffer.ToArray());
         buffer.Dispose();
     }
 
@@ -233,7 +233,7 @@ class SendDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RGetSpells);
         buffer.WriteFloat(LoadProgress);
-        ClientTCP.SendData(buffer.ToArray());
+        ClientTCP.SendLoadingData(buffer.ToArray());
         buffer.Dispose();
     }
 
@@ -247,7 +247,7 @@ class SendDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RLoadComplite);
         buffer.WriteFloat(LoadProgress);
-        ClientTCP.SendData(buffer.ToArray());
+        ClientTCP.SendLoadingData(buffer.ToArray());
         buffer.Dispose();
     }
 
@@ -275,6 +275,15 @@ class SendDataTCP
         buffer.Dispose();
     }
 
+    /// <summary>
+    ///             Buffer:
+    ///                     int PacketNum;
+    ///                     int index;
+    ///                     int instanceIndex;
+    ///                     Vector3 position;
+    ///                     Quaternion rotation;
+    ///                     int hp;
+    /// </summary>
     public static void SendInstantiate(int index, int instanceIndex, float[] position, float[] rotation, int hp)
     {
         PacketBuffer buffer = new PacketBuffer();
@@ -284,6 +293,20 @@ class SendDataTCP
         buffer.WriteVector3(position);
         buffer.WriteQuaternion(rotation);
         buffer.WriteInteger(hp);
+        ClientTCP.SendData(buffer.ToArray());
+        buffer.Dispose();
+    }
+
+    /// <summary>
+    ///             Buffer:
+    ///                     int PacketNum;
+    ///                     int index;
+    /// </summary>
+    public static void SendDestroy(int index)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteInteger((int)ServerPackets.SDestoy);
+        buffer.WriteInteger(index);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
