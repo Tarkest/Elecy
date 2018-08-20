@@ -18,13 +18,14 @@ public class NetworkObjectController : MonoBehaviour {
 
     void Start()
     {
-        StartCoroutine("Dead");
+        StartCoroutine(Dead());
     }
 
-    private IEnumerable Dead()
+    private IEnumerator Dead()
     {
         yield return new WaitForSeconds(1f);
-        NetworkDestoy();
+        if(owner)
+            NetworkDestoy();
     }
 
     public void CheckPosition(int UpdateIndex, float[] pos)

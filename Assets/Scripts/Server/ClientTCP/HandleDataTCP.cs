@@ -30,7 +30,8 @@ class HandleDataTCP
             {(int)ServerPackets.SMatchResult, HandleMatchResult },
             {(int)ServerPackets.SBuildInfo, HandleBuild },
             {(int)ServerPackets.SBuildSaved, HandleBuildSaved },
-            {(int)ServerPackets.SInstantiate, HandleInstantiate }
+            {(int)ServerPackets.SInstantiate, HandleInstantiate },
+            {(int)ServerPackets.SDestoy, HandleDestroy }
         };
     }
 
@@ -409,7 +410,8 @@ class HandleDataTCP
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         int index = buffer.ReadInteger();
-        Network.currentManager.dynamicPropList.Remove(index);
+        MainThread.executeInUpdate(() => Network.currentManager.dynamicPropList.Remove(index));
+        
     }
 
     /// <summary>

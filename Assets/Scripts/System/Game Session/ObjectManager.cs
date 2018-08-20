@@ -115,9 +115,9 @@ public class NetworkObjectList
         List[index] = null;
         for (int i = List.Length; i > 0; i--)
         {
-            if (List[i] == null)
+            if (List[i-1] == null)
             {
-                Array.Resize(ref List, i);
+                Array.Resize(ref List, i-1);
             }
             else
             {

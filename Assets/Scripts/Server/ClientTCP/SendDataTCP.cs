@@ -305,7 +305,7 @@ class SendDataTCP
     public static void SendDestroy(int index)
     {
         PacketBuffer buffer = new PacketBuffer();
-        buffer.WriteInteger((int)ServerPackets.SDestoy);
+        buffer.WriteInteger((int)RoomPackets.RDestroy);
         buffer.WriteInteger(index);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
