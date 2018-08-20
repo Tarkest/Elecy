@@ -16,10 +16,22 @@ public class NetworkObjectController : MonoBehaviour {
 
     #endregion
 
+    void Start()
+    {
+        StartCoroutine("Dead");
+    }
+
+    private IEnumerable Dead()
+    {
+        yield return new WaitForSeconds(1f);
+        NetworkDestoy();
+    }
+
     public void CheckPosition(int UpdateIndex, float[] pos)
     {
         
     }
+
     public void NetworkDestoy()
     {
         SendDataTCP.SendDestroy(index);
