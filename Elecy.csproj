@@ -372,9 +372,11 @@
     <Compile Include="Assets\Scripts\System\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Units\Enemy\EnemyMovement.cs" />
     <Compile Include="Assets\Scripts\Units\Player\Effect.cs" />
+    <Compile Include="Assets\Scripts\Units\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Units\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Units\Player\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Units\Player\SpellInvoker.cs" />
+    <Compile Include="Assets\Scripts\Units\Player\TestPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\Danil\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />

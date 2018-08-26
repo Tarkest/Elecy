@@ -52,7 +52,7 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         switch(type)
         {
             case 1:
-                ObjectManager.players[index].CheckPosition(updateIndex, pos);
+                Network.currentManager.Players[index].CheckPosition(updateIndex, pos);
                 break;
 
             case 2:
