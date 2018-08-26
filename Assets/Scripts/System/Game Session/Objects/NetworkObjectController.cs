@@ -14,18 +14,18 @@ public class NetworkObjectController : MonoBehaviour {
     private Rigidbody _thisRigitbody;
     public SpellProperties spell;
     public PropStats propStats;
-    public Behavior Behavior;
+    public Behaviour Behaviour;
 
     #endregion
 
     public void CheckPosition(int UpdateIndex, float[] pos)
     {
-        Behavior.CheckPosition(UpdateIndex, pos);
+        Behaviour.CheckPosition(UpdateIndex, pos);
     }
 
     public void Move()
     {
-        Behavior.Move();
+        Behaviour.Move();
     }
 
     public void NetworkDestoy()
@@ -39,7 +39,7 @@ public class NetworkObjectController : MonoBehaviour {
     }
 }
 
-public abstract class Behavior : MonoBehaviour
+public abstract class Behaviour : MonoBehaviour
 {
     private Rigidbody _rigidbody;
     private Vector3 _curPosition;

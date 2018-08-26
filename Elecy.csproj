@@ -322,6 +322,7 @@
     <Compile Include="Assets\Scripts\OldVersion\EnemyMovement1.cs" />
     <Compile Include="Assets\Scripts\OldVersion\PlayerMovement1.cs" />
     <Compile Include="Assets\Scripts\OldVersion\PlayerStats1.cs" />
+    <Compile Include="Assets\Scripts\OldVersion\Spark1.cs" />
     <Compile Include="Assets\Scripts\OldVersion\Spell1.cs" />
     <Compile Include="Assets\Scripts\OldVersion\SpellArea1.cs" />
     <Compile Include="Assets\Scripts\OldVersion\SpellContainer1.cs" />
