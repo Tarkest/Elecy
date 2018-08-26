@@ -50,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
             if (_currentLerpTime > (float)GSC.timerTick / 1000)
                 _currentLerpTime = (float)GSC.timerTick / 1000;
             float _delta = _currentLerpTime * 1000 / (float)GSC.timerTick;
-            Debug.Log(_delta);
             _playerRigidbody.MovePosition(Vector3.Lerp(transform.position, curPosition, _delta));
         }
 	}

@@ -31,7 +31,7 @@ public class BattleLogic : MonoBehaviour {
     private static void OnBattleTimerEvent(object o, ElapsedEventArgs e)
     {
         MainThread.executeInUpdate(() => { ObjectManager.players[ObjectManager.playerMovement].Move(); });
-
+        MainThread.executeInUpdate(() => { Network.currentManager.UpdatePrefabs(); });
     }
 
     public static void EndBattle(string Nickname)

@@ -51,6 +51,14 @@ public class ObjectManager : MonoBehaviour {
         Network.SetManager(this);
     }
 
+    public void UpdatePrefabs()
+    {
+        for (int i = 0; i < dynamicPropList.Lenght(); i++)
+        {
+            dynamicPropList.Get(i).Move();
+        }
+    }
+
     #region Get & Set
 
     public void SetStartTransform(float[] pos1, float[] pos2, float[] rot1, float[] rot2)
@@ -124,5 +132,10 @@ public class NetworkObjectList
                 return;
             }
         }
+    }
+
+    public int Lenght()
+    {
+        return List.Length;
     }
 }
