@@ -149,6 +149,16 @@ class SendDataTCP
         buffer.Dispose();
     }
 
+    public static void SendTestRoomEnter(int mapIndex)
+    {
+        using (PacketBuffer buffer = new PacketBuffer())
+        {
+            buffer.WriteInteger((int)NetPlayerPackets.PTestRoom);
+            buffer.WriteInteger(mapIndex);
+            ClientTCP.SendData(buffer.ToArray());
+        }
+    }
+
     #endregion
 
     #region GameRoom

@@ -1,14 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MainLobbyController : MonoBehaviour
 {
 
+    #region Public Properties
+
     public static bool isSearching;
     public static int windowsCount;
     public static float searchTimeCounter { get; private set; }
+
+    #endregion
+
+    #region Private Members
+
+    private static GameObject _testRoomButton;
+    private static Dropdown _testRoomDropdown;
+    private static Dictionary<string, GameObject> _dropOptions;
 
     private static GameObject _findGameButton;
     private static GameObject _armoryButton;
@@ -31,6 +42,10 @@ public class MainLobbyController : MonoBehaviour
     private static string _errorMsg;
     private static string _processText;
 
+    #endregion
+
+    #region Unity's
+
     void Awake()
     {
         _findGameButton = GameObject.Find("FindGameButton");
@@ -43,6 +58,26 @@ public class MainLobbyController : MonoBehaviour
         _badConnectionPad = GameObject.Find("BadConnectionPad");
         _armoryScreen = GameObject.Find("ArmoryScreen");
         _processScreen = GameObject.Find("ProcessPanel");
+
+        #region TestRoom
+
+        _testRoomButton = GameObject.Find("TestRoomButton");
+        _testRoomDropdown = GameObject.Find("TestRoomDropdown").GetComponent<Dropdown>();
+        _dropOptions = new Dictionary<string, GameObject>();
+        _dropOptions.Add("random", null);
+        for(int i = 1; i > 0; i++)
+        {
+            GameObject map = Resources.Load("Maps/" + i + "/GameArea") as GameObject;
+            if (map != null)
+                _dropOptions.Add(i.ToString(), map);
+            else
+                i = -1;
+        }
+        _testRoomDropdown.ClearOptions();
+        _testRoomDropdown.AddOptions(new List<string>(_dropOptions.Keys));
+
+        #endregion
+
     }
 
     void Start()
@@ -99,6 +134,10 @@ public class MainLobbyController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region TimeToTextConverter
+
     private string TimeInText(float Time)
     {
         int currentTime = (int)Time;
@@ -115,18 +154,9 @@ public class MainLobbyController : MonoBehaviour
             return minutes.ToString() + ":" + secString;
     }
 
-    public static void IncreaseCount()
-    {
-        windowsCount++;
-    }
-    
-    public static void DecreaseCount()
-    {
-        if(windowsCount > 0)
-        {
-            windowsCount--;
-        }
-    }
+    #endregion
+
+    #region Button Events
 
     public void ChangeMatchType()
     {
@@ -180,12 +210,6 @@ public class MainLobbyController : MonoBehaviour
         _optionsWindow.SetActive(false);
     }
 
-    public static void Error(string ErrorMassage)
-    {
-        _errorMsg = ErrorMassage;
-        _error = true;
-    }
-
     public void ArmoryPressed()
     {
         _armoryScreen.SetActive(true);
@@ -201,6 +225,34 @@ public class MainLobbyController : MonoBehaviour
     public void ArmoryBack()
     {
         _armoryScreen.SetActive(false);
+    }
+
+    public void TestRoom_Click()
+    {
+        SendDataTCP.SendTestRoomEnter(_testRoomDropdown.value);
+        _testRoomButton.GetComponent<Button>().interactable = false;
+        _testRoomDropdown.interactable = false;
+    }
+
+    #endregion
+
+    public static void IncreaseCount()
+    {
+        windowsCount++;
+    }
+    
+    public static void DecreaseCount()
+    {
+        if(windowsCount > 0)
+        {
+            windowsCount--;
+        }
+    }
+
+    public static void Error(string ErrorMassage)
+    {
+        _errorMsg = ErrorMassage;
+        _error = true;
     }
 
     public static void GetInProcess(string processName)

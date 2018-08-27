@@ -15,11 +15,13 @@ public class ObjectManager : MonoBehaviour {
     public GameObject[] middleRocksPrefab;
     public GameObject[] smallRocksPrefab;
 
+    public static CameraFollow cameraTarger;
+
     #endregion
 
     #region ObjectsContainer
 
-    public static PlayerMovement[] players = new PlayerMovement[2];
+    public Player[] Players;
 
     public NetworkObjectList dynamicPropList = new NetworkObjectList();
 
@@ -34,11 +36,14 @@ public class ObjectManager : MonoBehaviour {
     public int treesCount;
     public int rocksCount;
 
-    public static int playerMovement;
+    public static int playerIndex;
 
     #endregion
 
     #region Reusable Variables
+    private Vector3[] startPositions;
+    private Quaternion[] startRotations;
+
     private Vector3 _playerStartPosition;
     private Vector3 _enemyStartPosition;
     private Quaternion _playerStartRotation;
@@ -61,6 +66,27 @@ public class ObjectManager : MonoBehaviour {
         _enemyStartRotation = new Quaternion(rot2[0], rot2[1], rot2[2], rot2[3]);
     }
 
+    public void SetStartProperties(int playersCount, float[][] pos, float[][] rot)
+    {
+        Players = new Player[playersCount];
+        startPositions = new Vector3[playersCount];
+        startRotations = new Quaternion[playersCount];
+        for(int i = 0; i < playersCount; i++)
+        {
+            startPositions[i] = new Vector3(pos[i][0], pos[i][1], pos[i][2]);
+            startRotations[i] = new Quaternion(rot[i][0], rot[i][1], rot[i][2], rot[i][3]);
+        }
+    }
+
+    public Vector3 GetStartPosition(int index)
+    {
+        return startPositions[index];
+    }
+
+    public Quaternion GetStartRotation(int index)
+    {
+        return startRotations[index];
+    }
 
     public Vector3 GetPlayerStartPosition()
     {
