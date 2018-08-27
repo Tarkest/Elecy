@@ -20,6 +20,12 @@ public static class GSC
 
     #endregion
 
+    #region Races
+
+    public const int IgnisSpellCount = 9;
+
+    #endregion
+
     public const double timerTick = 1000d / 30d;
 }
 

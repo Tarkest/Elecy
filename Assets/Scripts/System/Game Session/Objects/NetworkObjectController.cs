@@ -9,10 +9,19 @@ public class NetworkObjectController : MonoBehaviour {
     public int index;
     public int hp;
     public bool owner;
+    public string combination;
 
     private Rigidbody _thisRigitbody;
     public SpellProperties spell;
     public PropStats propStats;
+    public StartTransform SpawnPoint;
+
+    public enum StartTransform
+    {
+        Caster = 0,
+        Mouse,
+        Behaviour
+    }
 
     #endregion
 
