@@ -96,13 +96,13 @@ public class SpellInvokerIgnis : MonoBehaviour {
 
     } 
 
-    public void LoadCombinations(NetworkObjectList spells)
+    public void LoadCombinations(List<GameObject> spells)
     {
         for(int i = 0; i <= GSC.IgnisSpellCount; i++)
         {
             try
             {
-                _posibleCombination[i] = spells.Get(i).combination;
+                _posibleCombination[i] = spells[i].GetComponent<NetworkObjectController>().combination;
             }
             catch
             {

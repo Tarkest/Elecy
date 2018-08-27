@@ -383,7 +383,7 @@
     <Compile Include="Assets\Scripts\Units\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Units\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Units\Player\PlayerStats.cs" />
-    <Compile Include="Assets\Scripts\Units\Player\SpellInvoker.cs" />
+    <Compile Include="Assets\Scripts\Units\Player\SpellInvokerIgnis.cs" />
     <Compile Include="Assets\Scripts\Units\Player\TestPlayer.cs" />
   </ItemGroup>
   <ItemGroup>

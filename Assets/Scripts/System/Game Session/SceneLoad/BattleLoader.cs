@@ -9,6 +9,7 @@ public class BattleLoader : MonoBehaviour {
     #region Private Members
 
     private static ObjectManager _thisLoadedmanager;
+    private static string  _race;
 
     #region LoadScreen
     private static GameObject _loadScreen;
@@ -47,6 +48,8 @@ public class BattleLoader : MonoBehaviour {
     {
         MainThread.executeInUpdate(() => { Instantiate(Resources.Load("Maps/" + MapIndex.ToString() + "/GameArea"), Vector3.zero, Quaternion.identity);
             DeveloperScreenController.AddInfo("Map Loaded", 1);
+            SetRace(Network.currentRace);
+            Network.currentRace = null;
         });
     }
 
@@ -60,6 +63,11 @@ public class BattleLoader : MonoBehaviour {
             _loadStages += 1;
         ThisPlayerProgressChange(1f / _loadStages);
         SendDataTCP.SendBeginLoading(_thisPlayerProgress);
+    }
+
+    public static void SetRace(string race)
+    {
+        _race = race;
     }
 
     #region Private Methods
@@ -115,7 +123,9 @@ public class BattleLoader : MonoBehaviour {
             {
                 // if nickname equals to client's nickname - spawns Player
                 if (nicknames[i] == ClientTCP.nickname)
+                {
                     SpawnPlayer(nicknames[i], positions[i], rotations[i], i);
+                }
                 else
                     // or spawns Enemy
                     SpawnEnemy(nicknames[i], positions[i], rotations[i], i);
@@ -277,6 +287,12 @@ public class BattleLoader : MonoBehaviour {
             DeveloperScreenController.AddInfo(i.ToString() + ": " + SpellsIndexes[i].ToString(), 1);
             ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / SpellsIndexes.Length);
         }
+        switch(_race)
+        {
+            case "Ignis":
+                _thisLoadedmanager.Players[ObjectManager.playerIndex].GetComponent<SpellInvokerIgnis>().LoadCombinations(_thisLoadedmanager.prefabList);
+                break;
+        }
         DeveloperScreenController.AddInfo("Spells Load...OK", 1);
         RoomUDP.Create();
         RoomUDP.BeginReceive();
@@ -305,6 +321,12 @@ public class BattleLoader : MonoBehaviour {
     private static void SpawnPlayer(string nickname, float[] pos, float[] rot, int i)
     {
         GameObject _player = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i)) as GameObject;
+        switch(_race)
+        {
+            case "Ignis":
+                _player.AddComponent<SpellInvokerIgnis>();
+                break;
+        }
         Player _playerComponent = _thisLoadedmanager.Players[i] = _player.GetComponent<Player>();
         _playerComponent.SetStartProperties(nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i), i, true);
         _playerComponent.SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);

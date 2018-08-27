@@ -179,6 +179,7 @@ public class MainLobbyController : MonoBehaviour
             searchTimeCounter = 0;
             isSearching = true;
             SendDataTCP.SendQueueStart(matchType, "Ignis");
+            Network.currentRace = "Ignis";
         }
         else if(isSearching)
         {
