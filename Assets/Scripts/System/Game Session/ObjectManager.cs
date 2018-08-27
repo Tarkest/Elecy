@@ -15,11 +15,11 @@ public class ObjectManager : MonoBehaviour {
     public GameObject[] middleRocksPrefab;
     public GameObject[] smallRocksPrefab;
 
+    public static CameraFollow cameraTarger;
+
     #endregion
 
     #region ObjectsContainer
-
-    public static PlayerMovement[] players = new PlayerMovement[2];
 
     public Player[] Players;
 

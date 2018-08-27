@@ -3,6 +3,7 @@
 public class CameraFollow : MonoBehaviour {
 
     public Vector3 targetPosition;
+    public Transform player;
 
     private void Start()
     {
@@ -11,16 +12,10 @@ public class CameraFollow : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if(Network.currentManager != null)
+        if(player != null)
         {
-            if(Network.currentManager.Players != null)
-            {
-                if (Network.currentManager.Players[ObjectManager.playerIndex] != null)
-                {
-                    targetPosition = Network.currentManager.Players[ObjectManager.playerIndex].transform.position;
-                    transform.position = Vector3.Lerp(transform.position, (targetPosition + new Vector3(0, GSC.cam_target_height, 0)), 5f * Time.fixedDeltaTime);
-                }
-            }
+            targetPosition = player.position;
+            transform.position = Vector3.Lerp(transform.position, (targetPosition + new Vector3(0, GSC.cam_target_height, 0)), 5f * Time.fixedDeltaTime);
         }
     }
 }

@@ -345,6 +345,7 @@
     <Compile Include="Assets\Scripts\System\Game Session\BattleLogic\BattleLogic.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\GameSessionConstants.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\GSC.cs" />
+    <Compile Include="Assets\Scripts\System\Game Session\Interface\RoomInterface.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\MouseController.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\ObjectManager.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\ObjectManagerOld.cs" />
@@ -370,6 +371,7 @@
     <Compile Include="Assets\Scripts\System\Main Lobby\OptionsController.cs" />
     <Compile Include="Assets\Scripts\System\SceneManage.cs" />
     <Compile Include="Assets\Scripts\System\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\System\TestRoomController.cs" />
     <Compile Include="Assets\Scripts\Units\Enemy\EnemyMovement.cs" />
     <Compile Include="Assets\Scripts\Units\Player\Effect.cs" />
     <Compile Include="Assets\Scripts\Units\Player\Player.cs" />

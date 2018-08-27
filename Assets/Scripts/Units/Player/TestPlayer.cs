@@ -1,18 +1,35 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class TestPlayer : Player
 {
     public Player player;
     public Player dummy;
-    public bool Player = true;
+    public bool Player;
 
     protected internal PlayerMovement DummyMovement;
     protected internal PlayerStats DummyStats;
-
-    private BoxCollider playerCollider;
+   
     private BoxCollider dummyCollider;
     private SkinnedMeshRenderer playerVisibility;
     private SkinnedMeshRenderer dummyVisibility;
+
+    private void Update()
+    {
+        if(playerVisibility != null && dummyVisibility != null)
+        {
+            if(Player)
+            {
+                playerVisibility.enabled = true;
+                dummyVisibility.enabled = false;
+            }
+            else
+            {
+                dummyVisibility.enabled = true;
+                playerVisibility.enabled = false;
+            }
+        }
+    }
 
     public override void SetStartProperties(string nickname, Vector3 pos, Quaternion rot, int ID, bool isPlayer = false)
     {
@@ -21,6 +38,8 @@ public class TestPlayer : Player
         startRotation = rot;
         this.ID = ID;
         player.PlayerMovement.SetStats(startPosition, isPlayer);
+        dummy.PlayerMovement.SetStats(startPosition);
+        Player = true;
     }
 
     public override void SetStats(int maxHP, int maxSN, float moveSpeed, float attackSpeed, int basicDefence, int fireDefence, int earthDefence, int windDefence, int waterDefence)
@@ -48,17 +67,12 @@ public class TestPlayer : Player
         dummyCollider = _enemy.GetComponent<BoxCollider>();
         dummyVisibility = _enemy.GetComponentInChildren<SkinnedMeshRenderer>();
         dummyCollider.enabled = false;
-        dummyVisibility.enabled = false;
         GameObject _player = Instantiate(Resources.Load("Players/Player"), Network.currentManager.GetStartPosition(0), Network.currentManager.GetStartRotation(0), this.transform) as GameObject;
         player = _player.GetComponent<Player>();
         player.PlayerMovement = _player.GetComponent<PlayerMovement>();
         player.PlayerStats = _player.GetComponent<PlayerStats>();
-        playerCollider = _player.GetComponent<BoxCollider>();
         playerVisibility = _player.GetComponentInChildren<SkinnedMeshRenderer>();
+        ObjectManager.cameraTarger.player = _player.transform;
     }
 
-    public void ChangeVisibility()
-    {
-
-    }
 }
