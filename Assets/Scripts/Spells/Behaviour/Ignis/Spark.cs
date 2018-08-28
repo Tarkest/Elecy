@@ -1,59 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Spark : MonoBehaviour {
+public class Spark : Behaviour
+{
+    private Vector3 _startPosition;
+    private Vector3 _targetPosition;
 
-    private bool spellType;
-    private SpellContainer1 _spell;
-    private Vector3 _casterPosition;
-
-    //Spell Attack/Defense
-    private Vector3 _spellPosition;
-    private Vector3 _mousePosition;
-    private Vector3 _target;
-    private Vector3 _direction;
-    private float _startTime;
-    private float path;
-
-    private void Start()
+    public void SetStartPosition(Vector3 StartPos)
     {
-        _spell = gameObject.GetComponent<SpellContainer1>();
-        _spell.SpellConteinerLoad();
-        _casterPosition = GameObject.Find("CastPoint").GetComponent<Transform>().position;
-        transform.position = _casterPosition;
-        _spellPosition = transform.position;
-        _startTime = Time.time;
-        _mousePosition = MouseController.mousePosition;
-        spellType = GameObject.Find("Test player").GetComponent<SpellInvoker1>().spellType;
+        _startPosition = StartPos;
     }
 
-    private void FixedUpdate()
+    public void SetTargetPosition(Vector3 TargetPos)
     {
-        _direction = ((_mousePosition - _spellPosition) / (_mousePosition - _spellPosition).magnitude);
-        path = _spell.speed * (Time.time - _startTime);
-        if (spellType)
-        {
-            _target = _direction * _spell.distance + _spellPosition;
-            _target = new Vector3(_target.x, _spellPosition.y, _target.z);
-            transform.position = Vector3.Lerp(_spellPosition, _target, path * Time.deltaTime);
-            if (transform.position == _target)
-                gameObject.GetComponent<Damage>().Death();
-        }
-        else
-        {
-            _target = _direction * 2 + _spellPosition;
-            _target = new Vector3(_target.x, _spellPosition.y, _target.z);
-            transform.position = Vector3.Lerp(_spellPosition, _target, path * Time.deltaTime);
-            if (transform.position == _target)
-                gameObject.GetComponent<Damage>().Death();
-        }
-
+        _targetPosition = TargetPos;
     }
 
-    void OnTriggerEnter(Collider other)
+    public override void Move()
     {
-        gameObject.GetComponent<Damage>().Death();
+
     }
-
-
-
 }
