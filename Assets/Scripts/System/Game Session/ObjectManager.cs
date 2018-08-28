@@ -60,7 +60,7 @@ public class ObjectManager : MonoBehaviour {
     {
         for (int i = 0; i < dynamicPropList.Lenght(); i++)
         {
-            dynamicPropList.Get(i).Move();
+                dynamicPropList.Get(i).Move();
         }
     }
 
@@ -125,7 +125,7 @@ public class NetworkObjectList
 
     public NetworkObjectList()
     {
-        List = new NetworkObjectController[1];
+        List = new NetworkObjectController[0];
     }
 
     public void Add(NetworkObjectController Object, int index)

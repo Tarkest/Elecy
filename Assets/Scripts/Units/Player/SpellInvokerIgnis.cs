@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpellInvokerIgnis : MonoBehaviour {
 
-    private string _combination;
+    private string _combination = "";
 
     private string[] _posibleCombination = new string[GSC.IgnisSpellCount];
 
@@ -71,7 +71,7 @@ public class SpellInvokerIgnis : MonoBehaviour {
         {
             Vector3 _spawnPoint = Vector3.zero;
             Quaternion _spawnRotation = Quaternion.identity;
-            switch(Network.currentManager.dynamicPropList.Get(number).SpawnPoint)
+            switch(Network.currentManager.prefabList[number].GetComponent<NetworkObjectController>().SpawnPoint)
             {
                 case NetworkObjectController.StartTransform.Caster:
                     _spawnPoint = gameObject.transform.position;
@@ -86,7 +86,7 @@ public class SpellInvokerIgnis : MonoBehaviour {
 
                     break;
             }
-            Network.NetworkInstantiate(Network.currentManager.dynamicPropList.Get(number).gameObject, _spawnPoint, _spawnRotation);
+            Network.NetworkInstantiate(Network.currentManager.prefabList[number].gameObject, _spawnPoint, _spawnRotation);
             _combination = "";
         }
         else
@@ -98,7 +98,7 @@ public class SpellInvokerIgnis : MonoBehaviour {
 
     public void LoadCombinations(List<GameObject> spells)
     {
-        for(int i = 0; i <= GSC.IgnisSpellCount; i++)
+        for(int i = 0; i < GSC.IgnisSpellCount; i++)
         {
             try
             {

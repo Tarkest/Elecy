@@ -19,7 +19,7 @@ public class Network : MonoBehaviour
     private static int scenenum;
     private static GameObject _networkInstanse;
     public static ObjectManager currentManager;
-    public static string currentRace;
+    public static string currentRace = "Ignis";
     #endregion
 
     #region Enum

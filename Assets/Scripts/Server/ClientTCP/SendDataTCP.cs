@@ -149,12 +149,13 @@ class SendDataTCP
         buffer.Dispose();
     }
 
-    public static void SendTestRoomEnter(int mapIndex)
+    public static void SendTestRoomEnter(int mapIndex, string race)
     {
         using (PacketBuffer buffer = new PacketBuffer())
         {
             buffer.WriteInteger((int)NetPlayerPackets.PTestRoom);
             buffer.WriteInteger(mapIndex);
+            buffer.WriteString(race);
             ClientTCP.SendData(buffer.ToArray());
         }
     }

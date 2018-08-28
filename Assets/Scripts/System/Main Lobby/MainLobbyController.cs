@@ -179,7 +179,6 @@ public class MainLobbyController : MonoBehaviour
             searchTimeCounter = 0;
             isSearching = true;
             SendDataTCP.SendQueueStart(matchType, "Ignis");
-            Network.currentRace = "Ignis";
         }
         else if(isSearching)
         {
@@ -230,7 +229,7 @@ public class MainLobbyController : MonoBehaviour
 
     public void TestRoom_Click()
     {
-        SendDataTCP.SendTestRoomEnter(_testRoomDropdown.value);
+        SendDataTCP.SendTestRoomEnter(_testRoomDropdown.value, "Ignis");
         _testRoomButton.GetComponent<Button>().interactable = false;
         _testRoomDropdown.interactable = false;
     }

@@ -341,6 +341,12 @@ public class BattleLoader : MonoBehaviour {
         Player _playerComponent = _thisLoadedmanager.Players[0] = _testPlayer.GetComponent<TestPlayer>() as Player;
         _playerComponent.SetStartProperties(nickname, _thisLoadedmanager.GetStartPosition(0), _thisLoadedmanager.GetStartRotation(0), 0, true);
         _playerComponent.SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
+        switch (_race)
+        {
+            case "Ignis":
+                _testPlayer.AddComponent<SpellInvokerIgnis>();
+                break;
+        }
         ObjectManager.playerIndex = 0;
 
         DeveloperScreenController.AddInfo("TestPlayer " + nickname + " Load...OK", 1);
