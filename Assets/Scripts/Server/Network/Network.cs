@@ -185,6 +185,9 @@ public class Network : MonoBehaviour
         _instance.GetComponent<NetworkObjectController>().hp = HP;
         if (Owner == ClientTCP.nickname)
         {
+            _instance.GetComponent<Behaviour>().casterPosition = currentManager.Players[ObjectManager.playerIndex].transform.position;
+            _instance.GetComponent<Behaviour>().mousePosition = MouseController.mousePosition;
+            _instance.GetComponent<Behaviour>().InvokeBehaviour();
             _instance.GetComponent<NetworkObjectController>().owner = true;
         }
         currentManager.dynamicPropList.Add(_instance.GetComponent<NetworkObjectController>(), ObjectIndex);

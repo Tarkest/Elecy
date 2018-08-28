@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
                 _moveUpdate.Add(index, new MovementUpdate(newPosition));
                 curPosIndex++;
                 _currentLerpTime = 0f;
-                RoomUDPSendData.SendMovePosition(index, newPosition);
+                RoomUDPSendData.SendMovePosition(0, index, newPosition);
                 MovementUpdate value;
                 if (_moveUpdate.TryGetValue(index, out value))
                     value.Sended();

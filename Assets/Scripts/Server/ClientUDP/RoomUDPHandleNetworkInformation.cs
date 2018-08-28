@@ -55,7 +55,7 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
                 Network.currentManager.Players[index].CheckPosition(updateIndex, pos);
                 break;
 
-            case 2:
+            case 4:
                 Network.currentManager.dynamicPropList.Get(index).CheckPosition(updateIndex, pos);
                 break;
         }

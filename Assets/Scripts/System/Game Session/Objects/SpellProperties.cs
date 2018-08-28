@@ -7,6 +7,7 @@ public class SpellProperties : MonoBehaviour {
     public short variationHash;
 
     public int hp;
+    public float speed;
 
 	// Use this for initialization
 	void Start () {

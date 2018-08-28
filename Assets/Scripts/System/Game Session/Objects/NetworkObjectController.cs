@@ -12,7 +12,6 @@ public class NetworkObjectController : MonoBehaviour {
     public bool owner;
     public string combination;
 
-    private Rigidbody _thisRigitbody;
     public SpellProperties spell;
     public PropStats propStats;
     public Behaviour Behaviour;
@@ -50,22 +49,24 @@ public class NetworkObjectController : MonoBehaviour {
 
 public abstract class Behaviour : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
-    private Vector3 _curPosition;
-    private Dictionary<int, MovementUpdate> _moveUpdate = new Dictionary<int, MovementUpdate>();
-    private int _curPosIndex;
-    private bool _isMain;
-    private float _currentLerpTime;
+    protected Rigidbody _rigidbody;
+    protected Vector3 _curPosition;
+    protected Dictionary<int, MovementUpdate> _moveUpdate = new Dictionary<int, MovementUpdate>();
+    protected int _curPosIndex;
+    protected float _currentLerpTime;
     public int[] _keys;
+
+    public Vector3 casterPosition;
+    public Vector3 mousePosition;
 
     void Start()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody>();
     }
 
-    void Update()
+    protected void Update()
     {
-        if (_isMain)
+        if (GetComponent<NetworkObjectController>().owner)
         {
             MovementUpdate _value;
             if (_moveUpdate.TryGetValue(_curPosIndex, out _value))
@@ -93,7 +94,7 @@ public abstract class Behaviour : MonoBehaviour
     /// <returns></returns>
     public void CheckPosition(int index, float[] pos)
     {
-        if (_isMain)
+        if (GetComponent<NetworkObjectController>().owner)
         {
             lock (_moveUpdate)
             {
@@ -147,10 +148,11 @@ public abstract class Behaviour : MonoBehaviour
             _currentLerpTime = 0f;
         }
     }
+    public abstract void InvokeBehaviour();
 
     public abstract void Move();
 
-    private struct MovementUpdate
+    protected struct MovementUpdate
     {
         public readonly Vector3 position;
         public bool sent;
