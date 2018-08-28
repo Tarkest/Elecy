@@ -45,7 +45,6 @@
         PQueueStop,
         PGetSkillsBuild,
         PSaveSkillsBuild,
-        PTestRoom,
 
         NetPlayerPacketsNum // Number
     }

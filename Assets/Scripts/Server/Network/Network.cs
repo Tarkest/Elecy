@@ -80,18 +80,18 @@ public class Network : MonoBehaviour
         }
         if(currentManager != null)
         {
-            //if (Input.GetMouseButtonDown(0))
-            //{
-            //    NetworkInstantiate(currentManager.prefabList[0], MouseController.mousePosition, Quaternion.identity);
-            //}
-            //if (Input.GetMouseButtonDown(1))
-            //{
-            //    NetworkInstantiate(currentManager.prefabList[1], MouseController.mousePosition, Quaternion.identity);
-            //}
-            //if (Input.GetMouseButtonDown(2))
-            //{
-            //    NetworkInstantiate(currentManager.prefabList[2], MouseController.mousePosition, Quaternion.identity);
-            //}
+            if (Input.GetMouseButtonDown(0))
+            {
+                NetworkInstantiate(currentManager.prefabList[0], MouseController.mousePosition, Quaternion.identity);
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                NetworkInstantiate(currentManager.prefabList[1], MouseController.mousePosition, Quaternion.identity);
+            }
+            if (Input.GetMouseButtonDown(2))
+            {
+                NetworkInstantiate(currentManager.prefabList[2], MouseController.mousePosition, Quaternion.identity);
+            }
         }
     }
 
@@ -113,9 +113,9 @@ public class Network : MonoBehaviour
         scenechange = true;
     }
 
-    public static void InBattle(int sceneNum)
+    public static void InBattle()
     {
-        scenenum = sceneNum;
+        scenenum = 2;
         scenechange = true;
     }
 

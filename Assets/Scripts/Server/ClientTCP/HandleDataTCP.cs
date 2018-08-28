@@ -190,16 +190,15 @@ class HandleDataTCP
     /// <summary>
     ///             Buffer:
     ///                     int PacketNum;
-    ///                     int sceneIndex;
+    ///                     int mapIndex;
     /// </summary>
     public static void HandleMatchFound(byte[] data)
-    {   
-        using (PacketBuffer buffer = new PacketBuffer())
-        {
-            buffer.WriteBytes(data);
-            buffer.ReadInteger();
-            Network.InBattle(buffer.ReadInteger());
-        }
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        buffer.Dispose();
+        Network.InBattle();
     }
 
     /// <summary>
@@ -265,18 +264,12 @@ class HandleDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        int playersCount = buffer.ReadInteger();
-        string[] nicknames = new string[playersCount];
-        float[][] positions = new float[playersCount][];
-        float[][] rotations = new float[playersCount][];
-        for(int i = 0; i < playersCount; i++)
-        {
-            nicknames[i] = buffer.ReadString();
-            positions[i] = new float[] { buffer.ReadFloat(), 0.5f, buffer.ReadFloat() };
-            rotations[i] = new float[] { buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat() };
-        }
+        string Nickname1 = buffer.ReadString();
+        string Nickname2 = buffer.ReadString();
+        float[][] pos = new float[][] { new float[] { buffer.ReadFloat(), 0.5f, buffer.ReadFloat() }, new float[] { buffer.ReadFloat(), 0.5f, buffer.ReadFloat() } };
+        float[][] rot = new float[][] { buffer.ReadQuternion(), buffer.ReadQuternion() };
         buffer.Dispose();
-        MainThread.executeInUpdate(() => { BattleLoader.SpanwPlayers(nicknames, positions, rotations, playersCount); });
+        MainThread.executeInUpdate(() => { BattleLoader.SpanwPlayers(Nickname1, Nickname2, pos, rot); });
     }
 
     /// <summary>
@@ -383,8 +376,7 @@ class HandleDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        int _amountOfBuilds = buffer.ReadInteger();
-        int _spellArrayLenght = buffer.ReadInteger();
+        int _spellArrayLenght = buffer.ReadInteger() + buffer.ReadInteger();
         short[] _spellsIndexes = new short[_spellArrayLenght/2];
         short[] _spellsVariation = new short[_spellArrayLenght/2];
         for (int i = 0; i < _spellArrayLenght/2; i++)

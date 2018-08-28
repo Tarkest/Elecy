@@ -21,7 +21,5 @@ public static class GSC
     #endregion
 
     public const double timerTick = 1000d / 30d;
-
-    public static ObjectManager ObjectManager;
 }
 

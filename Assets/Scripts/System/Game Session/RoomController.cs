@@ -5,25 +5,25 @@ using UnityEngine.UI;
 
 public class RoomController : MonoBehaviour {
 
-    protected internal static GameObject _popUpScreen;
-    protected internal static GameObject _inGameMenu;
-    protected internal static GameObject _splashScreen;
-    protected internal static GameObject _buttons;
-    protected internal static GameObject _button;
-    protected internal static Text _text;
-    protected internal static Text _winnerText;
-    protected internal static GameObject _statisticScreen;
-    protected internal static GameObject _devScreen;
+    private static GameObject _popUpScreen;
+    private static GameObject _inGameMenu;
+    private static GameObject _splashScreen;
+    private static GameObject _buttons;
+    private static GameObject _button;
+    private static Text _text;
+    private static Text _winnerText;
+    private static GameObject _statisticScreen;
+    private static GameObject _devScreen;
 
-    protected internal static bool _menuIsActive = false;
+    private static bool _menuIsActive = false;
     public static bool battleIsOn = true;
-    protected internal static bool _statisticView = false;
-    protected internal static bool _won;
-    protected internal bool _devScreenIsOn;
+    private static bool _statisticView = false;
+    private static bool _won;
+    private bool _devScreenIsOn;
 
     private static List<int> everySecond = new List<int>();
 
-    protected void Awake()
+    void Awake()
     {
         _inGameMenu = GameObject.Find("InGameMenu");
         _splashScreen = GameObject.Find("SplashScreen");
@@ -36,7 +36,7 @@ public class RoomController : MonoBehaviour {
         _devScreen = GameObject.Find("DeveloperScreen");
     }
 
-    protected void Start()
+    void Start()
     {
         _inGameMenu.SetActive(false);
         _splashScreen.SetActive(false);
@@ -45,7 +45,7 @@ public class RoomController : MonoBehaviour {
         _devScreen.SetActive(false);
     }
 
-    protected void Update()
+    void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
