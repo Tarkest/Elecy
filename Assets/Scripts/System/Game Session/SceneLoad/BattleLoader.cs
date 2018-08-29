@@ -290,7 +290,7 @@ public class BattleLoader : MonoBehaviour {
         switch(_race)
         {
             case "Ignis":
-                _thisLoadedmanager.Players[ObjectManager.playerIndex].GetComponent<SpellInvokerIgnis>().LoadCombinations(_thisLoadedmanager.prefabList);
+                (_thisLoadedmanager.Players[ObjectManager.playerIndex] as IPlayer).LoadCombinations(_thisLoadedmanager.prefabList);
                 break;
         }
         DeveloperScreenController.AddInfo("Spells Load...OK", 1);
@@ -311,9 +311,9 @@ public class BattleLoader : MonoBehaviour {
     private static void SpawnEnemy(string nickname, float[] pos, float[] rot, int i)
     {
         GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i)) as GameObject;
-        Player _playerComponent = _thisLoadedmanager.Players[i] = _enemy.GetComponent<Player>();
+        Player _playerComponent = _enemy.GetComponent<Player>();
+        _thisLoadedmanager.Players[i] = _playerComponent as BaseObject;
         _playerComponent.SetStartProperties(nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i), i);
-        _playerComponent.SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
 
         DeveloperScreenController.AddInfo("Enemy " + nickname + " Load...OK", 1);
     }
@@ -321,15 +321,9 @@ public class BattleLoader : MonoBehaviour {
     private static void SpawnPlayer(string nickname, float[] pos, float[] rot, int i)
     {
         GameObject _player = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i)) as GameObject;
-        switch(_race)
-        {
-            case "Ignis":
-                _player.AddComponent<SpellInvokerIgnis>();
-                break;
-        }
-        Player _playerComponent = _thisLoadedmanager.Players[i] = _player.GetComponent<Player>();
+        Player _playerComponent = _player.GetComponent<Player>();
+        _thisLoadedmanager.Players[i] = _playerComponent as BaseObject;
         _playerComponent.SetStartProperties(nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i), i, true);
-        _playerComponent.SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
         ObjectManager.playerIndex = i;
         ObjectManager.cameraTarger.player = _player.transform;
         DeveloperScreenController.AddInfo("Player " + nickname + " Load...OK", 1);
@@ -338,15 +332,9 @@ public class BattleLoader : MonoBehaviour {
     private static void SpawnTest(string nickname, float[] pos, float[] rot)
     {
         GameObject _testPlayer = Instantiate(Resources.Load("Players/TestPlayer"), Vector3.zero, Quaternion.identity) as GameObject;
-        Player _playerComponent = _thisLoadedmanager.Players[0] = _testPlayer.GetComponent<TestPlayer>() as Player;
+        Player _playerComponent = _testPlayer.GetComponent<Player>();
+        _thisLoadedmanager.Players[0] = _playerComponent as BaseObject;
         _playerComponent.SetStartProperties(nickname, _thisLoadedmanager.GetStartPosition(0), _thisLoadedmanager.GetStartRotation(0), 0, true);
-        _playerComponent.SetStats(1000, 1000, 10f, 10f, 10, 5, 5, 5, 5);
-        switch (_race)
-        {
-            case "Ignis":
-                _testPlayer.AddComponent<SpellInvokerIgnis>();
-                break;
-        }
         ObjectManager.playerIndex = 0;
 
         DeveloperScreenController.AddInfo("TestPlayer " + nickname + " Load...OK", 1);

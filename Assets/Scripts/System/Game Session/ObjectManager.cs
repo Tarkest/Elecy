@@ -21,7 +21,7 @@ public class ObjectManager : MonoBehaviour {
 
     #region ObjectsContainer
 
-    public Player[] Players;
+    public BaseObject[] Players;
 
     public NetworkObjectList dynamicPropList = new NetworkObjectList();
 
@@ -121,14 +121,14 @@ public class ObjectManager : MonoBehaviour {
 
 public class NetworkObjectList
 {
-    NetworkObjectController[] List;
+    BaseObject[] List;
 
     public NetworkObjectList()
     {
-        List = new NetworkObjectController[0];
+        List = new BaseObject[0];
     }
 
-    public void Add(NetworkObjectController Object, int index)
+    public void Add(BaseObject Object, int index)
     {
         if(List.Length < index + 1)
         {
@@ -138,7 +138,7 @@ public class NetworkObjectList
         List[index] = Object;
     }
 
-    public NetworkObjectController Get(int index)
+    public BaseObject Get(int index)
     {
         return List[index];
     }

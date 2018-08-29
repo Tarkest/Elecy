@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "New Spell", menuName = "Spell1")] 
-public class Spell1 : ScriptableObject
+[CreateAssetMenu(fileName ="NewSpell", menuName ="Spell")]
+internal class SpellMenu : ScriptableObject
 {
     public string spellName;
     public string description;
-    public string targetType;
-    public int spellHP;
+    public string combination;
+    public StartTransform targetType;
+    public int spellMaxHP;
     public int sunergyCost;
     public int damage;
     public float distance;
@@ -16,3 +17,4 @@ public class Spell1 : ScriptableObject
     public float castArea;
     public Image spellIcon;
 }
+

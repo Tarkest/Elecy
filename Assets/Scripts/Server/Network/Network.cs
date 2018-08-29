@@ -153,13 +153,13 @@ public class Network : MonoBehaviour
             float[] _rot = new float[4] { rot.x, rot.y, rot.z, rot.w };
             if(parent != null)
             {
-               _parentIndex = parent.gameObject.GetComponent<NetworkObjectController>().index;
+               _parentIndex = parent.gameObject.GetComponent<Spell>().index;
             }
             else
             {
                 _parentIndex = -1;
             }
-            SendDataTCP.SendInstantiate(_index, _parentIndex, _pos, _rot, Object.GetComponent<NetworkObjectController>().hp);
+            SendDataTCP.SendInstantiate(_index, _parentIndex, _pos, _rot, (Object.GetComponent<SpellStats>().stats as SpellMenu).spellMaxHP);
         }
         else
         {
@@ -172,25 +172,46 @@ public class Network : MonoBehaviour
         GameObject _prefab = currentManager.prefabList[PrefabIndex];
         Vector3 _position = new Vector3(Position[0], Position[1], Position[2]);
         Quaternion _rotation = new Quaternion(Rotation[0], Rotation[1], Rotation[2], Rotation[3]);
-        GameObject _instance;
-        if (InstanceIndex != -1)
+        if(currentManager.Players.Length == 1)
         {
-            Transform _parent = currentManager.dynamicPropList.Get(InstanceIndex).transform;
-            _instance = Instantiate(_prefab, _position, _rotation, _parent);
+            InstantiateTestSpell(_prefab, _position, _rotation, ObjectIndex, InstanceIndex, Owner == ClientTCP.nickname);
         }
         else
         {
-            _instance = Instantiate(_prefab, _position, _rotation);
+           InstantiateSpell(_prefab, _position, _rotation, ObjectIndex, InstanceIndex, Owner == ClientTCP.nickname);
         }
-        _instance.GetComponent<NetworkObjectController>().hp = HP;
-        if (Owner == ClientTCP.nickname)
+    }
+
+    #endregion
+
+    #region Private Helpers
+
+    private static void InstantiateSpell(GameObject prefab, Vector3 position, Quaternion rotation, int index, int parentIndex, bool isMain)
+    {
+        GameObject _instance;
+        if (parentIndex != -1)
         {
-            _instance.GetComponent<Behaviour>().casterPosition = currentManager.Players[ObjectManager.playerIndex].transform.position;
-            _instance.GetComponent<Behaviour>().mousePosition = MouseController.mousePosition;
-            _instance.GetComponent<Behaviour>().InvokeBehaviour();
-            _instance.GetComponent<NetworkObjectController>().owner = true;
+            Transform _parent = currentManager.dynamicPropList.Get(parentIndex).transform;
+            _instance =  Instantiate(prefab, position, rotation, _parent);
         }
-        currentManager.dynamicPropList.Add(_instance.GetComponent<NetworkObjectController>(), ObjectIndex);
+        else
+        {
+           _instance = Instantiate(prefab, position, rotation);
+        }
+        Spell baseComponent = _instance.GetComponent<Spell>();
+        baseComponent.SetStartProperties((currentManager.Players[ObjectManager.playerIndex] as IPlayer).GetPosition(),
+                                                            MouseController.mousePosition,
+                                                            index,
+                                                            isMain);
+        currentManager.dynamicPropList.Add(baseComponent, index);
+    }
+
+    private static void InstantiateTestSpell(GameObject prefab, Vector3 position, Quaternion rotation, int index, int parentIndex, bool isMain)
+    {
+        GameObject test_instance = Instantiate(Resources.Load("Spells/TestSpell"), position, rotation) as GameObject;
+        TestSpell baseComponent = test_instance.GetComponent<TestSpell>();
+        baseComponent.SetStartProperties(prefab, position, rotation, MouseController.mousePosition, index, isMain);
+        currentManager.dynamicPropList.Add(baseComponent, index);
     }
 
     #endregion

@@ -29,3 +29,10 @@ public static class GSC
     public const double timerTick = 1000d / 30d;
 }
 
+public enum StartTransform
+{
+    Caster = 0,
+    Mouse,
+    Behaviour
+}
+
