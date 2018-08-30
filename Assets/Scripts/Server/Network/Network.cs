@@ -141,25 +141,20 @@ public class Network : MonoBehaviour
         currentManager = manager;
     }
 
-    public static void NetworkInstantiate(GameObject Object, Vector3? Position = null, Quaternion? Rotation = null, Transform parent = null)
+    public static void NetworkInstantiate(GameObject Object, Vector3? CastPosition = null, Vector3? TargetPosition = null, Quaternion? Rotation = null, Transform Parent = null)
     {
         if (currentManager.prefabList.Contains(Object))
         {
             int _index = currentManager.prefabList.IndexOf(Object);
-            int _parentIndex;
-            Vector3 pos = Position ?? Vector3.zero;
+            int _parentIndex = Parent != null ? Parent.gameObject.GetComponent<Spell>().index : -1;
+            Vector3 castPos = CastPosition ?? Vector3.zero;
+            Vector3 targetPos = TargetPosition ?? Vector3.zero;
             Quaternion rot = Rotation ?? Quaternion.identity;
-            float[] _pos = new float[3] { pos.x, pos.y, pos.z };
+
+            float[] _castPos = new float[3] { castPos.x, castPos.y == 0 ? 0.5f : castPos.y, castPos.z };
+            float[] _targetPos = new float[3] { targetPos.x, targetPos.y == 0 ? 0.5f : targetPos.y, targetPos.z };
             float[] _rot = new float[4] { rot.x, rot.y, rot.z, rot.w };
-            if(parent != null)
-            {
-               _parentIndex = parent.gameObject.GetComponent<Spell>().index;
-            }
-            else
-            {
-                _parentIndex = -1;
-            }
-            SendDataTCP.SendInstantiate(_index, _parentIndex, _pos, _rot, (Object.GetComponent<SpellStats>().stats as SpellMenu).spellMaxHP);
+            SendDataTCP.SendInstantiate(_index, _parentIndex, _castPos,_targetPos, _rot, (Object.GetComponent<SpellStats>().stats as SpellMenu).spellMaxHP);
         }
         else
         {
@@ -167,18 +162,19 @@ public class Network : MonoBehaviour
         }
     }
 
-    public static void NetworkInstantiate(int PrefabIndex, int ObjectIndex, int InstanceIndex, float[] Position, float[] Rotation, int HP, string Owner)
+    public static void NetworkInstantiate(int PrefabIndex, int ObjectIndex, int InstanceIndex, float[] CastPosition, float[] TargetPosition, float[] Rotation, int HP, string Owner)
     {
         GameObject _prefab = currentManager.prefabList[PrefabIndex];
-        Vector3 _position = new Vector3(Position[0], Position[1], Position[2]);
+        Vector3 _castPosition = new Vector3(CastPosition[0], CastPosition[1], CastPosition[2]);
+        Vector3 _targetPosition = new Vector3(TargetPosition[0], TargetPosition[1], TargetPosition[2]);
         Quaternion _rotation = new Quaternion(Rotation[0], Rotation[1], Rotation[2], Rotation[3]);
         if(currentManager.Players.Length == 1)
         {
-            InstantiateTestSpell(_prefab, _position, _rotation, ObjectIndex, InstanceIndex, Owner == ClientTCP.nickname);
+            InstantiateTestSpell(_prefab, _castPosition, _targetPosition, _rotation, ObjectIndex, InstanceIndex, Owner == ClientTCP.nickname);
         }
         else
         {
-           InstantiateSpell(_prefab, _position, _rotation, ObjectIndex, InstanceIndex, Owner == ClientTCP.nickname);
+           InstantiateSpell(_prefab, _castPosition, _targetPosition, _rotation, ObjectIndex, InstanceIndex, Owner == ClientTCP.nickname);
         }
     }
 
@@ -186,31 +182,40 @@ public class Network : MonoBehaviour
 
     #region Private Helpers
 
-    private static void InstantiateSpell(GameObject prefab, Vector3 position, Quaternion rotation, int index, int parentIndex, bool isMain)
+    private static void InstantiateSpell(GameObject prefab, Vector3 castPosition, Vector3 targetPosition, Quaternion rotation, int index, int parentIndex, bool isMain)
     {
         GameObject _instance;
         if (parentIndex != -1)
         {
             Transform _parent = currentManager.dynamicPropList.Get(parentIndex).transform;
-            _instance =  Instantiate(prefab, position, rotation, _parent);
+            _instance =  Instantiate(prefab, castPosition, rotation, _parent);
         }
         else
         {
-           _instance = Instantiate(prefab, position, rotation);
+           _instance = Instantiate(prefab, castPosition, rotation);
         }
         Spell baseComponent = _instance.GetComponent<Spell>();
-        baseComponent.SetStartProperties((currentManager.Players[ObjectManager.playerIndex] as IPlayer).GetPosition(),
-                                                            MouseController.mousePosition,
-                                                            index,
-                                                            isMain);
+        baseComponent.SetStartProperties(castPosition,
+                                        targetPosition,
+                                        index,
+                                        isMain);
         currentManager.dynamicPropList.Add(baseComponent, index);
     }
 
-    private static void InstantiateTestSpell(GameObject prefab, Vector3 position, Quaternion rotation, int index, int parentIndex, bool isMain)
+    private static void InstantiateTestSpell(GameObject prefab, Vector3 castPosition, Vector3 targetPosition, Quaternion rotation, int index, int parentIndex, bool isMain)
     {
-        GameObject test_instance = Instantiate(Resources.Load("Spells/TestSpell"), position, rotation) as GameObject;
+        GameObject test_instance;
+        if (parentIndex != -1)
+        {
+            Transform _parent = currentManager.dynamicPropList.Get(parentIndex).transform;
+            test_instance = Instantiate(Resources.Load("Spells/TestSpell"), Vector3.zero, Quaternion.identity, _parent) as GameObject;
+        }
+        else
+        {
+            test_instance = Instantiate(Resources.Load("Spells/TestSpell"), Vector3.zero, Quaternion.identity) as GameObject;
+        }
         TestSpell baseComponent = test_instance.GetComponent<TestSpell>();
-        baseComponent.SetStartProperties(prefab, position, rotation, MouseController.mousePosition, index, isMain);
+        baseComponent.SetStartProperties(prefab, castPosition, rotation, targetPosition, index, isMain);
         currentManager.dynamicPropList.Add(baseComponent, index);
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpellInvokerIgnis : MonoBehaviour {
 
-    private string _combination = "";
+    public string _combination = "";
 
     private string[] _posibleCombination = new string[GSC.IgnisSpellCount];
 
@@ -69,24 +69,27 @@ public class SpellInvokerIgnis : MonoBehaviour {
     {
         if(number != -1)
         {
-            Vector3 _spawnPoint = MouseController.mousePosition;
+            Vector3 _spawnPoint = Vector3.zero;
+            Vector3 _targetPoint = Vector3.zero;
             Quaternion _spawnRotation = Quaternion.identity;
             switch ((Network.currentManager.prefabList[number].GetComponent<SpellStats>().stats as SpellMenu).targetType)
             {
                 case StartTransform.Caster:
                     _spawnPoint = gameObject.transform.position;
                     _spawnRotation = gameObject.transform.rotation;
+                    _targetPoint = MouseController.mousePosition;
                     break;
 
                 case StartTransform.Mouse:
                     _spawnPoint = MouseController.mousePosition;
+                    _targetPoint = gameObject.transform.position;
                     break;
 
                 case StartTransform.Behaviour:
-
+                    _spawnPoint = MouseController.mousePosition;
                     break;
             }
-            Network.NetworkInstantiate(Network.currentManager.prefabList[number].gameObject, _spawnPoint, _spawnRotation);
+            Network.NetworkInstantiate(Network.currentManager.prefabList[number].gameObject, _spawnPoint, _targetPoint, _spawnRotation);
             _combination = "";
         }
         else
@@ -98,16 +101,9 @@ public class SpellInvokerIgnis : MonoBehaviour {
 
     public void LoadCombinations(List<GameObject> spells)
     {
-        for(int i = 0; i < GSC.IgnisSpellCount; i++)
+        for(int i = 0; i < spells.Count; i++)
         {
-            try
-            {
-                _posibleCombination[i] = (spells[i].GetComponent<SpellStats>().stats as SpellMenu).combination;
-            }
-            catch
-            {
-                _posibleCombination[i] = null;
-            }
+            _posibleCombination[i] = (spells[i].GetComponent<SpellStats>().stats as SpellMenu).combination;
         }
     }
 }

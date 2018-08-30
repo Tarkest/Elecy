@@ -36,3 +36,11 @@ public enum StartTransform
     Behaviour
 }
 
+public enum ObjectType
+{
+    player = 1,
+    tree = 2,
+    rock = 3,
+    spell = 4,
+}
+

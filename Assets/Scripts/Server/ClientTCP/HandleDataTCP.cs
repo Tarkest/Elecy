@@ -404,11 +404,12 @@ class HandleDataTCP
         int _prefabIndex = buffer.ReadInteger();
         int _objectIndex = buffer.ReadInteger();
         int _instanceIndex = buffer.ReadInteger();
-        float[] _pos = buffer.ReadVector3();
+        float[] _castPos = buffer.ReadVector3();
+        float[] _targetPos = buffer.ReadVector3();
         float[] _rot = buffer.ReadQuternion();
         int hp = buffer.ReadInteger();
         string _casterNickname = buffer.ReadString();
-        MainThread.executeInUpdate(() => Network.NetworkInstantiate(_prefabIndex, _objectIndex, _instanceIndex, _pos, _rot, hp, _casterNickname));
+        MainThread.executeInUpdate(() => Network.NetworkInstantiate(_prefabIndex, _objectIndex, _instanceIndex, _castPos, _targetPos, _rot, hp, _casterNickname));
         buffer.Dispose();
     }
 

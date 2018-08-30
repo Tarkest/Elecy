@@ -295,13 +295,14 @@ class SendDataTCP
     ///                     Quaternion rotation;
     ///                     int hp;
     /// </summary>
-    public static void SendInstantiate(int index, int instanceIndex, float[] position, float[] rotation, int hp)
+    public static void SendInstantiate(int index, int instanceIndex, float[] castPosition, float[] targetPosition, float[] rotation, int hp)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RInstantiate);
         buffer.WriteInteger(index);
         buffer.WriteInteger(instanceIndex);
-        buffer.WriteVector3(position);
+        buffer.WriteVector3(castPosition);
+        buffer.WriteVector3(targetPosition);
         buffer.WriteQuaternion(rotation);
         buffer.WriteInteger(hp);
         ClientTCP.SendData(buffer.ToArray());

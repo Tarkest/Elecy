@@ -312,7 +312,7 @@ public class BattleLoader : MonoBehaviour {
     {
         GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i)) as GameObject;
         Player _playerComponent = _enemy.GetComponent<Player>();
-        _thisLoadedmanager.Players[i] = _playerComponent as BaseObject;
+        _thisLoadedmanager.Players[i] = _playerComponent;
         _playerComponent.SetStartProperties(nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i), i);
 
         DeveloperScreenController.AddInfo("Enemy " + nickname + " Load...OK", 1);
@@ -322,7 +322,7 @@ public class BattleLoader : MonoBehaviour {
     {
         GameObject _player = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i)) as GameObject;
         Player _playerComponent = _player.GetComponent<Player>();
-        _thisLoadedmanager.Players[i] = _playerComponent as BaseObject;
+        _thisLoadedmanager.Players[i] = _playerComponent;
         _playerComponent.SetStartProperties(nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i), i, true);
         ObjectManager.playerIndex = i;
         ObjectManager.cameraTarger.player = _player.transform;
@@ -332,8 +332,8 @@ public class BattleLoader : MonoBehaviour {
     private static void SpawnTest(string nickname, float[] pos, float[] rot)
     {
         GameObject _testPlayer = Instantiate(Resources.Load("Players/TestPlayer"), Vector3.zero, Quaternion.identity) as GameObject;
-        Player _playerComponent = _testPlayer.GetComponent<Player>();
-        _thisLoadedmanager.Players[0] = _playerComponent as BaseObject;
+        TestPlayer _playerComponent = _testPlayer.GetComponent<TestPlayer>();
+        _thisLoadedmanager.Players[0] = _playerComponent;
         _playerComponent.SetStartProperties(nickname, _thisLoadedmanager.GetStartPosition(0), _thisLoadedmanager.GetStartRotation(0), 0, true);
         ObjectManager.playerIndex = 0;
 
@@ -361,7 +361,8 @@ public class BattleLoader : MonoBehaviour {
     {
         MainThread.executeInUpdate(() => {
             _loadScreen.SetActive(false);
+            BattleLogic.BeginBattle();
         });
-        BattleLogic.BeginBattle();
+ 
     }
 }

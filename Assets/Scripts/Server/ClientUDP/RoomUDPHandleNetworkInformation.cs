@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,19 +45,31 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        byte type = buffer.ReadByte();
+        ObjectType type = (ObjectType)buffer.ReadInteger();
         int index = buffer.ReadInteger();
         int updateIndex = buffer.ReadInteger();
-        float[] pos = new float[] { buffer.ReadFloat(), buffer.ReadFloat() };
+        float[] pos = new float[] { buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat() };
         buffer.Dispose();
         switch(type)
         {
-            case 1:
+            case ObjectType.player:
                 Network.currentManager.Players[index].CheckPosition(updateIndex, pos);
                 break;
 
-            case 4:
-                Network.currentManager.dynamicPropList.Get(index).CheckPosition(updateIndex, pos);
+            case ObjectType.spell:
+                try
+                {
+                    Network.currentManager.dynamicPropList.Get(index).CheckPosition(updateIndex, pos);
+                }
+                catch (NullReferenceException ex)
+                {
+                    Debug.Log("NullRef na " + index + " objecte");
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    Debug.Log("A vot i indexoutofraaaange!");
+                }
+
                 break;
         }
     }

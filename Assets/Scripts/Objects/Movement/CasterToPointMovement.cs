@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CasterToPointMovement : BaseMovement
@@ -7,16 +8,18 @@ public class CasterToPointMovement : BaseMovement
     #region Variables
 
     protected Rigidbody _rigidbody;
-    protected Vector3 _targetPosition;
-    protected bool _moving;
+    public Vector3 _targetPosition;
+    public bool _moving;
+    public bool Destroying;
 
     #endregion
 
     #region Unity's
 
-    private void Start()
+    private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        moveUpdate = new Dictionary<int, MovementUpdate>();
     }
 
     private void Update()
@@ -30,7 +33,14 @@ public class CasterToPointMovement : BaseMovement
             }
         }
         if (transform.position.Equals(_targetPosition))
-            (baseObject as Spell).NetworkDestoy();
+        {
+            if(!Destroying)
+            {
+                Destroying = true;
+                (baseObject as Spell).NetworkDestoy();
+            }
+        }
+
     }
 
     private void FixedUpdate()
@@ -76,19 +86,26 @@ public class CasterToPointMovement : BaseMovement
 
     protected internal override void Move()
     {
-        if (_isMain)
+        if (_isMain && _moving)
         {
             int index = _curPosIndex + 1;
             Vector3 _newPos;
-            _newPos = Vector3.RotateTowards(transform.position, _targetPosition, 0f, 0f);
-            _newPos = transform.position + _newPos.normalized * (baseObject.Stats as SpellStats).CurrentSpeed * (float)GSC.timerTick / 1000f;
+            Vector3 _direction = _targetPosition - transform.position;
+            if (_direction.x < 1f && _direction.x > -1f && _direction.z > -1f && _direction.z < 1f)
+            {
+                if (_direction.Equals(Vector3.zero))
+                    return;
+               _newPos = _targetPosition;
+            }
+            else
+                _newPos = transform.position + _direction.normalized * (baseObject.Stats as SpellStats).CurrentSpeed * (float)GSC.timerTick / 1000f;
             _newPos.y = 0.5f;
             lock (moveUpdate)
             {
                 moveUpdate.Add(index, new MovementUpdate(_newPos));
                 _curPosIndex++;
                 _currentLerpTime = 0f;
-                RoomUDPSendData.SendMovePosition((baseObject as Spell).index, index, _newPos);
+                RoomUDPSendData.SendMovePosition(ObjectType.spell, baseObject.index, index, _newPos);
                 MovementUpdate value;
                 if (moveUpdate.TryGetValue(index, out value))
                     value.Sended();

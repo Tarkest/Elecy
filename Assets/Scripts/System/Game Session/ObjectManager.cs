@@ -60,6 +60,7 @@ public class ObjectManager : MonoBehaviour {
     {
         for (int i = 0; i < dynamicPropList.Lenght(); i++)
         {
+            if(dynamicPropList.Get(i) != null)
                 dynamicPropList.Get(i).Move();
         }
     }
@@ -76,7 +77,7 @@ public class ObjectManager : MonoBehaviour {
 
     public void SetStartProperties(int playersCount, float[][] pos, float[][] rot)
     {
-        Players = new Player[playersCount];
+        Players = new BaseObject[playersCount];
         startPositions = new Vector3[playersCount];
         startRotations = new Quaternion[playersCount];
         for(int i = 0; i < playersCount; i++)
@@ -122,6 +123,7 @@ public class ObjectManager : MonoBehaviour {
 public class NetworkObjectList
 {
     BaseObject[] List;
+    int count;
 
     public NetworkObjectList()
     {
@@ -130,17 +132,25 @@ public class NetworkObjectList
 
     public void Add(BaseObject Object, int index)
     {
-        if(List.Length < index + 1)
+        lock(List)
         {
-            Array.Resize(ref List, index + 1);
+            if(List.Length < index + 1)
+            {
+                Array.Resize(ref List, index + 1);
+            }
+            Object.index = index;
+            List[index] = Object;
         }
-        Object.index = index;
-        List[index] = Object;
+
     }
 
     public BaseObject Get(int index)
     {
-        return List[index];
+        lock(List)
+        {
+            return List[index];
+        }
+
     }
 
     public int Lenght()
@@ -150,18 +160,22 @@ public class NetworkObjectList
 
     public void Remove(int index)
     {
-        List[index].Destroy();
-        List[index] = null;
-        for (int i = List.Length; i > 0; i--)
+        lock(List)
         {
-            if (List[i-1] == null)
+            List[index].Destroy();
+            List[index] = null;
+            for (int i = List.Length; i > 0; i--)
             {
-                Array.Resize(ref List, i-1);
-            }
-            else
-            {
-                return;
+                if (List[i-1] == null)
+                {
+                    Array.Resize(ref List, i-1);
+                }
+                else
+                {
+                    return;
+                }
             }
         }
+
     }
 }

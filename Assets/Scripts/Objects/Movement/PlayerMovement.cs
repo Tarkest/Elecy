@@ -9,13 +9,13 @@ public class PlayerMovement : BaseMovement
 
     protected Rigidbody _playerRigidbody;
     protected Animator animator;
-    protected bool moving;
+    public bool moving;
 
     #endregion
 
     #region Unity
 
-    void Start()
+    void Awake()
     {
         _playerRigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -73,7 +73,7 @@ public class PlayerMovement : BaseMovement
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        if (h != 0 || v != 0)
+        if ((h != 0 || v != 0) && moving)
         {
             int index = _curPosIndex + 1;
             Vector3 newPosition;
@@ -94,7 +94,7 @@ public class PlayerMovement : BaseMovement
                 moveUpdate.Add(index, new MovementUpdate(newPosition));
                 _curPosIndex++;
                 _currentLerpTime = 0f;
-                RoomUDPSendData.SendMovePosition(0, index, newPosition);
+                RoomUDPSendData.SendMovePosition(ObjectType.player, baseObject.index, index, newPosition);
                 MovementUpdate value;
                 if (moveUpdate.TryGetValue(index, out value))
                     value.Sended();

@@ -5,9 +5,9 @@ public class TestSpell : BaseObject
 
     public Spell spell;
     public Spell dummy;
-    public new BaseMovement Movement { get { return spell.Movement; } }
-    public new SpellStats Stats { get { return spell.Stats as SpellStats; } }
-    public new int index { get { return spell.index; } }
+    internal new BaseMovement Movement { get { return spell.Movement; } }
+    internal new SpellStats Stats { get { return spell.Stats as SpellStats; } }
+    internal new int index { get { return spell.index; } }
 
     protected MeshRenderer spellVisibility;
     protected MeshRenderer dummyVisibility;

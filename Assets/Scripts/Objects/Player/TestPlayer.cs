@@ -8,14 +8,14 @@ public class TestPlayer : BaseObject, IPlayer
 
     public Player player;
     public Player dummy;
-    public new PlayerMovement Movement { get { return player.Movement as PlayerMovement; } }
-    public new PlayerStats Stats { get { return player.Stats as PlayerStats; } }
-    public SpellInvokerIgnis PlayerInvoker { get { return player.PlayerInvoker; } }
+    internal new PlayerMovement Movement { get { return player.Movement as PlayerMovement; } }
+    internal new PlayerStats Stats { get { return player.Stats as PlayerStats; } }
+    internal SpellInvokerIgnis PlayerInvoker { get { return player.PlayerInvoker; } }
     public bool Player;
-    public string nickname { get { return player.nickname; } }
-    public Vector3 startPosition { get { return player.startPosition; } }
-    public Quaternion startRotation { get { return player.startRotation; } }
-    public new int index { get { return player.index; } }
+    internal string nickname { get { return player.nickname; } }
+    internal Vector3 startPosition { get { return player.startPosition; } }
+    internal Quaternion startRotation { get { return player.startRotation; } }
+    internal new int index { get { return player.index; } }
 
     private SkinnedMeshRenderer playerVisibility;
     private SkinnedMeshRenderer dummyVisibility;
@@ -90,6 +90,7 @@ public class TestPlayer : BaseObject, IPlayer
     {
         GameObject _enemy = Instantiate(Resources.Load("Players/Player"), Network.currentManager.GetStartPosition(0), Network.currentManager.GetStartRotation(0), this.transform) as GameObject;
         dummy = _enemy.GetComponent<Player>();
+        Destroy(_enemy.GetComponent<SpellInvokerIgnis>());
         _enemy.GetComponent<BoxCollider>().enabled = false;
         dummyVisibility = _enemy.GetComponentInChildren<SkinnedMeshRenderer>();
         GameObject _player = Instantiate(Resources.Load("Players/Player"), Network.currentManager.GetStartPosition(0), Network.currentManager.GetStartRotation(0), this.transform) as GameObject;

@@ -6,10 +6,10 @@ public abstract class BaseMovement : MonoBehaviour
 {
     protected bool _isMain;
     protected Vector3 _curPosition;
-    protected int _curPosIndex;
+    public int _curPosIndex;
     protected float _currentLerpTime;
 
-    internal Dictionary<int, MovementUpdate> moveUpdate;
+    public Dictionary<int, MovementUpdate> moveUpdate;
     internal BaseObject baseObject;
 
     protected internal void CheckPosition(int index, float[] pos)
@@ -23,7 +23,7 @@ public abstract class BaseMovement : MonoBehaviour
                 {
                     if (!value.received)
                     {
-                        if (!value.position.Equals(new Vector3(pos[0], 0.5f, pos[1])))
+                        if (!value.position.Equals(new Vector3(pos[0], pos[1], pos[2])))
                         {
                             BattleLogic.StopTimer();
                             List<int> removeIndexes = new List<int>();
@@ -64,7 +64,9 @@ public abstract class BaseMovement : MonoBehaviour
         else
         {
             _curPosition.x = pos[0];
-            _curPosition.z = pos[1];
+            _curPosition.y = pos[1];
+            _curPosition.z = pos[2];
+
             _currentLerpTime = 0f;
         }
     }
@@ -74,7 +76,7 @@ public abstract class BaseMovement : MonoBehaviour
 
 }
 
-internal struct MovementUpdate
+public struct MovementUpdate
 {
     public readonly Vector3 position;
     public bool sent;

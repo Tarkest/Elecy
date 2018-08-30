@@ -306,7 +306,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Background_Stats.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraProperties.cs" />
     <Compile Include="Assets\Scripts\MainThread.cs" />
@@ -331,15 +330,6 @@
     <Compile Include="Assets\Scripts\Objects\Stats\ScriptableObjects\SpellMenu.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\ScriptableObjects\StaticObjectMenu.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\SpellStats.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\Effect1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\EffectController1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\EnemyMovement1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\PlayerMovement1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\PlayerStats1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\Spell1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\SpellArea1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\SpellContainer1.cs" />
-    <Compile Include="Assets\Scripts\OldVersion\SpellInvoker1.cs" />
     <Compile Include="Assets\Scripts\Server\ClientTCP\ClientTCP.cs" />
     <Compile Include="Assets\Scripts\Server\ClientTCP\HandleDataTCP.cs" />
     <Compile Include="Assets\Scripts\Server\ClientTCP\SendDataTCP.cs" />
@@ -351,7 +341,6 @@
     <Compile Include="Assets\Scripts\Server\Network\NetworkGameObject.cs" />
     <Compile Include="Assets\Scripts\Server\Network\NetworkPackages.cs" />
     <Compile Include="Assets\Scripts\Server\Network\PacketBuffer.cs" />
-    <Compile Include="Assets\Scripts\SpellInvoker_2.cs" />
     <Compile Include="Assets\Scripts\System\Enterance\EntranceController.cs" />
     <Compile Include="Assets\Scripts\System\Enterance\Interface\EntranceErrorWindow.cs" />
     <Compile Include="Assets\Scripts\System\Enterance\Interface\EntranceExitWindow.cs" />

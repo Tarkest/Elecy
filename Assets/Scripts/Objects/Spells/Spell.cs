@@ -2,7 +2,6 @@
 
 public class Spell : BaseObject
 {
-
     //private void Awake()
     //{
     //    SetProtected();

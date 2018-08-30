@@ -11,15 +11,15 @@ public class RoomUDPSendData : MonoBehaviour {
         buffer.Dispose();
     }
 
-    public static void SendMovePosition(int objIndex, int index, Vector3 position)
+    public static void SendMovePosition(ObjectType objType, int objIndex, int index, Vector3 position)
     {
         using (PacketBuffer buffer = new PacketBuffer())
         {
             buffer.WriteInteger((int)UDPRoomPackets.URTransformUpdate);
+            buffer.WriteInteger((int)objType);
             buffer.WriteInteger(objIndex);
             buffer.WriteInteger(index);
-            buffer.WriteFloat(position.x);
-            buffer.WriteFloat(position.z);
+            buffer.WriteVector3(new float[] { position.x, position.y, position.z });
             RoomUDP.SendData(buffer.ToArray());
         }
     }
