@@ -319,11 +319,9 @@
     <Compile Include="Assets\Scripts\Objects\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Objects\Player\SpellInvokerIgnis.cs" />
     <Compile Include="Assets\Scripts\Objects\Player\TestPlayer.cs" />
-    <Compile Include="Assets\Scripts\Objects\Spells\Ignis\Spark.cs" />
     <Compile Include="Assets\Scripts\Objects\Spells\Spell.cs" />
     <Compile Include="Assets\Scripts\Objects\Spells\SpellContainer.cs" />
     <Compile Include="Assets\Scripts\Objects\Spells\TestSpell.cs" />
-    <Compile Include="Assets\Scripts\Objects\Static-DynamicObjects\NetworkObjectController.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\ObjectStats.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\ScriptableObjects\PlayerMenu.cs" />
@@ -333,12 +331,11 @@
     <Compile Include="Assets\Scripts\Server\ClientTCP\ClientTCP.cs" />
     <Compile Include="Assets\Scripts\Server\ClientTCP\HandleDataTCP.cs" />
     <Compile Include="Assets\Scripts\Server\ClientTCP\SendDataTCP.cs" />
-    <Compile Include="Assets\Scripts\Server\ClientUDP\RoomUDP.cs" />
-    <Compile Include="Assets\Scripts\Server\ClientUDP\RoomUDPHandleNetworkInformation.cs" />
-    <Compile Include="Assets\Scripts\Server\ClientUDP\RoomUDPSendData.cs" />
+    <Compile Include="Assets\Scripts\Server\ClientUDP\ClientUDP.cs" />
+    <Compile Include="Assets\Scripts\Server\ClientUDP\HandleDataUDP.cs" />
+    <Compile Include="Assets\Scripts\Server\ClientUDP\SendDataUDP.cs" />
     <Compile Include="Assets\Scripts\Server\Network\Network.cs" />
     <Compile Include="Assets\Scripts\Server\Network\NetworkConstants.cs" />
-    <Compile Include="Assets\Scripts\Server\Network\NetworkGameObject.cs" />
     <Compile Include="Assets\Scripts\Server\Network\NetworkPackages.cs" />
     <Compile Include="Assets\Scripts\Server\Network\PacketBuffer.cs" />
     <Compile Include="Assets\Scripts\System\Enterance\EntranceController.cs" />
@@ -367,7 +364,6 @@
     <Compile Include="Assets\Scripts\System\Main Lobby\OptionsController.cs" />
     <Compile Include="Assets\Scripts\System\SceneManage.cs" />
     <Compile Include="Assets\Scripts\System\SoundManager.cs" />
-    <Compile Include="Assets\Scripts\System\TestRoomController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\Danil\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />

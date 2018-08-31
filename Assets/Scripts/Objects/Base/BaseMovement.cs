@@ -33,7 +33,7 @@ public abstract class BaseMovement : MonoBehaviour
                                 {
                                     _curPosIndex = k.Key;
                                     _currentLerpTime = 0f;
-                                    RoomUDPSendData.SendMoveBack(k.Key);
+                                    SendDataUDP.SendMoveBack(k.Key);
                                     break;
                                 }
                                 else

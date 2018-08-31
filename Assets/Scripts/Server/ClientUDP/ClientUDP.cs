@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
 
 
-public class RoomUDP : MonoBehaviour
+internal class ClientUDP : MonoBehaviour
 {
     private static UdpClient _udpClient;
     private static bool _receiving = false;
@@ -15,7 +13,7 @@ public class RoomUDP : MonoBehaviour
     
     public static void Create()
     {
-        RoomUDPHandleNetworkInformation.InitializeNetworkPackages();
+        HandleDataUDP.InitializeNetworkPackages();
         _udpClient = new UdpClient();
         _ipAdress = new IPEndPoint(IPAddress.Parse(Network.IP_ADDRESS), Network.UDP_PORT);
         _udpClient.Connect(_ipAdress);
@@ -63,7 +61,7 @@ public class RoomUDP : MonoBehaviour
                 IPEndPoint _ipEndPointOfThis = null;
                 byte[] data = _client.EndReceive(ar, ref _ipEndPointOfThis);
                 _client.BeginReceive(new AsyncCallback(ReceiveCallback), _client);
-                RoomUDPHandleNetworkInformation.HandleNetworkInformation(data);
+                HandleDataUDP.HandleNetworkInformation(data);
             }
         }
         catch (Exception ex)

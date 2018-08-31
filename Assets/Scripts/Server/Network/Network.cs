@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -154,7 +153,7 @@ public class Network : MonoBehaviour
             float[] _castPos = new float[3] { castPos.x, castPos.y == 0 ? 0.5f : castPos.y, castPos.z };
             float[] _targetPos = new float[3] { targetPos.x, targetPos.y == 0 ? 0.5f : targetPos.y, targetPos.z };
             float[] _rot = new float[4] { rot.x, rot.y, rot.z, rot.w };
-            SendDataTCP.SendInstantiate(_index, _parentIndex, _castPos,_targetPos, _rot, (Object.GetComponent<SpellStats>().stats as SpellMenu).spellMaxHP);
+            SendDataTCP.SendInstantiate(_index, _parentIndex, _castPos,_targetPos, _rot, (Object.GetComponent<SpellStats>().stats as SpellMenu).SpellMaxHP);
         }
         else
         {

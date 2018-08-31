@@ -1,5 +1,4 @@
-﻿
-public static class GSC
+﻿public static class GSC
 {
 
     #region Camera
@@ -29,11 +28,9 @@ public static class GSC
     public const double timerTick = 1000d / 30d;
 }
 
-public enum StartTransform
+public enum SpellMovement
 {
-    Caster = 0,
-    Mouse,
-    Behaviour
+    CasterToPointMovement = 0,
 }
 
 public enum ObjectType

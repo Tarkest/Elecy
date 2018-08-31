@@ -32,9 +32,9 @@ public class CasterToPointMovement : BaseMovement
                 _curPosition = _value.position;
             }
         }
-        if (transform.position.Equals(_targetPosition))
+        if (transform.position.x == _targetPosition.x && transform.position.z == _targetPosition.z)
         {
-            if(!Destroying)
+            if (!Destroying)
             {
                 Destroying = true;
                 (baseObject as Spell).NetworkDestoy();
@@ -93,7 +93,8 @@ public class CasterToPointMovement : BaseMovement
             Vector3 _direction = _targetPosition - transform.position;
             if (_direction.x < 1f && _direction.x > -1f && _direction.z > -1f && _direction.z < 1f)
             {
-                if (_direction.Equals(Vector3.zero))
+                // _direction.Equals(Vector3.zero) includes magnitude and sqrMagnitude
+                if (_direction.x == 0f && _direction.z == 0f) 
                     return;
                _newPos = _targetPosition;
             }
@@ -105,7 +106,7 @@ public class CasterToPointMovement : BaseMovement
                 moveUpdate.Add(index, new MovementUpdate(_newPos));
                 _curPosIndex++;
                 _currentLerpTime = 0f;
-                RoomUDPSendData.SendMovePosition(ObjectType.spell, baseObject.index, index, _newPos);
+                SendDataUDP.SendMovePosition(ObjectType.spell, baseObject.index, index, _newPos);
                 MovementUpdate value;
                 if (moveUpdate.TryGetValue(index, out value))
                     value.Sended();

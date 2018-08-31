@@ -21,8 +21,6 @@ public class RoomController : MonoBehaviour {
     protected internal static bool _won;
     protected internal bool _devScreenIsOn;
 
-    private static List<int> everySecond = new List<int>();
-
     protected void Awake()
     {
         _inGameMenu = GameObject.Find("InGameMenu");

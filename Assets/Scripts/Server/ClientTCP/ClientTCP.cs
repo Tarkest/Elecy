@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 
 
-public static class ClientTCP
+internal static class ClientTCP
 {
 
     #region Variables

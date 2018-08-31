@@ -94,7 +94,7 @@ public class PlayerMovement : BaseMovement
                 moveUpdate.Add(index, new MovementUpdate(newPosition));
                 _curPosIndex++;
                 _currentLerpTime = 0f;
-                RoomUDPSendData.SendMovePosition(ObjectType.player, baseObject.index, index, newPosition);
+                SendDataUDP.SendMovePosition(ObjectType.player, baseObject.index, index, newPosition);
                 MovementUpdate value;
                 if (moveUpdate.TryGetValue(index, out value))
                     value.Sended();

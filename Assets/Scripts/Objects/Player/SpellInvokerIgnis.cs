@@ -72,28 +72,21 @@ public class SpellInvokerIgnis : MonoBehaviour {
             Vector3 _spawnPoint = Vector3.zero;
             Vector3 _targetPoint = Vector3.zero;
             Quaternion _spawnRotation = Quaternion.identity;
-            switch ((Network.currentManager.prefabList[number].GetComponent<SpellStats>().stats as SpellMenu).targetType)
+            switch ((Network.currentManager.prefabList[number].GetComponent<SpellStats>().stats as SpellMenu).Movement)
             {
-                case StartTransform.Caster:
+                case SpellMovement.CasterToPointMovement:
                     _spawnPoint = gameObject.transform.position;
                     _spawnRotation = gameObject.transform.rotation;
                     _targetPoint = MouseController.mousePosition;
                     break;
 
-                case StartTransform.Mouse:
-                    _spawnPoint = MouseController.mousePosition;
-                    _targetPoint = gameObject.transform.position;
-                    break;
-
-                case StartTransform.Behaviour:
-                    _spawnPoint = MouseController.mousePosition;
-                    break;
             }
             Network.NetworkInstantiate(Network.currentManager.prefabList[number].gameObject, _spawnPoint, _targetPoint, _spawnRotation);
             _combination = "";
         }
         else
         {
+            _combination = "";
             Debug.Log("My reactor is not ready for this");
         }
 
@@ -103,7 +96,7 @@ public class SpellInvokerIgnis : MonoBehaviour {
     {
         for(int i = 0; i < spells.Count; i++)
         {
-            _posibleCombination[i] = (spells[i].GetComponent<SpellStats>().stats as SpellMenu).combination;
+            _posibleCombination[i] = (spells[i].GetComponent<SpellStats>().stats as SpellMenu).Combination;
         }
     }
 }

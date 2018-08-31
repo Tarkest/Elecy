@@ -212,6 +212,7 @@ public class MainLobbyController : MonoBehaviour
 
     public void ArmoryPressed()
     {
+        _armoryButton.SetActive(false);
         _armoryScreen.SetActive(true);
         SendDataTCP.SendGetSkillBuild("Ignis");
     }
@@ -224,6 +225,7 @@ public class MainLobbyController : MonoBehaviour
 
     public void ArmoryBack()
     {
+        _armoryButton.SetActive(true);
         _armoryScreen.SetActive(false);
     }
 

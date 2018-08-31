@@ -123,7 +123,6 @@ public class ObjectManager : MonoBehaviour {
 public class NetworkObjectList
 {
     BaseObject[] List;
-    int count;
 
     public NetworkObjectList()
     {
@@ -162,20 +161,11 @@ public class NetworkObjectList
     {
         lock(List)
         {
-            List[index].Destroy();
-            List[index] = null;
-            for (int i = List.Length; i > 0; i--)
+            if(List[index] != null)
             {
-                if (List[i-1] == null)
-                {
-                    Array.Resize(ref List, i-1);
-                }
-                else
-                {
-                    return;
-                }
+                List[index].Destroy();
+                List[index] = null;
             }
         }
-
     }
 }

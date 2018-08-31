@@ -2,19 +2,23 @@
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName ="NewSpell", menuName ="Spell")]
-internal class SpellMenu : ScriptableObject
+public class SpellMenu : ScriptableObject
 {
-    public string spellName;
-    public string description;
-    public string combination;
-    public StartTransform targetType;
-    public int spellMaxHP;
-    public int sunergyCost;
-    public int damage;
-    public float distance;
-    public float speed;
-    public float castTime;
-    public float castArea;
-    public Image spellIcon;
+    public string SpellName;
+    public string Description;
+    public string Combination;
+    public SpellMovement Movement;
+    public int SpellMaxHP;
+    public int SunergyCost;
+    public int Damage;
+    public float Distance;
+    /// <summary>
+    /// Maximum value: 100
+    /// Minimum value: 10
+    /// </summary>
+    public float Speed;
+    public float CastTime;
+    public float CastArea;
+    public Image SpellIcon;
 }
 

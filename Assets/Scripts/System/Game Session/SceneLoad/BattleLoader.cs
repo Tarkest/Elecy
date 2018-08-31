@@ -294,9 +294,9 @@ public class BattleLoader : MonoBehaviour {
                 break;
         }
         DeveloperScreenController.AddInfo("Spells Load...OK", 1);
-        RoomUDP.Create();
-        RoomUDP.BeginReceive();
-        RoomUDPSendData.SendConnectionOk();
+        ClientUDP.Create();
+        ClientUDP.BeginReceive();
+        SendDataUDP.SendConnectionOk();
     }
 
     public static void LoadComplite()

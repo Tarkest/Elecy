@@ -11,9 +11,24 @@ public class SpellStats : BaseStats
     internal override void SetBaseStats(BaseObject obj)
     {
         base.SetBaseStats(obj);
-        CurrentHP = (stats as SpellMenu).spellMaxHP;
-        CurrentSpeed = (stats as SpellMenu).speed;
+        CurrentHP = (stats as SpellMenu).SpellMaxHP;
+        CurrentSpeed = (stats as SpellMenu).Speed;
+        SetSpellMovement();
     }
+
+    #region Spell Movement
+
+    protected void SetSpellMovement()
+    {
+        switch((stats as SpellMenu).Movement)
+        {
+            case SpellMovement.CasterToPointMovement:
+                this.gameObject.AddComponent<CasterToPointMovement>();
+                break;
+        }
+    }
+
+    #endregion
 
     #region Hash
 

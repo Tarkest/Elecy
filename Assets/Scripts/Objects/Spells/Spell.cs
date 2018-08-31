@@ -2,10 +2,6 @@
 
 public class Spell : BaseObject
 {
-    //private void Awake()
-    //{
-    //    SetProtected();
-    //}
 
     internal void SetStartProperties(Vector3 castPosition, Vector3 targetPosition, int index, bool isMain = false)
     {
@@ -31,13 +27,9 @@ public class Spell : BaseObject
 
     protected internal override void SetMovement(bool isPlayer = false, params Vector3[] pos)
     {
+        Movement = GetComponent<BaseMovement>();
         Movement.SetMovement(this, isPlayer, pos);
     }
-
-    //protected void SetProtected()
-    //{
-    //    Stats = GetComponent<SpellStats>();
-    //}
 
     public void NetworkDestoy()
     {

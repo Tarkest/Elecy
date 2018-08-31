@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomUDPHandleNetworkInformation : MonoBehaviour {
+public class HandleDataUDP : MonoBehaviour {
 
     private delegate void Packet_(byte[] data);
     private static Dictionary<int, Packet_> _Packets;
@@ -61,13 +60,11 @@ public class RoomUDPHandleNetworkInformation : MonoBehaviour {
                 {
                     Network.currentManager.dynamicPropList.Get(index).CheckPosition(updateIndex, pos);
                 }
-                catch (NullReferenceException ex)
+                catch (Exception ex)
                 {
-                    Debug.Log("NullRef na " + index + " objecte");
-                }
-                catch (IndexOutOfRangeException ex)
-                {
-                    Debug.Log("A vot i indexoutofraaaange!");
+                    if (ex is NullReferenceException || ex is IndexOutOfRangeException)
+                        return;
+                    throw;
                 }
 
                 break;

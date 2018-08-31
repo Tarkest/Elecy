@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
-using System;
 
-public class RoomUDPSendData : MonoBehaviour {
+public class SendDataUDP : MonoBehaviour {
 
     public static void SendConnectionOk()
     {
         PacketBuffer buffer = new PacketBuffer(); 
         buffer.WriteInteger((int)UDPRoomPackets.URConnectionComplite);
-        RoomUDP.SendData(buffer.ToArray());
+        ClientUDP.SendData(buffer.ToArray());
         buffer.Dispose();
     }
 
@@ -20,7 +19,7 @@ public class RoomUDPSendData : MonoBehaviour {
             buffer.WriteInteger(objIndex);
             buffer.WriteInteger(index);
             buffer.WriteVector3(new float[] { position.x, position.y, position.z });
-            RoomUDP.SendData(buffer.ToArray());
+            ClientUDP.SendData(buffer.ToArray());
         }
     }
 
@@ -30,7 +29,7 @@ public class RoomUDPSendData : MonoBehaviour {
         {
             buffer.WriteInteger((int)UDPRoomPackets.URTransformStepback);
             buffer.WriteInteger(index);
-            RoomUDP.SendData(buffer.ToArray());
+            ClientUDP.SendData(buffer.ToArray());
         }
     }
 }

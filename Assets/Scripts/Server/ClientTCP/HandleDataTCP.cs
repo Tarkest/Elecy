@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-class HandleDataTCP
+internal class HandleDataTCP
 {
     private delegate void Packet_(byte[] data);
     private static Dictionary<int, Packet_> _Packets;
@@ -225,7 +222,6 @@ class HandleDataTCP
         }
         buffer.Dispose();
         ArmoryController.SetSkills(_skillArray, _skillVariation);
-        //MainLobbyController.GetOffProcess();
     }
 
     /// <summary>
