@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,15 +33,6 @@ public class CasterToPointMovement : BaseMovement
                 _curPosition = _value.position;
             }
         }
-        if (transform.position.x == _targetPosition.x && transform.position.z == _targetPosition.z)
-        {
-            if (!Destroying)
-            {
-                Destroying = true;
-                (baseObject as Spell).NetworkDestoy();
-            }
-        }
-
     }
 
     private void FixedUpdate()
@@ -94,8 +86,15 @@ public class CasterToPointMovement : BaseMovement
             if (_direction.x < 1f && _direction.x > -1f && _direction.z > -1f && _direction.z < 1f)
             {
                 // _direction.Equals(Vector3.zero) includes magnitude and sqrMagnitude
-                if (_direction.x == 0f && _direction.z == 0f) 
+                if (_direction.x == 0f && _direction.z == 0f)
+                {
+                    if (!Destroying)
+                    {
+                        Destroying = true;
+                        StartCoroutine(DestroyCoroutine());
+                    }
                     return;
+                }
                _newPos = _targetPosition;
             }
             else
@@ -113,6 +112,15 @@ public class CasterToPointMovement : BaseMovement
                 else
                     throw new Exception("Move send exception");
             }
+        }
+    }
+
+    IEnumerator DestroyCoroutine()
+    {
+        while(true)
+        {
+            (baseObject as Spell).NetworkDestoy();
+            yield return new WaitForSeconds(1);
         }
     }
 
