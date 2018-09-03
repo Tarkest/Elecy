@@ -198,6 +198,7 @@ public class Network : MonoBehaviour
                                         targetPosition,
                                         index,
                                         isMain);
+        _instance.tag = Tags.Spell.ToString();
         currentManager.dynamicPropList.Add(baseComponent, index);
     }
 
@@ -213,6 +214,7 @@ public class Network : MonoBehaviour
         {
             test_instance = Instantiate(Resources.Load("Spells/TestSpell"), Vector3.zero, Quaternion.identity) as GameObject;
         }
+        test_instance.tag = Tags.Spell.ToString();
         TestSpell baseComponent = test_instance.GetComponent<TestSpell>();
         baseComponent.SetStartProperties(prefab, castPosition, rotation, targetPosition, index, isMain);
         currentManager.dynamicPropList.Add(baseComponent, index);

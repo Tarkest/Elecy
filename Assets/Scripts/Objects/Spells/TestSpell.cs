@@ -39,9 +39,9 @@ public class TestSpell : BaseObject
         dummy.Movement.CheckPosition(index, pos);
     }
 
-    protected internal override void Move()
+    protected internal override void Invoke()
     {
-        spell.Movement.Move();
+        spell.Invoke();
     }
 
 
@@ -51,10 +51,11 @@ public class TestSpell : BaseObject
         GameObject _dummy = Instantiate(prefab, position, rotation, this.transform) as GameObject;
         dummy = _dummy.GetComponent<Spell>();
         dummyVisibility = _dummy.GetComponentInChildren<MeshRenderer>();
+        _dummy.tag = Tags.Spell.ToString();
         GameObject _spell = Instantiate(prefab, position, rotation, this.transform) as GameObject;
         spell = _spell.GetComponent<Spell>();
         spellVisibility = _spell.GetComponentInChildren<MeshRenderer>();
-
+        _spell.tag = Tags.Spell.ToString();
     }
 
     #region Not Implementet (no use)

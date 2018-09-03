@@ -41,3 +41,11 @@ public enum ObjectType
     spell = 4,
 }
 
+public enum Tags
+{
+    Player,
+    Enemy,
+    Spell,
+    StaticObject,
+}
+

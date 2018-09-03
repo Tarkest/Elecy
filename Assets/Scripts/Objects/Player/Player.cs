@@ -14,15 +14,6 @@ public class Player : BaseObject, IPlayer
 
     #endregion
 
-    #region Unity's
-
-    //private void Awake()
-    //{
-    //    SetProtected();
-    //}
-
-    #endregion
-
     #region Public Commands
 
     public void SetStartProperties(string nickname, Vector3 pos, Quaternion rot, int ID, bool isPlayer = false)
@@ -45,9 +36,7 @@ public class Player : BaseObject, IPlayer
         return this.gameObject.transform.position;
     }
 
-    #region Movement
-
-    protected internal override void Move()
+    protected internal override void Invoke()
     {
         Movement.Move();
     }
@@ -59,16 +48,7 @@ public class Player : BaseObject, IPlayer
 
     #endregion
 
-    #endregion
-
     #region Private Helpers
-
-    //protected internal virtual void SetProtected()
-    //{
-    //    Movement = transform.GetComponent<PlayerMovement>();
-    //    Stats = transform.GetComponent<PlayerStats>();
-    //    PlayerInvoker = transform.GetComponent<SpellInvokerIgnis>();
-    //}
 
     protected internal override void SetMovement(bool isPlayer = false, params Vector3[] pos)
     {

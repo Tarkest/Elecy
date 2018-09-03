@@ -61,7 +61,7 @@ public class ObjectManager : MonoBehaviour {
         for (int i = 0; i < dynamicPropList.Lenght(); i++)
         {
             if(dynamicPropList.Get(i) != null)
-                dynamicPropList.Get(i).Move();
+                dynamicPropList.Get(i).Invoke();
         }
     }
 

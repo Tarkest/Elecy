@@ -15,7 +15,7 @@ public class Spell : BaseObject
         Movement.CheckPosition(index, pos);
     }
 
-    protected internal override void Move()
+    protected internal override void Invoke()
     {
         Movement.Move();
     }

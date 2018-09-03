@@ -61,9 +61,9 @@ public class TestPlayer : BaseObject, IPlayer
 
     #region Public Commands
 
-    protected internal override void Move()
+    protected internal override void Invoke()
     {
-        player.Movement.Move();
+        player.Invoke();
     }
 
     protected internal override void CheckPosition(int updateIndex, float[] pos)
@@ -93,10 +93,12 @@ public class TestPlayer : BaseObject, IPlayer
         Destroy(_enemy.GetComponent<SpellInvokerIgnis>());
         _enemy.GetComponent<BoxCollider>().enabled = false;
         dummyVisibility = _enemy.GetComponentInChildren<SkinnedMeshRenderer>();
+        _enemy.tag = Tags.Player.ToString();
         GameObject _player = Instantiate(Resources.Load("Players/Player"), Network.currentManager.GetStartPosition(0), Network.currentManager.GetStartRotation(0), this.transform) as GameObject;
         player = _player.GetComponent<Player>();
         playerVisibility = _player.GetComponentInChildren<SkinnedMeshRenderer>();
         ObjectManager.cameraTarger.player = _player.transform;
+        _player.tag = Tags.Player.ToString();
     }
 
     #endregion
