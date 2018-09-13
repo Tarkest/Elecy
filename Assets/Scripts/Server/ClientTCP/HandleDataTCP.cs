@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 internal class HandleDataTCP
 {
@@ -28,7 +29,8 @@ internal class HandleDataTCP
             {(int)ServerPackets.SBuildInfo, HandleBuild },
             {(int)ServerPackets.SBuildSaved, HandleBuildSaved },
             {(int)ServerPackets.SInstantiate, HandleInstantiate },
-            {(int)ServerPackets.SDestoy, HandleDestroy }
+            {(int)ServerPackets.SDestoy, HandleDestroy },
+            {(int)ServerPackets.SDamage, HandleDamage }
         };
     }
 
@@ -441,6 +443,28 @@ internal class HandleDataTCP
     public static void HandlePlayerLogOut(byte[] data)
     {
         Network.EndBattle();
+    }
+
+
+    private static void HandleDamage(byte[] data)
+    {
+        using (PacketBuffer buffer = new PacketBuffer())
+        {
+            buffer.WriteBytes(data);
+            buffer.ReadInteger();
+            ObjectType type = (ObjectType)buffer.ReadInteger();
+            int index = buffer.ReadInteger();
+            int damage = buffer.ReadInteger();
+            switch (type)
+            {
+                case ObjectType.player:
+                    Network.currentManager.Players[index].Stats.TakeDamage(damage);
+                    break;
+                case ObjectType.spell:
+                    Network.currentManager.dynamicPropList[index].Stats.TakeDamage(damage);
+                    break;
+            }
+        }
     }
 
     #endregion

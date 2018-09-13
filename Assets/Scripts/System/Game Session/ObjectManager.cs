@@ -143,6 +143,14 @@ public class NetworkObjectList
 
     }
 
+    public BaseObject this[int index]
+    {
+        get
+        {
+            return List[index];
+        }
+    }
+
     public BaseObject Get(int index)
     {
         lock(List)

@@ -317,6 +317,20 @@
         buffer.Dispose();
     }
 
+    public static void SendDamage(ObjectType type, int index, int damage, StaticTypes? staticType = null)
+    {
+        using (PacketBuffer buffer = new PacketBuffer())
+        {
+            buffer.WriteInteger((int)RoomPackets.RDamage);
+            buffer.WriteInteger((int)type);
+            if (staticType != null)
+                buffer.WriteInteger((int)staticType);
+            buffer.WriteInteger(index);
+            buffer.WriteInteger(damage);
+            ClientTCP.SendData(buffer.ToArray());
+        }
+    }
+
     #endregion
 
 }

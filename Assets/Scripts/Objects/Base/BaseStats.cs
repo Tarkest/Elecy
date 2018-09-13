@@ -15,6 +15,8 @@ public abstract class BaseStats : MonoBehaviour
         baseObject = obj;
     }
 
+    internal abstract void TakeDamage(int damage);
+
 
 }
 

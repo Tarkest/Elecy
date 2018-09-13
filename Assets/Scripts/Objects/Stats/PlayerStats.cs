@@ -28,6 +28,11 @@ public class PlayerStats : BaseStats
         CurrentBaseWaterDefence = (stats as PlayerMenu).playerBaseWaterDefence;
     }
 
+    internal override void TakeDamage(int damage)
+    {
+        Debug.Log("Took " + damage + " damage");
+    }
+
     private void Update()
     {
         foreach (Effect Effect in Effects)

@@ -16,6 +16,12 @@ public class SpellStats : BaseStats
         SetSpellMovement();
     }
 
+
+    internal override void TakeDamage(int damage)
+    {
+        Debug.Log("Spell took " + damage + " damage");
+    }
+
     #region Spell Movement
 
     protected void SetSpellMovement()
