@@ -23,7 +23,7 @@ public class Spark : BaseBehavior
                 return;
         }
         int index = other.gameObject.GetComponent<BaseObject>().index;
-        int damage = (gameObject.GetComponent<SpellStats>().stats as SpellMenu).Damage;
+        int damage = gameObject.GetComponent<SpellStats>().Stats.Damage;
         SendDataTCP.SendDamage(type, index, damage);
     }
 }

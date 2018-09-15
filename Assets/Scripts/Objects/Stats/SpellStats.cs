@@ -1,32 +1,32 @@
 ﻿using UnityEngine;
 
-public class SpellStats : BaseStats
+public class SpellStats : BaseStats, IStatsMenuSpecifier<SpellMenu>
 {
 
     public short variationHash;
 
-    public int CurrentHP;
     public float CurrentSpeed;
 
-    internal override void SetBaseStats(BaseObject obj)
+    public SpellMenu Stats
     {
-        base.SetBaseStats(obj);
-        CurrentHP = (stats as SpellMenu).SpellMaxHP;
-        CurrentSpeed = (stats as SpellMenu).Speed;
-        SetSpellMovement();
+        get
+        {
+            return mStats as SpellMenu;
+        }
     }
 
-
-    internal override void TakeDamage(int damage)
+    public void Init(BaseObject obj)
     {
-        Debug.Log("Spell took " + damage + " damage");
+        base.mInit(obj);
+        CurrentSpeed = Stats.Speed;
+        SetSpellMovement();
     }
 
     #region Spell Movement
 
     protected void SetSpellMovement()
     {
-        switch((stats as SpellMenu).Movement)
+        switch(Stats.Movement)
         {
             case SpellMovement.CasterToPointMovement:
                 this.gameObject.AddComponent<CasterToPointMovement>();

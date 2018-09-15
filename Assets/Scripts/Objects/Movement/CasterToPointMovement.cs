@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CasterToPointMovement : BaseMovement
+public class CasterToPointMovement : BaseSpellMovement
 {
 
     #region Variables
 
     protected Rigidbody _rigidbody;
-    public Vector3 _targetPosition;
-    public bool _moving;
     public bool Destroying;
 
     #endregion
@@ -46,34 +44,6 @@ public class CasterToPointMovement : BaseMovement
 
     #endregion
 
-    #region Initialization
-
-    /// <summary>
-    /// Set starts properties for moving. 
-    /// </summary>
-    /// <param name="obj">Component's parent</param>
-    /// <param name="isPlayer">If true the calculation happanes in this movement</param>
-    /// <param name="pos">Two Vector3: cast and target points</param>
-    protected internal override void SetMovement(BaseObject obj, bool isPlayer = false, params Vector3[] pos)
-    {
-        baseObject = obj;
-        _isMain = isPlayer;
-        if (_isMain)
-        {
-            _curPosIndex = 1;
-            moveUpdate.Add(_curPosIndex, new MovementUpdate(pos[0]));
-            MovementUpdate _value;
-            if (moveUpdate.TryGetValue(_curPosIndex, out _value))
-                _value.Received();
-            else { throw new Exception("Set Movement Exception: There is no value in dictionary."); }
-        }
-        _curPosition = pos[0];
-        _targetPosition = pos[1];
-        _moving = true;
-    }
-
-    #endregion
-
     #region Move
 
     protected internal override void Move()
@@ -82,7 +52,7 @@ public class CasterToPointMovement : BaseMovement
         {
             int index = _curPosIndex + 1;
             Vector3 _newPos;
-            Vector3 _direction = _targetPosition - transform.position;
+            Vector3 _direction = TargetPosition - transform.position;
             if (_direction.x < 1f && _direction.x > -1f && _direction.z > -1f && _direction.z < 1f)
             {
                 // _direction.Equals(Vector3.zero) includes magnitude and sqrMagnitude
@@ -95,17 +65,17 @@ public class CasterToPointMovement : BaseMovement
                     }
                     return;
                 }
-               _newPos = _targetPosition;
+               _newPos = TargetPosition;
             }
             else
-                _newPos = transform.position + _direction.normalized * (baseObject.Stats as SpellStats).CurrentSpeed * (float)GSC.timerTick / 1000f;
+                _newPos = transform.position + _direction.normalized * BaseObject.Stats.CurrentSpeed * (float)GSC.timerTick / 1000f;
             _newPos.y = 0.5f;
             lock (moveUpdate)
             {
                 moveUpdate.Add(index, new MovementUpdate(_newPos));
                 _curPosIndex++;
                 _currentLerpTime = 0f;
-                SendDataUDP.SendMovePosition(ObjectType.spell, baseObject.index, index, _newPos);
+                SendDataUDP.SendMovePosition(ObjectType.spell, BaseObject.index, index, _newPos);
                 MovementUpdate value;
                 if (moveUpdate.TryGetValue(index, out value))
                     value.Sended();
@@ -119,7 +89,7 @@ public class CasterToPointMovement : BaseMovement
     {
         while(true)
         {
-            (baseObject as Spell).NetworkDestoy();
+            BaseObject.NetworkDestoy();
             yield return new WaitForSeconds(1);
         }
     }

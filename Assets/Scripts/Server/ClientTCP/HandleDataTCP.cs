@@ -458,10 +458,10 @@ internal class HandleDataTCP
             switch (type)
             {
                 case ObjectType.player:
-                    Network.currentManager.Players[index].Stats.TakeDamage(damage);
+                    Network.currentManager.Players[index].Stats.HPOuterChange(damage);
                     break;
                 case ObjectType.spell:
-                    Network.currentManager.dynamicPropList[index].Stats.TakeDamage(damage);
+                    Network.currentManager.dynamicPropList[index].Stats.HPOuterChange(damage);
                     break;
             }
         }

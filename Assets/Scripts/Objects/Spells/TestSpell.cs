@@ -1,13 +1,34 @@
 ﻿using UnityEngine;
 
-public class TestSpell : BaseObject
+public class TestSpell : Spell, ITest<Spell>
 {
 
-    public Spell spell;
-    public Spell dummy;
-    internal new BaseMovement Movement { get { return spell.Movement; } }
-    internal new SpellStats Stats { get { return spell.Stats as SpellStats; } }
-    internal new int index { get { return spell.index; } }
+    internal new BaseMovement Movement { get { return mObject.Movement; } }
+    internal new SpellStats Stats { get { return mObject.Stats as SpellStats; } }
+    internal new int index { get { return mObject.index; } }
+
+    public Spell mObject
+    {
+        get
+        {
+            return mObject;
+        }
+        private set
+        {
+            mObject = value;
+        }
+    }
+    public Spell Dummy
+    {
+        get
+        {
+            return Dummy;
+        }
+        private set
+        {
+            Dummy = value;
+        }
+    }
 
     protected MeshRenderer spellVisibility;
     protected MeshRenderer dummyVisibility;
@@ -29,42 +50,21 @@ public class TestSpell : BaseObject
     internal void SetStartProperties(GameObject prefab, Vector3 castPosition, Quaternion rotation, Vector3 targetPosition, int index, bool isMain = false)
     {
         SetProtected(prefab, castPosition, rotation);
-        spell.SetStartProperties(castPosition, targetPosition, index, isMain);
-        dummy.SetStartProperties(castPosition, targetPosition, index);
+        mObject.Init(castPosition, targetPosition, index, isMain);
+        Dummy.Init(castPosition, targetPosition, index);
     }
-
-    protected internal override void CheckPosition(int index, float[] pos)
-    {
-        spell.Movement.CheckPosition(index, pos);
-        dummy.Movement.CheckPosition(index, pos);
-    }
-
-    protected internal override void Invoke()
-    {
-        spell.Invoke();
-    }
-
-
 
     protected void SetProtected(GameObject prefab, Vector3 position, Quaternion rotation)
     {
         GameObject _dummy = Instantiate(prefab, position, rotation, this.transform) as GameObject;
-        dummy = _dummy.GetComponent<Spell>();
+        Dummy = _dummy.GetComponent<Spell>();
         dummyVisibility = _dummy.GetComponentInChildren<MeshRenderer>();
         _dummy.tag = Tags.Spell.ToString();
         GameObject _spell = Instantiate(prefab, position, rotation, this.transform) as GameObject;
-        spell = _spell.GetComponent<Spell>();
+        mObject = _spell.GetComponent<Spell>();
         spellVisibility = _spell.GetComponentInChildren<MeshRenderer>();
         _spell.tag = Tags.Spell.ToString();
     }
-
-    #region Not Implementet (no use)
-
-    protected internal override void SetBaseStats() { }
-
-    protected internal override void SetMovement(bool isPlayer = false, params Vector3[] pos) { }
-
-    #endregion
 
 }
 

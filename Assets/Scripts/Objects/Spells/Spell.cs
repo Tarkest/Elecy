@@ -1,35 +1,38 @@
 ﻿using UnityEngine;
 
-public class Spell : BaseObject
+public class Spell : BaseObject, IStatsSpecifier<SpellStats>, IMovementSpecifier<BaseSpellMovement>
 {
 
-    internal void SetStartProperties(Vector3 castPosition, Vector3 targetPosition, int index, bool isMain = false)
+    #region Public Members
+
+    public SpellStats Stats
     {
-        this.index = index;
-        SetBaseStats();
-        SetMovement(isMain, castPosition, targetPosition);
+        get
+        {
+            return mStats as SpellStats;
+        }
     }
 
-    protected internal override void CheckPosition(int index, float[] pos)
+    public BaseSpellMovement Movement
     {
-        Movement.CheckPosition(index, pos);
+        get
+        {
+            return mMovement as BaseSpellMovement;
+        }
     }
 
-    protected internal override void Invoke()
+    #endregion
+
+    #region Init
+
+    public void Init(Vector3 castPos, Vector3 targetPos, int index, bool isMain = false)
     {
-        Movement.Move();
+        base.Init(index);
+        Stats.Init(this);
+        Movement.Init(this, isMain, targetPos, castPos);
     }
 
-    protected internal override void SetBaseStats()
-    {
-        Stats.SetBaseStats(this);
-    }
-
-    protected internal override void SetMovement(bool isPlayer = false, params Vector3[] pos)
-    {
-        Movement = GetComponent<BaseMovement>();
-        Movement.SetMovement(this, isPlayer, pos);
-    }
+    #endregion
 
     public void NetworkDestoy()
     {

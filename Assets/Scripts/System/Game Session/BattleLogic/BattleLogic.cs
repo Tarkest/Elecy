@@ -30,7 +30,7 @@ public class BattleLogic : MonoBehaviour {
 
     private static void OnBattleTimerEvent(object o, ElapsedEventArgs e)
     {
-        MainThread.executeInUpdate(() => { Network.currentManager.Players[ObjectManager.playerIndex].Invoke(); });
+        MainThread.executeInUpdate(() => { Network.currentManager.Players[ObjectManager.playerIndex].Callback(); });
         MainThread.executeInUpdate(() => { Network.currentManager.UpdatePrefabs(); });
     }
 

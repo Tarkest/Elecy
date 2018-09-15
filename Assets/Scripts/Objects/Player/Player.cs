@@ -2,62 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : BaseObject, IPlayer
+public class Player : BaseObject, IStatsSpecifier<PlayerStats>, IMovementSpecifier<BaseMovement>
 {
 
     #region Variables
 
-    public SpellInvokerIgnis PlayerInvoker;
     public string nickname;
-    public Vector3 startPosition;
-    public Quaternion startRotation;
+    public BaseInvoker PlayerInvoker;
+
+    public PlayerStats Stats
+    {
+        get
+        {
+            return mStats as PlayerStats;
+        }
+    }
+    public BaseMovement Movement
+    {
+        get
+        {
+            return mMovement as BaseMovement;
+        }
+    }
 
     #endregion
 
     #region Public Commands
 
-    public void SetStartProperties(string nickname, Vector3 pos, Quaternion rot, int ID, bool isPlayer = false)
+    public virtual void Init(int index, string nickname, Vector3 pos, Quaternion rot, bool isPlayer = false)
     {
+        base.Init(index);
         this.nickname = nickname;
-        startPosition = pos;
-        startRotation = rot;
-        index = ID;
-        SetMovement(isPlayer, pos);
-        SetBaseStats();
+        Stats.Init(this);
+        Movement.Init(this, isPlayer, pos);
     }
 
     public virtual void LoadCombinations(List<GameObject> spells)
     {
-        PlayerInvoker.LoadCombinations(spells);
+        PlayerInvoker.Init(this, spells);
     }
 
     public virtual Vector3 GetPosition()
     {
         return this.gameObject.transform.position;
-    }
-
-    protected internal override void Invoke()
-    {
-        Movement.Move();
-    }
-
-    protected internal override void CheckPosition(int updateIndex, float[] pos)
-    {
-        Movement.CheckPosition(updateIndex, pos);
-    }
-
-    #endregion
-
-    #region Private Helpers
-
-    protected internal override void SetMovement(bool isPlayer = false, params Vector3[] pos)
-    {
-        Movement.SetMovement(this, isPlayer, pos[0]);
-    }
-
-    protected internal override void SetBaseStats()
-    {
-        Stats.SetBaseStats(this);
     }
 
     #endregion
