@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-public class PlayerMovement : BaseMovement
+public class PlayerMovement : BaseMovement, IBaseObjectSpecifier<Player>
 {
 
     #region Variables
@@ -10,6 +10,14 @@ public class PlayerMovement : BaseMovement
     protected Rigidbody _playerRigidbody;
     protected Animator animator;
     public bool moving;
+
+    public Player BaseObject
+    {
+        get
+        {
+            return _baseObject as Player;
+        }
+    }
 
     #endregion
 
@@ -46,27 +54,6 @@ public class PlayerMovement : BaseMovement
 
     #endregion
 
-    #region Initialize
-
-    protected internal override void SetMovement(BaseObject obj, bool isPlayer = false, params Vector3[] spawnPosition)
-    {
-        _isMain = isPlayer;
-        baseObject = obj;
-        if(_isMain)
-        {
-            _curPosIndex = 1;
-            moveUpdate.Add(_curPosIndex, new MovementUpdate(spawnPosition[0]));
-            MovementUpdate _value;
-            if(moveUpdate.TryGetValue(_curPosIndex, out _value)) 
-                _value.Received();
-            else { throw new Exception("Set Movement Exception: There is no value in dictionary."); }
-        }
-        _curPosition = spawnPosition[0];
-        moving = true;
-    }
-
-    #endregion
-
     #region Move
 
     protected internal override void Move()
@@ -79,14 +66,14 @@ public class PlayerMovement : BaseMovement
             Vector3 newPosition;
             Vector3 direction = new Vector3(h, 0, v);
             RaycastHit _hit;
-            if(Physics.Raycast(transform.position, direction.normalized, out _hit, Vector3.Distance(transform.position, _curPosition + direction.normalized * (baseObject.Stats as PlayerStats).CurrentMoveSpeed * (float)GSC.timerTick / 1000f)))
+            if(Physics.Raycast(transform.position, direction.normalized, out _hit, Vector3.Distance(transform.position, _curPosition + direction.normalized * BaseObject.Stats.CurrentMoveSpeed * (float)GSC.timerTick / 1000f)))
             {
                 newPosition = _hit.point;
 
             }
             else
             {
-                newPosition = _curPosition + direction.normalized * (baseObject.Stats as PlayerStats).CurrentMoveSpeed * (float)GSC.timerTick / 1000f;
+                newPosition = _curPosition + direction.normalized * BaseObject.Stats.CurrentMoveSpeed * (float)GSC.timerTick / 1000f;
             }
             newPosition.y = 0.5f;      
             lock(moveUpdate)
@@ -94,7 +81,7 @@ public class PlayerMovement : BaseMovement
                 moveUpdate.Add(index, new MovementUpdate(newPosition));
                 _curPosIndex++;
                 _currentLerpTime = 0f;
-                SendDataUDP.SendMovePosition(ObjectType.player, baseObject.index, index, newPosition);
+                SendDataUDP.SendMovePosition(ObjectType.player, BaseObject.index, index, newPosition);
                 MovementUpdate value;
                 if (moveUpdate.TryGetValue(index, out value))
                     value.Sended();

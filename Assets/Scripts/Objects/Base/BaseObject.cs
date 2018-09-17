@@ -1,23 +1,54 @@
 ﻿using UnityEngine;
 
-public abstract class BaseObject : MonoBehaviour 
+public abstract class BaseObject : MonoBehaviour, ITickCallback, ICheckPosition, IHPOuterChange
 {
-    public BaseMovement Movement;
-    public BaseStats Stats;
+    public BaseMovement mMovement;
+    public BaseStats mStats;
     public int index;
 
-    protected internal abstract void SetMovement(bool isPlayer = false, params Vector3[] pos);
-    protected internal abstract void SetBaseStats();
+
+    #region Initialization
+
+    protected void Init(int index)
+    {
+        this.index = index;
+    }
+
+    #endregion
+
+    #region Tick Callback
+
+    public virtual void Callback()
+    {
+        mStats.HPUpdate();
+        mMovement.Move();
+    }
+
+    #endregion
 
     #region Moving
-    protected internal abstract void Move();
-    protected internal abstract void CheckPosition(int index, float[] pos);
+
+    public virtual void CheckPosition(int index, float[] pos)
+    {
+        mMovement.CheckPosition(index, pos);
+    }
+
+    #endregion
+
+    #region HPChange
+
+    public virtual void HPOuterChange(int change)
+    {
+        mStats.HPOuterChange(change);
+    }
+
     #endregion
 
     public void Destroy()
     {
         Destroy(gameObject);
     }
+
 
 }
 

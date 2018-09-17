@@ -21,7 +21,7 @@ public class ObjectManager : MonoBehaviour {
 
     #region ObjectsContainer
 
-    public BaseObject[] Players;
+    public Player[] Players;
 
     public NetworkObjectList dynamicPropList = new NetworkObjectList();
 
@@ -61,7 +61,7 @@ public class ObjectManager : MonoBehaviour {
         for (int i = 0; i < dynamicPropList.Lenght(); i++)
         {
             if(dynamicPropList.Get(i) != null)
-                dynamicPropList.Get(i).Move();
+                dynamicPropList.Get(i).Callback();
         }
     }
 
@@ -77,7 +77,7 @@ public class ObjectManager : MonoBehaviour {
 
     public void SetStartProperties(int playersCount, float[][] pos, float[][] rot)
     {
-        Players = new BaseObject[playersCount];
+        Players = new Player[playersCount];
         startPositions = new Vector3[playersCount];
         startRotations = new Quaternion[playersCount];
         for(int i = 0; i < playersCount; i++)
@@ -122,14 +122,14 @@ public class ObjectManager : MonoBehaviour {
 
 public class NetworkObjectList
 {
-    BaseObject[] List;
+    Spell[] List;
 
     public NetworkObjectList()
     {
-        List = new BaseObject[0];
+        List = new Spell[0];
     }
 
-    public void Add(BaseObject Object, int index)
+    public void Add(Spell Object, int index)
     {
         lock(List)
         {
@@ -143,7 +143,15 @@ public class NetworkObjectList
 
     }
 
-    public BaseObject Get(int index)
+    public Spell this[int index]
+    {
+        get
+        {
+            return List[index];
+        }
+    }
+
+    public Spell Get(int index)
     {
         lock(List)
         {

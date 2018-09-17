@@ -153,7 +153,7 @@ public class Network : MonoBehaviour
             float[] _castPos = new float[3] { castPos.x, castPos.y == 0 ? 0.5f : castPos.y, castPos.z };
             float[] _targetPos = new float[3] { targetPos.x, targetPos.y == 0 ? 0.5f : targetPos.y, targetPos.z };
             float[] _rot = new float[4] { rot.x, rot.y, rot.z, rot.w };
-            SendDataTCP.SendInstantiate(_index, _parentIndex, _castPos,_targetPos, _rot, (Object.GetComponent<SpellStats>().stats as SpellMenu).SpellMaxHP);
+            SendDataTCP.SendInstantiate(_index, _parentIndex, _castPos,_targetPos, _rot, Object.GetComponent<SpellStats>().Stats.MaxHP);
         }
         else
         {
@@ -194,10 +194,11 @@ public class Network : MonoBehaviour
            _instance = Instantiate(prefab, castPosition, rotation);
         }
         Spell baseComponent = _instance.GetComponent<Spell>();
-        baseComponent.SetStartProperties(castPosition,
-                                        targetPosition,
-                                        index,
-                                        isMain);
+        baseComponent.Init(castPosition,
+                            targetPosition,
+                            index,
+                            isMain);
+        _instance.tag = Tags.Spell.ToString();
         currentManager.dynamicPropList.Add(baseComponent, index);
     }
 
@@ -213,6 +214,7 @@ public class Network : MonoBehaviour
         {
             test_instance = Instantiate(Resources.Load("Spells/TestSpell"), Vector3.zero, Quaternion.identity) as GameObject;
         }
+        test_instance.tag = Tags.Spell.ToString();
         TestSpell baseComponent = test_instance.GetComponent<TestSpell>();
         baseComponent.SetStartProperties(prefab, castPosition, rotation, targetPosition, index, isMain);
         currentManager.dynamicPropList.Add(baseComponent, index);

@@ -22,6 +22,7 @@
         SBuildSaved,
         SInstantiate,
         SDestoy,
+        SDamage,
     }
 
 #endregion
@@ -62,6 +63,7 @@
         RRoomLeave,
         RInstantiate,
         RDestroy,
+        RDamage,
     }
 
 #endregion
