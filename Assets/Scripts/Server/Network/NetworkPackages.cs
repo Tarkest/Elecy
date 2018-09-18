@@ -21,8 +21,12 @@
         SBuildInfo,
         SBuildSaved,
         SInstantiate,
-        SDestoy,
+        SDestroy,
         SDamage,
+        SFriendsInfo,
+        SFriendLeave,
+        SFriendInfo,
+        SFriendChange
     }
 
 #endregion
@@ -41,7 +45,9 @@
     public enum NetPlayerPackets
     {
         PConnectionComplite = ClientPackets.ClientPacketsNum,
+        PAddFriend,
         PGlChatMsg,
+        PPrivateMsg,
         PQueueStart,
         PQueueStop,
         PGetSkillsBuild,

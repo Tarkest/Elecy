@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class FriendFieldController : MonoBehaviour {
@@ -11,18 +9,20 @@ public class FriendFieldController : MonoBehaviour {
 
     private string _NicknameBuffer;
     private string _StatusBuffer;
+    private string[] _statuses = new string[2] { "In Main Lobby","Playing" };
 
-    public void AddFriend(string nickname)
+    public void AddFriend(string nickname, int status)
     {
         _NicknameBuffer = nickname;
-        _StatusBuffer = "Online";
+        _StatusBuffer = _statuses[status];
         AwakeFriend();
     }
 
     private void AwakeFriend()
     {
-        NickName = gameObject.transform.Find("NickNameText").GetComponent<Text>();
-        Status = gameObject.transform.Find("StatusText").GetComponent<Text>();
+        Avatar = gameObject.transform.Find("Avatar").GetComponent<Image>();
+        NickName = gameObject.transform.Find("Text").transform.Find("Nickname").GetComponent<Text>();
+        Status = gameObject.transform.Find("Text").transform.Find("Status").GetComponent<Text>();
         CreateFriend();
     }
 
@@ -30,5 +30,10 @@ public class FriendFieldController : MonoBehaviour {
     {
         NickName.text = _NicknameBuffer;
         Status.text = _StatusBuffer;
+    }
+
+    public void ChangeStatus(int status)
+    {
+        Status.text = _statuses[status];
     }
 }

@@ -154,6 +154,16 @@
         }
     }
 
+    public static void SendFriendTag(string guideTag)
+    {
+        using (PacketBuffer buffer = new PacketBuffer())
+        {
+            buffer.WriteInteger((int)NetPlayerPackets.PAddFriend);
+            buffer.WriteString(guideTag);
+            ClientTCP.SendData(buffer.ToArray());
+        }
+    }
+
     #endregion
 
     #region GameRoom

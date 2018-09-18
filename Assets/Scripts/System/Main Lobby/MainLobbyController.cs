@@ -58,6 +58,7 @@ public class MainLobbyController : MonoBehaviour
         _badConnectionPad = GameObject.Find("BadConnectionPad");
         _armoryScreen = GameObject.Find("ArmoryScreen");
         _processScreen = GameObject.Find("ProcessPanel");
+        GameObject.Find("AccountInfo").transform.Find("NicknameTag").GetComponent<Text>().text = ClientTCP.nickname + " #" + ClientTCP.guideKey;
 
         #region TestRoom
 
@@ -266,5 +267,10 @@ public class MainLobbyController : MonoBehaviour
     public static void GetOffProcess()
     {
         _processWindow.GetOffProcess();
+    }
+
+    public static void DestroyBlackScreen()
+    {
+        GameObject.Find("BlackCover").SetActive(false);
     }
 }

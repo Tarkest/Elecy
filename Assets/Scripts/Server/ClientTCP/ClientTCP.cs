@@ -12,6 +12,7 @@ internal static class ClientTCP
     public static int[] levels;
     public static int[] ranks;
     public static string nickname;
+    public static string guideKey;
 
     private static Socket _socket;
     private static byte[] _buffer;
@@ -49,9 +50,10 @@ internal static class ClientTCP
         Network.Connect = Network.ConnectStatus.Connecting;
     }
 
-    public static void Login(string nick, int[][] data)
+    public static void Login(string nick, string key, int[][] data)
     {
         nickname = nick;
+        guideKey = key;
         levels = data[0];
         ranks = data[1];
         clientState = GameState.MainLobby;

@@ -29,8 +29,12 @@ internal class HandleDataTCP
             {(int)ServerPackets.SBuildInfo, HandleBuild },
             {(int)ServerPackets.SBuildSaved, HandleBuildSaved },
             {(int)ServerPackets.SInstantiate, HandleInstantiate },
-            {(int)ServerPackets.SDestoy, HandleDestroy },
-            {(int)ServerPackets.SDamage, HandleDamage }
+            {(int)ServerPackets.SDestroy, HandleDestroy },
+            {(int)ServerPackets.SDamage, HandleDamage },
+            {(int)ServerPackets.SFriendsInfo, HandleFriendsInfo },
+            {(int)ServerPackets.SFriendLeave, HandleFriendLeave },
+            {(int)ServerPackets.SFriendInfo, HandleFriendInfo },
+            {(int)ServerPackets.SFriendChange, HandleFriendChange }
         };
     }
 
@@ -101,6 +105,7 @@ internal class HandleDataTCP
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         string nickname = buffer.ReadString();
+        string guideKey = buffer.ReadString();
         int[][] accountData = new int[2][];
         int[] levels = new int[5];
         int[] ranks = new int[5];
@@ -112,7 +117,7 @@ internal class HandleDataTCP
         accountData[1] = ranks;
         buffer.Dispose();
         EntranceController.GetOffProcess();
-        Network.Login(1, nickname, accountData);
+        Network.Login(1, nickname, guideKey, accountData);
     }
 
     /// <summary>
@@ -146,6 +151,57 @@ internal class HandleDataTCP
         buffer.ReadInteger();
         GlobalChatController.RecieveMessage("Server", buffer.ReadString());
         buffer.Dispose();
+    }
+
+    public static void HandleFriendsInfo(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        int _friendsCount = buffer.ReadInteger();
+        string[] _nicknames = new string[_friendsCount];
+        string[] _guideKeys = new string[_friendsCount];
+        int[] _statuses = new int[_friendsCount];
+        for (int i = 0; i < _friendsCount; i++)
+        {
+            _nicknames[i] = buffer.ReadString();
+            _guideKeys[i] = buffer.ReadString();
+            _statuses[i] = buffer.ReadInteger();
+        }
+        buffer.Dispose();
+        MainThread.executeInUpdate(()=>FriendListController.AddFriends(_nicknames, _guideKeys, _statuses));
+    }
+
+    public static void HandleFriendInfo(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.ReadInteger();
+        string _nickname = buffer.ReadString();
+        string _guideKey = buffer.ReadString();
+        int _status = buffer.ReadInteger();
+        buffer.Dispose();
+        MainThread.executeInUpdate(() => FriendListController.AddFriend(_nickname, _guideKey, _status));
+    }
+
+    public static void HandleFriendChange(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string _guideKey = buffer.ReadString();
+        int status = buffer.ReadInteger();
+        buffer.Dispose();
+        FriendListController.ChangeStatus(_guideKey, status);
+    }
+
+    public static void HandleFriendLeave(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        string _guideKey = buffer.ReadString();
+        buffer.Dispose();
+        FriendListController.DestroyFriend(_guideKey);
     }
 
     /// <summary>

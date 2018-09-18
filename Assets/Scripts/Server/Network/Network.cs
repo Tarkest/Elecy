@@ -99,9 +99,9 @@ public class Network : MonoBehaviour
 
     #region Transitions
 
-    public static void Login(int playerIndex, string nickname, int[][] accountData)
+    public static void Login(int playerIndex, string nickname, string guideKey, int[][] accountData)
     {
-        ClientTCP.Login(nickname, accountData);
+        ClientTCP.Login(nickname, guideKey, accountData);
         scenenum = 1;
         scenechange = true;
     }
