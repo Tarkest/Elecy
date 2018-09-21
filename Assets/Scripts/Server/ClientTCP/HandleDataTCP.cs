@@ -438,16 +438,21 @@ internal class HandleDataTCP
         buffer.WriteBytes(data);
         buffer.ReadInteger();
         int _amountOfBuilds = buffer.ReadInteger();
-        int _spellArrayLenght = buffer.ReadInteger();
-        short[] _spellsIndexes = new short[_spellArrayLenght/2];
-        short[] _spellsVariation = new short[_spellArrayLenght/2];
-        for (int i = 0; i < _spellArrayLenght/2; i++)
+        short[][][] spells = new short[_amountOfBuilds][][];
+        for(int i = 0; i < _amountOfBuilds; i++)
         {
-            _spellsIndexes[i] = buffer.ReadShort();
-            _spellsVariation[i] = buffer.ReadShort();
+            int length = buffer.ReadInteger();
+            short[] containerHash = new short[length];
+            short[] variationHash = new short[length];
+            for (int j = 0; j < length; j++)
+            {
+                containerHash[j] = buffer.ReadShort();
+                variationHash[j] = buffer.ReadShort();
+            }
+            spells[i] = new short[][] { containerHash, variationHash };
         }
         buffer.Dispose();
-        MainThread.executeInUpdate(() => BattleLoader.LoadSpells(_spellsIndexes, _spellsVariation));
+        MainThread.executeInUpdate(() => BattleLoader.LoadSpells(spells));
     }
 
     public static void HandleInstantiate(byte[] data)
@@ -458,7 +463,7 @@ internal class HandleDataTCP
         int _prefabIndex = buffer.ReadInteger();
         int _objectIndex = buffer.ReadInteger();
         int _instanceIndex = buffer.ReadInteger();
-        float[] _castPos = buffer.ReadVector3();
+        float[] _castPos = new float[] { buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat() };
         float[] _targetPos = buffer.ReadVector3();
         float[] _rot = buffer.ReadQuternion();
         int hp = buffer.ReadInteger();

@@ -12,5 +12,6 @@
     public new virtual void Init(int hp)
     {
         Stats.Init(this, hp);
+        initiaziled = true;
     }
 }

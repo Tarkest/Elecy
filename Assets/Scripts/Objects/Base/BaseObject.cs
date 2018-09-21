@@ -5,7 +5,7 @@ public abstract class BaseObject : MonoBehaviour, ITickCallback, ICheckPosition,
     public BaseMovement mMovement;
     public BaseStats mStats;
     public int index;
-
+    protected bool initiaziled;
 
     #region Initialization
 
@@ -20,8 +20,11 @@ public abstract class BaseObject : MonoBehaviour, ITickCallback, ICheckPosition,
 
     public virtual void Callback()
     {
-        mStats.HPUpdate();
-        mMovement.Move();
+        if(initiaziled)
+        {
+            mStats.HPUpdate();
+            mMovement.Move();
+        }
     }
 
     #endregion
@@ -30,7 +33,8 @@ public abstract class BaseObject : MonoBehaviour, ITickCallback, ICheckPosition,
 
     public virtual void CheckPosition(int index, float[] pos)
     {
-        mMovement.CheckPosition(index, pos);
+        if(initiaziled)
+            mMovement.CheckPosition(index, pos);
     }
 
     #endregion
@@ -39,7 +43,8 @@ public abstract class BaseObject : MonoBehaviour, ITickCallback, ICheckPosition,
 
     public virtual void HPOuterChange(int change)
     {
-        mStats.HPOuterChange(change);
+        if(initiaziled)
+            mStats.HPOuterChange(change);
     }
 
     #endregion

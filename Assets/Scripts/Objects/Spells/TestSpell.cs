@@ -7,31 +7,32 @@ public class TestSpell : Spell, ITest<Spell>
     internal new SpellStats Stats { get { return mObject.Stats as SpellStats; } }
     internal new int index { get { return mObject.index; } }
 
-    public Spell mObject
-    {
-        get
-        {
-            return mObject;
-        }
-        private set
-        {
-            mObject = value;
-        }
-    }
-    public Spell Dummy
-    {
-        get
-        {
-            return Dummy;
-        }
-        private set
-        {
-            Dummy = value;
-        }
-    }
+    public Spell mObject { get; set; }
+    public Spell Dummy { get; set; }
 
     protected MeshRenderer spellVisibility;
     protected MeshRenderer dummyVisibility;
+
+    #region Overrided Test Commands
+
+    public override void Callback()
+    {
+        mObject.Callback();
+    }
+
+    public override void CheckPosition(int index, float[] pos)
+    {
+        mObject.CheckPosition(index, pos);
+        Dummy.CheckPosition(index, pos);
+    }
+
+    public override void HPOuterChange(int change)
+    {
+        mObject.HPOuterChange(change);
+        Dummy.HPOuterChange(change);
+    }
+
+    #endregion
 
     private void Update()
     {

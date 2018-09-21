@@ -293,29 +293,32 @@ public class BattleLoader : MonoBehaviour {
         SendDataTCP.SendGetSpells(_thisPlayerProgress);
     }
 
-    public static void LoadSpells(short[] SpellsIndexes, short[] VariationIndexes)
+    public static void LoadSpells(short[][][] spells)
     {
         DeveloperScreenController.AddInfo("Begin Load: Spells", 1);
         SpellContainer[] _resourses = Resources.LoadAll("Spells", typeof(SpellContainer)).Cast<SpellContainer>().ToArray();
-        DeveloperScreenController.AddInfo("Speels Count: " + SpellsIndexes.Length.ToString(), 1);
+        DeveloperScreenController.AddInfo("Build Count: " + spells.Length.ToString(), 1);
         DeveloperScreenController.AddInfo("Spells: ", 1);
-        for (int i = 0; i < SpellsIndexes.Length; i++)
+        for(int i = 0; i < spells.Length; i++)
         {
-            foreach (SpellContainer container in _resourses)
+            GameObject[] spellsObjects = new GameObject[spells[i][0].Length];
+            for(int j = 0; j < spells[i][0].Length; j++)
             {
-                if (container.CheckHash(SpellsIndexes[i]))
+                foreach(SpellContainer container in _resourses)
                 {
-                    _thisLoadedmanager.prefabList.Add(container.GetSpellVariation(VariationIndexes[i]));
-                    break;
+                    if(container.CheckHash(spells[i][0][j]))
+                    {
+                        spellsObjects[j] = container.GetSpellVariation(spells[i][1][j]);
+                        break;
+                    }
                 }
             }
-            DeveloperScreenController.AddInfo(i.ToString() + ": " + SpellsIndexes[i].ToString(), 1);
-            ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / SpellsIndexes.Length);
+            _thisLoadedmanager.spells.Add(i, spellsObjects);
         }
-        switch(_race)
+        switch (_race)
         {
             case "Ignis":
-                (_thisLoadedmanager.Players[ObjectManager.playerIndex] as IPlayer).LoadCombinations(_thisLoadedmanager.prefabList);
+                _thisLoadedmanager.Players[ObjectManager.playerIndex].LoadCombinations(_thisLoadedmanager.spells[ObjectManager.playerIndex]);
                 break;
         }
         DeveloperScreenController.AddInfo("Spells Load...OK", 1);

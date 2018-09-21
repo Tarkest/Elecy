@@ -9,7 +9,6 @@ public class PlayerMovement : BaseMovement, IBaseObjectSpecifier<Player>
 
     protected Rigidbody _playerRigidbody;
     protected Animator animator;
-    public bool moving;
 
     public Player BaseObject
     {
@@ -32,7 +31,7 @@ public class PlayerMovement : BaseMovement, IBaseObjectSpecifier<Player>
 
     void Update()
     {
-        if (_isMain && moving)
+        if (_isMain && _moving)
         {
             MovementUpdate value;
             if (moveUpdate.TryGetValue(_curPosIndex, out value))
@@ -42,7 +41,7 @@ public class PlayerMovement : BaseMovement, IBaseObjectSpecifier<Player>
 
     void FixedUpdate ()
     {
-        if (moving)
+        if (_moving)
         {
             _currentLerpTime += Time.fixedDeltaTime;
             if (_currentLerpTime > (float)GSC.timerTick / 1000)
@@ -60,7 +59,7 @@ public class PlayerMovement : BaseMovement, IBaseObjectSpecifier<Player>
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        if ((h != 0 || v != 0) && moving)
+        if ((h != 0 || v != 0) && _moving)
         {
             int index = _curPosIndex + 1;
             Vector3 newPosition;

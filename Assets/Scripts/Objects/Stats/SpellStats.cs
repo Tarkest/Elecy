@@ -29,7 +29,7 @@ public class SpellStats : BaseStats, IStatsMenuSpecifier<SpellMenu>
         switch(Stats.Movement)
         {
             case SpellMovement.CasterToPointMovement:
-                this.gameObject.AddComponent<CasterToPointMovement>();
+                baseObject.mMovement = this.gameObject.AddComponent<CasterToPointMovement>();
                 break;
         }
     }

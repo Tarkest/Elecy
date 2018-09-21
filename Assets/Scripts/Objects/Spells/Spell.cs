@@ -29,7 +29,8 @@ public class Spell : BaseObject, IStatsSpecifier<SpellStats>, IMovementSpecifier
     {
         base.Init(index);
         Stats.Init(this);
-        Movement.Init(this, isMain, targetPos, castPos);
+        Movement.Init(this, isMain, castPos, targetPos);
+        initiaziled = true;
     }
 
     #endregion

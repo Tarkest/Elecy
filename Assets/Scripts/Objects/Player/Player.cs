@@ -35,9 +35,10 @@ public class Player : BaseObject, IStatsSpecifier<PlayerStats>, IMovementSpecifi
         this.nickname = nickname;
         Stats.Init(this);
         Movement.Init(this, isPlayer, pos);
+        initiaziled = true;
     }
 
-    public virtual void LoadCombinations(List<GameObject> spells)
+    public virtual void LoadCombinations(GameObject[] spells)
     {
         PlayerInvoker.Init(this, spells);
     }

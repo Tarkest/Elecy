@@ -140,11 +140,10 @@ public class Network : MonoBehaviour
         currentManager = manager;
     }
 
-    public static void NetworkInstantiate(GameObject Object, Vector3? CastPosition = null, Vector3? TargetPosition = null, Quaternion? Rotation = null, Transform Parent = null)
+    public static void NetworkInstantiate(int index, GameObject Object, Vector3? CastPosition = null, Vector3? TargetPosition = null, Quaternion? Rotation = null, Transform Parent = null)
     {
-        if (currentManager.prefabList.Contains(Object))
-        {
-            int _index = currentManager.prefabList.IndexOf(Object);
+        //if (currentManager.prefabList.Contains(Object)) // Зачем тут проверка, если в метод обьект из этого листа и передается
+        //{
             int _parentIndex = Parent != null ? Parent.gameObject.GetComponent<Spell>().index : -1;
             Vector3 castPos = CastPosition ?? Vector3.zero;
             Vector3 targetPos = TargetPosition ?? Vector3.zero;
@@ -153,17 +152,17 @@ public class Network : MonoBehaviour
             float[] _castPos = new float[3] { castPos.x, castPos.y == 0 ? 0.5f : castPos.y, castPos.z };
             float[] _targetPos = new float[3] { targetPos.x, targetPos.y == 0 ? 0.5f : targetPos.y, targetPos.z };
             float[] _rot = new float[4] { rot.x, rot.y, rot.z, rot.w };
-            SendDataTCP.SendInstantiate(_index, _parentIndex, _castPos,_targetPos, _rot, Object.GetComponent<SpellStats>().Stats.MaxHP);
-        }
-        else
-        {
-            throw new Exception("В предзагрузке отсутсвует обьект");
-        }
+            SendDataTCP.SendInstantiate(index, _parentIndex, _castPos,_targetPos, _rot, Object.GetComponent<SpellStats>().Stats.MaxHP);
+        //}
+        //else
+        //{
+        //    throw new Exception("В предзагрузке отсутсвует обьект");
+        //}
     }
 
     public static void NetworkInstantiate(int PrefabIndex, int ObjectIndex, int InstanceIndex, float[] CastPosition, float[] TargetPosition, float[] Rotation, int HP, string Owner)
     {
-        GameObject _prefab = currentManager.prefabList[PrefabIndex];
+        GameObject _prefab = currentManager.spells[ObjectManager.playerIndex][PrefabIndex];
         Vector3 _castPosition = new Vector3(CastPosition[0], CastPosition[1], CastPosition[2]);
         Vector3 _targetPosition = new Vector3(TargetPosition[0], TargetPosition[1], TargetPosition[2]);
         Quaternion _rotation = new Quaternion(Rotation[0], Rotation[1], Rotation[2], Rotation[3]);

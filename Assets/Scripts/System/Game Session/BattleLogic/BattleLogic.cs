@@ -11,7 +11,7 @@ public class BattleLogic : MonoBehaviour {
         battleTimer = new System.Timers.Timer(GSC.timerTick);
         battleTimer.Elapsed += OnBattleTimerEvent;
         battleTimer.AutoReset = true;
-        Thread.Sleep(5000);
+        //Thread.Sleep(5000);
         StartTimer();
     }
 

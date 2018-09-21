@@ -6,7 +6,7 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
 {
     protected BaseObject mBaseObject;
     protected string _combination;
-    protected string[] _posibleCombinations;
+    protected readonly string[] _posibleCombinations = new string[] { "", "Q", "QE", "EQ", "QQQ", "EEE", "QEQ", "EQE", "QQQQ" };
 
     public Player BaseObject
     {
@@ -71,11 +71,11 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
 
     #region Initialization 
 
-    public virtual void Init(BaseObject obj, List<GameObject> spells)
+    public virtual void Init(BaseObject obj, GameObject[] spells)
     {
         _combination = "";
         mBaseObject = obj;
-        LoadCombinations(spells);
+        //LoadCombinations(spells);
     }
 
     #endregion
@@ -87,7 +87,7 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
             Vector3 _spawnPoint = Vector3.zero;
             Vector3 _targetPoint = Vector3.zero;
             Quaternion _spawnRotation = Quaternion.identity;
-            switch (Network.currentManager.prefabList[number].GetComponent<SpellStats>().Stats.Movement)
+            switch (Network.currentManager.spells[mBaseObject.index][number].GetComponent<SpellStats>().Stats.Movement)
             {
                 case SpellMovement.CasterToPointMovement:
                     _spawnPoint = gameObject.transform.position;
@@ -96,7 +96,7 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
                     break;
 
             }
-            Network.NetworkInstantiate(Network.currentManager.prefabList[number].gameObject, _spawnPoint, _targetPoint, _spawnRotation);
+            Network.NetworkInstantiate(number, Network.currentManager.spells[mBaseObject.index][number], _spawnPoint, _targetPoint, _spawnRotation);
         }
         else
         {
@@ -118,9 +118,9 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
         return -1;
     }
 
-    protected void LoadCombinations(List<GameObject> spells)
+    protected void LoadCombinations(GameObject[] spells)
     {
-        for (int i = 0; i < spells.Count; i++)
+        for (int i = 0; i < spells.Length; i++)
         {
             _posibleCombinations[i] = spells[i].GetComponent<SpellStats>().Stats.Combination;
         }

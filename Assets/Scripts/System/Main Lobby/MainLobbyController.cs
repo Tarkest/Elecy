@@ -271,6 +271,8 @@ public class MainLobbyController : MonoBehaviour
 
     public static void DestroyBlackScreen()
     {
-        GameObject.Find("BlackCover").SetActive(false);
+        //GameObject o = GameObject.Find("BlackCover");
+        //if(o != null)
+        //    o.SetActive(false);
     }
 }

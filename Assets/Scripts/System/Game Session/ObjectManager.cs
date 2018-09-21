@@ -29,6 +29,8 @@ public class ObjectManager : MonoBehaviour {
 
     public List<GameObject> prefabList = new List<GameObject>();
 
+    public Dictionary<int, GameObject[]> spells = new Dictionary<int, GameObject[]>();
+
     #endregion
 
     #region Variables

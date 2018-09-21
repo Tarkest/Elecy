@@ -14,28 +14,8 @@ public class TestPlayer : Player, ITest<Player>
 
     public bool Player;
 
-    public Player mObject
-    {
-        get
-        {
-            return mObject;
-        }
-        private set
-        {
-            mObject = value;
-        }
-    }
-    public Player Dummy
-    {
-        get
-        {
-            return Dummy;
-        }
-        private set
-        {
-            Dummy = value;
-        }
-    }
+    public Player mObject { get; private set; }
+    public Player Dummy { get; private set; }
 
     private SkinnedMeshRenderer playerVisibility;
     private SkinnedMeshRenderer dummyVisibility;
@@ -77,7 +57,7 @@ public class TestPlayer : Player, ITest<Player>
 
     #region Public Commands
 
-    public override void LoadCombinations(List<GameObject> spells)
+    public override void LoadCombinations(GameObject[] spells)
     {
         mObject.LoadCombinations(spells);
     }
@@ -85,6 +65,27 @@ public class TestPlayer : Player, ITest<Player>
     public override Vector3 GetPosition()
     {
         return mObject.GetPosition();
+    }
+
+    #endregion
+
+    #region Overrided Test Commands
+
+    public override void Callback()
+    {
+        mObject.Callback();
+    }
+
+    public override void CheckPosition(int index, float[] pos)
+    {
+        mObject.CheckPosition(index, pos);
+        Dummy.CheckPosition(index, pos);
+    }
+
+    public override void HPOuterChange(int change)
+    {
+        mObject.HPOuterChange(change);
+        Dummy.HPOuterChange(change);
     }
 
     #endregion
