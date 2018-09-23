@@ -1,27 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Player : BaseObject, IStatsSpecifier<PlayerStats>, IMovementSpecifier<BaseMovement>
+public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
 {
 
-    #region Variables
+    #region Public Variables
 
     public string nickname;
     public BaseInvoker PlayerInvoker;
 
-    public PlayerStats Stats
+    public PlayerMenu Stats
     {
         get
         {
-            return mStats as PlayerStats;
+            return mStats as PlayerMenu;
         }
     }
-    public BaseMovement Movement
+
+    internal Rigidbody playerRigidbody;
+
+    #endregion
+
+    #region Stats
+
+    public float CurrentMoveSpeed;
+
+    #endregion
+
+    #region Unity
+
+    void Awake()
     {
-        get
+        playerRigidbody = GetComponent<Rigidbody>();
+    }
+
+    void FixedUpdate()
+    {
+        if (moving)
         {
-            return mMovement as BaseMovement;
+            positionUpdate.currentLerpTime += Time.fixedDeltaTime;
+            if (positionUpdate.currentLerpTime > (float)GSC.timerTick / 1000)
+                positionUpdate.currentLerpTime = (float)GSC.timerTick / 1000;
+            float _delta = positionUpdate.currentLerpTime * 1000 / (float)GSC.timerTick;
+            playerRigidbody.MovePosition(Vector3.Lerp(transform.position, positionUpdate.currentValue, _delta));
         }
     }
 
@@ -29,12 +49,14 @@ public class Player : BaseObject, IStatsSpecifier<PlayerStats>, IMovementSpecifi
 
     #region Public Commands
 
-    public virtual void Init(int index, string nickname, Vector3 pos, Quaternion rot, bool isPlayer = false)
+    public virtual void Init(int index, string nickname, Vector3 pos, Quaternion rot, bool isMain = false)
     {
         base.Init(index);
         this.nickname = nickname;
-        Stats.Init(this);
-        Movement.Init(this, isPlayer, pos);
+        positionUpdate.Init(pos, this);
+        this.moving = true;
+        this.isMain = isMain;
+        SetStartStats();
         initiaziled = true;
     }
 
@@ -46,6 +68,15 @@ public class Player : BaseObject, IStatsSpecifier<PlayerStats>, IMovementSpecifi
     public virtual Vector3 GetPosition()
     {
         return this.gameObject.transform.position;
+    }
+
+    #endregion
+
+    #region Private Helpers
+
+    protected void SetStartStats()
+    {
+        CurrentMoveSpeed = Stats.BaseMoveSpeed;
     }
 
     #endregion

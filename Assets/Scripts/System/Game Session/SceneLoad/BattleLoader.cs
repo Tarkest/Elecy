@@ -115,25 +115,19 @@ public class BattleLoader : MonoBehaviour {
         // Creates arrays of Position / Rotation / Players
         _thisLoadedmanager.SetStartProperties(playersCount, positions, rotations);
         ObjectManager.cameraTarger = GameObject.Find("Camera").GetComponent<CameraFollow>();
-        // Checks if amount of players equals 1 (test mode) or more (game mode)
-        if (playersCount > 1)
+
+        // in game mode Spawns 'playersCount' - amount of players
+        for (int i = 0; i < playersCount; i++)
         {
-            // in game mode Spawns 'playersCount' - amount of players
-            for (int i = 0; i < playersCount; i++)
+            // if nickname equals to client's nickname - spawns Player
+            if (nicknames[i] == ClientTCP.nickname)
             {
-                // if nickname equals to client's nickname - spawns Player
-                if (nicknames[i] == ClientTCP.nickname)
-                {
-                    SpawnPlayer(nicknames[i], positions[i], rotations[i], i);
-                }
-                else
-                    // or spawns Enemy
-                    SpawnEnemy(nicknames[i], positions[i], rotations[i], i);
+                SpawnPlayer(nicknames[i], positions[i], rotations[i], i);
             }
+            else
+                // or spawns Enemy
+                SpawnEnemy(nicknames[i], positions[i], rotations[i], i);
         }
-        else
-            // in test mode spawns Player and invisible Player's dummy
-            SpawnTest(nicknames[0], positions[0], rotations[0]);
 
         ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
         CheckForLoadingRocks();
@@ -356,17 +350,6 @@ public class BattleLoader : MonoBehaviour {
         ObjectManager.cameraTarger.player = _player.transform;
         _player.tag = Tags.Player.ToString();
         DeveloperScreenController.AddInfo("Player " + nickname + " Load...OK", 1);
-    }
-
-    private static void SpawnTest(string nickname, float[] pos, float[] rot)
-    {
-        GameObject _testPlayer = Instantiate(Resources.Load("Players/TestPlayer"), Vector3.zero, Quaternion.identity) as GameObject;
-        TestPlayer _playerComponent = _testPlayer.GetComponent<TestPlayer>();
-        _thisLoadedmanager.Players[0] = _playerComponent;
-        _playerComponent.Init(0, nickname, _thisLoadedmanager.GetStartPosition(0), _thisLoadedmanager.GetStartRotation(0), true);
-        ObjectManager.playerIndex = 0;
-        _testPlayer.tag = Tags.Player.ToString();
-        DeveloperScreenController.AddInfo("TestPlayer " + nickname + " Load...OK", 1);
     }
 
     #endregion

@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 
-public abstract class BaseObject : MonoBehaviour, ITickCallback, ICheckPosition, IHPOuterChange
+public abstract class BaseObject : MonoBehaviour
 {
-    public BaseMovement mMovement;
-    public BaseStats mStats;
+    public PositionUpdate positionUpdate;
+    public BaseStatsMenu mStats;
     public int index;
+
+    public bool isMain;
+    public bool moving;
+
     protected bool initiaziled;
 
     #region Initialization
@@ -22,29 +26,8 @@ public abstract class BaseObject : MonoBehaviour, ITickCallback, ICheckPosition,
     {
         if(initiaziled)
         {
-            mStats.HPUpdate();
-            mMovement.Move();
+            positionUpdate.Callback();
         }
-    }
-
-    #endregion
-
-    #region Moving
-
-    public virtual void CheckPosition(int index, float[] pos)
-    {
-        if(initiaziled)
-            mMovement.CheckPosition(index, pos);
-    }
-
-    #endregion
-
-    #region HPChange
-
-    public virtual void HPOuterChange(int change)
-    {
-        if(initiaziled)
-            mStats.HPOuterChange(change);
     }
 
     #endregion

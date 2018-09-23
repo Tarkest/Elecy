@@ -87,7 +87,7 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
             Vector3 _spawnPoint = Vector3.zero;
             Vector3 _targetPoint = Vector3.zero;
             Quaternion _spawnRotation = Quaternion.identity;
-            switch (Network.currentManager.spells[mBaseObject.index][number].GetComponent<SpellStats>().Stats.Movement)
+            switch (Network.currentManager.spells[mBaseObject.index][number].GetComponent<Spell>().Stats.Movement)
             {
                 case SpellMovement.CasterToPointMovement:
                     _spawnPoint = gameObject.transform.position;
@@ -122,7 +122,7 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
     {
         for (int i = 0; i < spells.Length; i++)
         {
-            _posibleCombinations[i] = spells[i].GetComponent<SpellStats>().Stats.Combination;
+            _posibleCombinations[i] = spells[i].GetComponent<Spell>().Stats.Combination;
         }
     }
 

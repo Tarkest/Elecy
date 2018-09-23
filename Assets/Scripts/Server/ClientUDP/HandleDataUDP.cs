@@ -47,18 +47,18 @@ public class HandleDataUDP : MonoBehaviour {
         ObjectType type = (ObjectType)buffer.ReadInteger();
         int index = buffer.ReadInteger();
         int updateIndex = buffer.ReadInteger();
-        float[] pos = new float[] { buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat() };
+        Vector3 pos = new Vector3(buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat());
         buffer.Dispose();
         switch(type)
         {
             case ObjectType.player:
-                Network.currentManager.Players[index].CheckPosition(updateIndex, pos);
+                Network.currentManager.Players[index].positionUpdate.Handle(updateIndex, pos);
                 break;
 
             case ObjectType.spell:
                 try
                 {
-                    Network.currentManager.dynamicPropList.Get(index).CheckPosition(updateIndex, pos);
+                    Network.currentManager.dynamicPropList.Get(index).positionUpdate.Handle(updateIndex, pos);
                 }
                 catch (Exception ex)
                 {

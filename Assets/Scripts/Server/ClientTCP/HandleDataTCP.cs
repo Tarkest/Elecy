@@ -30,7 +30,7 @@ internal class HandleDataTCP
             {(int)ServerPackets.SBuildSaved, HandleBuildSaved },
             {(int)ServerPackets.SInstantiate, HandleInstantiate },
             {(int)ServerPackets.SDestroy, HandleDestroy },
-            {(int)ServerPackets.SDamage, HandleDamage },
+            //{(int)ServerPackets.SDamage, HandleDamage },
             {(int)ServerPackets.SFriendsInfo, HandleFriendsInfo },
             {(int)ServerPackets.SFriendLeave, HandleFriendLeave },
             {(int)ServerPackets.SFriendInfo, HandleFriendInfo },
@@ -269,7 +269,7 @@ internal class HandleDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        string race = buffer.ReadString();
+        buffer.ReadString(); // this's race, use it bro 
         int spellcount = buffer.ReadInteger();
         short[] _skillArray = new short[spellcount/2];
         short[] _skillVariation = new short[spellcount/2];
@@ -507,26 +507,26 @@ internal class HandleDataTCP
     }
 
 
-    private static void HandleDamage(byte[] data)
-    {
-        using (PacketBuffer buffer = new PacketBuffer())
-        {
-            buffer.WriteBytes(data);
-            buffer.ReadInteger();
-            ObjectType type = (ObjectType)buffer.ReadInteger();
-            int index = buffer.ReadInteger();
-            int damage = buffer.ReadInteger();
-            switch (type)
-            {
-                case ObjectType.player:
-                    Network.currentManager.Players[index].Stats.HPOuterChange(damage);
-                    break;
-                case ObjectType.spell:
-                    Network.currentManager.dynamicPropList[index].Stats.HPOuterChange(damage);
-                    break;
-            }
-        }
-    }
+    //private static void HandleDamage(byte[] data)
+    //{
+    //    using (PacketBuffer buffer = new PacketBuffer())
+    //    {
+    //        buffer.WriteBytes(data);
+    //        buffer.ReadInteger();
+    //        ObjectType type = (ObjectType)buffer.ReadInteger();
+    //        int index = buffer.ReadInteger();
+    //        int damage = buffer.ReadInteger();
+    //        switch (type)
+    //        {
+    //            case ObjectType.player:
+    //                Network.currentManager.Players[index].mStats.HPOuterChange(damage);
+    //                break;
+    //            case ObjectType.spell:
+    //                Network.currentManager.dynamicPropList[index].Stats.HPOuterChange(damage);
+    //                break;
+    //        }
+    //    }
+    //}
 
     #endregion
 

@@ -6,8 +6,8 @@ public class SpellContainer : MonoBehaviour {
 
     public GameObject GetSpellVariation(short Hash)
     {
-        SpellStats[] stats = transform.GetComponentsInChildren<SpellStats>();
-        foreach(SpellStats stat in stats)
+        Spell[] stats = transform.GetComponentsInChildren<Spell>();
+        foreach(Spell stat in stats)
         {
             if (stat.CheckHash(Hash))
                 return stat.gameObject;

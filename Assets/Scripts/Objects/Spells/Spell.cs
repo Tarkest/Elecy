@@ -1,25 +1,33 @@
 ﻿using UnityEngine;
 
-public class Spell : BaseObject, IStatsSpecifier<SpellStats>, IMovementSpecifier<BaseSpellMovement>
+public class Spell : BaseObject, IPositionUpdateSpecifier<SpellPositionUpdate>, IStatsMenuSpecifier<SpellMenu>
 {
 
     #region Public Members
 
-    public SpellStats Stats
+    public SpellPositionUpdate PositionUpdate
     {
         get
         {
-            return mStats as SpellStats;
+            return positionUpdate as SpellPositionUpdate;
         }
     }
 
-    public BaseSpellMovement Movement
+    public SpellMenu Stats
     {
         get
         {
-            return mMovement as BaseSpellMovement;
+            return mStats as SpellMenu;
         }
     }
+
+    public short variationHash;
+
+    #endregion
+
+    #region Stats
+
+    public float CurrentSpeed;
 
     #endregion
 
@@ -28,8 +36,7 @@ public class Spell : BaseObject, IStatsSpecifier<SpellStats>, IMovementSpecifier
     public void Init(Vector3 castPos, Vector3 targetPos, int index, bool isMain = false)
     {
         base.Init(index);
-        Stats.Init(this);
-        Movement.Init(this, isMain, castPos, targetPos);
+        PositionUpdate.Init(castPos, targetPos, this);
         initiaziled = true;
     }
 
@@ -39,5 +46,26 @@ public class Spell : BaseObject, IStatsSpecifier<SpellStats>, IMovementSpecifier
     {
         SendDataTCP.SendDestroy(index);
     }
+
+    #region Hash
+
+    public bool CheckHash(short hash)
+    {
+        if (variationHash == hash)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public GameObject GetPrefab()
+    {
+        return gameObject;
+    }
+
+    #endregion
 }
 
