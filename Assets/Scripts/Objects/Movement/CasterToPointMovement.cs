@@ -78,7 +78,7 @@ public class CasterToPointMovement : BaseSpellMovement
                 SendDataUDP.SendMovePosition(ObjectType.spell, BaseObject.index, index, _newPos);
                 MovementUpdate value;
                 if (moveUpdate.TryGetValue(index, out value))
-                    value.Sended();
+                    value.Sent();
                 else
                     throw new Exception("Move send exception");
             }

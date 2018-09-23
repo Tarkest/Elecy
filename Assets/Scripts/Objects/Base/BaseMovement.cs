@@ -136,7 +136,7 @@ public struct MovementUpdate
         received = false;
     }
 
-    public void Sended()
+    public void Sent()
     {
         sent = true;
     }

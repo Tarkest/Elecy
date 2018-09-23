@@ -83,7 +83,7 @@ public class PlayerMovement : BaseMovement, IBaseObjectSpecifier<Player>
                 SendDataUDP.SendMovePosition(ObjectType.player, BaseObject.index, index, newPosition);
                 MovementUpdate value;
                 if (moveUpdate.TryGetValue(index, out value))
-                    value.Sended();
+                    value.Sent();
                 else
                     throw new Exception("Move send exception");
             }
