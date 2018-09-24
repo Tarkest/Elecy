@@ -12,7 +12,7 @@ public class HandleDataUDP : MonoBehaviour {
         _Packets = new Dictionary<int, Packet_>
         {
             {(int)UDPServerPackets.USConnectionOK, HandleConnectionOk},
-            {(int)UDPServerPackets.USTransformUpdate, HandleMovePosition },
+            {(int)UDPServerPackets.USPositionUpdate, HandleMovePosition },
         };
     }
 

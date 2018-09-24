@@ -76,9 +76,14 @@
     <Compile Include="Assets\Scripts\Objects\Stats\PlayerMenu.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\SpellMenu.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\StaticObjectMenu.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\HPUpdate.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdate.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdates\CasterToPointPositionUpdate.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdates\PlayerPositionUpdate.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\RotationUpdate.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\RotationUpdates\RotationToObjectUpdate.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\RotationUpdates\RotationToPointUpdate.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\SynergyUpdate.cs" />
     <Compile Include="Assets\Scripts\Server\ClientTCP\ClientTCP.cs" />
     <Compile Include="Assets\Scripts\Server\ClientTCP\HandleDataTCP.cs" />
     <Compile Include="Assets\Scripts\Server\ClientTCP\SendDataTCP.cs" />

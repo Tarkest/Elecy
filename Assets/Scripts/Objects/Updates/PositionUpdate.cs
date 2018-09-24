@@ -8,7 +8,7 @@ public abstract class PositionUpdate : BaseUpdate<Vector3>
     protected override void SendStepBack()
     {
         currentLerpTime = 0f;
-        SendDataUDP.SendMoveBack(currentIndex);
+        SendDataUDP.SendPositionStepback(mObject.type, mObject.index, currentIndex);
     }
 
 }

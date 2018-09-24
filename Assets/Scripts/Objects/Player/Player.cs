@@ -7,6 +7,7 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
 
     public string nickname;
     public BaseInvoker PlayerInvoker;
+    public SynergyUpdate synergyUpdate;
 
     public PlayerMenu Stats
     {
@@ -28,11 +29,6 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
 
     #region Unity
 
-    void Awake()
-    {
-        playerRigidbody = GetComponent<Rigidbody>();
-    }
-
     void FixedUpdate()
     {
         if (moving)
@@ -41,7 +37,7 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
             if (positionUpdate.currentLerpTime > (float)GSC.timerTick / 1000)
                 positionUpdate.currentLerpTime = (float)GSC.timerTick / 1000;
             float _delta = positionUpdate.currentLerpTime * 1000 / (float)GSC.timerTick;
-            playerRigidbody.MovePosition(Vector3.Lerp(transform.position, positionUpdate.currentValue, _delta));
+            mRigidbody.MovePosition(Vector3.Lerp(transform.position, positionUpdate.currentValue, _delta));
         }
     }
 
@@ -51,9 +47,12 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
 
     public virtual void Init(int index, string nickname, Vector3 pos, Quaternion rot, bool isMain = false)
     {
-        base.Init(index);
+        synergyUpdate = new SynergyUpdate();
+        base.Init(index, ObjectType.player);
         this.nickname = nickname;
         positionUpdate.Init(pos, this);
+        hpUpdate.Init(Stats.MaxHP, this);
+        synergyUpdate.Init(Stats.MaxSN, this);
         this.moving = true;
         this.isMain = isMain;
         SetStartStats();

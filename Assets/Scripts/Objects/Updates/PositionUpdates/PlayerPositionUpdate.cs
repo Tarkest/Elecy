@@ -38,7 +38,7 @@ public class PlayerPositionUpdate : PositionUpdate, IBaseObjectSpecifier<Player>
                 currentIndex++; // May cause problems
                 currentValue = newPosition;
                 currentLerpTime = 0f;
-                SendDataUDP.SendMovePosition(ObjectType.player, BaseObject.index, index, newPosition);
+                SendDataUDP.SendPositionUpdate(ObjectType.player, BaseObject.index, index, newPosition);
                 UpdateContainer<Vector3> value;
                 if (updateLibrary.TryGetValue(index, out value))
                     value.Sent();

@@ -35,8 +35,9 @@ public class Spell : BaseObject, IPositionUpdateSpecifier<SpellPositionUpdate>, 
 
     public void Init(Vector3 castPos, Vector3 targetPos, int index, bool isMain = false)
     {
-        base.Init(index);
+        base.Init(index, ObjectType.spell);
         PositionUpdate.Init(castPos, targetPos, this);
+        hpUpdate.Init(Stats.MaxHP, this);
         initiaziled = true;
     }
 

@@ -35,7 +35,7 @@ public class CasterToPointPositionUpdate : SpellPositionUpdate
                 currentIndex++;
                 currentValue = _newPos;
                 currentLerpTime = 0f;
-                SendDataUDP.SendMovePosition(ObjectType.spell, BaseObject.index, index, _newPos);
+                SendDataUDP.SendPositionUpdate(ObjectType.spell, BaseObject.index, index, _newPos);
                 UpdateContainer<Vector3> value;
                 if (updateLibrary.TryGetValue(index, out value))
                     value.Sent();

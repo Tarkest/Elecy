@@ -36,7 +36,7 @@ public abstract class BaseUpdate<T> : MonoBehaviour
 
     #region Public Commands
 
-    public void Handle(int index, T value)
+    public virtual void Handle(int index, T value)
     {
         if(mObject.isMain)
         {
