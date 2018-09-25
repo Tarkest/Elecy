@@ -2,7 +2,6 @@
 
 public class RotationToPointUpdate : RotationUpdate
 {
-
     protected Vector3 target;
 
     private void Update()

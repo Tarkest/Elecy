@@ -48,6 +48,8 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
     public virtual void Init(int index, string nickname, Vector3 pos, Quaternion rot, bool isMain = false)
     {
         synergyUpdate = new SynergyUpdate();
+        rotationUpdate = new RotationToObjectUpdate();
+        (rotationUpdate as RotationToObjectUpdate).Init(rot, this, MouseController.Object);
         base.Init(index, ObjectType.player);
         this.nickname = nickname;
         positionUpdate.Init(pos, this);

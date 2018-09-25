@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName ="NewSpell", menuName ="Spell")]
+[CreateAssetMenu(fileName = "NewSpell", menuName = "Spell")]
 public class SpellMenu : BaseStatsMenu
 {
     public string SpellName;
     public string Description;
     public string Combination;
-    public SpellMovement Movement;
+    public PositionUpdateEnum Movement;
+    public RotationUpdateEnum Rotation;
     public int SunergyCost;
     public int Damage;
     public float Distance;

@@ -15,7 +15,6 @@ public abstract class RotationUpdate : BaseUpdate<Quaternion>
                 SendDataUDP.SendRotationUpdate(mObject.type, mObject.index, currentIndex, currentValue);
             }
         }
-
     }
 
     protected override void SendStepBack()

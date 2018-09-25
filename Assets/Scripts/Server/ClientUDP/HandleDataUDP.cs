@@ -13,6 +13,9 @@ public class HandleDataUDP : MonoBehaviour {
         {
             {(int)UDPServerPackets.USConnectionOK, HandleConnectionOk},
             {(int)UDPServerPackets.USPositionUpdate, HandleMovePosition },
+            {(int)UDPServerPackets.USRotationUpdate, HandleRotation },
+            {(int)UDPServerPackets.USHealthUpdate, HandleHealth },
+            {(int)UDPServerPackets.USSynergyUpdate, HandleSynergy }
         };
     }
 
@@ -67,6 +70,87 @@ public class HandleDataUDP : MonoBehaviour {
                     throw;
                 }
 
+                break;
+        }
+    }
+
+    private static void HandleRotation(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        ObjectType type = (ObjectType)buffer.ReadInteger();
+        int index = buffer.ReadInteger();
+        int updateIndex = buffer.ReadInteger();
+        Quaternion rot = new Quaternion(buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat());
+        buffer.Dispose();
+        switch(type)
+        {
+            case ObjectType.player:
+                if(!Network.currentManager.Players[index].isMain)
+                    Network.currentManager.Players[index].rotationUpdate.Handle(updateIndex, rot);
+                break;
+
+            case ObjectType.spell:
+                try
+                {
+                    Network.currentManager.dynamicPropList.Get(index);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is NullReferenceException || ex is IndexOutOfRangeException)
+                        return;
+                    throw;
+                }
+                break;
+        }
+    }
+
+    private static void HandleHealth(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        ObjectType type = (ObjectType)buffer.ReadInteger();
+        int index = buffer.ReadInteger();
+        int updateIndex = buffer.ReadInteger();
+        int health = buffer.ReadInteger();
+        buffer.Dispose();
+        switch(type)
+        {
+            case ObjectType.player:
+                Network.currentManager.Players[index].hpUpdate.Handle(updateIndex, health);
+                break;
+
+            case ObjectType.spell:
+                try
+                {
+                    Network.currentManager.dynamicPropList.Get(index).hpUpdate.Handle(updateIndex, health);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is NullReferenceException || ex is IndexOutOfRangeException)
+                        return;
+                    throw;
+                }
+                break;
+        }
+    }
+
+    private static void HandleSynergy(byte[] data)
+    {
+        PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
+        buffer.ReadInteger();
+        ObjectType type = (ObjectType)buffer.ReadInteger();
+        int index = buffer.ReadInteger();
+        int updateIndex = buffer.ReadInteger();
+        int synergy = buffer.ReadInteger();
+        buffer.Dispose();
+        switch (type)
+        {
+            case ObjectType.player:
+                Network.currentManager.Players[index].synergyUpdate.Handle(updateIndex, synergy);
                 break;
         }
     }

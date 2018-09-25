@@ -2,7 +2,6 @@
 
 public class RotationToObjectUpdate : RotationUpdate
 {
-
     protected GameObject target;
 
     private void Update()

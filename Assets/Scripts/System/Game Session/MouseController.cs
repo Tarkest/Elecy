@@ -2,19 +2,21 @@
 
 public class MouseController : MonoBehaviour {
 
+    public static GameObject Object;
     public static Vector3 mousePosition;
     private static int _floorMask;
     private static float _camRayLenght = 200f;
 
     void Awake()
     {
+        Object = gameObject;
         _floorMask = LayerMask.GetMask("Floor");
         mousePosition = MousePos(Input.mousePosition);
     }
 
 	void Update ()
-    {
-        mousePosition = MousePos(Input.mousePosition);
+    {    
+        transform.position = mousePosition = MousePos(Input.mousePosition);
     }
 
     Vector3 MousePos (Vector3 x)

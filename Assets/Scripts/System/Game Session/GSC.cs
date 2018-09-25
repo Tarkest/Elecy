@@ -28,9 +28,16 @@
     public const double timerTick = 1000d / 30d;
 }
 
-public enum SpellMovement
+public enum PositionUpdateEnum
 {
-    CasterToPointMovement = 0,
+    ToPoint = 0,
+    ToObject,
+}
+
+public enum RotationUpdateEnum
+{
+    ToPoint= 0,
+    ToObject,
 }
 
 public enum ObjectType

@@ -3,6 +3,7 @@
 public abstract class BaseObject : MonoBehaviour
 {
     public PositionUpdate positionUpdate;
+    public RotationUpdate rotationUpdate;
     public HPUpdate hpUpdate;
     public BaseStatsMenu mStats;
     public int index;
