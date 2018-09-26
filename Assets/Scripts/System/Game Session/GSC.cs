@@ -32,12 +32,14 @@ public enum PositionUpdateEnum
 {
     ToPoint = 0,
     ToObject,
+    Empty,
 }
 
 public enum RotationUpdateEnum
 {
     ToPoint= 0,
     ToObject,
+    Empty,
 }
 
 public enum ObjectType

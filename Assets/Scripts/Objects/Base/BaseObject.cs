@@ -12,6 +12,13 @@ public abstract class BaseObject : MonoBehaviour
     public bool moving;
     internal Rigidbody mRigidbody;
     protected bool initiaziled;
+    public bool Destroying;
+
+    #region Stats
+
+    public float CurrentMoveSpeed;
+
+    #endregion
 
     #region Initialization
 
@@ -19,8 +26,9 @@ public abstract class BaseObject : MonoBehaviour
     {
         this.index = index;
         this.type = type;
-        hpUpdate = new HPUpdate();
+        hpUpdate = gameObject.AddComponent<HPUpdate>();
         mRigidbody = transform.GetComponent<Rigidbody>();
+        SetStartStats();
     }
 
     #endregion
@@ -39,9 +47,24 @@ public abstract class BaseObject : MonoBehaviour
 
     public void Destroy()
     {
-        Destroy(gameObject);
+        if(Destroying)
+            Destroy(gameObject);
+        else
+        {
+            Destroying = true;
+            // SendDestroy(type, index);
+        }
+
     }
 
+    #region Private Helpers
+
+    protected void SetStartStats()
+    {
+        CurrentMoveSpeed = mStats.BaseMoveSpeed;
+    }
+
+    #endregion
 
 }
 

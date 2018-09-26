@@ -9,6 +9,7 @@ public class BaseStatsMenu : ScriptableObject
     public int BaseEarthDefence;
     public int BaseWindDefence;
     public int BaseWaterDefence;
+    public float BaseMoveSpeed;
     public Image Icon;
 }
 

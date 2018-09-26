@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class PlayerMenu : BaseStatsMenu
 {
     public int MaxSN;
-    public float BaseMoveSpeed;
     public float BaseAttackSpeed;
 }
 

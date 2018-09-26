@@ -23,7 +23,7 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
 
     #region Stats
 
-    public float CurrentMoveSpeed;
+    public int CurrentSynergy;
 
     #endregion
 
@@ -47,8 +47,8 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
 
     public virtual void Init(int index, string nickname, Vector3 pos, Quaternion rot, bool isMain = false)
     {
-        synergyUpdate = new SynergyUpdate();
-        rotationUpdate = new RotationToObjectUpdate();
+        synergyUpdate = gameObject.AddComponent<SynergyUpdate>();
+        rotationUpdate = gameObject.AddComponent<RotationToObjectUpdate>();
         (rotationUpdate as RotationToObjectUpdate).Init(rot, this, MouseController.Object);
         base.Init(index, ObjectType.player);
         this.nickname = nickname;
@@ -57,7 +57,6 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
         synergyUpdate.Init(Stats.MaxSN, this);
         this.moving = true;
         this.isMain = isMain;
-        SetStartStats();
         initiaziled = true;
     }
 
@@ -73,13 +72,6 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
 
     #endregion
 
-    #region Private Helpers
 
-    protected void SetStartStats()
-    {
-        CurrentMoveSpeed = Stats.BaseMoveSpeed;
-    }
-
-    #endregion
 
 }

@@ -2,24 +2,31 @@
 using System.Collections;
 using UnityEngine;
 
-public class CasterToPointPositionUpdate : SpellPositionUpdate
+public class PositionToPointUpdate : PositionUpdate
 {
+
+    protected Vector3 TargetPosition;
+
+    public void Init(Vector3 spawnPos, Vector3 targetPos, BaseObject o)
+    {
+        base.Init(spawnPos, o);
+        TargetPosition = targetPos;
+    }
 
     public override void Callback()
     {
-        if (BaseObject.isMain && BaseObject.moving)
+        if (mObject.isMain && mObject.moving)
         {
             int index = currentIndex + 1;
             Vector3 _newPos;
-            Vector3 _direction = TargetPosition - BaseObject.transform.position;
+            Vector3 _direction = TargetPosition - mObject.transform.position;
             if (_direction.x < 1f && _direction.x > -1f && _direction.z > -1f && _direction.z < 1f)
             {
                 // _direction.Equals(Vector3.zero) includes magnitude and sqrMagnitude
                 if (_direction.x == 0f && _direction.z == 0f)
                 {
-                    if (!Destroying)
+                    if (mObject.Destroying)
                     {
-                        Destroying = true;
                         StartCoroutine(DestroyCoroutine());
                     }
                     return;
@@ -27,7 +34,7 @@ public class CasterToPointPositionUpdate : SpellPositionUpdate
                 _newPos = TargetPosition;
             }
             else
-                _newPos = transform.position + _direction.normalized * BaseObject.CurrentSpeed * (float)GSC.timerTick / 1000f;
+                _newPos = transform.position + _direction.normalized * mObject.CurrentMoveSpeed * (float)GSC.timerTick / 1000f;
             _newPos.y = 0.5f;
             lock (locker)
             {
@@ -35,7 +42,7 @@ public class CasterToPointPositionUpdate : SpellPositionUpdate
                 currentIndex++;
                 currentValue = _newPos;
                 currentLerpTime = 0f;
-                SendDataUDP.SendPositionUpdate(ObjectType.spell, BaseObject.index, index, _newPos);
+                SendDataUDP.SendPositionUpdate(ObjectType.spell, mObject.index, index, _newPos);
                 UpdateContainer<Vector3> value;
                 if (updateLibrary.TryGetValue(index, out value))
                     value.Sent();
@@ -49,7 +56,7 @@ public class CasterToPointPositionUpdate : SpellPositionUpdate
     {
         while (true)
         {
-            BaseObject.NetworkDestoy();
+            mObject.Destroy();
             yield return new WaitForSeconds(1);
         }
     }

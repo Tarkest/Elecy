@@ -89,7 +89,7 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
             Quaternion _spawnRotation = Quaternion.identity;
             switch (Network.currentManager.spells[mBaseObject.index][number].GetComponent<Spell>().Stats.Movement)
             {
-                case SpellMovement.CasterToPointMovement:
+                case PositionUpdateEnum.ToPoint:
                     _spawnPoint = gameObject.transform.position;
                     _spawnRotation = gameObject.transform.rotation;
                     _targetPoint = MouseController.mousePosition;

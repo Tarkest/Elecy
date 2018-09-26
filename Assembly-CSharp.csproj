@@ -77,10 +77,11 @@
     <Compile Include="Assets\Scripts\Objects\Stats\SpellMenu.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\StaticObjectMenu.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\HPUpdate.cs" />
-    <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdate.cs" />
-    <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdates\CasterToPointPositionUpdate.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdates\Base\PositionUpdate.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdates\PlayerPositionUpdate.cs" />
-    <Compile Include="Assets\Scripts\Objects\Updates\RotationUpdate.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdates\PositionToObjectUpdate.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdates\PositionToPointUpdate.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\RotationUpdates\Base\RotationUpdate.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\RotationUpdates\RotationToObjectUpdate.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\RotationUpdates\RotationToPointUpdate.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\SynergyUpdate.cs" />
