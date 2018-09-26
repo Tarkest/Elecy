@@ -25,7 +25,7 @@ public class PositionToPointUpdate : PositionUpdate
                 // _direction.Equals(Vector3.zero) includes magnitude and sqrMagnitude
                 if (_direction.x == 0f && _direction.z == 0f)
                 {
-                    if (mObject.Destroying)
+                    if (!mObject.Destroying)
                     {
                         StartCoroutine(DestroyCoroutine());
                     }

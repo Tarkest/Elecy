@@ -477,9 +477,15 @@ internal class HandleDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
+        ObjectType type = (ObjectType)buffer.ReadInteger();
         int index = buffer.ReadInteger();
-        MainThread.executeInUpdate(() => Network.currentManager.dynamicPropList.Remove(index));
-        
+        switch(type)
+        {
+            case ObjectType.spell:
+                MainThread.executeInUpdate(() => Network.currentManager.dynamicPropList.Remove(index));
+                break;
+        }
+        buffer.Dispose();   
     }
 
     /// <summary>

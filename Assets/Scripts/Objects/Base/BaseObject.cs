@@ -45,14 +45,14 @@ public abstract class BaseObject : MonoBehaviour
 
     #endregion
 
-    public void Destroy()
+    public virtual void Destroy()
     {
         if(Destroying)
             Destroy(gameObject);
         else
         {
             Destroying = true;
-            // SendDestroy(type, index);
+            SendDataTCP.SendDestroy(type, index);
         }
 
     }

@@ -316,12 +316,14 @@
     /// <summary>
     ///             Buffer:
     ///                     int PacketNum;
+    ///                     int ObjectType;
     ///                     int index;
     /// </summary>
-    public static void SendDestroy(int index)
+    public static void SendDestroy(ObjectType type, int index)
     {
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteInteger((int)RoomPackets.RDestroy);
+        buffer.WriteInteger((int)type);
         buffer.WriteInteger(index);
         ClientTCP.SendData(buffer.ToArray());
         buffer.Dispose();
