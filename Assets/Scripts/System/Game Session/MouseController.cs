@@ -28,7 +28,7 @@ public class MouseController : MonoBehaviour {
         if (Physics.Raycast(camRay, out floorHit, _camRayLenght, _floorMask))
         {
             _mousePos = floorHit.point;
-            _mousePos.y = 0f;
+            _mousePos.y = 0.5f;
         }
         return _mousePos;
     }
