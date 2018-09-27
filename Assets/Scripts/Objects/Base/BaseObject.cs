@@ -10,7 +10,6 @@ public abstract class BaseObject : MonoBehaviour
     public ObjectType type;
     public bool isMain;
     public bool moving;
-    internal Rigidbody mRigidbody;
     protected bool initiaziled;
     public bool Destroying;
 
@@ -27,7 +26,6 @@ public abstract class BaseObject : MonoBehaviour
         this.index = index;
         this.type = type;
         hpUpdate = gameObject.AddComponent<HPUpdate>();
-        mRigidbody = transform.GetComponent<Rigidbody>();
         SetStartStats();
     }
 

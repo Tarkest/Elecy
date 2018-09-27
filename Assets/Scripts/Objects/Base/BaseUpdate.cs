@@ -22,7 +22,7 @@ public abstract class BaseUpdate<T> : MonoBehaviour
 
     #region Constructor
 
-    public void Init(T value, BaseObject o)
+    public virtual void Init(T value, BaseObject o)
     {
         updateLibrary = new Dictionary<int, UpdateContainer<T>>();
         mObject = o;

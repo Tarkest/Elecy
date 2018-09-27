@@ -27,22 +27,6 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
 
     #endregion
 
-    #region Unity
-
-    void FixedUpdate()
-    {
-        if (moving)
-        {
-            positionUpdate.currentLerpTime += Time.fixedDeltaTime;
-            if (positionUpdate.currentLerpTime > (float)GSC.timerTick / 1000)
-                positionUpdate.currentLerpTime = (float)GSC.timerTick / 1000;
-            float _delta = positionUpdate.currentLerpTime * 1000 / (float)GSC.timerTick;
-            mRigidbody.MovePosition(Vector3.Lerp(transform.position, positionUpdate.currentValue, _delta));
-        }
-    }
-
-    #endregion
-
     #region Public Commands
 
     public virtual void Init(int index, string nickname, Vector3 pos, Quaternion rot, bool isMain = false)

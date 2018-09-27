@@ -5,12 +5,12 @@ public class PlayerPositionUpdate : PositionUpdate, IBaseObjectSpecifier<Player>
 {
 
     public Player BaseObject
+    {
+        get
         {
-            get
-            {
-                return mObject as Player;
-            }
+            return mObject as Player;
         }
+    }
 
     public override void Callback()
     {

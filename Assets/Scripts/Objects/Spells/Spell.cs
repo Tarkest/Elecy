@@ -18,21 +18,6 @@ public class Spell : BaseObject, IStatsMenuSpecifier<SpellMenu>
 
     #endregion
 
-    #region Unity
-
-    void FixedUpdate()
-    {
-        if (moving)
-        {
-            positionUpdate.currentLerpTime += Time.fixedDeltaTime;
-            if (positionUpdate.currentLerpTime > (float)GSC.timerTick / 1000)
-                positionUpdate.currentLerpTime = (float)GSC.timerTick / 1000;
-            float _delta = positionUpdate.currentLerpTime * 1000 / (float)GSC.timerTick;
-            mRigidbody.MovePosition(Vector3.Lerp(transform.position, positionUpdate.currentValue, _delta));
-        }
-    }
-
-    #endregion
 
     #region Init
 
