@@ -9,7 +9,12 @@ public class SpellMenu : BaseStatsMenu
     public string Description;
     public string Combination;
     public int SunergyCost;
-    public int Damage;
+    public int PhisicDamage;
+    public int IgnisDamage;
+    public int TerraDamage;
+    public int AquaDamage;
+    public int CaeliDamage;
+    public int PureDamage;
     public float Distance;
     /// <summary>
     /// Maximum value: 100

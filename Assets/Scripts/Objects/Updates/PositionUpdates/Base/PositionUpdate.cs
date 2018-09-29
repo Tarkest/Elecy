@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class PositionUpdate : BaseUpdate<Vector3>
 {
-
     public float currentLerpTime = 0f;
     internal Rigidbody mRigidbody;
 
@@ -19,13 +19,7 @@ public abstract class PositionUpdate : BaseUpdate<Vector3>
     {
         if (mObject.moving)
         {
-            currentLerpTime += Time.fixedDeltaTime;
-            if (currentLerpTime > (float)GSC.timerTick / 1000)
-                currentLerpTime = (float)GSC.timerTick / 1000;
-            Debug.Log("Alpha: " + currentLerpTime);
-            float _delta = currentLerpTime * 1000 / (float)GSC.timerTick;
-            Debug.Log("Delta: " + _delta);
-            mRigidbody.MovePosition(Vector3.Lerp(transform.position, currentValue, _delta));
+            mRigidbody.MovePosition(Vector3.MoveTowards(transform.position, currentValue, mObject.CurrentMoveSpeed * 0.025f));
         }
     }
 

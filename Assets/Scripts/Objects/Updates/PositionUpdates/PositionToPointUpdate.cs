@@ -48,6 +48,7 @@ public class PositionToPointUpdate : PositionUpdate
                     value.Sent();
                 else
                     throw new Exception("Move send exception");
+                //Interpolate();
             }
         }
     }

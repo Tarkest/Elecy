@@ -13,4 +13,9 @@ public interface IPositionUpdateSpecifier<P> where P : PositionUpdate
     P PositionUpdate { get; }
 }
 
+public interface IBaseDamageSpecifier<D> where D : BaseDamage
+{
+    D BaseDamage { get; }
+}
+
 

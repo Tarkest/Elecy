@@ -14,6 +14,8 @@ public class Spell : BaseObject, IStatsMenuSpecifier<SpellMenu>
         }
     }
 
+    public BaseDamage DamageComponent;
+
     public short variationHash;
 
     #endregion

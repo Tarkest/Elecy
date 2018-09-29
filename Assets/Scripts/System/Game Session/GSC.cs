@@ -2,8 +2,8 @@
 {
 
     #region Camera
-    public static float cam_dist = 20f;
-    public static float cam_height = 18f;
+    public static float cam_dist = 10f;
+    public static float cam_height = 28f;
     public static float cam_target_height = 0.5f;
 
     #endregion
@@ -25,7 +25,7 @@
 
     #endregion
 
-    public const double timerTick = 1000d / 10d;
+    public const double timerTick = 1000d / 50d;
 }
 
 public enum PositionUpdateEnum
@@ -62,5 +62,27 @@ public enum Tags
     Spell, // enemy or alliaed (need to change load spells, bitches)
     StaticObject,
     Untagged,
+}
+
+public enum DamageInvokeType
+{
+    OnHit,
+    OnDeath,
+    Prolonged,
+    Massive,
+    AfterTime
+}
+
+public enum DamageSerialize
+{
+    Single,
+    Area
+}
+
+public enum DamageTargets
+{
+    Enemy,
+    Ally,
+    All
 }
 

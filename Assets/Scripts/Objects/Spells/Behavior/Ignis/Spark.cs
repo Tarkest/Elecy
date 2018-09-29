@@ -23,7 +23,12 @@ public class Spark : BaseBehavior
                 return;
         }
         int index = other.gameObject.GetComponent<BaseObject>().index;
-        int damage = gameObject.GetComponent<Spell>().Stats.Damage;
-        SendDataTCP.SendDamage(type, index, damage);
+        int _pD = gameObject.GetComponent<Spell>().Stats.PhisicDamage;
+        int _iD = gameObject.GetComponent<Spell>().Stats.IgnisDamage;
+        int _tD = gameObject.GetComponent<Spell>().Stats.TerraDamage;
+        int _aD = gameObject.GetComponent<Spell>().Stats.AquaDamage;
+        int _cD = gameObject.GetComponent<Spell>().Stats.CaeliDamage;
+        int _puD = gameObject.GetComponent<Spell>().Stats.PureDamage;
+        SendDataTCP.SendDamage(type, index, _pD, _iD, _tD, _aD, _cD, _puD);
     }
 }

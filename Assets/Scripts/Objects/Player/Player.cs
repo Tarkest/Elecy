@@ -29,12 +29,12 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
 
     #region Public Commands
 
-    public virtual void Init(int index, string nickname, Vector3 pos, Quaternion rot, bool isMain = false)
+    public virtual void Init(int index, string nickname, Vector3 pos, Quaternion rot, bool isMain = false, bool isAlly = false)
     {
         synergyUpdate = gameObject.AddComponent<SynergyUpdate>();
         rotationUpdate = gameObject.AddComponent<RotationToObjectUpdate>();
         (rotationUpdate as RotationToObjectUpdate).Init(rot, this, MouseController.Object);
-        base.Init(index, ObjectType.player);
+        base.Init(index, ObjectType.player, isAlly);
         this.nickname = nickname;
         positionUpdate.Init(pos, this);
         hpUpdate.Init(Stats.MaxHP, this);

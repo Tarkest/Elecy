@@ -12,6 +12,14 @@ public class PlayerPositionUpdate : PositionUpdate, IBaseObjectSpecifier<Player>
         }
     }
 
+     void FixedUpdate()
+    {
+        if (mObject.moving)
+        {
+            mRigidbody.MovePosition(Vector3.MoveTowards(transform.position, currentValue, BaseObject.CurrentMoveSpeed * 0.025f));
+        }
+    }
+
     public override void Callback()
     {
         float h = Input.GetAxisRaw("Horizontal");
@@ -44,6 +52,7 @@ public class PlayerPositionUpdate : PositionUpdate, IBaseObjectSpecifier<Player>
                     value.Sent();
                 else
                     throw new Exception("Move send exception");
+                //Interpolate();
             }
         }
     }

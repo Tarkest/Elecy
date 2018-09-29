@@ -10,6 +10,7 @@ public abstract class BaseObject : MonoBehaviour
     public ObjectType type;
     public bool isMain;
     public bool moving;
+    public bool isAlly;
     protected bool initiaziled;
     public bool Destroying;
 
@@ -21,10 +22,12 @@ public abstract class BaseObject : MonoBehaviour
 
     #region Initialization
 
-    protected void Init(int index, ObjectType type)
+    protected void Init(int index, ObjectType type, bool? isAlly = null)
     {
         this.index = index;
         this.type = type;
+        if (isAlly != null)
+            this.isAlly = (bool)isAlly;
         hpUpdate = gameObject.AddComponent<HPUpdate>();
         SetStartStats();
     }

@@ -345,7 +345,7 @@ public class BattleLoader : MonoBehaviour {
         GameObject _player = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i)) as GameObject;
         Player _playerComponent = _player.GetComponent<Player>();
         _thisLoadedmanager.Players[i] = _playerComponent;
-        _playerComponent.Init(i, nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i), true);
+        _playerComponent.Init(i, nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i), true, true);
         ObjectManager.playerIndex = i;
         ObjectManager.cameraTarger.player = _player.transform;
         _player.tag = Tags.Player.ToString();
