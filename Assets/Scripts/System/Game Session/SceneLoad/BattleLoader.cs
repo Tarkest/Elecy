@@ -114,8 +114,7 @@ public class BattleLoader : MonoBehaviour {
         DeveloperScreenController.AddInfo("Begin Load: Players", 1);
         // Creates arrays of Position / Rotation / Players
         _thisLoadedmanager.SetStartProperties(playersCount, positions, rotations);
-        ObjectManager.cameraTarger = GameObject.Find("Camera").GetComponent<CameraFollow>();
-
+        ObjectManager.cameraTarger = GameObject.Find("Main Camera").GetComponent<CameraProperties>();
         // in game mode Spawns 'playersCount' - amount of players
         for (int i = 0; i < playersCount; i++)
         {
@@ -130,6 +129,7 @@ public class BattleLoader : MonoBehaviour {
         }
 
         ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
+
         CheckForLoadingRocks();
     }
 

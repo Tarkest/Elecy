@@ -12,14 +12,6 @@ public class PlayerPositionUpdate : PositionUpdate, IBaseObjectSpecifier<Player>
         }
     }
 
-     void FixedUpdate()
-    {
-        if (mObject.moving)
-        {
-            mRigidbody.MovePosition(Vector3.MoveTowards(transform.position, currentValue, BaseObject.CurrentMoveSpeed * 0.025f));
-        }
-    }
-
     public override void Callback()
     {
         float h = Input.GetAxisRaw("Horizontal");
@@ -42,6 +34,7 @@ public class PlayerPositionUpdate : PositionUpdate, IBaseObjectSpecifier<Player>
             newPosition.y = 0.5f;
             lock (locker)
             {
+                startLerpPos = transform.position;
                 updateLibrary.Add(index, new UpdateContainer<Vector3>(newPosition));
                 currentIndex++; // May cause problems
                 currentValue = newPosition;

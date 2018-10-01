@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class PositionUpdate : BaseUpdate<Vector3>
 {
     public float currentLerpTime = 0f;
+    protected Vector3 startLerpPos;
     internal Rigidbody mRigidbody;
 
     #region Unity
@@ -19,7 +20,11 @@ public abstract class PositionUpdate : BaseUpdate<Vector3>
     {
         if (mObject.moving)
         {
-            mRigidbody.MovePosition(Vector3.MoveTowards(transform.position, currentValue, mObject.CurrentMoveSpeed * 0.025f));
+            float times = ((float)GSC.timerTick / 1000f) / Time.fixedDeltaTime;
+            currentLerpTime += 1f / times;
+            if (currentLerpTime > 1f)
+                currentLerpTime = 1f;
+            mRigidbody.MovePosition(Vector3.Lerp(startLerpPos, currentValue, currentLerpTime));
         }
     }
 

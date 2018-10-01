@@ -15,7 +15,7 @@ public class ObjectManager : MonoBehaviour {
     public GameObject[] middleRocksPrefab;
     public GameObject[] smallRocksPrefab;
 
-    public static CameraFollow cameraTarger;
+    public static CameraProperties cameraTarger;
 
     #endregion
 

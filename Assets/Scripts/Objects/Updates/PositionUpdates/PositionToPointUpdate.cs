@@ -38,6 +38,7 @@ public class PositionToPointUpdate : PositionUpdate
             _newPos.y = 0.5f;
             lock (locker)
             {
+                startLerpPos = transform.position;
                 updateLibrary.Add(index, new UpdateContainer<Vector3>(_newPos));
                 currentIndex++;
                 currentValue = _newPos;
