@@ -329,7 +329,7 @@
         buffer.Dispose();
     }
 
-    public static void SendDamage(ObjectType type, int index, int PhysicDamage, int IgnisDamage, int TerraDamage, int AquaDamage, int CaeliDamage, int PureDamage, StaticTypes? staticType = null)
+    public static void SendDamage(ObjectType type, int index, int PhysicDamage, int IgnisDamage, int TerraDamage, int AquaDamage, int CaeliDamage, int PureDamage, bool heal, StaticTypes? staticType = null)
     {
         using (PacketBuffer buffer = new PacketBuffer())
         {
@@ -344,6 +344,7 @@
             buffer.WriteInteger(AquaDamage);
             buffer.WriteInteger(CaeliDamage);
             buffer.WriteInteger(PureDamage);
+            buffer.WriteBoolean(heal);
             ClientTCP.SendData(buffer.ToArray());
         }
     }

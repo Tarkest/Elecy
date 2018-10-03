@@ -25,7 +25,6 @@ public class CameraProperties : MonoBehaviour {
     {
         if (_set)
         {
-            
             transform.position = Vector3.Lerp(transform.position, (player.position + new Vector3(0, GSC.cam_target_height, -GSC.cam_dist) + Vector3.up * GSC.cam_height), smooth * Time.fixedDeltaTime);
         }
     }

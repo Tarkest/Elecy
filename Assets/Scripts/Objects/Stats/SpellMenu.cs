@@ -15,6 +15,7 @@ public class SpellMenu : BaseStatsMenu
     public int AquaDamage;
     public int CaeliDamage;
     public int PureDamage;
+    public bool Heal;
     public float Distance;
     /// <summary>
     /// Maximum value: 100

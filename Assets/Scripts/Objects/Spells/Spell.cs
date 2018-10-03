@@ -20,6 +20,17 @@ public class Spell : BaseObject, IStatsMenuSpecifier<SpellMenu>
 
     #endregion
 
+    public override void GetDamage(int PhysicDamage, int IgnisDamage, int TerraDamage, int CaeliDamage, int AquaDamage, int PureDamage, bool heal)
+    {
+        int _resultDamage = 0;
+        _resultDamage += PhysicDamage - mStats.BaseNormalDefence;
+        _resultDamage += IgnisDamage - (IgnisDamage * (mStats.BaseFireDefence / 100));
+        _resultDamage += TerraDamage - (TerraDamage * (mStats.BaseEarthDefence / 100));
+        _resultDamage += CaeliDamage - (CaeliDamage * (mStats.BaseWindDefence / 100));
+        _resultDamage += AquaDamage - (AquaDamage * (mStats.BaseWindDefence / 100));
+        _resultDamage += PureDamage;
+        hpUpdate.ChangeHP(_resultDamage, heal);
+    }
 
     #region Init
 

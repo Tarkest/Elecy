@@ -30,7 +30,8 @@ public class OnHitDamage : BaseDamage
                                                     TerraDamage,
                                                     AquaDamage,
                                                     CaeliDamage,
-                                                    PureDamage
+                                                    PureDamage,
+                                                    Spell.Stats.Heal
                                                    );
                         }
                         if (hit.transform.gameObject.GetComponent<BaseObject>() is Spell && !hit.transform.gameObject.GetComponent<BaseObject>().isAlly)
@@ -43,7 +44,8 @@ public class OnHitDamage : BaseDamage
                                                     TerraDamage,
                                                     AquaDamage,
                                                     CaeliDamage,
-                                                    PureDamage
+                                                    PureDamage,
+                                                    Spell.Stats.Heal
                                                    );
                         }
                         if (DeathAfterDamage)
@@ -67,7 +69,8 @@ public class OnHitDamage : BaseDamage
                                                 TerraDamage,
                                                 AquaDamage,
                                                 CaeliDamage,
-                                                PureDamage
+                                                PureDamage,
+                                                Spell.Stats.Heal
                                                );
                     }
                     if (collision.gameObject.GetComponent<BaseObject>() is Spell)
@@ -80,7 +83,8 @@ public class OnHitDamage : BaseDamage
                                                 TerraDamage,
                                                 AquaDamage,
                                                 CaeliDamage,
-                                                PureDamage
+                                                PureDamage,
+                                                Spell.Stats.Heal
                                                );
                     }
                 }
@@ -111,7 +115,8 @@ public class OnHitDamage : BaseDamage
                                                     TerraDamage,
                                                     AquaDamage,
                                                     CaeliDamage,
-                                                    PureDamage
+                                                    PureDamage,
+                                                    Spell.Stats.Heal
                                                    );
                         }
                         if (hit.transform.gameObject.GetComponent<BaseObject>() is Spell && hit.transform.gameObject.GetComponent<BaseObject>().isAlly)
@@ -124,7 +129,8 @@ public class OnHitDamage : BaseDamage
                                                     TerraDamage,
                                                     AquaDamage,
                                                     CaeliDamage,
-                                                    PureDamage
+                                                    PureDamage,
+                                                    Spell.Stats.Heal
                                                    );
                         }
                     }
@@ -148,7 +154,8 @@ public class OnHitDamage : BaseDamage
                                                 TerraDamage,
                                                 AquaDamage,
                                                 CaeliDamage,
-                                                PureDamage
+                                                PureDamage,
+                                                Spell.Stats.Heal
                                                );
                     }
                     if (collision.gameObject.GetComponent<BaseObject>() is Spell)
@@ -161,7 +168,8 @@ public class OnHitDamage : BaseDamage
                                                 TerraDamage,
                                                 AquaDamage,
                                                 CaeliDamage,
-                                                PureDamage
+                                                PureDamage,
+                                                Spell.Stats.Heal
                                                );
                     }
                 }
@@ -192,7 +200,8 @@ public class OnHitDamage : BaseDamage
                                                     TerraDamage,
                                                     AquaDamage,
                                                     CaeliDamage,
-                                                    PureDamage
+                                                    PureDamage,
+                                                    Spell.Stats.Heal
                                                    );
                         }
                         if (hit.transform.gameObject.GetComponent<BaseObject>() is Spell)
@@ -205,7 +214,8 @@ public class OnHitDamage : BaseDamage
                                                     TerraDamage,
                                                     AquaDamage,
                                                     CaeliDamage,
-                                                    PureDamage
+                                                    PureDamage,
+                                                    Spell.Stats.Heal
                                                    );
                         }
                     }
@@ -229,7 +239,8 @@ public class OnHitDamage : BaseDamage
                                                 TerraDamage,
                                                 AquaDamage,
                                                 CaeliDamage,
-                                                PureDamage
+                                                PureDamage,
+                                                Spell.Stats.Heal
                                                );
                     }
                     if (collision.gameObject.GetComponent<BaseObject>() is Spell)
@@ -242,7 +253,8 @@ public class OnHitDamage : BaseDamage
                                                 TerraDamage,
                                                 AquaDamage,
                                                 CaeliDamage,
-                                                PureDamage
+                                                PureDamage,
+                                                Spell.Stats.Heal
                                                );
                     }
                 }

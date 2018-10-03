@@ -58,6 +58,8 @@ public abstract class BaseObject : MonoBehaviour
 
     }
 
+    public abstract void GetDamage(int PhysicDamage, int IgnisDamage, int TerraDamage, int CaeliDamage, int AquaDamage, int PureDamage, bool Heal);
+
     #region Private Helpers
 
     protected void SetStartStats()
