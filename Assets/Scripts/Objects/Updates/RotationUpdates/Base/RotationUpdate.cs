@@ -5,9 +5,9 @@ public abstract class RotationUpdate : BaseUpdate<Quaternion>
 
     public override void Callback()
     {
-        lock(locker)
+        lock (locker)
         {
-            if(!transform.rotation.Equals(currentValue))
+            if (!transform.rotation.Equals(currentValue))
             {
                 currentIndex++;
                 currentValue = transform.rotation;

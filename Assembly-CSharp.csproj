@@ -59,7 +59,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraProperties.cs" />
     <Compile Include="Assets\Scripts\Objects\Base\BaseBehavior.cs" />
     <Compile Include="Assets\Scripts\Objects\Base\BaseInvoker.cs" />
@@ -76,6 +75,8 @@
     <Compile Include="Assets\Scripts\Objects\Stats\PlayerMenu.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\SpellMenu.cs" />
     <Compile Include="Assets\Scripts\Objects\Stats\StaticObjectMenu.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\Damage\Base\BaseDamage.cs" />
+    <Compile Include="Assets\Scripts\Objects\Updates\Damage\OnHitDamage.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\HPUpdate.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdates\Base\PositionUpdate.cs" />
     <Compile Include="Assets\Scripts\Objects\Updates\PositionUpdates\PlayerPositionUpdate.cs" />

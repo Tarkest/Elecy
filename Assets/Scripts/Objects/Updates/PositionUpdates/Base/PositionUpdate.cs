@@ -14,6 +14,7 @@ public abstract class PositionUpdate : BaseUpdate<Vector3>
     {
         base.Init(value, o);
         mRigidbody = GetComponent<Rigidbody>();
+        startLerpPos = value;
     }
 
     void FixedUpdate()

@@ -183,7 +183,7 @@ public class Network : MonoBehaviour
         }
         else
         {
-           _instance = Instantiate(prefab, castPosition, rotation);
+            _instance = Instantiate(prefab, castPosition, rotation);
         }
         Spell baseComponent = _instance.GetComponent<Spell>();
         baseComponent.Init(castPosition,

@@ -9,8 +9,8 @@ public class PositionToObjectUpdate : PositionUpdate
 
     public void Init(Vector3 spawnPos, GameObject targetObj, BaseObject o)
     {
-        base.Init(spawnPos, o);
         TargetObject = targetObj;
+        base.Init(spawnPos, o);
     }
 
     public override void Callback()

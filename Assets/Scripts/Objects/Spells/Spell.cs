@@ -39,7 +39,7 @@ public class Spell : BaseObject, IStatsMenuSpecifier<SpellMenu>
         #region CheckRotation
 
         Stats.SetRotation(GetComponent<RotationUpdate>());
-        if(!Stats.Rotation.Equals(RotationUpdateEnum.ToPoint))
+        if (!Stats.Rotation.Equals(RotationUpdateEnum.ToPoint))
         {
             throw new Exception("Spell" + index + " has wrong rotation update type!");
         }
