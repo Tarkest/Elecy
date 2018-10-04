@@ -29,7 +29,7 @@ public class FriendListController : MonoBehaviour {
         for(int i = 0; i<guidekey.Length; i++)
         {
             _currentFriendsCount += 1;
-            GameObject friend = Instantiate(_friend);
+            GameObject friend = Instantiate(_friend, _content.transform);
             friend.GetComponent<FriendFieldController>().AddFriend(nickname[i], status[i]);
             Friends.Add(guidekey[i], friend.GetComponent<FriendFieldController>());
         }
@@ -39,7 +39,7 @@ public class FriendListController : MonoBehaviour {
     public static void AddFriend(string nickname, string guidekey, int status)
     {
         _currentFriendsCount += 1;
-        GameObject friend = Instantiate(_friend);
+        GameObject friend = Instantiate(_friend, _content.transform);
         friend.GetComponent<FriendFieldController>().AddFriend(nickname, status);
         Friends.Add(guidekey, friend.GetComponent<FriendFieldController>());
     }

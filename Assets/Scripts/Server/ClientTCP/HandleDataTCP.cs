@@ -175,6 +175,7 @@ internal class HandleDataTCP
     public static void HandleFriendInfo(byte[] data)
     {
         PacketBuffer buffer = new PacketBuffer();
+        buffer.WriteBytes(data);
         buffer.ReadInteger();
         string _nickname = buffer.ReadString();
         string _guideKey = buffer.ReadString();

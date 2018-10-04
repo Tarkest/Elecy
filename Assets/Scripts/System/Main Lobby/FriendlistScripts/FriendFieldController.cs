@@ -9,7 +9,7 @@ public class FriendFieldController : MonoBehaviour {
 
     private string _NicknameBuffer;
     private string _StatusBuffer;
-    private string[] _statuses = new string[2] { "In Main Lobby","Playing" };
+    private string[] _statuses = new string[5] { "","In Main Lobby", "Searching For Match", "Playing", "End Playing" };
 
     public void AddFriend(string nickname, int status)
     {
@@ -34,6 +34,6 @@ public class FriendFieldController : MonoBehaviour {
 
     public void ChangeStatus(int status)
     {
-        Status.text = _statuses[status];
+        MainThread.executeInUpdate(() => Status.text = _statuses[status]);
     }
 }
