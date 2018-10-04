@@ -57,6 +57,7 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
     public override void GetDamage(int PhysicDamage, int IgnisDamage, int TerraDamage, int CaeliDamage, int AquaDamage, int PureDamage, bool heal)
     {
         int _resultDamage = 0;
+        Debug.Log("Physic: " + PhysicDamage + " Ignis: " + IgnisDamage + " Terra: " + TerraDamage + " Caeli: " + CaeliDamage + " Aqua: " + AquaDamage + " Pure: " + PureDamage + " Type: " + heal);
         _resultDamage += PhysicDamage - mStats.BaseNormalDefence;
         _resultDamage += IgnisDamage - (IgnisDamage * (mStats.BaseFireDefence / 100));
         _resultDamage += TerraDamage - (TerraDamage * (mStats.BaseEarthDefence / 100));
