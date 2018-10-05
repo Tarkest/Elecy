@@ -68,7 +68,6 @@
     <Compile Include="Assets\Scripts\Objects\Base\Interfaces\ISpecifier.cs" />
     <Compile Include="Assets\Scripts\Objects\Player\Invoker\SpellInvokerIgnis.cs" />
     <Compile Include="Assets\Scripts\Objects\Player\Player.cs" />
-    <Compile Include="Assets\Scripts\Objects\Spells\Behavior\Ignis\Spark.cs" />
     <Compile Include="Assets\Scripts\Objects\Spells\Spell.cs" />
     <Compile Include="Assets\Scripts\Objects\Spells\SpellContainer.cs" />
     <Compile Include="Assets\Scripts\Objects\StaticObject\StaticObject.cs" />
@@ -107,6 +106,9 @@
     <Compile Include="Assets\Scripts\System\Game Session\ObjectManager.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\RoomController.cs" />
     <Compile Include="Assets\Scripts\System\Game Session\SceneLoad\BattleLoader.cs" />
+    <Compile Include="Assets\Scripts\System\Game Session\SceneLoad\Loaders\Base\BaseLoader.cs" />
+    <Compile Include="Assets\Scripts\System\Game Session\SceneLoad\Loaders\PlayerLoader.cs" />
+    <Compile Include="Assets\Scripts\System\Game Session\SceneLoad\Loaders\StaticObjectsLoader.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\Armory\ArmoryController.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\Armory\ArmorySpell.cs" />
     <Compile Include="Assets\Scripts\System\Main Lobby\ChatScripts\ChatMessageController.cs" />

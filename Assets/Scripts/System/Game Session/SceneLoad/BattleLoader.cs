@@ -13,6 +13,7 @@ public class BattleLoader : MonoBehaviour {
 
     #region LoadScreen
     private static GameObject _loadScreen;
+    private static Slider[] _loadProgressSliders;
     private static Slider _yourLoadProgress;
     private static Slider _enemyLoadProgress;
     private static float _thisPlayerProgress = 0f;
@@ -26,9 +27,14 @@ public class BattleLoader : MonoBehaviour {
 
     void Awake()
     {
-        _loadScreen = GameObject.Find("LoadScreen");
-        _yourLoadProgress = _loadScreen.transform.Find("ThisPlayerLoad").GetComponent<Slider>();
-        _enemyLoadProgress = _loadScreen.transform.Find("EnemyPlayerLoad").GetComponent<Slider>();
+        _loadScreen = Instantiate(Resources.Load("Interface/GameRoom/Loading/" + Network.playerCount + "LoadScreen") as GameObject, GameObject.Find("Canvas").transform);
+        _loadProgressSliders = new Slider[Network.playerCount];
+        for (int i = 0; i < Network.playerCount; i++)
+        {
+            GameObject loading = GameObject.Find(i + 1 + "Loading") as GameObject;
+            _loadProgressSliders[i] = loading.GetComponent<Slider>(); 
+            loading.GetComponentInChildren<Text>().text = Network.nicknames[i];
+        }
     }
 
     void Start()
@@ -36,17 +42,40 @@ public class BattleLoader : MonoBehaviour {
         ClientTCP.EnterRoom();
     }
 
-    void Update()
+    #endregion
+
+    #region Loading Properties
+
+    public static BaseLoader Current
     {
-        _yourLoadProgress.value = _thisPlayerProgress;
-        _enemyLoadProgress.value = _enemyPlayerProgress;
+        get
+        {
+            return loaders[offset] as PlayerLoader;
+        }
+    }
+
+    public static BaseLoader[] loaders;
+    private static int offset;
+
+    #endregion
+
+    #region Loading Methods
+
+    public static void Next()
+    {
+        offset++;
+        if(offset < loaders.Length)
+            loaders[offset].Load();
+        //else
+        //    End loading
     }
 
     #endregion
 
     public static void LoadScene(int MapIndex)
     {
-        MainThread.executeInUpdate(() => { Instantiate(Resources.Load("Maps/" + MapIndex.ToString() + "/GameArea"), Vector3.zero, Quaternion.identity);
+        MainThread.executeInUpdate(() => {
+            Instantiate(Resources.Load("Maps/" + MapIndex.ToString() + "/GameArea"), Vector3.zero, Quaternion.identity);
             DeveloperScreenController.AddInfo("Map Loaded", 1);
             SetRace(Network.currentRace);
             Network.currentRace = null;
@@ -62,7 +91,6 @@ public class BattleLoader : MonoBehaviour {
         if (_thisLoadedmanager.bigTreesPrefab.Length > 0 || _thisLoadedmanager.middleTreesPrefab.Length > 0 || _thisLoadedmanager.smallTreesPrefab.Length > 0)
             _loadStages += 1;
         ThisPlayerProgressChange(1f / _loadStages);
-        SendDataTCP.SendBeginLoading(_thisPlayerProgress);
     }
 
     public static void SetRace(string race)
@@ -108,37 +136,12 @@ public class BattleLoader : MonoBehaviour {
 
     #region Procesing
 
-    public static void SpanwPlayers(string[] nicknames, float[][] positions, float[][] rotations, int playersCount)
-    {
-
-        DeveloperScreenController.AddInfo("Begin Load: Players", 1);
-        // Creates arrays of Position / Rotation / Players
-        _thisLoadedmanager.SetStartProperties(playersCount, positions, rotations);
-        ObjectManager.cameraTarger = GameObject.Find("Main Camera").GetComponent<CameraProperties>();
-        // in game mode Spawns 'playersCount' - amount of players
-        for (int i = 0; i < playersCount; i++)
-        {
-            // if nickname equals to client's nickname - spawns Player
-            if (nicknames[i] == ClientTCP.nickname)
-            {
-                SpawnPlayer(nicknames[i], positions[i], rotations[i], i);
-            }
-            else
-                // or spawns Enemy
-                SpawnEnemy(nicknames[i], positions[i], rotations[i], i);
-        }
-
-        ThisPlayerProgressChange(_thisPlayerProgress + (1f / _loadStages) / 2);
-
-        CheckForLoadingRocks();
-    }
-
     public static void SpawnRocks(int rocksCount, int[] index, int[] rocksHP, float[][] rocksPosition, float[][] rocksRotation)
     {
         DeveloperScreenController.AddInfo("Begin Load: Rocks", 1);
         DeveloperScreenController.AddInfo("Rock Count: " + rocksCount.ToString(), 1);
         GameObject _rocks = new GameObject("Rocks");
-        _rocks.transform.parent = _thisLoadedmanager.gameObject.transform;
+        //_rocks.transform.parent = _thisLoadedmanager.gameObject.transform;
         GameObject NewRock = null;
         int small = 0;
         int middle = 0;
@@ -324,32 +327,6 @@ public class BattleLoader : MonoBehaviour {
     public static void LoadComplite()
     {
         SendDataTCP.SendLoadComplite(_thisPlayerProgress);
-    }
-
-    #endregion
-
-    #region Private Helpers
-
-    private static void SpawnEnemy(string nickname, float[] pos, float[] rot, int i)
-    {
-        GameObject _enemy = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i)) as GameObject;
-        Player _playerComponent = _enemy.GetComponent<Player>();
-        _thisLoadedmanager.Players[i] = _playerComponent;
-        _playerComponent.Init(i, nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i));
-        _enemy.tag = Tags.Enemy.ToString();
-        DeveloperScreenController.AddInfo("Enemy " + nickname + " Load...OK", 1);
-    }
-
-    private static void SpawnPlayer(string nickname, float[] pos, float[] rot, int i)
-    {
-        GameObject _player = Instantiate(Resources.Load("Players/Player"), _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i)) as GameObject;
-        Player _playerComponent = _player.GetComponent<Player>();
-        _thisLoadedmanager.Players[i] = _playerComponent;
-        _playerComponent.Init(i, nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i), true, true);
-        ObjectManager.playerIndex = i;
-        ObjectManager.cameraTarger.player = _player.transform;
-        _player.tag = Tags.Player.ToString();
-        DeveloperScreenController.AddInfo("Player " + nickname + " Load...OK", 1);
     }
 
     #endregion

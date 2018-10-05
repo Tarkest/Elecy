@@ -11,6 +11,10 @@ public class Network : MonoBehaviour
     public static int UDP_PORT = NetworkConstants.UDP_PORT;
     public static ConnectStatus Connect;
 
+    public static int playerCount;
+    public static string[] nicknames;
+    public static int playerIndex;
+
     public bool connectToLocal;
 
     private static bool scenechange;
@@ -113,8 +117,19 @@ public class Network : MonoBehaviour
         scenechange = true;
     }
 
-    public static void InBattle(int sceneNum)
+    public static void InBattle(int sceneNum, int playerCount, string[] nicknames)
     {
+        Network.playerCount = playerCount;
+        Network.nicknames = nicknames;
+        for(int i = 0; i < playerCount; i++)
+        {
+            if (nicknames[i].Equals(ClientTCP.nickname))
+            {
+                playerIndex = i;
+                break;
+            }
+
+        }
         scenenum = sceneNum;
         scenechange = true;
     }

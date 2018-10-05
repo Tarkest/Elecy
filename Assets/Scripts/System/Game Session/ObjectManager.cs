@@ -25,6 +25,8 @@ public class ObjectManager : MonoBehaviour {
 
     public NetworkObjectList dynamicPropList = new NetworkObjectList();
 
+    public Player[][] playersplayers;
+
     public List<GameObject> staticPropsList = new List<GameObject>();
 
     public List<GameObject> prefabList = new List<GameObject>();
@@ -43,9 +45,8 @@ public class ObjectManager : MonoBehaviour {
     #endregion
 
     #region Reusable Variables
-    private Vector3[] startPositions;
-    private Quaternion[] startRotations;
-
+    public Vector3[] startPositions;
+    public Quaternion[] startRotations;
     private Vector3 _playerStartPosition;
     private Vector3 _enemyStartPosition;
     private Quaternion _playerStartRotation;
@@ -54,8 +55,12 @@ public class ObjectManager : MonoBehaviour {
 
     void Start()
     {
-        BattleLoader.SceneLoaded(this);
+        Players = new Player[Network.playerCount];
+        startPositions = new Vector3[Network.playerCount];
+        startRotations = new Quaternion[Network.playerCount];
+        cameraTarger = GameObject.Find("Main Camera").GetComponent<CameraProperties>();
         Network.SetManager(this);
+        BattleLoader.SceneLoaded(this);
     }
 
     public void UpdatePrefabs()
@@ -77,12 +82,12 @@ public class ObjectManager : MonoBehaviour {
         _enemyStartRotation = new Quaternion(rot2[0], rot2[1], rot2[2], rot2[3]);
     }
 
-    public void SetStartProperties(int playersCount, float[][] pos, float[][] rot)
+    public void SetStartProperties(float[][] pos, float[][] rot)
     {
-        Players = new Player[playersCount];
-        startPositions = new Vector3[playersCount];
-        startRotations = new Quaternion[playersCount];
-        for(int i = 0; i < playersCount; i++)
+        //Players = new Player[playersCount];
+        //startPositions = new Vector3[playersCount];
+        //startRotations = new Quaternion[playersCount];
+        for (int i = 0; i < Network.playerCount; i++)
         {
             startPositions[i] = new Vector3(pos[i][0], pos[i][1], pos[i][2]);
             startRotations[i] = new Quaternion(rot[i][0], rot[i][1], rot[i][2], rot[i][3]);
@@ -120,6 +125,7 @@ public class ObjectManager : MonoBehaviour {
     }
 
     #endregion
+
 }
 
 public class NetworkObjectList

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 internal class HandleDataTCP
 {
@@ -254,7 +255,14 @@ internal class HandleDataTCP
         {
             buffer.WriteBytes(data);
             buffer.ReadInteger();
-            Network.InBattle(buffer.ReadInteger());
+            int sceneIndex = buffer.ReadInteger();
+            int playersCount = buffer.ReadInteger();
+            string[] nicknames = new string[playersCount];
+            for(int i = 0; i < playersCount; i++)
+            {
+                nicknames[i] = buffer.ReadString();
+            }
+            Network.InBattle(sceneIndex, playersCount, nicknames);
         }
     }
 
@@ -320,18 +328,18 @@ internal class HandleDataTCP
         PacketBuffer buffer = new PacketBuffer();
         buffer.WriteBytes(data);
         buffer.ReadInteger();
-        int playersCount = buffer.ReadInteger();
-        string[] nicknames = new string[playersCount];
-        float[][] positions = new float[playersCount][];
-        float[][] rotations = new float[playersCount][];
-        for(int i = 0; i < playersCount; i++)
+        Vector3[] positions = new Vector3[Network.playerCount];
+        Quaternion[] rotations = new Quaternion[Network.playerCount];
+        for(int i = 0; i < Network.playerCount; i++)
         {
-            nicknames[i] = buffer.ReadString();
-            positions[i] = new float[] { buffer.ReadFloat(), 0.5f, buffer.ReadFloat() };
-            rotations[i] = new float[] { buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat() };
+            positions[i] = new Vector3(buffer.ReadFloat(), 0.5f, buffer.ReadFloat());
+            rotations[i] = new Quaternion(buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat(), buffer.ReadFloat());
         }
         buffer.Dispose();
-        MainThread.executeInUpdate(() => { BattleLoader.SpanwPlayers(nicknames, positions, rotations, playersCount); });
+        MainThread.executeInUpdate(() =>
+        {
+            (BattleLoader.Current as PlayerLoader).SpawnPlayers(positions, rotations);
+        });
     }
 
     /// <summary>
