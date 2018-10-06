@@ -58,10 +58,12 @@ public class ObjectManager : MonoBehaviour {
 
     public void UpdatePrefabs()
     {
-        for (int i = 0; i < dynamicPropList.Lenght(); i++)
+        lock(dynamicPropList.expectant)
         {
-            if(dynamicPropList[i] != null)
-                dynamicPropList[i].Callback();
+            foreach(Spell spell in dynamicPropList)
+            {
+                spell.Callback();
+            }
         }
     }
 
@@ -120,18 +122,20 @@ public class ObjectManager : MonoBehaviour {
     #endregion
 }
 
-public class NetworkObjectList
+public class NetworkObjectList : IEnumerable
 {
     Dictionary<int, Spell> List;
+    public object expectant;
 
     public NetworkObjectList()
     {
         List = new Dictionary<int, Spell>();
+        expectant = new object();
     }
 
     public void Add(Spell Object, int index)
     {
-        lock(List)
+        lock(expectant)
         {
             List.Add(index, Object);
             Object.index = index;
@@ -143,7 +147,8 @@ public class NetworkObjectList
     {
         get
         {
-            return List[index];
+            Spell obj;
+            return List.TryGetValue(index, out obj) ? obj : null;
         }
     }
 
@@ -154,10 +159,20 @@ public class NetworkObjectList
 
     public void Remove(int index)
     {
-        lock(List)
+        lock(expectant)
         {
-            List[index].Destroy();
+            this[index].Destroy();
             List.Remove(index);
         }
+    }
+
+    public IEnumerator<Spell> GetEnumerator()
+    {
+        return List.Values.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return this.GetEnumerator();
     }
 }
