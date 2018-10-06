@@ -178,7 +178,7 @@ public class Network : MonoBehaviour
         GameObject _instance;
         if (parentIndex != -1)
         {
-            Transform _parent = currentManager.dynamicPropList.Get(parentIndex).transform;
+            Transform _parent = currentManager.dynamicPropList[parentIndex].transform;
             _instance =  Instantiate(prefab, castPosition, rotation, _parent);
         }
         else

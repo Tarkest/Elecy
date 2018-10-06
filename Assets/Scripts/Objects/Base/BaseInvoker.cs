@@ -20,32 +20,29 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
 
     void Update()
     {
-        if(mBaseObject.isMain)
+        if (Input.GetButtonDown("CombinationInputLeft"))
         {
-            if (Input.GetButtonDown("CombinationInputLeft"))
-            {
-                UpdateCombination('Q');
-            }
+            UpdateCombination('Q');
+        }
 
-            if (Input.GetButtonDown("CombinationInputRight"))
-            {
-                UpdateCombination('E');
-            }
+        if (Input.GetButtonDown("CombinationInputRight"))
+        {
+            UpdateCombination('E');
+        }
 
-            if (Input.GetButtonDown("ResetCombination"))
-            {
-                UpdateCombination();
-            }
+        if (Input.GetButtonDown("ResetCombination"))
+        {
+            UpdateCombination();
+        }
 
-            if (Input.GetButtonDown("AttackInvoke"))
-            {
-                InvokeSpell(Invoke(_posibleCombinations, _combination));
-            }
+        if (Input.GetButtonDown("AttackInvoke"))
+        {
+            InvokeSpell(Invoke(_posibleCombinations, _combination));
+        }
 
-            if (Input.GetButtonDown("DefenceInvoke"))
-            {
-                InvokeSpell(Invoke(_posibleCombinations, _combination));
-            }
+        if (Input.GetButtonDown("DefenceInvoke"))
+        {
+            InvokeSpell(Invoke(_posibleCombinations, _combination));
         }
     }
 

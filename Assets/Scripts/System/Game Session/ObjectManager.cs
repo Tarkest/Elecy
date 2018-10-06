@@ -60,8 +60,8 @@ public class ObjectManager : MonoBehaviour {
     {
         for (int i = 0; i < dynamicPropList.Lenght(); i++)
         {
-            if(dynamicPropList.Get(i) != null)
-                dynamicPropList.Get(i).Callback();
+            if(dynamicPropList[i] != null)
+                dynamicPropList[i].Callback();
         }
     }
 
@@ -122,23 +122,19 @@ public class ObjectManager : MonoBehaviour {
 
 public class NetworkObjectList
 {
-    Spell[] List;
+    Dictionary<int, Spell> List;
 
     public NetworkObjectList()
     {
-        List = new Spell[0];
+        List = new Dictionary<int, Spell>();
     }
 
     public void Add(Spell Object, int index)
     {
         lock(List)
         {
-            if(List.Length < index + 1)
-            {
-                Array.Resize(ref List, index + 1);
-            }
+            List.Add(index, Object);
             Object.index = index;
-            List[index] = Object;
         }
 
     }
@@ -151,29 +147,17 @@ public class NetworkObjectList
         }
     }
 
-    public Spell Get(int index)
-    {
-        lock(List)
-        {
-            return List[index];
-        }
-
-    }
-
     public int Lenght()
     {
-        return List.Length;
+        return List.Count;
     }
 
     public void Remove(int index)
     {
         lock(List)
         {
-            if(List[index] != null)
-            {
-                List[index].Destroy();
-                List[index] = null;
-            }
+            List[index].Destroy();
+            List.Remove(index);
         }
     }
 }

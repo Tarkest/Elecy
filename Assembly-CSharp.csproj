@@ -68,7 +68,6 @@
     <Compile Include="Assets\Scripts\Objects\Base\Interfaces\ISpecifier.cs" />
     <Compile Include="Assets\Scripts\Objects\Player\Invoker\SpellInvokerIgnis.cs" />
     <Compile Include="Assets\Scripts\Objects\Player\Player.cs" />
-    <Compile Include="Assets\Scripts\Objects\Spells\Behavior\Ignis\Spark.cs" />
     <Compile Include="Assets\Scripts\Objects\Spells\Spell.cs" />
     <Compile Include="Assets\Scripts\Objects\Spells\SpellContainer.cs" />
     <Compile Include="Assets\Scripts\Objects\StaticObject\StaticObject.cs" />

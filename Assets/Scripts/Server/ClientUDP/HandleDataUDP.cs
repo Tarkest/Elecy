@@ -61,7 +61,7 @@ public class HandleDataUDP : MonoBehaviour {
             case ObjectType.spell:
                 try
                 {
-                    Network.currentManager.dynamicPropList.Get(index).positionUpdate.Handle(updateIndex, pos);
+                    Network.currentManager.dynamicPropList[index].positionUpdate.Handle(updateIndex, pos);
                 }
                 catch (Exception ex)
                 {
@@ -94,7 +94,7 @@ public class HandleDataUDP : MonoBehaviour {
             case ObjectType.spell:
                 try
                 {
-                    Network.currentManager.dynamicPropList.Get(index);
+                    Network.currentManager.dynamicPropList[index].rotationUpdate.Handle(updateIndex, rot);
                 }
                 catch (Exception ex)
                 {
@@ -125,7 +125,7 @@ public class HandleDataUDP : MonoBehaviour {
             case ObjectType.spell:
                 try
                 {
-                    Network.currentManager.dynamicPropList.Get(index).hpUpdate.Handle(updateIndex, health);
+                    Network.currentManager.dynamicPropList[index].hpUpdate.Handle(updateIndex, health);
                 }
                 catch (Exception ex)
                 {
