@@ -6,8 +6,15 @@ public class RotationToObjectUpdate : RotationUpdate
 
     private void Update()
     {
-        if(mObject.moving)
-            mObject.transform.LookAt(target.transform);
+        if(mObject.isMain)
+        {
+            if(mObject.moving)
+                mObject.transform.LookAt(target.transform);
+        }
+        else
+        {
+                mObject.transform.rotation = currentValue;
+        }
     }
 
     public void Init(Quaternion value, BaseObject o, GameObject target)

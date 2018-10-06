@@ -2,7 +2,6 @@
 
 public abstract class RotationUpdate : BaseUpdate<Quaternion>
 {
-
     public override void Callback()
     {
         lock (locker)

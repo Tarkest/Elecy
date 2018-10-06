@@ -309,12 +309,6 @@ public class BattleLoader : MonoBehaviour {
             }
             _thisLoadedmanager.spells.Add(i, spellsObjects);
         }
-        switch (_race)
-        {
-            case "Ignis":
-                _thisLoadedmanager.Players[ObjectManager.playerIndex].LoadCombinations(_thisLoadedmanager.spells[ObjectManager.playerIndex]);
-                break;
-        }
         DeveloperScreenController.AddInfo("Spells Load...OK", 1);
         ClientUDP.Create();
         ClientUDP.BeginReceive();
@@ -337,6 +331,7 @@ public class BattleLoader : MonoBehaviour {
         _thisLoadedmanager.Players[i] = _playerComponent;
         _playerComponent.Init(i, nickname, _thisLoadedmanager.GetStartPosition(i), _thisLoadedmanager.GetStartRotation(i));
         _enemy.tag = Tags.Enemy.ToString();
+        Destroy(_enemy.GetComponent<BaseInvoker>());
         DeveloperScreenController.AddInfo("Enemy " + nickname + " Load...OK", 1);
     }
 

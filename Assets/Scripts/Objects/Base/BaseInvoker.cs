@@ -20,29 +20,32 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
 
     void Update()
     {
-        if (Input.GetButtonDown("CombinationInputLeft"))
+        if(mBaseObject.isMain)
         {
-            UpdateCombination('Q');
-        }
+            if (Input.GetButtonDown("CombinationInputLeft"))
+            {
+                UpdateCombination('Q');
+            }
 
-        if (Input.GetButtonDown("CombinationInputRight"))
-        {
-            UpdateCombination('E');
-        }
+            if (Input.GetButtonDown("CombinationInputRight"))
+            {
+                UpdateCombination('E');
+            }
 
-        if (Input.GetButtonDown("ResetCombination"))
-        {
-            UpdateCombination();
-        }
+            if (Input.GetButtonDown("ResetCombination"))
+            {
+                UpdateCombination();
+            }
 
-        if (Input.GetButtonDown("AttackInvoke"))
-        {
-            InvokeSpell(Invoke(_posibleCombinations, _combination));
-        }
+            if (Input.GetButtonDown("AttackInvoke"))
+            {
+                InvokeSpell(Invoke(_posibleCombinations, _combination));
+            }
 
-        if (Input.GetButtonDown("DefenceInvoke"))
-        {
-            InvokeSpell(Invoke(_posibleCombinations, _combination));
+            if (Input.GetButtonDown("DefenceInvoke"))
+            {
+                InvokeSpell(Invoke(_posibleCombinations, _combination));
+            }
         }
     }
 
@@ -71,11 +74,10 @@ public abstract class BaseInvoker : MonoBehaviour, IBaseObjectSpecifier<Player>
 
     #region Initialization 
 
-    public virtual void Init(BaseObject obj, GameObject[] spells)
+    public virtual void Init(BaseObject obj)
     {
         _combination = "";
         mBaseObject = obj;
-        //LoadCombinations(spells);
     }
 
     #endregion

@@ -33,7 +33,10 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
     {
         synergyUpdate = gameObject.AddComponent<SynergyUpdate>();
         rotationUpdate = gameObject.AddComponent<RotationToObjectUpdate>();
-        (rotationUpdate as RotationToObjectUpdate).Init(rot, this, MouseController.Object);
+        if (isMain)
+            (rotationUpdate as RotationToObjectUpdate).Init(rot, this, MouseController.Object);
+        else
+            (rotationUpdate as RotationToObjectUpdate).Init(rot, this);
         base.Init(index, ObjectType.player, isAlly);
         this.nickname = nickname;
         positionUpdate.Init(pos, this);
@@ -41,12 +44,8 @@ public class Player : BaseObject, IStatsMenuSpecifier<PlayerMenu>
         synergyUpdate.Init(Stats.MaxSN, this);
         this.moving = true;
         this.isMain = isMain;
+        PlayerInvoker.Init(this);
         initiaziled = true;
-    }
-
-    public virtual void LoadCombinations(GameObject[] spells)
-    {
-        PlayerInvoker.Init(this, spells);
     }
 
     public virtual Vector3 GetPosition()
