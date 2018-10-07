@@ -27,7 +27,7 @@ public class PositionToPointUpdate : PositionUpdate
                 {
                     if (!mObject.Destroying)
                     {
-                        StartCoroutine(DestroyCoroutine());
+                        mObject.Destroy();
                     }
                     return;
                 }

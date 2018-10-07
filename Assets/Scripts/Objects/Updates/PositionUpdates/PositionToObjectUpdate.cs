@@ -25,9 +25,9 @@ public class PositionToObjectUpdate : PositionUpdate
                 // _direction.Equals(Vector3.zero) includes magnitude and sqrMagnitude
                 if (_direction.x == 0f && _direction.z == 0f)
                 {
-                    if (mObject.Destroying)
+                    if (!mObject.Destroying)
                     {
-                        StartCoroutine(DestroyCoroutine());
+                        mObject.Destroy();
                     }
                     return;
                 }
@@ -51,15 +51,6 @@ public class PositionToObjectUpdate : PositionUpdate
                     throw new Exception("Move send exception");
                 //Interpolate();
             }
-        }
-    }
-
-    IEnumerator DestroyCoroutine()
-    {
-        while (true)
-        {
-            mObject.Destroy();
-            yield return new WaitForSeconds(1);
         }
     }
 

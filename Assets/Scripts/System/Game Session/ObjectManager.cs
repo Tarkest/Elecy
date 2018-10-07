@@ -62,7 +62,8 @@ public class ObjectManager : MonoBehaviour {
         {
             foreach(Spell spell in dynamicPropList)
             {
-                spell.Callback();
+                if(spell != null && spell.isMain)
+                    spell.Callback();
             }
         }
     }
@@ -161,8 +162,13 @@ public class NetworkObjectList : IEnumerable
     {
         lock(expectant)
         {
-            this[index].Destroy();
-            List.Remove(index);
+            Spell obj;
+            if(List.TryGetValue(index, out obj))
+            {
+                List.Remove(index);
+                obj.Destroy(true);
+            }
+
         }
     }
 

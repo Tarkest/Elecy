@@ -46,15 +46,16 @@ public abstract class BaseObject : MonoBehaviour
 
     #endregion
 
-    public virtual void Destroy()
+    public virtual void Destroy(bool destroy = false)
     {
-        if(isMain && !Destroying)
+        if (destroy)
+            Destroy(gameObject);
+        else
         {
             Destroying = true;
             SendDataTCP.SendDestroy(type, index);
         }
-        else
-            Destroy(gameObject);
+
     }
 
     public abstract void GetDamage(int PhysicDamage, int IgnisDamage, int TerraDamage, int CaeliDamage, int AquaDamage, int PureDamage, bool Heal);
